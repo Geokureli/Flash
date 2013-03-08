@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<level bpm="120" speed="20">
+  <rock>0</rock>
+  <rock>1</rock>
+  <ball>2</ball>
+  <rock>3</rock>
+  <rock>4</rock>
+  <rock>4.5</rock>
+  <rock>5</rock>
+  <ball>6</ball>
+  <rock>7</rock>
+  <rock>8</rock>
+  <rock>9</rock>
+  <gap>10</gap>
+  <rock>11</rock>
+  <rock>12</rock>
+  <rock>12.5</rock>
+  <rock>13</rock>
+  <gap>14</gap>
+  <rock>15</rock>
+  <rock>16</rock>
+  <rock>17</rock>
+  <block>18</block>
+  <rock>19</rock>
+  <rock>20</rock>
+  <rock>20.5</rock>
+  <rock>21</rock>
+  <block>22</block>
+  <rock>23</rock>
+</level>
