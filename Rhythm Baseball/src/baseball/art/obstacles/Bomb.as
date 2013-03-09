@@ -35,7 +35,8 @@ package baseball.art.obstacles
 		}
 		override public function update():void {
 			super.update();
-			//y = stage.stageHeight-Math.pow(BeatKeeper.toBeatPixels(1) * (beat - BeatKeeper.beat),2);
+			if(isRhythm && boundMode == BoundMode.DESTROY)
+				y = (HERO.y + Math.pow(BeatKeeper.toBeatPixels(beat - BeatKeeper.beat) - Math.sqrt(HERO.y), 2)) / 2 + 30;
 		}
 	}
 

@@ -26,11 +26,12 @@ package baseball.art
 			sprites.addAnimation("duck", Vector.<int>([10, 11]), false, 1);
 			sprites.addAnimation("duck_end", Vector.<int>([10]),true, 1);
 			sprites.addAnimation("jump", Vector.<int>([12, 12, 12, 12, 12, 12, 12, 12, 12]));
-			sprites.addAnimation("swing", Vector.<int>([13, 14, 15, 16, 17]), true, 1);
+			sprites.addAnimation("swing", Vector.<int>([13, 14, 15, 15, 16, 17, 17]), true, 1);
 			sprites.addAnimation("hit", Vector.<int>([8, 9]), false);
 		}
 		public var u:Boolean, d:Boolean, l:Boolean, r:Boolean,
 					_u:Boolean, _d:Boolean, _l:Boolean, _r:Boolean;
+		public var hitBlock:Boolean;
 		public function Hero() {
 			super();
 		}
@@ -61,7 +62,7 @@ package baseball.art
 			if (!l) _l = true;
 			if (!r) _r = true;
 			if (currentAnimation == "idle"){// || currentAnimation == "slide_end" || currentAnimation == "duck_end") {
-				if (d) {
+				if (r) {
 					currentAnimation = "slide";
 					SoundManager.play("duck");
 					//
@@ -78,14 +79,15 @@ package baseball.art
 					addEventListener(AnimationEvent.COMPLETE, animEnd);
 				}
 				
-				if (r) {
+				if (d) {
 					currentAnimation = "duck";
 					SoundManager.play("duck");
 				}
-			} else if (currentAnimation == "slide" && !d && frame > 1) {
+			} else if (currentAnimation == "slide" && !r && frame > 1) {
 				currentAnimation = "slide_end";
 				addEventListener(AnimationEvent.COMPLETE, animEnd);
-			} else if (currentAnimation == "duck" && !r && frame > 1) {
+			} else if (currentAnimation == "duck" && !d && frame > 1 && !hitBlock) {
+				trace(hitBlock)
 				currentAnimation = "duck_end";
 				addEventListener(AnimationEvent.COMPLETE, animEnd);
 			} else if (currentAnimation == "jump" && !u && frame > 1) {

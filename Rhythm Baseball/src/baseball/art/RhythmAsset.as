@@ -15,7 +15,8 @@ package baseball.art
 	public class RhythmAsset extends Asset 
 	{
 		static public var BOUNDS:Rectangle;
-		static public var END_X:int, SCROLL:int;
+		static public var HERO:Vec2;
+		static public var SCROLL:Number;
 		public var beat:Number, speed:Number;
 		public var isRhythm:Boolean;
 		public function RhythmAsset(beat:Number, graphic:DisplayObject = null) {
@@ -35,7 +36,8 @@ package baseball.art
 		}
 		override public function update():void {
 			super.update();
-			x = END_X + BeatKeeper.toBeatPixels(SCROLL+speed) * (BeatKeeper.beat - beat);
+			if(isRhythm)
+				x = HERO.x + BeatKeeper.toBeatPixels(SCROLL+speed) * (BeatKeeper.beat - beat);
 		}
 	}
 

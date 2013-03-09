@@ -11,7 +11,7 @@ package baseball.beat
 	 */
 	public class BeatKeeper {
 		static private var startTime:int;
-		static public var beatsPerMinute:int, frameRate:int = 30;
+		static public var beatsPerMinute:Number, frameRate:int = 30;
 		static public var beat:Number;
 		static private var dispatcher:EventDispatcher;
 		static private var events:Vector.<EventListener>;
@@ -20,7 +20,7 @@ package baseball.beat
 			dispatcher = new EventDispatcher();
 			events = new Vector.<EventListener>();
 			startTime = getTimer() + delay;
-			beatsPerMinute = 120;
+			//beatsPerMinute = 120;
 			beat = -delay / 60000 * beatsPerMinute;
 		}
 		static public function reset():void {

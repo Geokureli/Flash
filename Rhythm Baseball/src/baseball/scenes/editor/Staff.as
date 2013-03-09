@@ -24,9 +24,10 @@ package baseball.scenes.editor
 		}
 		public function draw():void {
 			graphics.clear();
-			var measure:int = BeatKeeper.toBeatPixels(-RhythmAsset.SCROLL);
+			var measure:int = BeatKeeper.toBeatPixels( -RhythmAsset.SCROLL) / 4 * beatsPerMeasure;
 			graphics.lineStyle(2);
-			for (var x:int = measure; x < stage.stageWidth; x += measure) {
+			trace((BeatKeeper.beat * 4) % beatsPerMeasure);
+			for (var x:int = measure - (BeatKeeper.beat % (beatsPerMeasure/4)) * measure; x < stage.stageWidth; x += measure) {
 				graphics.moveTo(x, 0);
 				graphics.lineTo(x, stage.stageHeight);
 			}

@@ -21,6 +21,7 @@ package baseball.scenes.editor {
 	import relic.data.BoundMode;
 	import relic.data.events.SceneEvent;
 	import relic.data.Global;
+	import relic.data.Vec2;
 	/**
 	 * ...
 	 * @author George
@@ -42,7 +43,7 @@ package baseball.scenes.editor {
 			BeatKeeper.beat = 0;
 			BeatKeeper.beatsPerMinute = 160;
 			RhythmAsset.SCROLL = -10;
-			RhythmAsset.END_X = 0;
+			RhythmAsset.HERO = new Vec2(0, 245+64);
 			Bomb.SPEED = 0;
 		}
 		
@@ -94,13 +95,18 @@ package baseball.scenes.editor {
 			place(
 				"front",
 				add(new Text(BeatKeeper.beatsPerMinute.toString()), "txt_bpm"),
-				{x:500, y:10, width:100, height:20, border:true, background:true, type:TextFieldType.INPUT }
+				{x:450, y:10, width:100, height:20, border:true, background:true, type:TextFieldType.INPUT }
 			);
 			
 			place(
 				"front",
 				add(new Text((-RhythmAsset.SCROLL).toString()), "txt_speed"),
-				{x:610, y:10, width:100, height:20, border:true, background:true, type:TextFieldType.INPUT }
+				{x:560, y:10, width:100, height:20, border:true, background:true, type:TextFieldType.INPUT }
+			);
+			place(
+				"front",
+				add(new Text(((staff as Staff).beatsPerMeasure.toString())), "txt_meter"),
+				{x:670, y:10, width:100, height:20, border:true, background:true, type:TextFieldType.INPUT }
 			);
 		}
 		
@@ -137,7 +143,8 @@ package baseball.scenes.editor {
 				case 13:
 					BeatKeeper.beatsPerMinute = Number((asset("txt_bpm") as Text).text);
 					RhythmAsset.SCROLL = -Number((asset("txt_speed") as Text).text);
-					(asset("staff") as Staff).draw();
+					(staff as Staff).beatsPerMeasure = Number((asset("txt_meter") as Text).text);
+					(staff as Staff).draw();
 					break;
 				default:
 					if (e.keyCode > 48 && e.keyCode < 54) {
@@ -175,7 +182,7 @@ package baseball.scenes.editor {
 						break;
 					case MouseEvent.MOUSE_DOWN:
 						//trace(BeatKeeper.toFramePixels(BeatKeeper.beat)
-						var beat:int = BeatKeeper.beat*4 + (RhythmAsset.END_X - e.stageX) / BeatKeeper.toBeatPixels(RhythmAsset.SCROLL/4);
+						var beat:int = BeatKeeper.beat*4 + (RhythmAsset.HERO.x - e.stageX) / BeatKeeper.toBeatPixels(RhythmAsset.SCROLL/4);
 						if (level[beat] != null && selected != null && level[beat] is selected)
 							break;
 						if(selected != null)
@@ -190,8 +197,14 @@ package baseball.scenes.editor {
 		}
 		override public function enterFrame():void {
 			super.enterFrame();
-			if (right) BeatKeeper.beat++;
-			if (left && BeatKeeper.beat > 0) BeatKeeper.beat--;
+			if (right){
+				BeatKeeper.beat += .25;
+				staff.draw();
+			}
+			if (left && BeatKeeper.beat > 0) {
+				BeatKeeper.beat -= .25;
+				staff.draw();
+			}
 		}
 		override public function destroy():void {
 			super.destroy();
@@ -199,6 +212,7 @@ package baseball.scenes.editor {
 			selected = null;
 			level = null;
 		}
+		private function get staff():Staff { return asset("staff") as Staff; }
 	}
 
 }

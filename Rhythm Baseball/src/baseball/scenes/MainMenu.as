@@ -10,15 +10,17 @@ package baseball.scenes
 	 */
 	public class MainMenu extends MenuScene 
 	{
-		private var editorBtn:Btn, testBtn:Btn;
+		private var editorBtn:Btn, testBtn:Btn, rdmBtn:Btn;
 		public function MainMenu() { super(); }
 		override protected function addStaticChildren():void {
 			super.addStaticChildren();
 			
 			addChild(editorBtn = new Btn("Level Editor", 400, 40)).addEventListener(MouseEvent.CLICK, btnClick);
-			addChild(testBtn = new Btn("Test Editor", 400, 40)).addEventListener(MouseEvent.CLICK, btnClick);
+			addChild(testBtn = new Btn("Test Level", 400, 40)).addEventListener(MouseEvent.CLICK, btnClick);
+			addChild(rdmBtn = new Btn("Random Level", 400, 40)).addEventListener(MouseEvent.CLICK, btnClick);
 			editorBtn.name = "editor";
 			testBtn.name = "test";
+			rdmBtn.name = "random";
 		}
 		
 		private function btnClick(e:MouseEvent):void {
@@ -27,9 +29,10 @@ package baseball.scenes
 		
 		override protected function init(e:Event = null):void {
 			super.init(e);
-			testBtn.x = editorBtn.x = stage.stageWidth / 2;
-			editorBtn.y = 200;
-			testBtn.y = 300;
+			testBtn.x = editorBtn.x = rdmBtn.x = stage.stageWidth / 2;
+			editorBtn.y = 150;
+			testBtn.y = 250;
+			rdmBtn.y = 350;
 		}
 		
 		override public function destroy():void {
@@ -38,6 +41,8 @@ package baseball.scenes
 			editorBtn = null;
 			removeChild(testBtn);
 			testBtn = null;
+			removeChild(rdmBtn);
+			rdmBtn = null;
 		}
 	}
 
@@ -60,6 +65,7 @@ class Btn extends Sprite {
 		rect = new Rectangle( -width / 2, -height / 2, width, height);
 		addChild(text = new TextField());
 		text.text = txt;
+		text.width = 150;
 		text.setTextFormat(textFormat);
 		text.x = -text.width / 2;
 		text.y = -10;

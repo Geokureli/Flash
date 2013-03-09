@@ -1,14 +1,15 @@
-package baseball
-{
+package baseball {
 	import baseball.art.obstacles.Bomb;
 	import baseball.art.RhythmAsset;
 	import baseball.beat.BeatKeeper;
 	import baseball.data.events.BeatEvent;
 	import baseball.scenes.GameScene;
 	import baseball.scenes.MainMenu;
+	import baseball.scenes.RandomScene;
 	import baseball.scenes.TestScene;
 	import baseball.scenes.editor.EditorScene;
 	import flash.geom.Rectangle;
+	import relic.art.blitting.Blit;
 	import relic.audio.SoundManager;
 	import relic.data.AssetManager;
 	import relic.data.Random;
@@ -24,18 +25,14 @@ package baseball
 	 * ...
 	 * @author George
 	 */
-	public class Main extends Sprite 
-	{
-		public var scenes:Object = { "main":MainMenu, "editor":EditorScene, "test":TestScene };
+	public class Main extends Sprite {
+		public var scenes:Object = { main:MainMenu, editor:EditorScene, test:TestScene, random:RandomScene};
 		private var _sceneNumber:int;
 		private var currentScene:Scene;
-		public function Main():void 
-		{	
+		public function Main():void {	
 			if (stage) init();
 			else addEventListener(Event.ADDED_TO_STAGE, init);
 			
-			var data:XML = <data><x/><y/><z/></data>;
-			delete data.children()[1];
 		}
 		
 		private function init(e:Event = null):void {
@@ -49,8 +46,7 @@ package baseball
 			if (currentScene != null) currentScene.enterFrame();
 		}
 		
-		private function set scene(value:String):void 
-		{
+		private function set scene(value:String):void {
 			if (currentScene != null) {
 				currentScene.removeEventListener(SceneEvent.SCENE_CHANGE, onSceneChange);
 				currentScene.destroy();

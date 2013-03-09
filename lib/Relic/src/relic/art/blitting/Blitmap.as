@@ -1,0 +1,210 @@
+package relic.art.blitting {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.utils.Dictionary;
+	
+	/**
+	 * ...
+	 * @author George
+	 */
+	public class Blitmap extends Bitmap {
+		private var layerOrder:Vector.<BlitLayer>;
+		private var layers:Object, blits:Object, autoNames:Object, groups:Object;
+		private var trash:Vector.<String>;
+		private var autoGroups:Dictionary;
+		public var bgColor:uint;
+		
+		public function Blitmap(bitmapData:BitmapData=null, pixelSnapping:String="auto", smoothing:Boolean=false) {
+			super(bitmapData, pixelSnapping, smoothing);
+			setDefaultValues();
+		}
+		
+		protected function setDefaultValues():void {
+			layerOrder = new Vector.<BlitLayer>();
+			trash = new Vector.<String>();
+			autoGroups = new Dictionary();
+			autoNames = { };
+			layers = { };
+			blits = { };
+		}
+		
+		/**
+		 * Creates a new layer and adds it to the asset manager's control target
+		 * @param	name: The key used to reference the layer.
+		 * @return	The created Layer
+		 */
+		public function addLayer(name:String):void {
+			var layer:BlitLayer = new BlitLayer();
+			layerOrder.push(layer);
+			layers[name] = layer;
+		}
+		
+		/**
+		 * Adds an autoGroup for a specified class type.
+		 * @param	type: The type of assets that the group should automatically contain.
+		 * @param	group: the corresponding group name.
+		 */
+		public function autoGroup(type:Class, group:String):void {
+			autoGroups[type] = group;
+		}
+		
+		/**
+		 * Registers the blit in the blit manager.
+		 * @param	blit: The target blit.
+		 * @param	name: The identifier for which to access the blit (see autoName())
+		 * @param	groups(optional): The groups this blit belongs to. to add to multiple groups, spearate by commas. (see autoGroup()).
+		 * @return	The blit that was added
+		 */
+		public function add(blit:Blit, name:String = null, groups:String = null):Blit {
+			for (var key:Object in autoGroups) {
+				if (blit is Class(key)) {
+					if (groups == null) groups = autoGroups[key];
+					else { groups += ',' + groups; }
+				}
+			}
+			if (name == null) {
+				if (blit.name in autoNames)
+					name = blit.name + '_' + autoNames[blit.name]++;
+				else if (groups != null) {
+					// --- SET UNIQUE NAME FROM MAIN GROUP
+					name = groups.split(',')[0];
+					name += groups[name].length;
+					if(name in blits) throw new ArgumentError("No blit name defined");
+				} else throw new ArgumentError("No blit name defined");
+			}
+			blit.name = name;
+			if (groups != null) {
+				for each(var group:String in groups.split(',')) {
+					// --- CHECK IF GROUP EXISTS
+					if (!(group in this.groups))
+						this.groups[group] = new Vector.<Blit>();// --- ADD GROUP
+					groups[group].push(blit); // --- ADD TO GROUPS
+				}
+			}
+			blits[name] = blit;
+			return blit;
+		}
+		
+		/**
+		 * Adds the target
+		 * @param	layer: The name of the layer to add the blit to.
+		 * @param	blit: The target blit to be placed. if a string is passed, the blit with the matching identifier is used. Otherwise pass in the actual blit.
+		 * @param	params(optional): an object containing variables that will be set on the target asset(for awesome 1 line defs).
+		 * @return	The blit that was Added.
+		 */
+		public function place(layer:String, blit:Object, params:Object = null):Blit {
+			// --- GET BLIT
+			if (blit is String) blit = blits[blit];
+			
+			// --- SET PARAMS
+			for (var i:String in params)
+				blit[i] = params[i];
+			
+			// --- ADD TO LAYER
+			layers[layer].add(blit);
+			return blit as Blit;
+		}
+		
+		/**
+		 * Retrieves the blit registered to the specified key.
+		 * @param	name: The identifier of the blit.
+		 * @return the target blit.
+		 */
+		public function getBlit(name:String):Blit { return blits[name]; }
+		
+		/**
+		 * Removes an blit from it's parent.
+		 * @param	name: The name the blit is registered to, or the actual blit itself.
+		 * @return	The blit that was removed.
+		 */
+		public function remove(blit:Object):Blit {
+			if (blit is String) blit = blits[blit];
+			blit._parent.remove(blit);
+			return blit as Blit;
+		}
+		
+		/**
+		 * Removes the blit
+		 * @param	name: the name the blit is registered to, or the actual blit itself.
+		 * @return	The blit that was killed.
+		 */
+		public function kill(blit:Object):Blit {
+			blit = remove(blit);
+			for (var g:String in groups) {
+				var index:int = groups[g].indexOf(blit);
+				if (index != -1) groups[g].splice(index, 1);
+			}
+			
+			delete blits[name];
+			blit.destroy();
+			return blit as Blit;
+		}
+		
+		/**
+		 * Retrieves the target group.
+		 * @param	name: the identifier of the group.
+		 * @return the target group
+		 */
+		public function group(name:String):Vector.<Blit> { return groups[name]; }
+		
+		/**
+		 * Kills all of the blits in a group. Kills them good.
+		 * @param	name: Target group name to obliterate.
+		 */
+		public function killGroup(name:String):void {
+			for each(var g:String in name.split(',')) {
+				if(g in groups){
+					var group:Vector.<Blit> = groups[g];
+					while (group.length > 0) kill(group[0].name);
+				}
+			}
+		}
+		
+		
+		// ====================================================================
+		// 								- Events -
+		// ====================================================================
+		
+		/**
+		 * Removes trash, updates all blits.
+		 */
+		public function update():void {
+			clearTrash();
+			for (var blitName:String in blits) {
+				if (blits[blitName].live) blits[blitName].update();
+				if (blits[blitName].trash) trash.push(blitName);
+			}
+			draw();
+		}
+		
+		private function draw():void {
+			bitmapData.fillRect(bitmapData.rect, bgColor);
+			for each(var layer:BlitLayer in layerOrder) {
+				for each(var child:Blit in layer.children)
+					child.draw(bitmapData);
+			}
+		}
+		
+		private function clearTrash():void {
+			while (trash.length > 0) kill(trash.shift());
+		}
+		
+		/**
+		 * Removes all references and allows the asset manager and its contents to be garbage collected
+		 */
+		public function destroy():void {
+			clearTrash();
+			while (layerOrder.length > 0)
+				layerOrder.shift().destroy();
+			
+			layerOrder = null;
+			layers = null;
+			autoGroups = null;
+			blits = autoNames = null;
+			layerOrder = null;
+			trash = null;
+		}
+		
+	}
+
+}

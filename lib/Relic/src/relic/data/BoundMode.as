@@ -6,7 +6,7 @@ package relic.data
 	 */
 	public class BoundMode 
 	{
-		static public const NONE:String = "none",
+		static public const NONE:String = null,
 							LOCK:String = "lock",
 							BOUNCE:String = "bounce",
 							DESTROY:String = "destroy";

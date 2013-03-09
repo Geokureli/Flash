@@ -2,11 +2,14 @@ package baseball.scenes
 {
 	import baseball.art.RhythmAsset;
 	import baseball.beat.BeatKeeper;
+	import flash.events.KeyboardEvent;
 	import relic.art.Asset;
 	import relic.art.Scene;
 	import relic.art.ScrollingBG;
 	import relic.art.SpriteSheet;
 	import relic.audio.SoundManager;
+	import relic.data.events.SceneEvent;
+	import relic.data.Vec2;
 	
 	import baseball.Imports;
 	import baseball.art.Hero;
@@ -31,9 +34,8 @@ package baseball.scenes
 	{
 		private var count:int;
 		private var back:Sprite, mid:Sprite, front:Sprite;
-		
+		protected var bombTime:Number, defaultTime:Number;
 		protected var level:XML;
-		protected var spawnList:XMLList;
 		
 		public function GameScene() {
 			super();
@@ -69,40 +71,39 @@ package baseball.scenes
 			//bg.y = 280 + 64;
 			//bg.speed = -10;
 			//back.addChild(bg);
-			
-			RhythmAsset.END_X = add(new Hero(), "hero").right;
+			add(new Hero(), "hero")
+			RhythmAsset.HERO = new Vec2(asset("hero").right, asset("hero").y);
 			place("mid", "hero");
 		}
 		override protected function init(e:Event = null):void 
 		{
 			super.init(e);
 			BeatKeeper.frameRate = stage.frameRate;
-			setSpawnTimes(level);
-			spawnList = level.children().copy();
+			bombTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / (Bomb.SPEED + RhythmAsset.SCROLL) / stage.frameRate;
+			defaultTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / RhythmAsset.SCROLL / stage.frameRate;
 		}
 		
-		
-		protected function setSpawnTimes(level:XML):void {
-			var bombTime:Number = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / (Bomb.SPEED + RhythmAsset.SCROLL) / stage.frameRate;
-			var time:Number = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / RhythmAsset.SCROLL / stage.frameRate;
-			for (var i:int = 0; i < level.children().length(); i++) {
-				if (level.children()[i].name().toString() == "ball")
-					level.children()[i]["@spawn"] = Number(level.children()[i]) - bombTime;
-				else 
-					level.children()[i]["@spawn"] = Number(level.children()[i]) - time;
-			}
+		override protected function keyHandle(e:KeyboardEvent):void {
+			super.keyHandle(e);
+			if (e.keyCode == 27)
+				dispatchEvent(new SceneEvent(SceneEvent.SCENE_CHANGE, { next:"main" } ));
 		}
+		
 		override public function enterFrame():void {
+			var lastBeat:Number = BeatKeeper.beat;
 			super.enterFrame();
-			for (var i:int = 0; i < spawnList.length(); i++) {
-				if (BeatKeeper.beat > Number(spawnList[i].@spawn)) {
-					switch(spawnList[i].name().toString()) {
-						case "ball": addBomb(spawnList[i]); break;
-						case "gap": addGap(spawnList[i]); break;
-						case "rock": addRock(spawnList[i]); break;
-						case "block": addBlock(spawnList[i]); break;
+			var beat:Number = BeatKeeper.beat;
+			
+			for each(var node:XML in level.children()) {
+				var spawn:Number = Number(node) - (node.name().toString() == "ball" ? bombTime : defaultTime);
+				if (beat > spawn && lastBeat <= spawn) {
+					switch(node.name().toString()) {
+						case "ball": addBomb(node.toString()); break;
+						case "gap": addGap(node.toString()); break;
+						case "rock": addRock(node.toString()); break;
+						case "block": addBlock(node.toString()); break;
 					}
-					delete spawnList[i];
+					//delete spawnList[node];
 					break;
 				}
 			}
@@ -133,10 +134,13 @@ package baseball.scenes
 				if (hero.isTouching(gap) && hero.currentAnimation != "jump") 
 					endGame();
 			}
+			hero.hitBlock = false;
 			for each(var block:Block in assets.group("blocks")) {
-				if (hero.isTouching(block)
-				&& (hero.currentAnimation != "duck" || hero.currentAnimation == "duck_end")) 
-					endGame();
+				if (hero.isTouching(block)) {
+					hero.hitBlock = true;
+					if (hero.currentAnimation != "duck" || hero.currentAnimation == "duck_end") 
+						endGame();
+				}
 			}
 			for each(var rock:Rock in assets.group("rocks")) {
 				if (hero.isTouching(rock) && rock.currentAnimation == "idle") {
@@ -154,7 +158,6 @@ package baseball.scenes
 			hero.disableKeys();
 			updateAssets = false;
 			count = 0;
-			trace(BeatKeeper.beat);
 		}
 		
 		private function endLevel():void {
@@ -175,13 +178,11 @@ package baseball.scenes
 			update = defaultUpdate;
 			hero.currentAnimation = "idle";
 			updateAssets = true;
-			spawnList = level.children().copy();
 		}
 		
 		override public function destroy():void {
 			super.destroy();
 			level = null;
-			spawnList = null;
 		}
 		
 		
