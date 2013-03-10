@@ -15,9 +15,9 @@ package baseball.scenes
 		override protected function addStaticChildren():void {
 			super.addStaticChildren();
 			
-			addChild(editorBtn = new Btn("Level Editor", 400, 40)).addEventListener(MouseEvent.CLICK, btnClick);
-			addChild(testBtn = new Btn("Test Level", 400, 40)).addEventListener(MouseEvent.CLICK, btnClick);
-			addChild(rdmBtn = new Btn("Random Level", 400, 40)).addEventListener(MouseEvent.CLICK, btnClick);
+			addChild(editorBtn	= new Btn("Level Editor",	200, 30)).addEventListener(MouseEvent.CLICK, btnClick);
+			addChild(testBtn	= new Btn("Test Level",		200, 30)).addEventListener(MouseEvent.CLICK, btnClick);
+			addChild(rdmBtn		= new Btn("Random Level",	200, 30)).addEventListener(MouseEvent.CLICK, btnClick);
 			editorBtn.name = "editor";
 			testBtn.name = "test";
 			rdmBtn.name = "random";
@@ -30,9 +30,9 @@ package baseball.scenes
 		override protected function init(e:Event = null):void {
 			super.init(e);
 			testBtn.x = editorBtn.x = rdmBtn.x = stage.stageWidth / 2;
-			editorBtn.y = 150;
-			testBtn.y = 250;
-			rdmBtn.y = 350;
+			editorBtn.y = 50;
+			testBtn.y = 100;
+			rdmBtn.y = 150;
 		}
 		
 		override public function destroy():void {

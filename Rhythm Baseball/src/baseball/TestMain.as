@@ -1,10 +1,12 @@
 package baseball {
 	import baseball.art.BlitHero;
 	import baseball.art.Hero;
+	import baseball.art.RhythmAsset;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import relic.art.blitting.Blitmap;
+	import relic.data.Vec2;
 	
 	/**
 	 * ...
@@ -20,8 +22,10 @@ package baseball {
 		
 		private function init(e:Event = null):void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			level = new Blitmap(new BitmapData(400, 200, false, 0));
-			level.scaleX = level.scaleY = 2;
+			RhythmAsset.HERO = new Vec2(100, 309);
+			
+			level = new Blitmap(new BitmapData(800, 400, false, 0));
+			//level.scaleX = level.scaleY = 2;
 			addChild(level);
 			level.addLayer("bg");
 			level.place("bg", level.add(new BlitHero(), "hero"));

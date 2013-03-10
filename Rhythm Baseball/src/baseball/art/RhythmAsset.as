@@ -14,7 +14,6 @@ package baseball.art
 	 */
 	public class RhythmAsset extends Asset 
 	{
-		static public var BOUNDS:Rectangle;
 		static public var HERO:Vec2;
 		static public var SCROLL:Number;
 		public var beat:Number, speed:Number;
@@ -26,9 +25,9 @@ package baseball.art
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
 			speed = 0;
-			bounds = BOUNDS;
 			boundMode = BoundMode.DESTROY;
 			isRhythm = true;
+			y = HERO.y
 		}
 		override protected function init(e:Event):void {
 			super.init(e);

@@ -43,7 +43,7 @@ package baseball.scenes.editor {
 			BeatKeeper.beat = 0;
 			BeatKeeper.beatsPerMinute = 160;
 			RhythmAsset.SCROLL = -10;
-			RhythmAsset.HERO = new Vec2(0, 245+64);
+			RhythmAsset.HERO.x = 0;
 			Bomb.SPEED = 0;
 		}
 		

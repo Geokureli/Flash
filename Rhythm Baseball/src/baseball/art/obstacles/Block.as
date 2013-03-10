@@ -19,7 +19,7 @@ package baseball.art.obstacles
 			name = "block";
 			//graphic.x -= 10;
 			shape = new Box(0, 0, 24, 64);
-			y = 310;
+			y++;
 		}
 		
 	}

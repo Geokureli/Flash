@@ -47,7 +47,7 @@ package baseball.scenes
 			BeatKeeper.beatsPerMinute = 160;
 			Bomb.SPEED = -10;
 			RhythmAsset.SCROLL = -10;
-			
+			RhythmAsset.HERO = new Vec2(100, 309);
 		}
 		override protected function createLayers():void {
 			super.createLayers();
@@ -79,8 +79,8 @@ package baseball.scenes
 		{
 			super.init(e);
 			BeatKeeper.frameRate = stage.frameRate;
-			bombTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / (Bomb.SPEED + RhythmAsset.SCROLL) / stage.frameRate;
-			defaultTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / RhythmAsset.SCROLL / stage.frameRate;
+			bombTime = BeatKeeper.beatsPerMinute * -(stage.stageWidth+200) / 60 / (Bomb.SPEED + RhythmAsset.SCROLL) / stage.frameRate;
+			defaultTime = BeatKeeper.beatsPerMinute * -(stage.stageWidth+200) / 60 / RhythmAsset.SCROLL / stage.frameRate;
 		}
 		
 		override protected function keyHandle(e:KeyboardEvent):void {

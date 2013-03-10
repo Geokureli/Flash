@@ -9,6 +9,7 @@ package baseball {
 	import baseball.scenes.TestScene;
 	import baseball.scenes.editor.EditorScene;
 	import flash.geom.Rectangle;
+	import relic.art.Asset;
 	import relic.art.blitting.Blit;
 	import relic.audio.SoundManager;
 	import relic.data.AssetManager;
@@ -32,12 +33,11 @@ package baseball {
 		public function Main():void {	
 			if (stage) init();
 			else addEventListener(Event.ADDED_TO_STAGE, init);
-			
 		}
 		
 		private function init(e:Event = null):void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			RhythmAsset.BOUNDS = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
+			Asset.defaultBounds = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
 			scene = "main";
 			addEventListener(Event.ENTER_FRAME, enterFrame);
 		}

@@ -27,7 +27,7 @@ package baseball.art.obstacles
 			name = "gap";
 			graphic.x -= 20
 			shape = new Box(-4, 0, 24, 64);
-			y = 344;
+			y += 43;
 		}
 		
 	}

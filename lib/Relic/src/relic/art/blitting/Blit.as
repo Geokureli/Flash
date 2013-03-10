@@ -1,6 +1,8 @@
 package relic.art.blitting {
 	import flash.display.BitmapData;
 	import flash.display.IBitmapDrawable;
+	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.geom.Matrix;
 	import flash.geom.Rectangle;
@@ -9,6 +11,7 @@ package relic.art.blitting {
 	import relic.art.SpriteSheet;
 	import relic.data.BoundMode;
 	import relic.data.events.AnimationEvent;
+	import relic.data.shapes.Box;
 	import relic.data.shapes.Shape;
 	import relic.data.Vec2;
 	
@@ -17,11 +20,11 @@ package relic.art.blitting {
 	 * @author George
 	 */
 	public class Blit extends EventDispatcher implements IAsset {
-		private var _x:Number,
-					_y:Number,
-					_width:Number,
-					_height:Number;
+		private var mat:Matrix;
 		
+		private var _width:Number,
+					_height:Number;
+					
 		private var _vel:Vec2,
 					_acc:Vec2,
 					_maxSpeed:Vec2;
@@ -37,41 +40,51 @@ package relic.art.blitting {
 		private var _friction:Number,
 					_bounce:Number;
 		
-		private var _shape:Shape;
-		
-		private var debugGraphics:flash.display.Shape;
+		private var _shape:Shape,
+					_graphicBounds:Shape;
 		
 		private var _bounds:Rectangle;
 		
 		internal var _parent:BlitLayer;
 		
-		private var frame:int;
-		private var animations:Object;
+		protected var currentFrame:int;
+		protected var animations:Object;
 		
 		public function Blit() {
 			setDefaultValues();
 			
+			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
 		protected function setDefaultValues():void {
-			_x = _y = 0;
+			mat = new Matrix();
 			_vel = new Vec2();
 			_acc = new Vec2();
 			_maxSpeed = new Vec2();
 			_boundMode = BoundMode.NONE;
-			_friction = 1;
+			_friction = 0;
 			_bounce = 0;
 			_spawned = false;
 			_trash = false;
 			_live = true;
 			
+			
 			animations = { };
 		}
+		
+		protected function init(e:Event):void {
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+			bounds = map.bitmapData.rect;
+		}
+		
+		protected function setGraphicBounds():void {
+			var frame:BitmapData = this.frame;
+			if(frame != null)
+				_graphicBounds = new Box(0, 0, frame.width, frame.height);
+		}
+		
 		public function draw(target:BitmapData):void {
-			target.draw(
-				animations[currentAnimation].getFrame(frame),
-				new Matrix()
-			);
+			if(frame != null) target.draw(frame, mat);
 		}
 		
 		public function addAnimationSet(sheet:SpriteSheet):void {
@@ -79,43 +92,6 @@ package relic.art.blitting {
 				animations[i] = sheet.animations[i];
 		}
 		
-		/* INTERFACE relic.art.IAsset */
-		
-		public function get x():Number { return _x; }
-		public function set x(value:Number):void { _x = value; }
-		
-		public function get y():Number { return _y; }
-		public function set y(value:Number):void { _y = value; }
-		
-		public function get width():Number { return _width; }
-		public function get height():Number { return _height; }
-		
-		public function get name():String { return _name; }
-		public function set name(value:String):void { _name = value; }
-		
-		public function get left():Number	{ return _x + (_shape == null ? 0 : _shape.left); }
-		public function get right():Number	{ return _x + (_shape == null ? 0 : _shape.right); }
-		public function get top():Number	{ return _y + (_shape == null ? 0 : _shape.top); }
-		public function get bottom():Number	{ return _y + (_shape == null ? 0 : _shape.bottom); }
-		
-		public function set left(value:Number):void		{ _x = value - (_shape == null ? 0 : _shape.left); }
-		public function set right(value:Number):void	{ _x = value - (_shape == null ? 0 : _shape.right); }
-		public function set top(value:Number):void		{ _y = value - (_shape == null ? 0 : _shape.top); }
-		public function set bottom(value:Number):void	{ _y = value - (_shape == null ? 0 : _shape.bottom); }
-		
-		public function get anim():Animation { return null; }
-		
-		public function get currentAnimation():String { return _currentAnimation; }
-		public function set currentAnimation(value:String):void {
-			if (_currentAnimation != value) frame = 0;
-			_currentAnimation = value;
-		}
-		
-		public function get boundMode():String { return _boundMode; }
-		public function set boundMode(value:String):void { _boundMode = value; }
-		
-		public function get shape():Shape { return _shape; }
-		public function set shape(value:Shape):void { _shape = value; }
 		
 		public function isTouching(asset:IAsset):Boolean {
 			if(shape == null || asset.shape == null) return false;
@@ -129,8 +105,11 @@ package relic.art.blitting {
 		}
 		
 		public function update():void {
+			move();
 			
-			frame++;
+			collide();
+			
+			updateGraphics();
 		}
 		
 		protected function move():void {
@@ -147,6 +126,7 @@ package relic.art.blitting {
 			y += vel.y;
 			vel.multiply(1 - friction);
 		}
+		
 		protected function collide():void {
 			switch(boundMode) {
 				case BoundMode.LOCK:
@@ -169,16 +149,13 @@ package relic.art.blitting {
 		
 		protected function updateGraphics():void {
 			if (currentAnimation != null) {
-				if (frame > anim.numFrames * anim.rate) {
+				if (currentFrame > anim.numFrames * anim.rate)
 					dispatchEvent(new AnimationEvent(AnimationEvent.COMPLETE, {name:currentAnimation}));
-				}
-				//var newBMD:BitmapData = animations[currentAnimation].getFrame(frame);
-				//if (bm.bitmapData != newBMD) bm.bitmapData = newBMD;
-				//if (graphicBounds == null) setGraphicBounds();
+
+				if (graphicBounds == null) setGraphicBounds();
 			}
-			frame++;
+			currentFrame++;
 		}
-		
 		
 		private function get isOffStage():Boolean {
 			if (bounds == null) return false;
@@ -188,39 +165,116 @@ package relic.art.blitting {
 		public function kill():void { }
 		
 		public function destroy():void {
-			_currentAnimation = _name = null;
-			if(_parent != null) _parent.remove(this);
+			
+			_vel = _acc = _maxSpeed = null;
+			
+			_currentAnimation = _boundMode = _name = null;
+			
+			_shape = _graphicBounds = null;
+			
+			_bounds = null;
+			
+			if(_parent)
+				_parent.remove(this);
 			_parent = null;
-			_shape = null;
+			
+			animations = null;
 		}
 		
-		public function get spawned():Boolean { return _spawned; }
-		public function set spawned(value:Boolean):void { _spawned = value; }
+		public function get x():Number { return mat.tx; }
+		public function set x(value:Number):void { mat.tx = value; }
 		
-		public function get trash():Boolean { return _trash; }
-		public function set trash(value:Boolean):void { _trash = value; }
+		public function get y():Number { return mat.ty; }
+		public function set y(value:Number):void { mat.ty = value; }
 		
-		public function get live():Boolean { return _live; }
-		public function set live(value:Boolean):void { _live = value; }
+		public function get width():Number { return _width; }
+		public function get height():Number { return _height; }
 		
-		public function get vel():Vec2 { return _vel; }
-		public function set vel(value:Vec2):void { _vel = value; }
+		public function get name():String { return _name; }
+		public function set name(value:String):void { _name = value; }
 		
-		public function get acc():Vec2 { return _acc; }
-		public function set acc(value:Vec2):void { _acc = value; }
+		/** The left collision bound of the blit. */
+		public function get left():Number	{ return x + (_shape == null ? 0 : _shape.left); }
+		/** The right collision bound of the blit. */
+		public function get right():Number	{ return x + (_shape == null ? 0 : _shape.right); }
+		/** The top collision bound of the blit. */
+		public function get top():Number	{ return y + (_shape == null ? 0 : _shape.top); }
+		/** The bottom collision bound of the blit. */
+		public function get bottom():Number	{ return y + (_shape == null ? 0 : _shape.bottom); }
 		
-		public function get maxSpeed():Vec2 { return _maxSpeed; }
-		public function set maxSpeed(value:Vec2):void { _maxSpeed = value; }
+		public function set left(value:Number):void		{ x = value - (_shape == null ? 0 : _shape.left); }
+		public function set right(value:Number):void	{ x = value - (_shape == null ? 0 : _shape.right); }
+		public function set top(value:Number):void		{ y = value - (_shape == null ? 0 : _shape.top); }
+		public function set bottom(value:Number):void	{ y = value - (_shape == null ? 0 : _shape.bottom); }
 		
-		public function get friction():Number { return _friction; }
-		public function set friction(value:Number):void { _friction = value; }
+		/** The currently playing animation. */
+		public function get anim():Animation {
+			if (_currentAnimation == null) return null;
+			return animations[_currentAnimation];
+		}
 		
-		public function get bounce():Number { return _bounce; }
-		public function set bounce(value:Number):void { _bounce = value; }
+		/** The frame currently being displayed */
+		public function get frame():BitmapData {
+			if (anim == null) return null;
+			return anim.getFrame(currentFrame);
+		}
 		
+		/** the name of the current animation. */
+		public function get currentAnimation():String { return _currentAnimation; }
+		public function set currentAnimation(value:String):void {
+			if (_currentAnimation != value) currentFrame = 0;
+			_currentAnimation = value;
+		}
+		
+		/** The collision shape of the blit. */
+		public function get shape():Shape { return _shape; }
+		public function set shape(value:Shape):void { _shape = value; }
+		
+		/** The blit's graphic shape. Used to tell if it's on screen. */
+		public function get graphicBounds():Shape { return _graphicBounds; }
+		public function set graphicBounds(value:Shape):void { _graphicBounds = value; }
+		
+		/** The bounds of the blit. */
 		public function get bounds():Rectangle { return _bounds; }
 		public function set bounds(value:Rectangle):void { _bounds = value; }
 		
+		/** The type of binding used in regards to its stage bounds. (see: relic.data.BoundMode) */
+		public function get boundMode():String { return _boundMode; }
+		public function set boundMode(value:String):void { _boundMode = value; }
+		
+		/** True once the blit enters the bounds. */
+		public function get spawned():Boolean { return _spawned; }
+		public function set spawned(value:Boolean):void { _spawned = value; }
+		
+		/** Used internally for garbage collection. */
+		public function get trash():Boolean { return _trash; }
+		public function set trash(value:Boolean):void { _trash = value; }
+		
+		/** If true, the containing Blitmap will automatically call update. */
+		public function get live():Boolean { return _live; }
+		public function set live(value:Boolean):void { _live = value; }
+		
+		/** The velocity of the blit. */
+		public function get vel():Vec2 { return _vel; }
+		public function set vel(value:Vec2):void { _vel = value; }
+		
+		/** The acceloration of the blit. */
+		public function get acc():Vec2 { return _acc; }
+		public function set acc(value:Vec2):void { _acc = value; }
+		
+		/** Ignored if -1, otherwise caps velocity (positive and negative). */
+		public function get maxSpeed():Vec2 { return _maxSpeed; }
+		public function set maxSpeed(value:Vec2):void { _maxSpeed = value; }
+		
+		/** The blit's friction (0 = no friction). */
+		public function get friction():Number { return _friction; }
+		public function set friction(value:Number):void { _friction = value; }
+		
+		/** The elasticity of the blit, a ball will a bounce of .5 will bounce half as high. */
+		public function get bounce():Number { return _bounce; }
+		public function set bounce(value:Number):void { _bounce = value; }
+		
+		protected function get stage():Stage { return _parent.stage; }
+		protected function get map():Blitmap { return _parent.parent; }
 	}
-
 }

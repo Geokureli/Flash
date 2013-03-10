@@ -30,7 +30,7 @@ package baseball.art.obstacles
 			addAnimationSet(sprites);
 			currentAnimation = "idle";
 			shape = new Box(0, 0, 16, 16);
-			y = 340;
+			y += 31;
 			speed = SPEED;
 		}
 		override public function update():void {

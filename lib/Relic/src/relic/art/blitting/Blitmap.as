@@ -36,6 +36,7 @@ package relic.art.blitting {
 		public function addLayer(name:String):void {
 			var layer:BlitLayer = new BlitLayer();
 			layerOrder.push(layer);
+			layer.parent = this;
 			layers[name] = layer;
 		}
 		

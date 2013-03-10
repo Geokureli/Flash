@@ -27,7 +27,7 @@ package baseball.art.obstacles
 			addAnimationSet(sprites);
 			currentAnimation = "idle";
 			shape = new Box(0, 16, 8, 32);
-			y = 325;
+			y += 16;
 		}
 		
 	}

@@ -9,6 +9,7 @@ package baseball.art
 	import relic.data.BoundMode;
 	import relic.data.shapes.Box;
 	import flash.events.Event;
+	import relic.data.Vec2;
 	/**
 	 * ...
 	 * @author George
@@ -38,8 +39,8 @@ package baseball.art
 		override protected function setDefaultValues():void 
 		{
 			super.setDefaultValues();
-			x = 100;
-			y = 245+64;
+			x = RhythmAsset.HERO.x;
+			y = RhythmAsset.HERO.y;
 			friction = .05;
 			shape = new Box(20, 0, 20, 64);
 			//shape.debugDraw(graphics);
@@ -83,14 +84,14 @@ package baseball.art
 					currentAnimation = "duck";
 					SoundManager.play("duck");
 				}
-			} else if (currentAnimation == "slide" && !r && frame > 1) {
+			} else if (currentAnimation == "slide" && !r && _currentFrame > 1) {
 				currentAnimation = "slide_end";
 				addEventListener(AnimationEvent.COMPLETE, animEnd);
-			} else if (currentAnimation == "duck" && !d && frame > 1 && !hitBlock) {
+			} else if (currentAnimation == "duck" && !d && _currentFrame > 1 && !hitBlock) {
 				trace(hitBlock)
 				currentAnimation = "duck_end";
 				addEventListener(AnimationEvent.COMPLETE, animEnd);
-			} else if (currentAnimation == "jump" && !u && frame > 1) {
+			} else if (currentAnimation == "jump" && !u && _currentFrame > 1) {
 				removeEventListener(AnimationEvent.COMPLETE, animEnd);
 				currentAnimation = "idle";
 				SoundManager.play("hit");
@@ -100,7 +101,7 @@ package baseball.art
 			super.updateGraphics();
 			if(currentAnimation != "idle"){
 				//trace((BeatKeeper.beat - startBeat) * BeatKeeper.beatsPerMinute * stage.frameRate / 60 / 3 - frame);
-				frame = (BeatKeeper.beat - startBeat) * BeatKeeper.beatsPerMinute * stage.frameRate / 60 / 3;
+				_currentFrame = (BeatKeeper.beat - startBeat) * BeatKeeper.beatsPerMinute * stage.frameRate / 60 / 3;
 			}
 		}
 		override public function set currentAnimation(value:String):void 
