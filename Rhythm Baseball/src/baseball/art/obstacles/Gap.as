@@ -1,6 +1,6 @@
 package baseball.art.obstacles 
 {
-	import baseball.art.RhythmAsset;
+	import baseball.art.RhythmBlit;
 	import baseball.Imports;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -13,19 +13,20 @@ package baseball.art.obstacles
 	 * ...
 	 * @author George
 	 */
-	public class Gap extends RhythmAsset {
+	public class Gap extends RhythmBlit {
 		static public var src:BitmapData;
 		{
 			src = new Imports.Gap().bitmapData;
 			SpriteSheet.clearBG(src, -1);
 		}
 		public function Gap(beat:Number) {
-			super(beat, new Bitmap(src));
+			super(beat);
+			graphic = src;
 		}
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
 			name = "gap";
-			graphic.x -= 20
+			origin.x -= 20
 			shape = new Box(-4, 0, 24, 64);
 			y += 43;
 		}

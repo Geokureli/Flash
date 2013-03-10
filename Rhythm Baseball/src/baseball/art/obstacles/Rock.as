@@ -1,6 +1,6 @@
 package baseball.art.obstacles 
 {
-	import baseball.art.RhythmAsset;
+	import baseball.art.RhythmBlit;
 	import baseball.Imports;
 	import relic.art.Asset;
 	import relic.art.SpriteSheet;
@@ -10,7 +10,7 @@ package baseball.art.obstacles
 	 * ...
 	 * @author George
 	 */
-	public class Rock extends RhythmAsset {
+	public class Rock extends RhythmBlit {
 		static public var sprites:SpriteSheet;
 		{
 			sprites = new SpriteSheet(new Imports.Rock().bitmapData);

@@ -11,6 +11,7 @@ package relic.art.blitting {
 	import relic.art.SpriteSheet;
 	import relic.data.BoundMode;
 	import relic.data.events.AnimationEvent;
+	import relic.data.events.AssetEvent;
 	import relic.data.shapes.Box;
 	import relic.data.shapes.Shape;
 	import relic.data.Vec2;
@@ -49,6 +50,9 @@ package relic.art.blitting {
 		
 		protected var currentFrame:int;
 		protected var animations:Object;
+		private var _graphic:BitmapData;
+		
+		public var origin:Vec2;
 		
 		public function Blit() {
 			setDefaultValues();
@@ -60,7 +64,8 @@ package relic.art.blitting {
 			mat = new Matrix();
 			_vel = new Vec2();
 			_acc = new Vec2();
-			_maxSpeed = new Vec2();
+			_maxSpeed = new Vec2(-1, -1);
+			origin = new Vec2();
 			_boundMode = BoundMode.NONE;
 			_friction = 0;
 			_bounce = 0;
@@ -79,12 +84,17 @@ package relic.art.blitting {
 		
 		protected function setGraphicBounds():void {
 			var frame:BitmapData = this.frame;
+			if(graphic != null)
+				_graphicBounds = new Box(origin.x, origin.y, graphic.width, graphic.height);
 			if(frame != null)
-				_graphicBounds = new Box(0, 0, frame.width, frame.height);
+				_graphicBounds = new Box(origin.x, origin.y, frame.width, frame.height);
 		}
 		
 		public function draw(target:BitmapData):void {
-			if(frame != null) target.draw(frame, mat);
+			mat.translate(origin.x, origin.y);
+			if (graphic != null) target.draw(graphic, mat);
+			if (frame != null) target.draw(frame, mat);
+			mat.translate(-origin.x, -origin.y);
 		}
 		
 		public function addAnimationSet(sheet:SpriteSheet):void {
@@ -162,7 +172,10 @@ package relic.art.blitting {
 			return left > bounds.right || right < bounds.left || top > bounds.bottom || bottom < bounds.top;
 		}
 		
-		public function kill():void { }
+		public function kill():void {
+			dispatchEvent(new AssetEvent(AssetEvent.KILL, this));
+			_trash = true;
+		}
 		
 		public function destroy():void {
 			
@@ -217,6 +230,12 @@ package relic.art.blitting {
 		public function get frame():BitmapData {
 			if (anim == null) return null;
 			return anim.getFrame(currentFrame);
+		}
+		
+		public function get graphic():BitmapData { return _graphic; }
+		public function set graphic(value:BitmapData):void {
+			_graphic = value;
+			if (graphicBounds == null) setGraphicBounds();
 		}
 		
 		/** the name of the current animation. */

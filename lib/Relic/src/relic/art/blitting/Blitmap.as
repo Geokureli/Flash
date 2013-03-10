@@ -1,13 +1,19 @@
 package relic.art.blitting {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.utils.Dictionary;
+	import relic.art.IScene;
 	
 	/**
 	 * ...
 	 * @author George
 	 */
 	public class Blitmap extends Bitmap {
+		
+		protected var up:Boolean, down:Boolean, left:Boolean, right:Boolean, 
+						updateBlits:Boolean;
 		private var layerOrder:Vector.<BlitLayer>;
 		private var layers:Object, blits:Object, autoNames:Object, groups:Object;
 		private var trash:Vector.<String>;
@@ -17,6 +23,8 @@ package relic.art.blitting {
 		public function Blitmap(bitmapData:BitmapData=null, pixelSnapping:String="auto", smoothing:Boolean=false) {
 			super(bitmapData, pixelSnapping, smoothing);
 			setDefaultValues();
+			
+			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
 		protected function setDefaultValues():void {
@@ -26,6 +34,25 @@ package relic.art.blitting {
 			autoNames = { };
 			layers = { };
 			blits = { };
+			groups = { };
+			updateBlits = true;
+		}
+		
+		/** Called when added to stage
+		 * 
+		 * @param	e: fuck it
+		 */
+		protected function init(e:Event):void {
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+			addListeners();
+		}
+		
+		/** Called by init() (super() encouraged)
+		 * 
+		 */
+		protected function addListeners():void {
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyHandle);
+			stage.addEventListener(KeyboardEvent.KEY_UP, keyHandle);
 		}
 		
 		/**
@@ -48,6 +75,13 @@ package relic.art.blitting {
 		public function autoGroup(type:Class, group:String):void {
 			autoGroups[type] = group;
 		}
+		
+		/**
+		 * Sets a watcher that renames certain blits to a unique name. If you set an autoName for "apple" and add 
+		 * to blits named apple will have a number appended to it corresponding to the order they were added in.
+		 * @param	base:The name to look for and replace with a unique name.
+		 */
+		public function autoName(base:String):void { autoNames[base] = 0; }
 		
 		/**
 		 * Registers the blit in the blit manager.
@@ -79,7 +113,7 @@ package relic.art.blitting {
 					// --- CHECK IF GROUP EXISTS
 					if (!(group in this.groups))
 						this.groups[group] = new Vector.<Blit>();// --- ADD GROUP
-					groups[group].push(blit); // --- ADD TO GROUPS
+					this.groups[group].push(blit); // --- ADD TO GROUPS
 				}
 			}
 			blits[name] = blit;
@@ -133,10 +167,11 @@ package relic.art.blitting {
 			blit = remove(blit);
 			for (var g:String in groups) {
 				var index:int = groups[g].indexOf(blit);
-				if (index != -1) groups[g].splice(index, 1);
+				if (index != -1)
+					groups[g].splice(index, 1);
 			}
 			
-			delete blits[name];
+			delete blits[blit.name];
 			blit.destroy();
 			return blit as Blit;
 		}
@@ -171,9 +206,11 @@ package relic.art.blitting {
 		 */
 		public function update():void {
 			clearTrash();
-			for (var blitName:String in blits) {
-				if (blits[blitName].live) blits[blitName].update();
-				if (blits[blitName].trash) trash.push(blitName);
+			if(updateBlits){
+				for (var blitName:String in blits) {
+					if (blits[blitName].live) blits[blitName].update();
+					if (blits[blitName].trash) trash.push(blitName);
+				}
 			}
 			draw();
 		}
@@ -190,10 +227,20 @@ package relic.art.blitting {
 			while (trash.length > 0) kill(trash.shift());
 		}
 		
+		protected function keyHandle(e:KeyboardEvent):void {
+			switch(e.keyCode) {
+				case 37: left	= e.type == KeyboardEvent.KEY_DOWN; break;
+				case 38: up		= e.type == KeyboardEvent.KEY_DOWN; break;
+				case 39: right	= e.type == KeyboardEvent.KEY_DOWN; break;
+				case 40: down	= e.type == KeyboardEvent.KEY_DOWN; break;
+			}
+		}
+		
 		/**
 		 * Removes all references and allows the asset manager and its contents to be garbage collected
 		 */
 		public function destroy():void {
+			removeListeners();
 			clearTrash();
 			while (layerOrder.length > 0)
 				layerOrder.shift().destroy();
@@ -204,6 +251,14 @@ package relic.art.blitting {
 			blits = autoNames = null;
 			layerOrder = null;
 			trash = null;
+		}
+		
+		/**
+		 * Removes listeners from the scene.
+		 */
+		protected function removeListeners():void {
+			stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyHandle);
+			stage.removeEventListener(KeyboardEvent.KEY_UP, keyHandle);
 		}
 		
 	}

@@ -1,6 +1,6 @@
 package baseball.art.obstacles 
 {
-	import baseball.art.RhythmAsset;
+	import baseball.art.RhythmBlit;
 	import baseball.Imports;
 	import flash.display.Bitmap;
 	import relic.art.Asset;
@@ -10,14 +10,16 @@ package baseball.art.obstacles
 	 * ...
 	 * @author George
 	 */
-	public class Block extends RhythmAsset {
+	public class Block extends RhythmBlit {
 		
-		public function Block(beat:Number) { super(beat, new Imports.Block()); }
+		public function Block(beat:Number) {
+			super(beat); }
 		
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
 			name = "block";
-			//graphic.x -= 10;
+			graphic = new Imports.Block().bitmapData;
+			origin.x -= 10;
 			shape = new Box(0, 0, 24, 64);
 			y++;
 		}

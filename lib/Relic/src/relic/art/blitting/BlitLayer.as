@@ -23,7 +23,7 @@ package relic.art.blitting
 		}
 		
 		public function remove(blit:Blit):Blit {
-			var i:int = children.indexOf(blit.name);
+			var i:int = children.indexOf(blit);
 			if (i == -1) return blit;
 			children.splice(i, 1);
 			blit._parent = null;

@@ -11,8 +11,10 @@ package baseball {
 	import flash.geom.Rectangle;
 	import relic.art.Asset;
 	import relic.art.blitting.Blit;
+	import relic.art.IScene;
 	import relic.audio.SoundManager;
 	import relic.data.AssetManager;
+	import relic.data.Game;
 	import relic.data.Random;
 	import relic.data.Script;
 	import relic.data.Vec2;
@@ -26,40 +28,14 @@ package baseball {
 	 * ...
 	 * @author George
 	 */
-	public class Main extends Sprite {
-		public var scenes:Object = { main:MainMenu, editor:EditorScene, test:TestScene, random:RandomScene};
-		private var _sceneNumber:int;
-		private var currentScene:Scene;
+	public class Main extends Game {
 		public function Main():void {	
-			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init);
+			super();
 		}
-		
-		private function init(e:Event = null):void {
-			removeEventListener(Event.ADDED_TO_STAGE, init);
-			Asset.defaultBounds = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
-			scene = "main";
-			addEventListener(Event.ENTER_FRAME, enterFrame);
-		}
-		
-		private function enterFrame(e:Event):void {
-			if (currentScene != null) currentScene.enterFrame();
-		}
-		
-		private function set scene(value:String):void {
-			if (currentScene != null) {
-				currentScene.removeEventListener(SceneEvent.SCENE_CHANGE, onSceneChange);
-				currentScene.destroy();
-				removeChild(currentScene);
-			}
-			currentScene = new scenes[value]();
-			addChild(currentScene);
-			currentScene.addEventListener(SceneEvent.SCENE_CHANGE, onSceneChange);
-		}
-		
-		private function onSceneChange(e:SceneEvent):void {
-			scene = e.data.next;
-			stage.focus = stage;
+		override protected function setDefaultValues():void {
+			super.setDefaultValues();
+			scenes = { main:MainMenu, editor:EditorScene, test:TestScene, random:RandomScene };
+			new TestScene();
 		}
 	}
 	

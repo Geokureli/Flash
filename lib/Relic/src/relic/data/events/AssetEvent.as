@@ -2,6 +2,7 @@ package relic.data.events
 {
 	import flash.events.Event;
 	import relic.art.Asset;
+	import relic.art.IAsset;
 	
 	/**
 	 * ...
@@ -13,8 +14,8 @@ package relic.data.events
 							IN_BOUNDS:String = "inBounds",
 							OUT_BOUNDS:String = "outBounds";
 							
-		public var asset:Asset;
-		public function AssetEvent(type:String, asset:Asset, bubbles:Boolean = false, cancelable:Boolean = false){
+		public var asset:IAsset;
+		public function AssetEvent(type:String, asset:IAsset, bubbles:Boolean = false, cancelable:Boolean = false){
 			super(type, bubbles, cancelable);
 			this.asset = asset;
 		}

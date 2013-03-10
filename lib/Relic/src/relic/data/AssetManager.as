@@ -73,6 +73,11 @@ package relic.data
 			autoGroups[type] = group;
 		}
 		
+		/**
+		 * Sets a watcher that renames certain assets to a unique name. If you set an autoName for "apple" and add 
+		 * to assets named apple will have a number appended to it corresponding to the order they were added in.
+		 * @param	base:The name to look for and replace with a unique name.
+		 */
 		public function autoName(base:String):void { autoNames[base] = 0; }
 		
 		/**

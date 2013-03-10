@@ -1,15 +1,17 @@
 package baseball.scenes 
 {
-	import baseball.art.RhythmAsset;
+	import baseball.art.RhythmBlit;
 	import baseball.beat.BeatKeeper;
-	import flash.events.KeyboardEvent;
+	
 	import relic.art.Asset;
 	import relic.art.Scene;
 	import relic.art.ScrollingBG;
 	import relic.art.SpriteSheet;
+	import relic.art.blitting.Blitmap;
+	import relic.art.blitting.BlitScene;
 	import relic.audio.SoundManager;
-	import relic.data.events.SceneEvent;
 	import relic.data.Vec2;
+	import relic.data.events.SceneEvent;
 	
 	import baseball.Imports;
 	import baseball.art.Hero;
@@ -20,6 +22,7 @@ package baseball.scenes
 
 	import flash.geom.Point;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.utils.getTimer;
 	import flash.display.Sprite;
 	import flash.display.Bitmap;
@@ -30,36 +33,36 @@ package baseball.scenes
 	 * ...
 	 * @author George
 	 */
-	public class GameScene extends Scene
-	{
+	public class GameScene extends BlitScene {
 		private var count:int;
 		private var back:Sprite, mid:Sprite, front:Sprite;
 		protected var bombTime:Number, defaultTime:Number;
 		protected var level:XML;
 		
 		public function GameScene() {
-			super();
+			super(new BitmapData(800, 400, false, 0));
 			BeatKeeper.init();
 		}
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
-			update = defaultUpdate;
+			defaultUpdate = mainUpdate;
 			BeatKeeper.beatsPerMinute = 160;
 			Bomb.SPEED = -10;
-			RhythmAsset.SCROLL = -10;
-			RhythmAsset.HERO = new Vec2(100, 309);
+			RhythmBlit.SCROLL = -10;
+			RhythmBlit.HERO = new Vec2(100, 309);
+			bgColor = 0xFFFFFF;
 		}
 		override protected function createLayers():void {
 			super.createLayers();
-			assets.autoGroup(Bomb, "bombs");
-			assets.autoGroup(Gap, "gaps");
-			assets.autoGroup(Rock, "rocks");
-			assets.autoGroup(Block, "blocks");
+			autoGroup(Bomb, "bombs");
+			autoGroup(Gap, "gaps");
+			autoGroup(Rock, "rocks");
+			autoGroup(Block, "blocks");
 			
-			assets.autoName("bomb");
-			assets.autoName("gap");
-			assets.autoName("rock");
-			assets.autoName("block");
+			autoName("bomb");
+			autoName("gap");
+			autoName("rock");
+			autoName("block");
 		}
 		override protected function addStaticChildren():void {
 			super.addStaticChildren();
@@ -71,16 +74,15 @@ package baseball.scenes
 			//bg.y = 280 + 64;
 			//bg.speed = -10;
 			//back.addChild(bg);
-			add(new Hero(), "hero")
-			RhythmAsset.HERO = new Vec2(asset("hero").right, asset("hero").y);
+			var hero:Hero = add(new Hero(), "hero") as Hero;
+			RhythmBlit.HERO = new Vec2(hero.right, hero.y);
 			place("mid", "hero");
 		}
-		override protected function init(e:Event = null):void 
-		{
+		override protected function init(e:Event):void {
 			super.init(e);
 			BeatKeeper.frameRate = stage.frameRate;
-			bombTime = BeatKeeper.beatsPerMinute * -(stage.stageWidth+200) / 60 / (Bomb.SPEED + RhythmAsset.SCROLL) / stage.frameRate;
-			defaultTime = BeatKeeper.beatsPerMinute * -(stage.stageWidth+200) / 60 / RhythmAsset.SCROLL / stage.frameRate;
+			bombTime = BeatKeeper.beatsPerMinute * -(stage.stageWidth+200) / 60 / (Bomb.SPEED + RhythmBlit.SCROLL) / stage.frameRate;
+			defaultTime = BeatKeeper.beatsPerMinute * -(stage.stageWidth+200) / 60 / RhythmBlit.SCROLL / stage.frameRate;
 		}
 		
 		override protected function keyHandle(e:KeyboardEvent):void {
@@ -89,9 +91,9 @@ package baseball.scenes
 				dispatchEvent(new SceneEvent(SceneEvent.SCENE_CHANGE, { next:"main" } ));
 		}
 		
-		override public function enterFrame():void {
+		override public function update():void {
 			var lastBeat:Number = BeatKeeper.beat;
-			super.enterFrame();
+			super.update();
 			var beat:Number = BeatKeeper.beat;
 			
 			for each(var node:XML in level.children()) {
@@ -109,7 +111,7 @@ package baseball.scenes
 			}
 		}
 		
-		protected function defaultUpdate():void 
+		protected function mainUpdate():void 
 		{
 			hero.u = up;
 			hero.d = down;
@@ -119,7 +121,7 @@ package baseball.scenes
 			//hero.update();
 			//bg.update();
 			
-			for each(var bomb:Bomb in assets.group("bombs")){
+			for each(var bomb:Bomb in group("bombs")){
 				if (hero.isTouching(bomb) && bomb.isRhythm) {
 					if (hero.currentAnimation == "swing") {
 						bomb.vel.x = 20;
@@ -130,19 +132,19 @@ package baseball.scenes
 					} else endGame();
 				}
 			}
-			for each(var gap:Gap in assets.group("gaps")) {
+			for each(var gap:Gap in group("gaps")) {
 				if (hero.isTouching(gap) && hero.currentAnimation != "jump") 
 					endGame();
 			}
 			hero.hitBlock = false;
-			for each(var block:Block in assets.group("blocks")) {
+			for each(var block:Block in group("blocks")) {
 				if (hero.isTouching(block)) {
 					hero.hitBlock = true;
 					if (hero.currentAnimation != "duck" || hero.currentAnimation == "duck_end") 
 						endGame();
 				}
 			}
-			for each(var rock:Rock in assets.group("rocks")) {
+			for each(var rock:Rock in group("rocks")) {
 				if (hero.isTouching(rock) && rock.currentAnimation == "idle") {
 					if (hero.currentAnimation == "slide" || hero.currentAnimation == "slide_end") {
 						rock.currentAnimation = "break";
@@ -154,9 +156,9 @@ package baseball.scenes
 		private function endGame():void {
 			hero.currentAnimation = "hit";
 			SoundManager.play("hit");
-			update = endLevel;
+			defaultUpdate = endLevel;
 			hero.disableKeys();
-			updateAssets = false;
+			updateBlits = false;
 			count = 0;
 		}
 		
@@ -167,17 +169,17 @@ package baseball.scenes
 			}
 		}
 		
-		protected function addBomb(beat:Number):void { place("front", assets.add(new Bomb(beat)), {x:stage.stageWidth+10}); }
-		protected function addGap(beat:Number):void { place("back", assets.add(new Gap(beat)), {x:stage.stageWidth+10}); }
-		protected function addRock(beat:Number):void { place("front", assets.add(new Rock(beat)), {x:stage.stageWidth+10}); }
-		protected function addBlock(beat:Number):void { place("front", assets.add(new Block(beat)), {x:stage.stageWidth+10}); }
+		protected function addBomb(beat:Number):void { place("front", add(new Bomb(beat)), {x:stage.stageWidth+10}); }
+		protected function addGap(beat:Number):void { place("back", add(new Gap(beat)), {x:stage.stageWidth+10}); }
+		protected function addRock(beat:Number):void { place("front", add(new Rock(beat)), {x:stage.stageWidth+10}); }
+		protected function addBlock(beat:Number):void { place("front", add(new Block(beat)), {x:stage.stageWidth+10}); }
 		
 		protected function reset():void { 
 			BeatKeeper.reset();
-			assets.killGroup("bombs,gaps,rocks,blocks");
-			update = defaultUpdate;
+			killGroup("bombs,gaps,rocks,blocks");
+			defaultUpdate = mainUpdate;
 			hero.currentAnimation = "idle";
-			updateAssets = true;
+			updateBlits = true;
 		}
 		
 		override public function destroy():void {
@@ -186,7 +188,7 @@ package baseball.scenes
 		}
 		
 		
-		public function get hero():Hero { return asset("hero") as Hero; }
+		public function get hero():Hero { return getBlit("hero") as Hero; }
 	}
 
 }

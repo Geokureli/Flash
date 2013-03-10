@@ -1,10 +1,9 @@
 package baseball.art 
 {
 	import baseball.beat.BeatKeeper;
-	import flash.display.DisplayObject;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
-	import relic.art.Asset;
+	import relic.art.blitting.Blit;
 	import relic.data.BoundMode;
 	import relic.data.Vec2;
 	
@@ -12,14 +11,13 @@ package baseball.art
 	 * ...
 	 * @author George
 	 */
-	public class RhythmAsset extends Asset 
-	{
+	public class RhythmBlit extends Blit {
 		static public var HERO:Vec2;
 		static public var SCROLL:Number;
 		public var beat:Number, speed:Number;
 		public var isRhythm:Boolean;
-		public function RhythmAsset(beat:Number, graphic:DisplayObject = null) {
-			super(graphic);
+		public function RhythmBlit(beat:Number) {
+			super();
 			this.beat = beat;
 		}
 		override protected function setDefaultValues():void {
@@ -31,7 +29,7 @@ package baseball.art
 		}
 		override protected function init(e:Event):void {
 			super.init(e);
-			debugDraw();
+			//debugDraw();
 		}
 		override public function update():void {
 			super.update();

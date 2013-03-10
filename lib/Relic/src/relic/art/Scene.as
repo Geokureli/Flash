@@ -2,7 +2,7 @@ package relic.art
 {
 	import flash.display.DisplayObjectContainer;
 	import relic.data.AssetManager;
-	import relic.data.events.AssetEvent;
+	//import relic.data.events.AssetEvent;
 	import relic.data.Vec2;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -18,7 +18,7 @@ package relic.art
 		protected var assets:AssetManager;
 		protected var up:Boolean, down:Boolean, left:Boolean, right:Boolean, 
 						updateAssets:Boolean;
-		protected var update:Function;
+		protected var defaultUpdate:Function;
 		
 		public function Scene() {
 			super();
@@ -85,10 +85,10 @@ package relic.art
 		/** Called by main game (super() manditory)
 		 * 
 		 */
-		public function enterFrame():void {
+		public function update():void {
 			if (assets != null && updateAssets) assets.update();
 			
-			if (update != null) update();
+			if (defaultUpdate != null) defaultUpdate();
 		}
 		
 		/**

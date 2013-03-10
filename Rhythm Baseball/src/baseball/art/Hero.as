@@ -3,6 +3,7 @@ package baseball.art
 	import baseball.beat.BeatKeeper;
 	import baseball.Imports;
 	import relic.art.Asset;
+	import relic.art.blitting.Blit;
 	import relic.art.SpriteSheet;
 	import relic.audio.SoundManager;
 	import relic.data.events.AnimationEvent;
@@ -14,7 +15,7 @@ package baseball.art
 	 * ...
 	 * @author George
 	 */
-	public class Hero extends Asset {
+	public class Hero extends Blit {
 		static private var sprites:SpriteSheet;
 		private var startBeat:Number;
 		{
@@ -39,14 +40,14 @@ package baseball.art
 		override protected function setDefaultValues():void 
 		{
 			super.setDefaultValues();
-			x = RhythmAsset.HERO.x;
-			y = RhythmAsset.HERO.y;
+			x = RhythmBlit.HERO.x;
+			y = RhythmBlit.HERO.y;
 			friction = .05;
 			shape = new Box(20, 0, 20, 64);
 			//shape.debugDraw(graphics);
 			//boundMode = BoundMode.LOCK;
 			addAnimationSet(sprites);
-			debugDraw()
+			//debugDraw()
 		}
 		override protected function init(e:Event):void 
 		{
@@ -84,14 +85,14 @@ package baseball.art
 					currentAnimation = "duck";
 					SoundManager.play("duck");
 				}
-			} else if (currentAnimation == "slide" && !r && _currentFrame > 1) {
+			} else if (currentAnimation == "slide" && !r && currentFrame > 1) {
 				currentAnimation = "slide_end";
 				addEventListener(AnimationEvent.COMPLETE, animEnd);
-			} else if (currentAnimation == "duck" && !d && _currentFrame > 1 && !hitBlock) {
+			} else if (currentAnimation == "duck" && !d && currentFrame > 1 && !hitBlock) {
 				trace(hitBlock)
 				currentAnimation = "duck_end";
 				addEventListener(AnimationEvent.COMPLETE, animEnd);
-			} else if (currentAnimation == "jump" && !u && _currentFrame > 1) {
+			} else if (currentAnimation == "jump" && !u && currentFrame > 1) {
 				removeEventListener(AnimationEvent.COMPLETE, animEnd);
 				currentAnimation = "idle";
 				SoundManager.play("hit");
@@ -101,7 +102,7 @@ package baseball.art
 			super.updateGraphics();
 			if(currentAnimation != "idle"){
 				//trace((BeatKeeper.beat - startBeat) * BeatKeeper.beatsPerMinute * stage.frameRate / 60 / 3 - frame);
-				_currentFrame = (BeatKeeper.beat - startBeat) * BeatKeeper.beatsPerMinute * stage.frameRate / 60 / 3;
+				currentFrame = (BeatKeeper.beat - startBeat) * BeatKeeper.beatsPerMinute * stage.frameRate / 60 / 3;
 			}
 		}
 		override public function set currentAnimation(value:String):void 

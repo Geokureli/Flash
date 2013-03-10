@@ -4,7 +4,7 @@ package baseball.scenes
 	import baseball.art.obstacles.Bomb;
 	import baseball.art.obstacles.Gap;
 	import baseball.art.obstacles.Rock;
-	import baseball.art.RhythmAsset;
+	import baseball.art.RhythmBlit;
 	import baseball.beat.BeatKeeper;
 	import baseball.Imports;
 	import flash.display.Scene;
@@ -25,11 +25,10 @@ package baseball.scenes
 			if ("userLevel" in Global.VARS) level = Global.VARS.userLevel;
 			else level = new XML(new Imports.testLevel);
 			BeatKeeper.beatsPerMinute = level.@bpm;
-			RhythmAsset.SCROLL = -Number(level.@speed);
+			RhythmBlit.SCROLL = -Number(level.@speed);
 		}
-		override protected function init(e:Event = null):void {
+		override protected function init(e:Event):void {
 			super.init(e);
-			//createLevel();
 		}
 		
 		override protected function keyHandle(e:KeyboardEvent):void {

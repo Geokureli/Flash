@@ -1,6 +1,6 @@
 package baseball.art.obstacles 
 {
-	import baseball.art.RhythmAsset;
+	import baseball.art.RhythmBlit;
 	import baseball.beat.BeatKeeper;
 	import baseball.Imports;
 	import relic.art.Asset;
@@ -12,7 +12,7 @@ package baseball.art.obstacles
 	 * ...
 	 * @author George
 	 */
-	public class Bomb extends RhythmAsset {
+	public class Bomb extends RhythmBlit {
 		static public var SPEED:int = -10;
 		static public var sprites:SpriteSheet;
 		{

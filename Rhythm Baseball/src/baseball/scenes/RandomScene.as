@@ -1,6 +1,6 @@
 package baseball.scenes {
 	import baseball.art.obstacles.Bomb;
-	import baseball.art.RhythmAsset;
+	import baseball.art.RhythmBlit;
 	import baseball.beat.BeatKeeper;
 	import flash.events.Event;
 	import relic.art.Scene;
@@ -21,19 +21,19 @@ package baseball.scenes {
 			super.setDefaultValues();
 			beatCount = 0;
 			BeatKeeper.beatsPerMinute = 80;
-			RhythmAsset.SCROLL = -15;
+			RhythmBlit.SCROLL = -15;
 			level = <level bpm="120" speed="10"/>;
 		}
-		override protected function init(e:Event = null):void {
+		override protected function init(e:Event):void {
 			for (var i:int = 0; i < 10; i++)
 				addRandomObstacle();
 			super.init(e);
 		}
-		override public function enterFrame():void {
-			bombTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / (Bomb.SPEED + RhythmAsset.SCROLL) / stage.frameRate;
-			defaultTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / RhythmAsset.SCROLL / stage.frameRate;
+		override public function update():void {
+			bombTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / (Bomb.SPEED + RhythmBlit.SCROLL) / stage.frameRate;
+			defaultTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / RhythmBlit.SCROLL / stage.frameRate;
 			
-			super.enterFrame();
+			super.update();
 			BeatKeeper.beatsPerMinute += 2 / stage.frameRate;
 			if (beatCount-BeatKeeper.beat < 10) {
 				addRandomObstacle();
@@ -52,7 +52,7 @@ package baseball.scenes {
 		override protected function reset():void {
 			super.reset();
 			BeatKeeper.beatsPerMinute = 80;
-			RhythmAsset.SCROLL = -15;
+			RhythmBlit.SCROLL = -15;
 		}
 	}
 

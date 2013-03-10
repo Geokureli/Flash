@@ -1,5 +1,6 @@
 package relic.art {
 	import flash.display.BitmapData;
+	import flash.events.IEventDispatcher;
 	import flash.geom.Rectangle;
 	import relic.data.shapes.Shape;
 	import relic.data.Vec2;
@@ -8,7 +9,7 @@ package relic.art {
 	 * ...
 	 * @author George
 	 */
-	public interface IAsset {
+	public interface IAsset extends IEventDispatcher {
 		
 		/** Adds all of the animations from the target SpriteSheet. */
 		function addAnimationSet(sheet:SpriteSheet):void;

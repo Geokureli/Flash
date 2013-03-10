@@ -1,6 +1,5 @@
 package baseball.beat 
 {
-	import baseball.art.RhythmAsset;
 	import baseball.data.events.BeatEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;

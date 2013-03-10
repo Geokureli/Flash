@@ -166,6 +166,7 @@ package relic.art
 		/** Allows the asset to be garbage collected */
 		public function kill():void {
 			dispatchEvent(new AssetEvent(AssetEvent.KILL, this));
+			_trash = true;
 		}
 		
 		private function get isOffStage():Boolean {
