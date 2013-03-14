@@ -14,23 +14,27 @@ package baseball.beat
 		static public var beat:Number;
 		static private var dispatcher:EventDispatcher;
 		static private var events:Vector.<EventListener>;
+		static private var frame:int;
+		static public var time:int;
 
-		static public function init():void {
+		static public function init(offset:int = -2000):void {
 			dispatcher = new EventDispatcher();
 			events = new Vector.<EventListener>();
-			startTime = getTimer() + delay;
+			startTime = getTimer() - offset;
 			//beatsPerMinute = 120;
-			beat = -delay / 60000 * beatsPerMinute;
+			beat = offset / 60000 * beatsPerMinute;
+			frame = 0;
 		}
-		static public function reset():void {
-			startTime = getTimer() + delay;
-			beat = -delay / 60000 * beatsPerMinute;		
+		static public function reset(offset:int = -2000):void {
+			startTime = getTimer() - offset;
+			beat = offset / 60000 * beatsPerMinute;
 		}
 		static public function update():void {
-			var t:int = getTimer()-startTime;
-			if (int(t / 60000 * beatsPerMinute) - int(beat) >= 1)
+			time = getTimer()-startTime;
+			if (int(time / 60000 * beatsPerMinute) - int(beat) >= 1)
 				dispatchEvent(new BeatEvent(BeatEvent.ON_BEAT));
-			beat = t / 60000 * beatsPerMinute;
+			beat = time / 60000 * beatsPerMinute;
+			frame++;
 		}
 		static public function destroy():void {
 			while (events.length > 0)
@@ -64,7 +68,6 @@ package baseball.beat
 		static public function toFramePixels(speed:Number):Number{
 			return speed / frameRate / 60 * beatsPerMinute;
 		}
-		static private function get delay():int { return 2000; RhythmAsset.SCROLL}
 	}
 }
 class EventListener {

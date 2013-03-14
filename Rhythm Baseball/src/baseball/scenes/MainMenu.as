@@ -1,26 +1,34 @@
 package baseball.scenes 
 {
+	import baseball.Imports;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import relic.art.MenuScene;
 	import relic.data.events.SceneEvent;
+	import relic.data.Global;
 	/**
 	 * ...
 	 * @author George
 	 */
 	public class MainMenu extends MenuScene 
 	{
-		private var editorBtn:Btn, testBtn:Btn, rdmBtn:Btn;
+		private var editorBtn:Btn, rdmBtn:Btn, testBtn:Btn;
 		public function MainMenu() { super(); }
 		override protected function addStaticChildren():void {
 			super.addStaticChildren();
 			
 			addChild(editorBtn	= new Btn("Level Editor",	200, 30)).addEventListener(MouseEvent.CLICK, btnClick);
-			addChild(testBtn	= new Btn("Test Level",		200, 30)).addEventListener(MouseEvent.CLICK, btnClick);
+			//addChild(
+			testBtn	= new Btn("TMOTTBG",		200, 30)//).addEventListener(MouseEvent.CLICK, testClick);
 			addChild(rdmBtn		= new Btn("Random Level",	200, 30)).addEventListener(MouseEvent.CLICK, btnClick);
 			editorBtn.name = "editor";
-			testBtn.name = "test";
+			testBtn.name = "song";
 			rdmBtn.name = "random";
+		}
+		
+		private function testClick(e:MouseEvent):void {
+			Global.VARS.userLevel = <level bpm="100" speed="10" song="tmottbg"/>
+			dispatchEvent(new SceneEvent(SceneEvent.SCENE_CHANGE, { next:e.currentTarget.name } ));
 		}
 		
 		private function btnClick(e:MouseEvent):void {
@@ -29,7 +37,7 @@ package baseball.scenes
 		
 		override protected function init(e:Event = null):void {
 			super.init(e);
-			testBtn.x = editorBtn.x = rdmBtn.x = stage.stageWidth / 2;
+			editorBtn.x = rdmBtn.x = testBtn.x = stage.stageWidth / 2;
 			editorBtn.y = 50;
 			testBtn.y = 100;
 			rdmBtn.y = 150;
@@ -39,10 +47,10 @@ package baseball.scenes
 			super.destroy();
 			removeChild(editorBtn);
 			editorBtn = null;
-			removeChild(testBtn);
-			testBtn = null;
 			removeChild(rdmBtn);
 			rdmBtn = null;
+			//removeChild(testBtn);
+			testBtn = null;
 		}
 	}
 

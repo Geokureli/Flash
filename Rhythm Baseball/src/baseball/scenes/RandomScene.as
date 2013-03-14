@@ -1,9 +1,11 @@
 package baseball.scenes {
 	import baseball.art.obstacles.Bomb;
-	import baseball.art.RhythmBlit;
+	import baseball.art.Obstacle;
 	import baseball.beat.BeatKeeper;
 	import flash.events.Event;
 	import relic.art.Scene;
+	import relic.audio.SoundManager;
+	import relic.data.Global;
 	import relic.data.Random;
 	
 	/**
@@ -14,15 +16,26 @@ package baseball.scenes {
 		static public const TYPES:Array = ["ball", "block", "rock", "gap"];
 		
 		private var beatCount:int;
+		private var hasSong:Boolean;
 		
 		public function RandomScene() { super(); }
 		
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
 			beatCount = 0;
-			BeatKeeper.beatsPerMinute = 80;
-			RhythmBlit.SCROLL = -15;
-			level = <level bpm="120" speed="10"/>;
+		}
+		override protected function setLevelProperties():void {
+			super.setLevelProperties();
+			hasSong = false;
+			if ("userLevel" in Global.VARS) {
+				level = Global.VARS.userLevel;
+			} else {
+				level = <level bpm="80" speed="15"/>;
+			}
+			if ("song" in Global.VARS) {
+				song = Global.VARS.song;
+				hasSong = true;
+			}
 		}
 		override protected function init(e:Event):void {
 			for (var i:int = 0; i < 10; i++)
@@ -30,11 +43,13 @@ package baseball.scenes {
 			super.init(e);
 		}
 		override public function update():void {
-			bombTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / (Bomb.SPEED + RhythmBlit.SCROLL) / stage.frameRate;
-			defaultTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / RhythmBlit.SCROLL / stage.frameRate;
+			bombTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / (Bomb.SPEED + Obstacle.SCROLL) / stage.frameRate;
+			defaultTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / Obstacle.SCROLL / stage.frameRate;
 			
 			super.update();
-			BeatKeeper.beatsPerMinute += 2 / stage.frameRate;
+			if(!hasSong)
+				BeatKeeper.beatsPerMinute += 2 / stage.frameRate;
+			
 			if (beatCount-BeatKeeper.beat < 10) {
 				addRandomObstacle();
 			}
@@ -51,8 +66,8 @@ package baseball.scenes {
 		}
 		override protected function reset():void {
 			super.reset();
-			BeatKeeper.beatsPerMinute = 80;
-			RhythmBlit.SCROLL = -15;
+			BeatKeeper.beatsPerMinute = Number(level.@bpm);
+			Obstacle.SCROLL = -Number(level.@speed);
 		}
 	}
 

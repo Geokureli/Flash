@@ -3,6 +3,7 @@ package relic.art.blitting
 	import flash.display.BitmapData;
 	import flash.display.Stage;
 	import flash.events.Event;
+	import relic.data.events.BlitEvent;
 	/**
 	 * ...
 	 * @author George
@@ -14,11 +15,11 @@ package relic.art.blitting
 			children = new Vector.<Blit>();
 		}
 		public function add(blit:Blit):Blit {
-			if (blit._parent)
-				blit._parent.remove(blit);
+			if (blit._layer)
+				blit._layer.remove(blit);
 			children.push(blit);
-			blit._parent = this;
-			blit.dispatchEvent(new Event(Event.ADDED_TO_STAGE));
+			blit._layer = this;
+			blit.dispatchEvent(new BlitEvent(BlitEvent.ADDED_TO_BLITMAP));
 			return blit;
 		}
 		
@@ -26,8 +27,8 @@ package relic.art.blitting
 			var i:int = children.indexOf(blit);
 			if (i == -1) return blit;
 			children.splice(i, 1);
-			blit._parent = null;
-			blit.dispatchEvent(new Event(Event.REMOVED_FROM_STAGE));
+			blit._layer = null;
+			blit.dispatchEvent(new BlitEvent(BlitEvent.REMOVED_TO_BLITMAP));
 			return blit;
 		}
 		

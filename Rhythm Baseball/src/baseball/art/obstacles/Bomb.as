@@ -1,6 +1,6 @@
 package baseball.art.obstacles 
 {
-	import baseball.art.RhythmBlit;
+	import baseball.art.Obstacle;
 	import baseball.beat.BeatKeeper;
 	import baseball.Imports;
 	import relic.art.Asset;
@@ -12,7 +12,7 @@ package baseball.art.obstacles
 	 * ...
 	 * @author George
 	 */
-	public class Bomb extends RhythmBlit {
+	public class Bomb extends Obstacle {
 		static public var SPEED:int = -10;
 		static public var sprites:SpriteSheet;
 		{
@@ -30,13 +30,13 @@ package baseball.art.obstacles
 			addAnimationSet(sprites);
 			currentAnimation = "idle";
 			shape = new Box(0, 0, 16, 16);
-			y += 31;
+			y += 26;
 			speed = SPEED;
 		}
 		override public function update():void {
 			super.update();
 			if(isRhythm && boundMode == BoundMode.DESTROY)
-				y = (HERO.y + Math.pow(BeatKeeper.toBeatPixels(beat - BeatKeeper.beat) - Math.sqrt(HERO.y), 2)) / 2 + 30;
+				y = (HERO.y + Math.pow(BeatKeeper.toBeatPixels(beat - BeatKeeper.beat) - Math.sqrt(HERO.y), 2)) / 2 + 25;
 		}
 	}
 

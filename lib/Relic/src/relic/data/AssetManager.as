@@ -91,7 +91,7 @@ package relic.data
 			for (var key:Object in autoGroups) {
 				if (asset is Class(key)) {
 					if (groups == null) groups = autoGroups[key];
-					else { groups += ',' + groups; }
+					else { groups += ',' + autoGroups[key]; }
 				}
 			}
 			if (name == null) {
@@ -133,10 +133,8 @@ package relic.data
 				else throw new ArgumentError("parent string must the key of a layer or asset");
 			}
 			
-			// --- SET PARAMS
-			for (var i:String in params)
-				assets[name][i] = params[i];
-				
+			assets[name].setParameters(params);
+			
 			// --- ADD TO PARENT
 			parent.addChild(assets[name]);
 			return assets[name];

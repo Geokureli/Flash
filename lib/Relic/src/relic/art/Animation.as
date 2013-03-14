@@ -3,6 +3,7 @@ package relic.art
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.Matrix;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.events.Event;
 	/**
@@ -23,15 +24,20 @@ package relic.art
 			rate = 2;
 			numFrames = frames.length;
 		}
-		public function getFrame(num:int):BitmapData {
-			num /= rate;
+		public function drawFrame(num:int, target:BitmapData, dest:Point = null):void {
+			sheet.drawFrame(getSpriteFrame(num), target, dest);
+		}
+		public function getFrameRect(num:int):Rectangle {
+			return sheet.frames[getSpriteFrame(num)];
+		}
+		private function getSpriteFrame(frame:int):int {
+			frame /= rate;
 			
-			if (num >= frames.length) {
-				if (!loop) num = frames.length - 1;
-				else num %= frames.length;
+			if (frame >= frames.length) {
+				if (!loop) frame = frames.length - 1;
+				else frame %= frames.length;
 			}
-		
-			return sheet.frames[frames[num]];
+			return frames[frame];
 		}
 	}
 

@@ -22,13 +22,13 @@ package baseball.art
 			sprites = new SpriteSheet(new Imports.Hero().bitmapData);
 			sprites.clearBG();
 			sprites.createGrid(64, 64);
-			sprites.addAnimation("idle", Vector.<int>([0, 1, 2, 3, 4, 5, 6, 7]));
+			sprites.addAnimation("idle", Vector.<int>([0, 1, 2, 3, 4, 5, 6, 7]));// --- NOT TIME-BASED
 			sprites.addAnimation("slide", Vector.<int>([8, 9]), false, 1);
 			sprites.addAnimation("slide_end", Vector.<int>([8]), true, 1);
 			sprites.addAnimation("duck", Vector.<int>([10, 11]), false, 1);
 			sprites.addAnimation("duck_end", Vector.<int>([10]),true, 1);
-			sprites.addAnimation("jump", Vector.<int>([12, 12, 12, 12, 12, 12, 12, 12, 12]));
-			sprites.addAnimation("swing", Vector.<int>([13, 14, 15, 15, 16, 17, 17]), true, 1);
+			sprites.addAnimation("jump", Vector.<int>([12]), true, 19);// --- ROUGHLY 5 BEATS
+			sprites.addAnimation("swing", Vector.<int>([13, 14, 15, 15, 16, 16, 17]), false, 1);
 			sprites.addAnimation("hit", Vector.<int>([8, 9]), false);
 		}
 		public var u:Boolean, d:Boolean, l:Boolean, r:Boolean,
@@ -40,8 +40,8 @@ package baseball.art
 		override protected function setDefaultValues():void 
 		{
 			super.setDefaultValues();
-			x = RhythmBlit.HERO.x;
-			y = RhythmBlit.HERO.y;
+			x = Obstacle.HERO.x;
+			y = Obstacle.HERO.y;
 			friction = .05;
 			shape = new Box(20, 0, 20, 64);
 			//shape.debugDraw(graphics);
@@ -85,14 +85,13 @@ package baseball.art
 					currentAnimation = "duck";
 					SoundManager.play("duck");
 				}
-			} else if (currentAnimation == "slide" && !r && currentFrame > 1) {
+			} else if (currentAnimation == "slide" && !r && _currentFrame > 1) {
 				currentAnimation = "slide_end";
 				addEventListener(AnimationEvent.COMPLETE, animEnd);
-			} else if (currentAnimation == "duck" && !d && currentFrame > 1 && !hitBlock) {
-				trace(hitBlock)
+			} else if (currentAnimation == "duck" && !d && _currentFrame > 1 && !hitBlock) {
 				currentAnimation = "duck_end";
 				addEventListener(AnimationEvent.COMPLETE, animEnd);
-			} else if (currentAnimation == "jump" && !u && currentFrame > 1) {
+			} else if (currentAnimation == "jump" && !u && _currentFrame > 1) {
 				removeEventListener(AnimationEvent.COMPLETE, animEnd);
 				currentAnimation = "idle";
 				SoundManager.play("hit");
@@ -102,7 +101,7 @@ package baseball.art
 			super.updateGraphics();
 			if(currentAnimation != "idle"){
 				//trace((BeatKeeper.beat - startBeat) * BeatKeeper.beatsPerMinute * stage.frameRate / 60 / 3 - frame);
-				currentFrame = (BeatKeeper.beat - startBeat) * BeatKeeper.beatsPerMinute * stage.frameRate / 60 / 3;
+				_currentFrame = (BeatKeeper.beat - startBeat) * 120 * stage.frameRate / 60 / 3;
 			}
 		}
 		override public function set currentAnimation(value:String):void 

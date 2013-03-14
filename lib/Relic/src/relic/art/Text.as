@@ -1,5 +1,7 @@
 package relic.art 
 {
+	import flash.events.Event;
+	import flash.events.TextEvent;
 	import flash.text.TextLineMetrics;
 	import flash.display.DisplayObject;
 	import flash.geom.Rectangle;
@@ -12,16 +14,30 @@ package relic.art
 	 */
 	public class Text extends Asset {
 		static public const DEFAULT_FORMAT:TextFormat = new TextFormat("arial", 12, 0, true, null, null, null, null, TextFormatAlign.CENTER);
-		public var format:TextFormat;
+		private var _format:TextFormat;
+		private var _isInput:Boolean;
+		private var _numMode:Boolean;
 		public function Text(text:String) {
-			super(new TextField());
-			textField.defaultTextFormat = DEFAULT_FORMAT;
-			textField.text = text;
+			super();
+			graphic = new TextField();
+			format = DEFAULT_FORMAT;
+			this.text = text;
+			selectable = false;
 		}
 		
 		public function get textField():TextField { return graphic as TextField; }
 		
+		override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void {
+			if (type == TextEvent.TEXT_INPUT || type == Event.CHANGE)
+				textField.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			else super.addEventListener(type, listener, useCapture, priority, useWeakReference);
+		}
 		/* DELEGATE flash.text.TextField */
+		
+		public function get type():String { return textField.type; }
+		public function set type(value:String):void {
+			textField.type = value;
+		}
 		
 		override public function get width():Number { return textField.width; }
 		override public function set width(value:Number):void { textField.width = value; }
@@ -119,9 +135,6 @@ package relic.art
 		public function get thickness():Number { return textField.thickness; }
 		public function set thickness(value:Number):void { textField.thickness = value; }
 		
-		public function set type(value:String):void { textField.type = value; }
-		public function get type():String { return textField.type; }
-		
 		public function get wordWrap():Boolean { return textField.wordWrap; }
 		public function set wordWrap(value:Boolean):void { textField.wordWrap = value; }
 		
@@ -183,6 +196,17 @@ package relic.art
 		
 		public function get url():String { return format.url; }
 		public function set url(value:String):void { format.url = value; }
+		
+		public function get format():TextFormat { return textField.defaultTextFormat; }
+		public function set format(value:TextFormat):void { textField.defaultTextFormat = value; }
+		
+		public function get numMode():Boolean { return _numMode; }
+		public function set numMode(value:Boolean):void {
+			_numMode = value;
+			if (value)
+				restrict = "0-9.";
+			else restrict = null;
+		}
 		
 	}
 

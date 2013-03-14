@@ -1,10 +1,12 @@
 package relic.art 
 {
 	import flash.display.DisplayObject;
+	import flash.display.IBitmapDrawable;
 	import flash.display.Sprite;
 	import mx.core.IAssetLayoutFeatures;
 	import relic.data.events.AnimationEvent;
 	import relic.data.events.AssetEvent;
+	import relic.data.IXMLParam;
 	import relic.data.shapes.Box;
 	import relic.data.Vec2;
 	import relic.data.BoundMode;
@@ -14,11 +16,12 @@ package relic.art
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	import flash.utils.getQualifiedClassName;
 	/**
 	 * ...
 	 * @author George
 	 */
-	public class Asset extends MovieClip implements IAsset {
+	public class Asset extends MovieClip implements IXMLParam {
 		static public var defaultBounds:Rectangle;
 		
 		private var _vel:Vec2,
@@ -30,8 +33,7 @@ package relic.art
 					_trash:Boolean,
 					_live:Boolean;
 		
-		private var _currentAnimation:String,
-					_boundMode:String;
+		private var _boundMode:String;
 		
 		private var _friction:Number,
 					_bounce:Number;
@@ -42,21 +44,20 @@ package relic.art
 		private var debugGraphics:flash.display.Shape;
 		
 		private var _bounds:Rectangle;
+		private var _graphic:IBitmapDrawable;
 		
+		protected var _currentAnimation:String;
 		protected var _currentFrame:int;
+		protected var flashTime:int;
 		
 		public var animations:Object;
 		public var bm:Bitmap;
-		public var graphic:DisplayObject;
 		
-		public function Asset(graphic:DisplayObject = null) {
+		public function Asset() {
 			super();
-			if (graphic != null){
-				addChild(this.graphic = graphic);
-				setGraphicBounds();
-			} else addChild(bm = new Bitmap());
+			addChild(bm = new Bitmap());
 			setDefaultValues();
-			addEventListener(Event.ADDED_TO_STAGE, init);
+			addListeners();
 		}
 		
 		protected function setDefaultValues():void {
@@ -74,16 +75,29 @@ package relic.art
 			_trash = false;
 			_live = true;
 		}
-		
+		public function setParameters(params:Object):void {
+			for (var i:String in params)
+				this[i] = params[i];
+		}
 		protected function init(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
+		protected function addListeners():void {
+			addEventListener(Event.ADDED_TO_STAGE, init);
+		}
+		protected function removeListeners():void {
+			removeEventListener(Event.ADDED_TO_STAGE, init);
+		}
+		
 		protected function setGraphicBounds():void {
-			if(bm != null)
-				graphicBounds = new Box(bm.x, bm.y, bm.width, bm.height);
-			else if (graphic != null)
-				graphicBounds = new Box(graphic.x, graphic.y, graphic.width, graphic.height);
+			if(bm.bitmapData != null)
+				graphicBounds = new Box(bm.x-origin.x, bm.y-origin.y, bm.width, bm.height);
+			else if (child != null) {
+				var disObj:DisplayObject = child;
+				trace(disObj.getBounds(disObj));
+				graphicBounds = new Box(disObj.x, disObj.y, disObj.width, disObj.height);
+			}
 		}
 		
 		public function debugDraw():void {
@@ -101,6 +115,7 @@ package relic.art
 		
 		/** Removes all references in the Asset */
 		public function destroy():void {
+			removeListeners();
 			vel = acc = origin = maxSpeed = null;
 			bounds = null;
 			if(shape) shape.destroy();
@@ -112,8 +127,8 @@ package relic.art
 			if (bm != null && bm.parent == this)
 				removeChild(bm);
 			bm = null;
-			if (graphic != null && graphic.parent == this)
-				removeChild(graphic);
+			if (child != null && (child).parent == this)
+				removeChild(child);
 			graphic = null;
 		}
 		
@@ -152,7 +167,22 @@ package relic.art
 					if (top < bounds.top)		top = bounds.top;
 					break;
 				case BoundMode.BOUNCE:
-					
+					if (right > bounds.right) {
+						right = bounds.right*2 - right;
+						vel.x *= -1;
+					}
+					if (left  < bounds.left) {
+						left = bounds.left * 2 - left;
+						vel.x *= -1;
+					}
+					if (bottom > bounds.bottom) {
+						bottom = bounds.bottom * 2 - bottom;
+						vel.y *= -1;
+					}
+					if (top < bounds.top) {
+						top = bounds.top * 2 - top;
+						vel.y *= -1;
+					}
 					break;
 				case BoundMode.DESTROY:
 					if (spawned && isOffStage)
@@ -163,31 +193,44 @@ package relic.art
 				spawned = true; 
 		}
 		
+		public function startFlash(frames:int = 10):void {
+			flashTime = frames;
+		}
+		
 		/** Allows the asset to be garbage collected */
 		public function kill():void {
 			dispatchEvent(new AssetEvent(AssetEvent.KILL, this));
 			_trash = true;
 		}
 		
-		private function get isOffStage():Boolean {
-			if (bounds == null) return false;
+		protected function get isOffStage():Boolean {
+			if (bounds == null) return true;
 			return left > bounds.right || right < bounds.left || top > bounds.bottom || bottom < bounds.top;
 		}
 		
 		protected function updateGraphics():void {
-			if (currentAnimation != null) {
+			if (anim != null) {
 				if (_currentFrame > anim.numFrames * anim.rate) 
 					dispatchEvent(new AnimationEvent(AnimationEvent.COMPLETE, { name:currentAnimation } ));
-				
-				var newBMD:BitmapData = frame;
-				if (bm.bitmapData != newBMD) bm.bitmapData = newBMD;
+				draw()
 				if (graphicBounds == null) setGraphicBounds();
 			}
+			visible = (flashTime < 1 || flashTime % 2 == 0);
+			flashTime--;
 			_currentFrame++;
 		}
 		
+		private function draw():void {
+			var rect:Rectangle = anim.getFrameRect(_currentFrame);
+			if (bm.bitmapData == null
+			|| (bm.bitmapData.width != rect.width && bm.bitmapData.height != rect.height)) {
+				bm.bitmapData = new BitmapData(rect.width, rect.height);
+			}
+			anim.drawFrame(_currentFrame, bm.bitmapData);
+		}
+		
 		/** Determines whether the asset is overlapping or the target asset. */
-		public function isTouching(asset:IAsset):Boolean {
+		public function isTouching(asset:Asset):Boolean {
 			if(shape == null || asset.shape == null) return false;
 			return shape.hitShape(
 				new Vec2(
@@ -199,29 +242,23 @@ package relic.art
 		}
 		
 		/** The left collision bound of the asset. */
-		public function get left():Number	{ return x + origin.x + (_shape == null ? 0 : _shape.left   ); }
+		public function get left():Number	{ return x + (_shape == null ? 0 : _shape.left   ); }
 		/** The right collision bound of the asset. */
-		public function get right():Number	{ return x + origin.x + (_shape == null ? 0 : _shape.right  ); }
+		public function get right():Number	{ return x + (_shape == null ? 0 : _shape.right  ); }
 		/** The top collision bound of the asset. */
-		public function get top():Number	{ return y + origin.y + (_shape == null ? 0 : _shape.top    ); }
+		public function get top():Number	{ return y + (_shape == null ? 0 : _shape.top    ); }
 		/** The bottom collision bound of the asset. */
-		public function get bottom():Number	{ return y + origin.y + (_shape == null ? 0 : _shape.bottom ); }
+		public function get bottom():Number	{ return y + (_shape == null ? 0 : _shape.bottom ); }
 		
-		public function set left(value:Number):void		{ x = value - origin.x - (_shape == null ? 0 : _shape.left   ); }
-		public function set right(value:Number):void	{ x = value - origin.x - (_shape == null ? 0 : _shape.right  ); }
-		public function set top(value:Number):void		{ y = value - origin.y - (_shape == null ? 0 : _shape.top    ); }
-		public function set bottom(value:Number):void	{ y = value - origin.y - (_shape == null ? 0 : _shape.bottom ); }
+		public function set left(value:Number):void		{ x = value - (_shape == null ? 0 : _shape.left   ); }
+		public function set right(value:Number):void	{ x = value - (_shape == null ? 0 : _shape.right  ); }
+		public function set top(value:Number):void		{ y = value - (_shape == null ? 0 : _shape.top    ); }
+		public function set bottom(value:Number):void	{ y = value - (_shape == null ? 0 : _shape.bottom ); }
 		
 		/** The currently playing animation. */
 		public function get anim():Animation {
 			if (_currentAnimation == null) return null;
 			return animations[_currentAnimation];
-		}
-		
-		/** The frame currently being displayed */
-		public function get frame():BitmapData {
-			if (anim == null) return null;
-			return anim.getFrame(_currentFrame);
 		}
 		
 		/** the name of the current animation. */
@@ -288,6 +325,25 @@ package relic.art
 		/** The elasticity of the asset, a ball will a bounce of .5 will bounce half as high. */
 		public function get bounce():Number { return _bounce; }
 		public function set bounce(value:Number):void { _bounce = value; }
+		
+		public function get graphic():IBitmapDrawable { return _graphic; }
+		public function set graphic(value:IBitmapDrawable):void {
+			if (child != null)
+				removeChild(child);
+			_graphic = value;
+			if (value is BitmapData)
+				bm.bitmapData = value as BitmapData;
+			else addChild(child);
+			setGraphicBounds();
+			currentAnimation = null;
+			
+		}
+		
+		protected function get child():DisplayObject { return graphic as DisplayObject; }
+		
+		override public function toString():String {
+			return '[' + getQualifiedClassName(this).split('::').pop() + ': ' + name + ']';
+		}
 	}
 
 }

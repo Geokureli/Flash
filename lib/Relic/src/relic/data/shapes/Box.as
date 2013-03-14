@@ -1,5 +1,6 @@
 package relic.data.shapes 
 {
+	import flash.geom.Rectangle;
 	import relic.data.Vec2;
 	import flash.display.Graphics;
 	import flash.events.Event;
@@ -45,6 +46,10 @@ package relic.data.shapes
 			_height = value;
 			if (autoCenter) offset.y = -value/2;
 			//dispatchEvent(new Event(Event.CHANGE));
+		}
+		
+		static public function fromRect(rect:Rectangle):Box {
+			return new Box(rect.x, rect.y, rect.width, rect.height);
 		}
 	}
 

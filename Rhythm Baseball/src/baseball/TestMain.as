@@ -1,6 +1,6 @@
 package baseball {
 	import baseball.art.Hero;
-	import baseball.art.RhythmBlit;
+	import baseball.art.Obstacle;
 	import baseball.scenes.GameScene;
 	import baseball.scenes.RandomScene;
 	import baseball.scenes.TestScene;
@@ -24,6 +24,10 @@ package baseball {
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
 			scenes = { main:RandomScene };
+		}
+		override protected function init(e:Event = null):void {
+			super.init(e);
+			showFPS = true;
 		}
 	}
 	

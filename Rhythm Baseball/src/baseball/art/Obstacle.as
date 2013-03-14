@@ -11,12 +11,12 @@ package baseball.art
 	 * ...
 	 * @author George
 	 */
-	public class RhythmBlit extends Blit {
+	public class Obstacle extends Blit {
 		static public var HERO:Vec2;
 		static public var SCROLL:Number;
 		public var beat:Number, speed:Number;
 		public var isRhythm:Boolean;
-		public function RhythmBlit(beat:Number) {
+		public function Obstacle(beat:Number) {
 			super();
 			this.beat = beat;
 		}
@@ -29,12 +29,13 @@ package baseball.art
 		}
 		override protected function init(e:Event):void {
 			super.init(e);
+			x = HERO.x + BeatKeeper.toBeatPixels(SCROLL+speed) * (BeatKeeper.beat - beat);
 			//debugDraw();
 		}
 		override public function update():void {
 			super.update();
 			if(isRhythm)
-				x = HERO.x + BeatKeeper.toBeatPixels(SCROLL+speed) * (BeatKeeper.beat - beat);
+				x = HERO.x + BeatKeeper.toBeatPixels((SCROLL+speed) * (BeatKeeper.beat - beat));
 		}
 	}
 

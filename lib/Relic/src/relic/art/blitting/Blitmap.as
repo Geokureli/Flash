@@ -100,12 +100,7 @@ package relic.art.blitting {
 			if (name == null) {
 				if (blit.name in autoNames)
 					name = blit.name + '_' + autoNames[blit.name]++;
-				else if (groups != null) {
-					// --- SET UNIQUE NAME FROM MAIN GROUP
-					name = groups.split(',')[0];
-					name += groups[name].length;
-					if(name in blits) throw new ArgumentError("No blit name defined");
-				} else throw new ArgumentError("No blit name defined");
+				else throw new ArgumentError("No blit name defined");
 			}
 			blit.name = name;
 			if (groups != null) {
@@ -131,9 +126,7 @@ package relic.art.blitting {
 			// --- GET BLIT
 			if (blit is String) blit = blits[blit];
 			
-			// --- SET PARAMS
-			for (var i:String in params)
-				blit[i] = params[i];
+			blit.setParameters(params);
 			
 			// --- ADD TO LAYER
 			layers[layer].add(blit);
@@ -148,13 +141,25 @@ package relic.art.blitting {
 		public function getBlit(name:String):Blit { return blits[name]; }
 		
 		/**
+		 * Removes the target asset from the specified group or groups
+		 * @param	blit: The blit to remove.
+		 * @param	group: The group to remove it from. To remove from multiple groups, separate by commas 
+		 */
+		public function removeFromGroup(blit:Blit, groups:String):void {
+			for each(var group:String in groups.split(',')){
+				var index:int = this.groups[group].indexOf(blit);
+				if (index != -1) this.groups[group].splice(index, 1);
+			}
+		}
+		
+		/**
 		 * Removes an blit from it's parent.
 		 * @param	name: The name the blit is registered to, or the actual blit itself.
 		 * @return	The blit that was removed.
 		 */
 		public function remove(blit:Object):Blit {
 			if (blit is String) blit = blits[blit];
-			blit._parent.remove(blit);
+			blit._layer.remove(blit);
 			return blit as Blit;
 		}
 		
@@ -219,7 +224,7 @@ package relic.art.blitting {
 			bitmapData.fillRect(bitmapData.rect, bgColor);
 			for each(var layer:BlitLayer in layerOrder) {
 				for each(var child:Blit in layer.children)
-					child.draw(bitmapData);
+					child.drawToStage(bitmapData);
 			}
 		}
 		

@@ -1,5 +1,6 @@
 package relic.data 
 {
+	import flash.geom.Point;
 	/**
 	 * ...
 	 * @author George
@@ -8,7 +9,7 @@ package relic.data
 	{
 		public var	x:Number,
 					y:Number;
-		
+
 		public function Vec2(x:Number = 0, y:Number = 0) 
 		{
 			this.x = x;
@@ -21,7 +22,7 @@ package relic.data
 		// --- --- --- --- --- --- -
 		// --- --- MODIFIERS --- --- 
 		// --- --- --- --- --- --- -
-		
+
 		public function add(v:Vec2):void { x += v.x; y += v.y; }
 		public function subtract(v:Vec2):void { x -= v.x; y -= v.y; }
 		public function multiply(scaler:Number):void { x *= scaler; y *= scaler; }
@@ -31,11 +32,11 @@ package relic.data
 			x = x / l;
 			y = y / l;
 		}
-		
+
 		// --- --- --- --- --- --- -
 		// --- --- OPERATORS --- --- 
 		// --- --- --- --- --- --- - 
-		
+
 		public function sum(v:Vec2):Vec2 { return new Vec2(x + v.x, y + v.y); }
 		public function dif(v:Vec2):Vec2 { return new Vec2(x - v.x, y - v.y); }
 		public function scale(num:Number):Vec2 { return new Vec2(x * num, y * num); }
@@ -44,7 +45,7 @@ package relic.data
 		// --- --- --- --- --- --- --- --- -
 		// --- --- GETTERS / SETTERS --- ---
 		// --- --- --- --- --- --- --- --- -
-		
+
 		public function get length2():Number { return x * x + y * y; }
 		public function get length():Number { return Math.sqrt(x * x + y * y); }
 		public function set length(num:Number):void { normalize(); multiply(num); }
@@ -56,10 +57,10 @@ package relic.data
 		}
 		public function get rotation():Number { return angle / Math.PI * 180; }
 		public function set rotation(num:Number):void { angle = num * Math.PI / 180; }
-		
+
 		public function get rHand():Vec2 { return new Vec2(-y, x); }
 		public function get lHand():Vec2 { return new Vec2(y, -x); }
-		
+
 		public function get unitX():Number { return x / length; }
 		public function get unitY():Number { return y / length; }
 		public function get unit():Vec2 {
@@ -67,7 +68,10 @@ package relic.data
 			v.normalize();
 			return v;
 		}
+		public function get point():Point { return new Point(x, y); }
 		public function get string():String { return toString(); }
+		
+		static public function fromPoint(p:Point):Vec2 { return new Vec2(p.x, p.y); }
 	}
 
 }

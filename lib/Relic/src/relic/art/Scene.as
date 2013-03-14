@@ -1,5 +1,4 @@
-package relic.art 
-{
+package relic.art {
 	import flash.display.DisplayObjectContainer;
 	import relic.data.AssetManager;
 	//import relic.data.events.AssetEvent;
@@ -13,8 +12,7 @@ package relic.art
 	 * ...
 	 * @author George
 	 */
-	public class Scene extends Sprite 
-	{
+	public class Scene extends Sprite implements IScene {
 		protected var assets:AssetManager;
 		protected var up:Boolean, down:Boolean, left:Boolean, right:Boolean, 
 						updateAssets:Boolean;
@@ -187,7 +185,7 @@ package relic.art
 			removeListeners();
 			assets.destroy();
 			
-			update = null;
+			defaultUpdate = null;
 		}
 		
 		/**
