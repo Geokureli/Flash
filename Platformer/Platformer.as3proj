@@ -11,11 +11,12 @@
     <movie version="10" />
     <movie minorVersion="1" />
     <movie platform="Flash Player" />
-    <movie background="#A4E4FC" />
+    <movie background="#000000" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
+    <class path="..\lib\Relic\src" />
   </classpaths>
   <!-- Build options -->
   <build>

@@ -5,11 +5,12 @@ package baseball.scenes
 	import baseball.art.obstacles.Gap;
 	import baseball.art.obstacles.Rock;
 	import baseball.art.Obstacle;
-	import baseball.beat.BeatKeeper;
+	import relic.beat.BeatKeeper;
 	import baseball.Imports;
 	import flash.display.Scene;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import relic.audio.SoundManager;
 	import relic.data.events.SceneEvent;
 	import relic.data.Global;
 	/**
@@ -21,8 +22,6 @@ package baseball.scenes
 		public function TestScene() { super(); }
 		override protected function setLevelProperties():void {
 			super.setLevelProperties();
-			if ("userLevel" in Global.VARS) level = Global.VARS.userLevel;
-			else level = new XML(new Imports.testLevel);
 		}
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();			
@@ -34,8 +33,10 @@ package baseball.scenes
 		
 		override protected function keyHandle(e:KeyboardEvent):void {
 			super.keyHandle(e);
-			if (e.type == KeyboardEvent.KEY_DOWN && e.keyCode == 32 && "userLevel" in Global.VARS)
+			if (e.type == KeyboardEvent.KEY_DOWN && e.keyCode == 32 && "userLevel" in Global.VARS) {
+				SoundManager.stop(song);
 				dispatchEvent(new SceneEvent(SceneEvent.SCENE_CHANGE, { next:"editor" } ));
+			}
 		}
 		override protected function reset():void {
 			super.reset();

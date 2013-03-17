@@ -1,15 +1,16 @@
 package art 
 {
-	import data.Vec2;
+	import relic.data.Vec2;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import relic.art.Asset;
 	
 	/**
 	 * ...
 	 * @author George
 	 */
-	public class DragBox extends Sprite 
+	public class DragBox extends Asset 
 	{
 		static public var SIZE:int = 10;
 		public function DragBox(x:Number=0, y:Number=0) 

@@ -1,10 +1,10 @@
 package art.Scenes 
 {
-	import art.Asset;
-	import art.Scene;
-	import data.shapes.Box;
-	import data.BoundMode;
-	import data.Vec2;
+	import relic.art.Asset;
+	import relic.art.Scene;
+	import relic.data.shapes.Box;
+	import relic.data.BoundMode;
+	import relic.data.Vec2;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -37,9 +37,9 @@ package art.Scenes
 			hero.x = (stage.stageWidth - hero.width) / 2;
 			hero.y = (stage.stageHeight - hero.height - 100) / 2;
 		}
-		override protected function enterFrame(e:Event):void 
+		override public function update():void 
 		{
-			super.enterFrame(e);
+			super.update();
 			hero.acc.x = hero.acc.y = 0;
 			if (right) hero.acc.x = speed;
 			if (left) hero.acc.x = -speed;
@@ -47,7 +47,7 @@ package art.Scenes
 			if (down) hero.acc.y = speed;
 			hero.update();
 			var pos:Vec2 = new Vec2(hero.x+(hero.shape as Box).height/2, hero.y+(hero.shape as Box).width/2);
-			drawLayer.graphics.clear();
+			graphics.clear();
 			if(hero.acc.length2 > 0)
 				drawArrow(pos, pos.sum(hero.acc.scale(10)), 0xFF00);
 			if(hero.vel.length2 > 0)

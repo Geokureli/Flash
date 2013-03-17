@@ -4,6 +4,7 @@ package relic.art.blitting {
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.utils.Dictionary;
+	import relic.art.Asset;
 	import relic.art.IScene;
 	
 	/**
@@ -90,7 +91,7 @@ package relic.art.blitting {
 		 * @param	groups(optional): The groups this blit belongs to. to add to multiple groups, spearate by commas. (see autoGroup()).
 		 * @return	The blit that was added
 		 */
-		public function add(blit:Blit, name:String = null, groups:String = null):Blit {
+		public function add(blit:Asset, name:String = null, groups:String = null):Asset {
 			for (var key:Object in autoGroups) {
 				if (blit is Class(key)) {
 					if (groups == null) groups = autoGroups[key];
@@ -122,7 +123,7 @@ package relic.art.blitting {
 		 * @param	params(optional): an object containing variables that will be set on the target asset(for awesome 1 line defs).
 		 * @return	The blit that was Added.
 		 */
-		public function place(layer:String, blit:Object, params:Object = null):Blit {
+		public function place(layer:Object, blit:Object, params:Object = null):Asset {
 			// --- GET BLIT
 			if (blit is String) blit = blits[blit];
 			

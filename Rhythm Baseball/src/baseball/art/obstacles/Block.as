@@ -12,7 +12,7 @@ package baseball.art.obstacles
 	 */
 	public class Block extends Obstacle {
 		
-		public function Block(beat:Number) { super(beat); }
+		public function Block() { super(); }
 		
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();

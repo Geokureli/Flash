@@ -17,7 +17,7 @@ package relic.art {
 			super.setDefaultValues();
 			states = new ButtonStates();
 			isToggle = false;
-			selected = false;
+			_selected = false;
 		}
 		override protected function addListeners():void {
 			super.addListeners();

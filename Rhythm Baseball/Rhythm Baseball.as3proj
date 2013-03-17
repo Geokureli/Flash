@@ -4,7 +4,7 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin\RhythmBaseball.swf" />
+    <movie path="bin-debug\RhythmBaseball.swf" />
     <movie fps="30" />
     <movie width="800" />
     <movie height="400" />

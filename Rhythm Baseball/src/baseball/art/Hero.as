@@ -1,6 +1,7 @@
 package baseball.art 
 {
-	import baseball.beat.BeatKeeper;
+	import flash.media.SoundChannel;
+	import relic.beat.BeatKeeper;
 	import baseball.Imports;
 	import relic.art.Asset;
 	import relic.art.blitting.Blit;
@@ -17,6 +18,7 @@ package baseball.art
 	 */
 	public class Hero extends Blit {
 		static private var sprites:SpriteSheet;
+		private var jumpChannel:SoundChannel;
 		private var startBeat:Number;
 		{
 			sprites = new SpriteSheet(new Imports.Hero().bitmapData);
@@ -72,7 +74,7 @@ package baseball.art
 				if (u && _u) {
 					_u = false;
 					currentAnimation = "jump";
-					SoundManager.play("jump");
+					jumpChannel = SoundManager.play("jump");
 					addEventListener(AnimationEvent.COMPLETE, animEnd);
 				}
 				if (l && _l) {
@@ -93,6 +95,8 @@ package baseball.art
 				addEventListener(AnimationEvent.COMPLETE, animEnd);
 			} else if (currentAnimation == "jump" && !u && _currentFrame > 1) {
 				removeEventListener(AnimationEvent.COMPLETE, animEnd);
+				jumpChannel.stop();
+				jumpChannel = null;
 				currentAnimation = "idle";
 				SoundManager.play("hit");
 			}
@@ -110,7 +114,10 @@ package baseball.art
 			super.currentAnimation = value;
 		}
 		private function animEnd(e:AnimationEvent):void {
-			if (e.data.name == "jump") SoundManager.play("hit");
+			if (e.data.name == "jump") {
+				if (jumpChannel != null) jumpChannel.stop();
+				SoundManager.play("hit");
+			}
 			removeEventListener(AnimationEvent.COMPLETE, animEnd);
 			currentAnimation = "idle";
 		}

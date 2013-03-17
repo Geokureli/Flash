@@ -109,7 +109,7 @@ package relic.art {
 		 * @param	groups(optional): The groups this asset belongs to (see autoGroup()).
 		 * @return	the asset that was added
 		 */
-		protected function add(asset:Asset, name:String = null, groups:String = null):Asset {
+		public function add(asset:Asset, name:String = null, groups:String = null):Asset {
 			return assets.add(asset, name, groups);
 		}
 		
@@ -121,7 +121,7 @@ package relic.art {
 		 * @param	params(optional): an object containing variables that will be set on the target asset(for awesome 1 line defs).
 		 * @return	The asset that was Added.
 		 */
-		protected function place(parent:Object, asset:Object, params:Object = null):Asset {
+		public function place(parent:Object, asset:Object, params:Object = null):Asset {
 			if (asset is Asset) return assets.place(parent, asset.name, params);
 			return assets.place(parent, asset as String, params);
 		}

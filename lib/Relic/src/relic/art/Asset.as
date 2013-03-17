@@ -6,7 +6,6 @@ package relic.art
 	import mx.core.IAssetLayoutFeatures;
 	import relic.data.events.AnimationEvent;
 	import relic.data.events.AssetEvent;
-	import relic.data.IXMLParam;
 	import relic.data.shapes.Box;
 	import relic.data.Vec2;
 	import relic.data.BoundMode;
@@ -17,6 +16,8 @@ package relic.art
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import flash.utils.getQualifiedClassName;
+	import relic.data.xml.IXMLParam;
+	import relic.data.xml.XMLParser;
 	/**
 	 * ...
 	 * @author George
@@ -76,6 +77,8 @@ package relic.art
 			_live = true;
 		}
 		public function setParameters(params:Object):void {
+			if (Object is XML)
+				XMLParser.setProperties(this, params as XML);
 			for (var i:String in params)
 				this[i] = params[i];
 		}
@@ -95,7 +98,6 @@ package relic.art
 				graphicBounds = new Box(bm.x-origin.x, bm.y-origin.y, bm.width, bm.height);
 			else if (child != null) {
 				var disObj:DisplayObject = child;
-				trace(disObj.getBounds(disObj));
 				graphicBounds = new Box(disObj.x, disObj.y, disObj.width, disObj.height);
 			}
 		}
@@ -138,7 +140,7 @@ package relic.art
 		public function update():void {
 			move();
 			
-			collide();
+			checkBounds();
 			
 			updateGraphics();
 		}
@@ -158,7 +160,7 @@ package relic.art
 			vel.multiply(1 - friction);
 		}
 		
-		protected function collide():void {
+		protected function checkBounds():void {
 			switch(boundMode) {
 				case BoundMode.LOCK:
 					if (right > bounds.right)	right = bounds.right;
@@ -223,7 +225,7 @@ package relic.art
 		private function draw():void {
 			var rect:Rectangle = anim.getFrameRect(_currentFrame);
 			if (bm.bitmapData == null
-			|| (bm.bitmapData.width != rect.width && bm.bitmapData.height != rect.height)) {
+			|| (bm.bitmapData.width != rect.width || bm.bitmapData.height != rect.height)) {
 				bm.bitmapData = new BitmapData(rect.width, rect.height);
 			}
 			anim.drawFrame(_currentFrame, bm.bitmapData);
@@ -242,18 +244,18 @@ package relic.art
 		}
 		
 		/** The left collision bound of the asset. */
-		public function get left():Number	{ return x + (_shape == null ? 0 : _shape.left   ); }
+		public function get left():Number	{ return x + origin.x + (_shape == null ? 0 : _shape.left   ); }
 		/** The right collision bound of the asset. */
-		public function get right():Number	{ return x + (_shape == null ? 0 : _shape.right  ); }
+		public function get right():Number	{ return x + origin.x + (_shape == null ? 0 : _shape.right  ); }
 		/** The top collision bound of the asset. */
-		public function get top():Number	{ return y + (_shape == null ? 0 : _shape.top    ); }
+		public function get top():Number	{ return y + origin.y + (_shape == null ? 0 : _shape.top    ); }
 		/** The bottom collision bound of the asset. */
-		public function get bottom():Number	{ return y + (_shape == null ? 0 : _shape.bottom ); }
+		public function get bottom():Number	{ return y + origin.y + (_shape == null ? 0 : _shape.bottom ); }
 		
-		public function set left(value:Number):void		{ x = value - (_shape == null ? 0 : _shape.left   ); }
-		public function set right(value:Number):void	{ x = value - (_shape == null ? 0 : _shape.right  ); }
-		public function set top(value:Number):void		{ y = value - (_shape == null ? 0 : _shape.top    ); }
-		public function set bottom(value:Number):void	{ y = value - (_shape == null ? 0 : _shape.bottom ); }
+		public function set left(value:Number):void		{ x = value - origin.x - (_shape == null ? 0 : _shape.left   ); }
+		public function set right(value:Number):void	{ x = value - origin.x - (_shape == null ? 0 : _shape.right  ); }
+		public function set top(value:Number):void		{ y = value - origin.y - (_shape == null ? 0 : _shape.top    ); }
+		public function set bottom(value:Number):void	{ y = value - origin.y - (_shape == null ? 0 : _shape.bottom ); }
 		
 		/** The currently playing animation. */
 		public function get anim():Animation {
@@ -312,7 +314,17 @@ package relic.art
 		
 		/** Kind of useless right now. */
 		public function get origin():Vec2 { return _origin; }
-		public function set origin(value:Vec2):void { _origin = value; }
+		public function set origin(value:Vec2):void {
+			_origin = value;
+			if (child != null) {
+				child.x = -origin.x;
+				child.y = -origin.y;
+			}
+			if (bm != null) {
+				bm.x = -origin.x;
+				bm.y = -origin.y;
+			}
+		}
 		
 		/** If -1, than ignored, otherwise caps velocity (positive and negative). */
 		public function get maxSpeed():Vec2 { return _maxSpeed; }
@@ -333,7 +345,10 @@ package relic.art
 			_graphic = value;
 			if (value is BitmapData)
 				bm.bitmapData = value as BitmapData;
-			else addChild(child);
+			else {
+				addChild(child);
+			}
+			origin = origin;
 			setGraphicBounds();
 			currentAnimation = null;
 			

@@ -18,16 +18,15 @@ package baseball.scenes
 			super.addStaticChildren();
 			
 			addChild(editorBtn	= new Btn("Level Editor",	200, 30)).addEventListener(MouseEvent.CLICK, btnClick);
-			//addChild(
-			testBtn	= new Btn("TMOTTBG",		200, 30)//).addEventListener(MouseEvent.CLICK, testClick);
-			addChild(rdmBtn		= new Btn("Random Level",	200, 30)).addEventListener(MouseEvent.CLICK, btnClick);
+			addChild(testBtn	= new Btn("TMOTTBG",		200, 30)).addEventListener(MouseEvent.CLICK, testClick);
+			addChild(rdmBtn		= new Btn("Charge Mode",	200, 30)).addEventListener(MouseEvent.CLICK, btnClick);
 			editorBtn.name = "editor";
 			testBtn.name = "song";
 			rdmBtn.name = "random";
 		}
 		
 		private function testClick(e:MouseEvent):void {
-			Global.VARS.userLevel = <level bpm="100" speed="10" song="tmottbg"/>
+			Global.VARS.userLevel = new XML(new Imports.Level1);
 			dispatchEvent(new SceneEvent(SceneEvent.SCENE_CHANGE, { next:e.currentTarget.name } ));
 		}
 		
@@ -49,7 +48,7 @@ package baseball.scenes
 			editorBtn = null;
 			removeChild(rdmBtn);
 			rdmBtn = null;
-			//removeChild(testBtn);
+			removeChild(testBtn);
 			testBtn = null;
 		}
 	}

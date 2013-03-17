@@ -20,7 +20,7 @@ package baseball.art.obstacles
 			sprites.addAnimation("break", Vector.<int>([1, 2, 3, 4, 5]), false);
 		}
 		
-		public function Rock(beat:Number) { super(beat); name = "rock"; }
+		public function Rock() { super(); name = "rock"; }
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
 			

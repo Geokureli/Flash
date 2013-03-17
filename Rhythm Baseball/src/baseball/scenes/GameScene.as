@@ -1,7 +1,8 @@
 package baseball.scenes 
 {
 	import baseball.art.Obstacle;
-	import baseball.beat.BeatKeeper;
+	import relic.beat.BeatKeeper;
+	import relic.data.Global;
 	
 	import relic.art.Asset;
 	import relic.art.Scene;
@@ -38,7 +39,7 @@ package baseball.scenes
 		private var back:Sprite, mid:Sprite, front:Sprite;
 		private var songStarted:Boolean;
 		protected var strikes:int;
-		protected var bombTime:Number, defaultTime:Number;
+		protected var bombTime:Number, defaultTime:Number, songOffset:Number;
 		protected var level:XML, spawned:Vector.<int>
 		protected var song:String;
 		
@@ -50,7 +51,8 @@ package baseball.scenes
 		protected function setLevelProperties():void {
 			Bomb.SPEED = -10;
 			Obstacle.HERO = new Vec2(100, 300);
-			level = <level bpm="120" speed="10"/>;
+			if ("userLevel" in Global.VARS) level = Global.VARS.userLevel;
+			else level = new XML(new Imports.testLevel);
 		}
 		
 		override protected function setDefaultValues():void {
@@ -59,12 +61,16 @@ package baseball.scenes
 			BeatKeeper.beatsPerMinute = Number(level.@bpm);
 			Obstacle.SCROLL = -Number(level.@speed);
 			if ("@song" in level) song = level.@song;
+			if ("@offset" in level) songOffset = level.@offset;
+			Global.VARS.songOffset = songOffset;
+			Global.VARS.song = null;
 			trace(level.toXMLString());
 			defaultUpdate = mainUpdate;
 			bgColor = 0xFFFFFF;
 			spawned = new Vector.<int>();
 			songStarted = false;
 			strikes = 3;
+			BeatKeeper.clearMetronome();
 		}
 		
 		override protected function createLayers():void {
@@ -111,19 +117,14 @@ package baseball.scenes
 			super.update();
 			var beat:Number = BeatKeeper.beat;
 			
-			if (song != null && beat > 0 && !songStarted){
-				SoundManager.play(song);
-				songStarted = true;
-			}
-			
-			for each(var node:XML in level.children()) {
-				var spawn:Number = Number(node) - (node.name().toString() == "ball" ? bombTime : defaultTime);
+			for each(var node:XML in level.assets[0].children()) {
+				var spawn:Number = Number(node.@beat) - (node.name().toString() == "ball" ? bombTime : defaultTime);
 				if (beat > spawn && spawned.indexOf(node.childIndex()) == -1) {
 					switch(node.name().toString()) {
-						case "ball": addBomb(node.toString()); break;
-						case "gap": addGap(node.toString()); break;
-						case "rock": addRock(node.toString()); break;
-						case "block": addBlock(node.toString()); break;
+						case "ball": addBomb(Number(node.@beat)); break;
+						case "gap": addGap(Number(node.@beat)); break;
+						case "rock": addRock(Number(node.@beat)); break;
+						case "block": addBlock(Number(node.@beat)); break;
 					}
 					spawned.push(node.childIndex());
 					//delete spawnList[node];
@@ -139,6 +140,16 @@ package baseball.scenes
 			hero.l = left;
 			hero.r = right;
 			BeatKeeper.update();
+			
+			if (song != null && BeatKeeper.time > songOffset && !songStarted){
+				SoundManager.play(song, BeatKeeper.time - songOffset);
+				songStarted = true;
+				//Global.game.addDebugText("offset");
+				BeatKeeper.syncWithSong(song, songOffset);
+			}
+			//if (songStarted) {
+				//Global.game.setText("offset", (int(SoundManager.currentSongPosition) - (BeatKeeper.time - songOffset)).toString());
+			//}
 			//bg.update();
 			for each(var bomb:Bomb in group("bombs")){
 				if (bomb.left <= hero.right && bomb.isRhythm) {
@@ -194,6 +205,7 @@ package baseball.scenes
 			defaultUpdate = updateEnd;
 			hero.disableKeys();
 			updateBlits = false;
+			BeatKeeper.stopSync();
 			count = 0;
 		}
 		
@@ -204,12 +216,13 @@ package baseball.scenes
 			}
 		}
 		
-		protected function addBomb(beat:Number):void { place("front", add(new Bomb(beat))); }
-		protected function addGap(beat:Number):void { place("back", add(new Gap(beat))); }
-		protected function addRock(beat:Number):void { place("front", add(new Rock(beat))); }
-		protected function addBlock(beat:Number):void { place("front", add(new Block(beat))); }
+		protected function addBomb(beat:Number):void { (place("front", add(new Bomb())) as Obstacle).beat = beat; }
+		protected function addGap(beat:Number):void { (place("back", add(new Gap())) as Obstacle).beat = beat; }
+		protected function addRock(beat:Number):void { (place("front", add(new Rock())) as Obstacle).beat = beat; }
+		protected function addBlock(beat:Number):void { (place("front", add(new Block())) as Obstacle).beat = beat; }
 		
 		protected function reset():void { 
+			trace("reset");
 			BeatKeeper.reset();
 			killGroup("obstacles");
 			defaultUpdate = mainUpdate;
@@ -224,7 +237,10 @@ package baseball.scenes
 			super.destroy();
 			level = null;
 			spawned = null;
+			SoundManager.stop(song);
+			BeatKeeper.stopSync();
 			song = null;
+			Global.VARS.song = null;
 		}
 		
 		

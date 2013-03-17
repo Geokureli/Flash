@@ -6,7 +6,7 @@ package relic.data
 	 */
 	public class Global {
 		static public const VARS:Object = { };
-		
+		static public var game:Game;
 	}
 
 }

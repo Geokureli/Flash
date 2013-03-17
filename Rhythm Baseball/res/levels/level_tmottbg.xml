@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<level bpm="105" speed="15" song="tmottbg" offset="700" meter="6">
+	<assets>
+		<gap beat="1.5"/>
+		<ball beat="2.5"/>
+		<gap beat="3"/>
+		<gap beat="3.25"/>
+		<rock beat="4"/>
+		<block beat="5"/>
+		<block beat="5.5"/>
+		<gap beat="6"/>
+		<ball beat="6.75"/>
+		<gap beat="7.5"/>
+		<gap beat="7.75"/>
+		<rock beat="8.5"/>
+		<gap beat="9"/>
+		<gap beat="9.25"/>
+		<ball beat="10"/>
+		<gap beat="10.5"/>
+		<gap beat="10.75"/>
+		<gap beat="11"/>
+		<gap beat="11.25"/>
+		<rock beat="12.5"/>
+		<rock beat="13"/>
+		<ball beat="13.5"/>
+		<ball beat="14.5"/>
+		<block beat="15"/>
+		<block beat="15.5"/>
+		<block beat="16"/>
+		<gap beat="16.5"/>
+		<gap beat="16.75"/>
+		<rock beat="17.5"/>
+		<ball beat="18"/>
+		<rock beat="18.5"/>
+		<rock beat="19"/>
+		<ball beat="19.5"/>
+		<block beat="21"/>
+		<block beat="21.25"/>
+		<block beat="21.5"/>
+		<block beat="21.75"/>
+		<block beat="22"/>
+		<ball beat="22.5"/>
+		<ball beat="23.5"/>
+		<rock beat="24.5"/>
+		<rock beat="25"/>
+		<gap beat="25.5"/>
+		<gap beat="25.75"/>
+		<ball beat="26.5"/>
+		<gap beat="27"/>
+		<gap beat="27.25"/>
+		<rock beat="28"/>
+		<gap beat="28.5"/>
+		<gap beat="28.75"/>
+		<gap beat="29"/>
+		<gap beat="29.25"/>
+		<ball beat="30"/>
+		<gap beat="31.5"/>
+		<gap beat="31.75"/>
+		<rock beat="32.25"/>
+		<rock beat="32.75"/>
+		<ball beat="33.5"/>
+		<block beat="34.5"/>
+		<block beat="34.75"/>
+		<block beat="35"/>
+		<block beat="35.25"/>
+		<block beat="35.5"/>
+		<block beat="35.75"/>
+		<block beat="36"/>
+		<rock beat="36.5"/>
+		<rock beat="37"/>
+		<gap beat="37.5"/>
+		<gap beat="37.75"/>
+		<gap beat="38"/>
+		<gap beat="38.25"/>
+		<gap beat="39"/>
+		<gap beat="39.25"/>
+		<gap beat="39.5"/>
+		<gap beat="39.75"/>
+		<rock beat="40.75"/>
+		<rock beat="41.25"/>
+		<rock beat="41.75"/>
+		<ball beat="42.25"/>
+		<ball beat="42.75"/>
+		<ball beat="43.25"/>
+		<block beat="44"/>
+		<block beat="44.25"/>
+		<block beat="44.5"/>
+		<block beat="44.75"/>
+		<ball beat="45.25"/>
+		<block beat="45.75"/>
+		<block beat="46"/>
+		<block beat="46.25"/>
+		<block beat="46.5"/>
+		<gap beat="47.25"/>
+		<gap beat="47.5"/>
+		<rock beat="48"/>
+		<rock beat="48.5"/>
+		<ball beat="49.25"/>
+	</assets>
+</level>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

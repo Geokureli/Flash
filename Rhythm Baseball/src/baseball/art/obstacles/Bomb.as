@@ -1,7 +1,7 @@
 package baseball.art.obstacles 
 {
 	import baseball.art.Obstacle;
-	import baseball.beat.BeatKeeper;
+	import relic.beat.BeatKeeper;
 	import baseball.Imports;
 	import relic.art.Asset;
 	import relic.art.SpriteSheet;
@@ -22,7 +22,7 @@ package baseball.art.obstacles
 			sprites.addAnimation("idle", Vector.<int>([0, 1, 2, 3, 4, 5, 6, 7]));
 		}
 		
-		public function Bomb(beat:Number) { super(beat); name = "bomb";}
+		public function Bomb() { super(); name = "bomb";}
 
 		
 		override protected function setDefaultValues():void {

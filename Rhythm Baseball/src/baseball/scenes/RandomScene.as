@@ -1,7 +1,8 @@
 package baseball.scenes {
 	import baseball.art.obstacles.Bomb;
 	import baseball.art.Obstacle;
-	import baseball.beat.BeatKeeper;
+	import relic.beat.BeatKeeper;
+	import baseball.data.events.BeatEvent;
 	import flash.events.Event;
 	import relic.art.Scene;
 	import relic.audio.SoundManager;
@@ -16,7 +17,6 @@ package baseball.scenes {
 		static public const TYPES:Array = ["ball", "block", "rock", "gap"];
 		
 		private var beatCount:int;
-		private var hasSong:Boolean;
 		
 		public function RandomScene() { super(); }
 		
@@ -26,29 +26,30 @@ package baseball.scenes {
 		}
 		override protected function setLevelProperties():void {
 			super.setLevelProperties();
-			hasSong = false;
-			if ("userLevel" in Global.VARS) {
-				level = Global.VARS.userLevel;
-			} else {
-				level = <level bpm="80" speed="15"/>;
-			}
-			if ("song" in Global.VARS) {
-				song = Global.VARS.song;
-				hasSong = true;
-			}
+			level = <level bpm="80" speed="15"/>;
 		}
 		override protected function init(e:Event):void {
 			for (var i:int = 0; i < 10; i++)
 				addRandomObstacle();
+				BeatKeeper.setMetronome([
+					"A#", null, "F", null, "G", null, "A", null,
+					"A#", null, "F", null, "G", null, "A", null,
+					"B", null, "F#", null, "G#", null, "A#", null,
+					"B", null, "F#", null, "G#", null, "A#", null,
+					"C", null, "G", null, "A", null, "B", null
+				], .25);
 			super.init(e);
+		}
+		
+		private function onBeat(e:BeatEvent):void {
+			SoundManager.play("onBeat");
 		}
 		override public function update():void {
 			bombTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / (Bomb.SPEED + Obstacle.SCROLL) / stage.frameRate;
 			defaultTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / Obstacle.SCROLL / stage.frameRate;
 			
 			super.update();
-			if(!hasSong)
-				BeatKeeper.beatsPerMinute += 2 / stage.frameRate;
+			BeatKeeper.beatsPerMinute += 2 / stage.frameRate;
 			
 			if (beatCount-BeatKeeper.beat < 10) {
 				addRandomObstacle();
@@ -66,6 +67,7 @@ package baseball.scenes {
 		}
 		override protected function reset():void {
 			super.reset();
+			trace(BeatKeeper.beatsPerMinute, BeatKeeper.beat)
 			BeatKeeper.beatsPerMinute = Number(level.@bpm);
 			Obstacle.SCROLL = -Number(level.@speed);
 		}

@@ -1,6 +1,6 @@
 package baseball.art 
 {
-	import baseball.beat.BeatKeeper;
+	import relic.beat.BeatKeeper;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import relic.art.blitting.Blit;
@@ -16,9 +16,8 @@ package baseball.art
 		static public var SCROLL:Number;
 		public var beat:Number, speed:Number;
 		public var isRhythm:Boolean;
-		public function Obstacle(beat:Number) {
+		public function Obstacle() {
 			super();
-			this.beat = beat;
 		}
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
@@ -33,9 +32,9 @@ package baseball.art
 			//debugDraw();
 		}
 		override public function update():void {
-			super.update();
 			if(isRhythm)
 				x = HERO.x + BeatKeeper.toBeatPixels((SCROLL+speed) * (BeatKeeper.beat - beat));
+			super.update();
 		}
 	}
 

@@ -21,14 +21,14 @@ package baseball.art.obstacles
 			src = new Imports.Gap().bitmapData;
 			BitmapHelper.clearBG(src, -1);
 		}
-		public function Gap(beat:Number) {
-			super(beat);
+		public function Gap() {
+			super();
 			graphic = src;
 		}
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
 			name = "gap";
-			origin.x = -35
+			origin.x = 15;
 			shape = new Box(0, 0, 24, 64);
 			y += 25;
 			//boundMode = BoundMode.NONE;
