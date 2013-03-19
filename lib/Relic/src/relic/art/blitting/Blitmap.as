@@ -92,17 +92,16 @@ package relic.art.blitting {
 		 * @return	The blit that was added
 		 */
 		public function add(blit:Asset, name:String = null, groups:String = null):Asset {
+			if (name in blits) trace("Object already named " + name);
 			for (var key:Object in autoGroups) {
 				if (blit is Class(key)) {
 					if (groups == null) groups = autoGroups[key];
 					else { groups += ',' + groups; }
 				}
 			}
-			if (name == null) {
-				if (blit.name in autoNames)
-					name = blit.name + '_' + autoNames[blit.name]++;
-				else throw new ArgumentError("No blit name defined");
-			}
+			if (blit.name in autoNames)
+				name = blit.name + '_' + autoNames[blit.name]++;
+			else if(name == null) throw new ArgumentError("No blit name defined");
 			blit.name = name;
 			if (groups != null) {
 				for each(var group:String in groups.split(',')) {

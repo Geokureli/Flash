@@ -1,16 +1,13 @@
 package baseball {
-	import baseball.scenes.ButtonTestScene;
 	import baseball.scenes.editor.EditorScene;
 	import baseball.scenes.GameScene;
 	import baseball.scenes.MainMenu;
 	import baseball.scenes.RandomScene;
 	import baseball.scenes.TestScene;
-	import flash.display.Sprite;
 	import flash.display.StageQuality;
 	import relic.data.Game;
 	import flash.events.Event;
 	import relic.data.Global;
-	import relic.data.StringHelper;
 	import relic.data.xml.XMLParser;
 	/**
 	 * ...
@@ -29,7 +26,6 @@ package baseball {
 			showFPS = true;
 			Global.game = this;
 			stage.quality = StageQuality.LOW;
-			
 		}
 		override protected function enterFrame(e:Event):void {
 			super.enterFrame(e);

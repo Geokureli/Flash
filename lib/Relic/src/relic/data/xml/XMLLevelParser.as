@@ -12,15 +12,19 @@ package relic.data.xml {
 		public function XMLLevelParser(src:XML, target:IScene) {
 			super(src, target);
 		}
+		//override protected function setDefaultProperies():void { super.setDefaultProperies(); }
+		
 		override public function parse(entry:String = null):void {
 			for each(var asset:XML in source.assets.children()) {
 				parseNode(asset);
 			}
 		}
+		
 		override protected function parseNode(node:XML):void {
-			var special:Object = XMLParser.removeAttributes(SPECIAL_PARAMS);
+			super.parseNode(node);
+			var special:Object = XMLParser.removeAttributes(node, SPECIAL_PARAMS);
 			var obj:Asset = XMLClasses.createObject(node) as Asset;
-			if ("layer" in special) special.layer = "front";
+			if (special.layer == "") special.layer = "front";
 			scene.place(special.layer, scene.add(obj, obj.name, special.groups));
 		}
 		protected function get scene():IScene { return target as IScene; }

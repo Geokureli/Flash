@@ -3,6 +3,8 @@ package baseball.scenes
 	import baseball.art.Obstacle;
 	import relic.beat.BeatKeeper;
 	import relic.data.Global;
+	import relic.data.xml.XMLClasses;
+	import relic.data.xml.XMLParser;
 	
 	import relic.art.Asset;
 	import relic.art.Scene;
@@ -35,6 +37,12 @@ package baseball.scenes
 	 * @author George
 	 */
 	public class GameScene extends BlitScene {
+		{
+			XMLClasses.addRef(Bomb, "ball");
+			XMLClasses.addRef(Rock, "rock");
+			XMLClasses.addRef(Gap, "gap");
+			XMLClasses.addRef(Block, "block");
+		}
 		private var count:int;
 		private var back:Sprite, mid:Sprite, front:Sprite;
 		private var songStarted:Boolean;
@@ -42,6 +50,7 @@ package baseball.scenes
 		protected var bombTime:Number, defaultTime:Number, songOffset:Number;
 		protected var level:XML, spawned:Vector.<int>
 		protected var song:String;
+		protected var levelParser:LevelParser;
 		
 		public function GameScene() {
 			super(new BitmapData(800, 400, false, 0));
@@ -58,6 +67,7 @@ package baseball.scenes
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
 			setLevelProperties();
+			levelParser = new LevelParser(level, this);
 			BeatKeeper.beatsPerMinute = Number(level.@bpm);
 			Obstacle.SCROLL = -Number(level.@speed);
 			if ("@song" in level) song = level.@song;
@@ -120,12 +130,7 @@ package baseball.scenes
 			for each(var node:XML in level.assets[0].children()) {
 				var spawn:Number = Number(node.@beat) - (node.name().toString() == "ball" ? bombTime : defaultTime);
 				if (beat > spawn && spawned.indexOf(node.childIndex()) == -1) {
-					switch(node.name().toString()) {
-						case "ball": addBomb(Number(node.@beat)); break;
-						case "gap": addGap(Number(node.@beat)); break;
-						case "rock": addRock(Number(node.@beat)); break;
-						case "block": addBlock(Number(node.@beat)); break;
-					}
+					levelParser.spawn(node);
 					spawned.push(node.childIndex());
 					//delete spawnList[node];
 					break;
@@ -216,11 +221,6 @@ package baseball.scenes
 			}
 		}
 		
-		protected function addBomb(beat:Number):void { (place("front", add(new Bomb())) as Obstacle).beat = beat; }
-		protected function addGap(beat:Number):void { (place("back", add(new Gap())) as Obstacle).beat = beat; }
-		protected function addRock(beat:Number):void { (place("front", add(new Rock())) as Obstacle).beat = beat; }
-		protected function addBlock(beat:Number):void { (place("front", add(new Block())) as Obstacle).beat = beat; }
-		
 		protected function reset():void { 
 			trace("reset");
 			BeatKeeper.reset();
@@ -247,4 +247,20 @@ package baseball.scenes
 		public function get hero():Hero { return getBlit("hero") as Hero; }
 	}
 
+}
+import relic.art.IScene;
+import relic.data.xml.XMLLevelParser;
+class LevelParser extends XMLLevelParser {
+	public function LevelParser(src:XML, target:IScene) { super(src, target); }
+	//override public function parse(entry:String = null):void { super.parse(entry); }
+	override protected function setDefaultProperies():void {
+		super.setDefaultProperies();		
+		defaultAttributes.prependChild(<x>
+			<ball layer="front"/>
+			<rock layer="front"/>
+			<gap layer="back"/>
+			<block layer="front"/>
+		</x>.children());
+	}
+	public function spawn(node:XML):void { return parseNode(node); }
 }

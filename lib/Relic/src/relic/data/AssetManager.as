@@ -88,6 +88,7 @@ package relic.data
 		 * @return	the asset that was added
 		 */
 		public function add(asset:Asset, name:String = null, groups:String = null):Asset {
+			if (name in assets) trace("asset already named " + name);
 			for (var key:Object in autoGroups) {
 				if (asset is Class(key)) {
 					if (groups == null) groups = autoGroups[key];

@@ -10,7 +10,7 @@ package relic.data.xml {
 							NONE:String = null;
 		private var method:Function;
 		public var type:String;
-		private var thisArg:Object);
+		private var thisArg:Object;
 		public function XMLDelegate(method:Function, type:String = USE_XML, thisArg:Object = null) {
 			this.method = method;
 		}

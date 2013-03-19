@@ -26,14 +26,20 @@ package baseball.art
 			isRhythm = true;
 			y = HERO.y
 		}
+		override public function setParameters(params:Object):void {
+			super.setParameters(params);
+			//trace(params);
+		}
 		override protected function init(e:Event):void {
 			super.init(e);
 			x = HERO.x + BeatKeeper.toBeatPixels(SCROLL+speed) * (BeatKeeper.beat - beat);
 			//debugDraw();
 		}
 		override public function update():void {
-			if(isRhythm)
-				x = HERO.x + BeatKeeper.toBeatPixels((SCROLL+speed) * (BeatKeeper.beat - beat));
+			if(isRhythm){
+				x = HERO.x + BeatKeeper.toBeatPixels((SCROLL + speed) * (BeatKeeper.beat - beat));
+				//trace(x);
+			}
 			super.update();
 		}
 	}

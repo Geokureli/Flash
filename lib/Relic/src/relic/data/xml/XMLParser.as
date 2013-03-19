@@ -6,8 +6,11 @@ package relic.data.xml {
 	 */
 	public class XMLParser {
 		static private const DEFAULT_METHODS:Object = { };
+		static public const DEFAULT_ATTRIBUTES:XML = <defaults/>;
+		
 		protected var methods:Object;
 		protected var classes:Object;
+		protected var defaultAttributes:XML;
 		
 		protected var target:Object;
 		
@@ -20,16 +23,36 @@ package relic.data.xml {
 			preParse();
 		}
 		
-		private function setDefaultProperies():void { }
+		protected function setDefaultProperies():void {
+			methods = { };
+			classes = { };
+			defaultAttributes = <defaults/>;
+		}
 		public function preParse():void { }
 		public function parse(entry:String = null):void {
 			if (entry == null) parseNode(source);
 			else parseNode(source.children().(name().toString() == entry))[0];
 		}
 		protected function parseNode(node:XML):void {
+			setDefaultAttributes(node);
 			for each(var child:XML in node.children())
 				parseNode(child);
 		}
+		
+		
+		public function setDefaultAttributes(node:XML):void {
+			if (node.name().toString() in defaultAttributes) 
+				XMLParser.addAttributes(node, defaultAttributes[node.name().toString()][0]);
+			XMLParser.setDefaultAttributes(node);
+		}
+		
+		public function destroy():void {
+			methods = null;
+			classes = null;
+			source = null;
+			defaultAttributes = null;
+		}
+		
 		static public function removeFromParent(node:XML):XML {
 			delete node.parent()[node.name()];
 			return node;
@@ -41,8 +64,9 @@ package relic.data.xml {
 		}
 		static public function setProperties(obj:Object, node:XML):Object {
 			if (obj == null) obj = { };
-			for each(var at:XML in node.attributes()) 
-				obj[at.name().toString().substr(1)] = StringHelper.autoTypeString(node);
+			setDefaultAttributes(node);
+			for each(var att:XML in node.attributes())
+				obj[att.name().toString()] = StringHelper.autoTypeString(att.toString());
 			return obj;
 		}
 		static public function removeNodes(parent:XML, names:String):XMLList {
@@ -56,6 +80,15 @@ package relic.data.xml {
 			for each(var name:String in names.split(','))
 				obj[name] = StringHelper.autoTypeString(removeAttribute(parent, name));
 			return obj;
+		}
+		static public function setDefaultAttributes(node:XML):void {
+			if (node.name().toString() in DEFAULT_ATTRIBUTES) 
+				XMLParser.addAttributes(node, DEFAULT_ATTRIBUTES[node.name().toString()][0]);
+		}
+		
+		static public function addAttributes(node:XML, params:XML):void {
+			for each(var att:XML in params.attributes())
+				node["@" + att.name().toString()] = att.toString();
 		}
 	}
 }

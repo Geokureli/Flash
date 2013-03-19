@@ -1,7 +1,9 @@
 package {
 	import art.Scenes.AdvancedRectScene;
+	import art.Scenes.DisplacementmapScene;
 	import art.Scenes.MovementScene;
 	import art.Scenes.ProjectionScene;
+	import flash.filters.BitmapFilter;
 	import relic.data.Game;
 	
 	/**

@@ -77,9 +77,9 @@ package relic.art
 			_live = true;
 		}
 		public function setParameters(params:Object):void {
-			if (Object is XML)
+			if (params is XML)
 				XMLParser.setProperties(this, params as XML);
-			for (var i:String in params)
+			else for (var i:String in params)
 				this[i] = params[i];
 		}
 		protected function init(e:Event):void {

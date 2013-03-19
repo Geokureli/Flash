@@ -34,8 +34,8 @@ package art.Scenes {
 		protected function draw():void {
 			graphics.clear();
 		}
-		protected function drawRect(tl:Point, br:Point, ref:Point, border:int = 0x202020, h:int = 0x400040, v:int = 0x4040):void {
-			graphics.lineStyle(2, border);
+		protected function drawRect(tl:Point, br:Point, ref:Point, border:int = 0x404040, h:int = 0x800080, v:int = 0x8080):void {
+			graphics.lineStyle(4, border);
 			graphics.drawRect(tl.x, tl.y, br.x - tl.x, br.y - tl.y);
 			if(ref != null){
 				graphics.lineStyle(2, h);
