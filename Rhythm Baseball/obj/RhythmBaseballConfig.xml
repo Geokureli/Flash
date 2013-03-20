@@ -16,29 +16,17 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'3/19/2013'</value>
-    </define>
-    <define append="true">
-      <name>CONFIG::air</name>
-      <value>false</value>
-    </define>
-    <define append="true">
-      <name>CONFIG::mobile</name>
-      <value>false</value>
-    </define>
-    <define append="true">
-      <name>CONFIG::desktop</name>
-      <value>false</value>
+      <value>'3/20/2013'</value>
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>C:\Users\GeoKureli\Documents\FlashDevelop\Git\Rhythm Baseball\src</path-element>
-      <path-element>C:\Users\GeoKureli\Documents\FlashDevelop\Git\lib\Relic\src</path-element>
-      <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\Rhythm Baseball\src</path-element>
+      <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\lib\Relic\src</path-element>
+      <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Users\GeoKureli\Documents\FlashDevelop\Git\Rhythm Baseball\src\baseball\Main.as</path-element>
+    <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\Rhythm Baseball\src\baseball\Main.as</path-element>
   </file-specs>
   <default-background-color>#A4E4FC</default-background-color>
   <default-frame-rate>30</default-frame-rate>

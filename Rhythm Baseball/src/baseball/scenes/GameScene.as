@@ -58,8 +58,8 @@ package baseball.scenes
 		}
 		
 		protected function setLevelProperties():void {
-			Bomb.SPEED = -10;
-			Obstacle.HERO = new Vec2(100, 300);
+			Bomb.SPEED = 0;
+			Obstacle.HERO = new Vec2(100, 280);
 			if ("userLevel" in Global.VARS) level = Global.VARS.userLevel;
 			else level = new XML(new Imports.testLevel);
 		}
@@ -76,7 +76,7 @@ package baseball.scenes
 			Global.VARS.song = null;
 			trace(level.toXMLString());
 			defaultUpdate = mainUpdate;
-			bgColor = 0xFFFFFF;
+			//bgColor = 0xFFFFFF;
 			spawned = new Vector.<int>();
 			songStarted = false;
 			strikes = 3;
@@ -108,6 +108,10 @@ package baseball.scenes
 			var hero:Hero = add(new Hero(), "hero") as Hero;
 			Obstacle.HERO = new Vec2(hero.right, hero.y);
 			place("mid", "hero");
+			place("back", add(new BG(), "bg_stands", "bg"), { graphic:new Imports.Crowd().bitmapData, y:hero.y-112, parallax:.5 } );
+			place("back", add(new BG(), "bg_darkGrass", "bg"), { graphic:new Imports.BackGrass().bitmapData, y:hero.y, parallax:.75, rows:2 } );
+			place("back", add(new BG(), "bg_line", "bg"), { graphic:new Imports.Ground().bitmapData, y:hero.y+32 } );
+			place("back", add(new BG(), "bg_lightGrass", "bg"), { graphic:new Imports.ForeGrass().bitmapData, y:hero.y+96, parallax:1.5} );
 		}
 		override protected function init(e:Event):void {
 			super.init(e);
@@ -159,7 +163,7 @@ package baseball.scenes
 			for each(var bomb:Bomb in group("bombs")){
 				if (bomb.left <= hero.right && bomb.isRhythm) {
 					if (hero.currentAnimation == "swing") {
-						bomb.vel.x = 20;
+						bomb.vel.x = 40;
 						bomb.vel.y = -20;
 						bomb.acc.y = 1;
 						SoundManager.play("swing");
@@ -243,18 +247,20 @@ package baseball.scenes
 			Global.VARS.song = null;
 		}
 		
-		
 		public function get hero():Hero { return getBlit("hero") as Hero; }
 	}
 
 }
+import baseball.art.Obstacle;
 import relic.art.IScene;
+import relic.art.ScrollingBG;
+import relic.beat.BeatKeeper;
 import relic.data.xml.XMLLevelParser;
 class LevelParser extends XMLLevelParser {
 	public function LevelParser(src:XML, target:IScene) { super(src, target); }
 	//override public function parse(entry:String = null):void { super.parse(entry); }
-	override protected function setDefaultProperies():void {
-		super.setDefaultProperies();		
+	override protected function setDefaultValues():void {
+		super.setDefaultValues();
 		defaultAttributes.prependChild(<x>
 			<ball layer="front"/>
 			<rock layer="front"/>
@@ -263,4 +269,11 @@ class LevelParser extends XMLLevelParser {
 		</x>.children());
 	}
 	public function spawn(node:XML):void { return parseNode(node); }
+}
+class BG extends ScrollingBG {
+	public function BG() { super(); }
+	override public function update():void {
+		super.update();
+		x = Obstacle.HERO.x + BeatKeeper.toBeatPixels(Obstacle.SCROLL) * BeatKeeper.beat;
+	}
 }

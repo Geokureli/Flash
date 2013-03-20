@@ -21,7 +21,7 @@ package baseball.art
 		}
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
-			speed = 0;
+			speed = SCROLL;
 			boundMode = BoundMode.DESTROY;
 			isRhythm = true;
 			y = HERO.y
@@ -37,7 +37,7 @@ package baseball.art
 		}
 		override public function update():void {
 			if(isRhythm){
-				x = HERO.x + BeatKeeper.toBeatPixels((SCROLL + speed) * (BeatKeeper.beat - beat));
+				x = HERO.x + BeatKeeper.toBeatPixels(speed * (BeatKeeper.beat - beat));
 				//trace(x);
 			}
 			super.update();

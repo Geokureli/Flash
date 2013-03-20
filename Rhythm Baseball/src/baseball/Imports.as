@@ -12,6 +12,12 @@ package baseball {
 		static public const Hero:Class;
 		[Embed(source = "../../res/sprites/ground.png", mimeType = "image/png")]
 		static public const Ground:Class;
+		[Embed(source = "../../res/sprites/backgrass.png", mimeType = "image/png")]
+		static public const BackGrass:Class;
+		[Embed(source = "../../res/sprites/foregrass.png", mimeType = "image/png")]
+		static public const ForeGrass:Class;
+		[Embed(source = "../../res/sprites/crowd.png", mimeType = "image/png")]
+		static public const Crowd:Class;
 		[Embed(source = "../../res/sprites/bomb.png", mimeType = "image/png")]
 		static public const Bomb:Class;
 		[Embed(source = "../../res/sprites/gap.png", mimeType = "image/png")]

@@ -8,27 +8,34 @@ package relic.data.xml {
 		static private const DEFAULT_METHODS:Object = { };
 		static public const DEFAULT_ATTRIBUTES:XML = <defaults/>;
 		
-		protected var methods:Object;
-		protected var classes:Object;
-		protected var defaultAttributes:XML;
+		protected var methods:Object,
+						classes:Object;
+		protected var defaultAttributes:XML,
+						source:XML,
+						derived:XML;
 		
 		protected var target:Object;
 		
-		protected var source:XML;
 		
 		public function XMLParser(source:XML, target:Object) {
 			this.target = target;
-			this.source = source
-			setDefaultProperies()
+			this.source = source;
+			setDefaultValues();
 			preParse();
 		}
 		
-		protected function setDefaultProperies():void {
+		protected function setDefaultValues():void {
 			methods = { };
 			classes = { };
-			defaultAttributes = <defaults/>;
+			if("derived" in source)
+				derived = removeFromParent(source.derived[0]);
+			else derived = <derived/>
+			if("defaults" in source)
+				defaultAttributes = removeFromParent(source.defaults[0]);
+			else defaultAttributes = <defaults/>;
 		}
-		public function preParse():void { }
+		protected function preParse():void {
+		}
 		public function parse(entry:String = null):void {
 			if (entry == null) parseNode(source);
 			else parseNode(source.children().(name().toString() == entry))[0];

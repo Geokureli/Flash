@@ -13,6 +13,7 @@ package baseball.art.obstacles
 	 * @author George
 	 */
 	public class Bomb extends Obstacle {
+		static private const crest:int = 25;
 		static public var SPEED:int = -10;
 		static public var sprites:SpriteSheet;
 		{
@@ -31,12 +32,16 @@ package baseball.art.obstacles
 			currentAnimation = "idle";
 			shape = new Box(0, 0, 16, 16);
 			y += 26;
-			speed = SPEED;
+			//speed += SPEED;
+			visible = false;
 		}
 		override public function update():void {
 			super.update();
-			if(isRhythm && boundMode == BoundMode.DESTROY)
-				y = (HERO.y + Math.pow(BeatKeeper.toBeatPixels(beat - BeatKeeper.beat) - Math.sqrt(HERO.y), 2)) / 2 + 25;
+			const w:Number = stage.stageWidth + 200;
+			if(isRhythm && boundMode == BoundMode.DESTROY){
+				y = Math.pow((((HERO.x - x + 8) * 3 + w) / w), 2) * (HERO.y - crest) + crest;
+				if (y < HERO.y - 64) visible = true;
+			}
 		}
 	}
 

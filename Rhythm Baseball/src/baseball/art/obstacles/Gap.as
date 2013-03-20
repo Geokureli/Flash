@@ -30,7 +30,7 @@ package baseball.art.obstacles
 			name = "gap";
 			origin.x = 15;
 			shape = new Box(0, 0, 24, 64);
-			y += 25;
+			y += 32;
 			//boundMode = BoundMode.NONE;
 		}
 		override public function update():void {

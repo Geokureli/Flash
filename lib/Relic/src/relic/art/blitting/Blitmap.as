@@ -12,7 +12,7 @@ package relic.art.blitting {
 	 * @author George
 	 */
 	public class Blitmap extends Bitmap {
-		
+		static private const NULL_BG:uint = 0x01FFFFFF;
 		protected var up:Boolean, down:Boolean, left:Boolean, right:Boolean, 
 						updateBlits:Boolean;
 		private var layerOrder:Vector.<BlitLayer>;
@@ -37,6 +37,7 @@ package relic.art.blitting {
 			blits = { };
 			groups = { };
 			updateBlits = true;
+			bgColor = NULL_BG;
 		}
 		
 		/** Called when added to stage
@@ -46,6 +47,7 @@ package relic.art.blitting {
 		protected function init(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			addListeners();
+			if(bgColor == NULL_BG) bgColor = stage.color;
 		}
 		
 		/** Called by init() (super() encouraged)

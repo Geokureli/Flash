@@ -217,7 +217,7 @@ package relic.art
 				draw()
 				if (graphicBounds == null) setGraphicBounds();
 			}
-			visible = (flashTime < 1 || flashTime % 2 == 0);
+			//visible = 
 			flashTime--;
 			_currentFrame++;
 		}
@@ -358,6 +358,9 @@ package relic.art
 		
 		override public function toString():String {
 			return '[' + getQualifiedClassName(this).split('::').pop() + ': ' + name + ']';
+		}
+		override public function get visible():Boolean {
+			return super.visible && (flashTime < 1 || flashTime % 2 == 0);
 		}
 	}
 

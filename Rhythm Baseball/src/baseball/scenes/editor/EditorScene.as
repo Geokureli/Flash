@@ -353,7 +353,7 @@ package baseball.scenes.editor {
 		}
 		
 		private function generateData():void {
-			data = <level/>;
+			data = <level><assets/></level>;
 			data.@bpm = BeatKeeper.beatsPerMinute;
 			data.@speed = -Obstacle.SCROLL;
 			if (song != null) data.@song = song;
@@ -366,7 +366,7 @@ package baseball.scenes.editor {
 					else if (level[i] is Block) type = "block";
 					else if (level[i] is Gap) type = "gap";
 					else if (level[i] is Bomb) type = "ball";
-					data.appendChild(<{type} beat={Number(i)/4}></{type}>);
+					data.assets[0].appendChild(<{type} beat={Number(i)/4}></{type}>);
 				}
 			}
 			//trace(data.toXMLString());
