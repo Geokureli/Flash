@@ -5,8 +5,8 @@ package baseball {
 	import baseball.scenes.RandomScene;
 	import baseball.scenes.TestScene;
 	import flash.display.StageQuality;
-	import relic.data.Game;
 	import flash.events.Event;
+	import relic.data.Game;
 	import relic.data.Global;
 	import relic.data.xml.XMLParser;
 	/**

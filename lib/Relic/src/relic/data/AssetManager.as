@@ -1,5 +1,6 @@
 package relic.data 
 {
+	import baseball.art.obstacles.Bomb;
 	import flash.display.DisplayObjectContainer;
 	import flash.utils.Dictionary;
 	import relic.art.Asset;
@@ -9,19 +10,18 @@ package relic.data
 	 * @author George
 	 */
 	public class AssetManager {
-		private var layers:Object, groups:Object, assets:Object, autoNames:Object;
-		private var trash:Vector.<String>;
+		private var groups:Object, assets:Object, autoNames:Object;
+		private var garbage:Vector.<String>;
 		private var autoGroups:Dictionary;
-		private var target:DisplayObjectContainer;
+		private var target:IAssetHolder;
 		
-		public function AssetManager(target:DisplayObjectContainer) {
+		public function AssetManager(target:IAssetHolder) {
 			this.target = target;
-			layers = { };
 			groups = { };
 			assets = { };
 			autoGroups = new Dictionary();
 			autoNames = { };
-			trash = new Vector.<String>();
+			garbage = new Vector.<String>();
 		}
 		
 		// ====================================================================
@@ -29,56 +29,18 @@ package relic.data
 		// ====================================================================
 		
 		/**
-		 * Creates a new layer and adds it to the asset manager's control target
-		 * @param	name: The key used to reference the layer.
-		 * @return	The created Layer
-		 */
-		public function addLayer(name:String):Layer {
-			var layer:Layer = new Layer();
-			layer.name = name;
-			target.addChild(layer);
-			layers[name] = layer;
-			return layer;
-		}
-		
-		/**
-		 * Changes the depth order of the 2 specified layers
-		 * @param	layer1: The layer.
-		 * @param	layer2: The other layer.
-		 */
-		public function swapLayers(layer1:String, layer2:String):void {
-			target.swapChildren(layers[layer1], layers[layer2]);
-		}
-		
-		/**
-		 * Sends the specified layer to show above all other layers except the draw layer.
-		 * @param	name: The name of the target layer.
-		 */
-		public function layerToFront(name:String):void { target.addChild(layers[name]); }
-		
-		/**
-		 * Sends the specified layer behind all other layers. 
-		 * @param	name: The name of the target layer.
-		 */
-		public function layerToBack(name:String):void {
-			target.addChildAt(layers[name], 0);
-		}
-		
-		/**
 		 * Adds an autoGroup for a specified class type.
 		 * @param	type: The type of assets that the group should automatically contain.
 		 * @param	group: the corresponding group name.
 		 */
-		public function autoGroup(type:Class, group:String):void {
-			autoGroups[type] = group;
-		}
+		public function autoGroup(type:Class, group:String):void { autoGroups[type] = group; }
 		
 		/**
 		 * Sets a watcher that renames certain assets to a unique name. If you set an autoName for "apple" and add 
 		 * to assets named apple will have a number appended to it corresponding to the order they were added in.
 		 * @param	base:The name to look for and replace with a unique name.
 		 */
-		public function autoName(base:String):void { autoNames[base] = 0; }
+		public function autoID(base:String):void { autoNames[base] = 0; }
 		
 		/**
 		 * Registers the asset in the asset manager.
@@ -87,25 +49,25 @@ package relic.data
 		 * @param	groups(optional): The groups this asset belongs to (see autoGroup()).
 		 * @return	the asset that was added
 		 */
-		public function add(asset:Asset, name:String = null, groups:String = null):Asset {
-			if (name in assets) trace("asset already named " + name);
+		public function add(asset:Asset, id:String = null, groups:String = null):Asset {
+			if (id in assets) trace("asset already named " + id);
 			for (var key:Object in autoGroups) {
 				if (asset is Class(key)) {
 					if (groups == null) groups = autoGroups[key];
 					else { groups += ',' + autoGroups[key]; }
 				}
 			}
-			if (name == null) {
-				if (asset.name in autoNames)
-					name = asset.name + '_' + autoNames[asset.name]++;
-				else if (groups != null) {
-					// --- SET UNIQUE NAME FROM MAIN GROUP
-					name = groups.split(',')[0];
-					name += groups[name].length;
-					if(name in assets) throw new ArgumentError("No asset name defined");
-				} else throw new ArgumentError("No asset name defined");
-			}
-			asset.name = name;
+
+			if (asset.id in autoNames)
+				id = asset.id + '_' + autoNames[asset.id]++;
+			//else if (groups != null) {
+				// --- SET UNIQUE NAME FROM MAIN GROUP
+				//id = groups.split(',')[0];
+				//id += groups[id].length;
+				//if(id in assets) throw new ArgumentError("No asset name defined");
+			//} else throw new ArgumentError("No asset id defined, and no appropriate autoID");
+			asset.id = id;
+			
 			if (groups != null) {
 				for each(var group:String in groups.split(',')) {
 					// --- CHECK IF GROUP EXISTS
@@ -114,63 +76,29 @@ package relic.data
 					this.groups[group].push(asset); // --- ADD TO GROUPS
 				}
 			}
-			assets[name] = asset;
+			assets[id] = asset;
 			return asset;
 		}
 
-		/**
-		 * Adds the target
-		 * @param	parent: If a string is specified, a layer or asset with a matching name will be used. 
-		 * If a DisplayObjectContainer is specified, it is used.
-		 * @param	name: the name of the target asset.
-		 * @param	params(optional): an object containing variables that will be set on the target asset(for awesome 1 line defs).
-		 * @return	The asset that was Added.
-		 */
-		public function place(parent:Object, name:String, params:Object = null):Asset {
-			// --- GET PARENT
-			if (parent is String){
-				if (parent in layers) parent = layers[parent];
-				else if (parent in assets) parent = assets[parent];
-				else throw new ArgumentError("parent string must the key of a layer or asset");
-			}
-			
-			assets[name].setParameters(params);
-			
-			// --- ADD TO PARENT
-			parent.addChild(assets[name]);
-			return assets[name];
-		}
-		
 		/**
 		 * Retrieves the asset registered to the specified key.
 		 * @param	name: The identifier of the asset.
 		 * @return the target asset.
 		 */
-		public function getAsset(name:String):Asset { return assets[name]; }
-		
-		/**
-		 * Removes an asset from it's parent.
-		 * @param	name: the name the asset is registered to.
-		 * @return	The asset that was removed.
-		 */
-		public function remove(name:String):Asset {
-			var asset:Asset = assets[name];
-			asset.parent.removeChild(asset);
-			return asset;
-		}
+		public function a(id:String):Asset { return assets[id]; }
 		
 		/**
 		 * Removes the asset 
 		 * @param	name: the name the asset is registered to.
 		 * @return	The asset that was killed
 		 */
-		public function kill(name:String):Asset {
-			var asset:Asset = remove(name);
+		protected function kill(id:String):Asset {
+			var asset:Asset = a(id);
 			for (var g:String in groups) {
 				var index:int = groups[g].indexOf(asset);
 				if (index != -1) groups[g].splice(index, 1);
 			}
-			delete assets[name];
+			delete assets[id];
 			asset.destroy();
 			return asset;
 		}
@@ -180,38 +108,62 @@ package relic.data
 		 * @param	name: the identifier of the group.
 		 * @return the target group
 		 */
-		public function group(name:String):Vector.<Asset> { return groups[name]; }
-		
+		public function group(id:String):Vector.<Asset> { return groups[id]; }
+
+		public function setGroupParams(id:String, params:Object):void {
+			for each(var asset:Asset in groups[id])
+				asset.setParameters(params);
+		}
 		/**
 		 * Kills all of the assets in a group. Kills them good.
 		 * @param	name: Target group name to obliterate.
 		 */
-		public function killGroup(name:String):void {
-			for each(var g:String in name.split(',')) {
+		public function trashGroup(id:String):void {
+			for each(var g:String in id.split(',')) {
 				if(g in groups){
 					var group:Vector.<Asset> = groups[g];
-					while (group.length > 0) kill(group[0].name);
+					for each(var asset:Asset in group) trash(asset);
 				}
 			}
+		}
+		
+		
+		public function removeFromGroup(asset:Asset, string:String):void {
+			for each(var g:String in string.split(',')){
+				var index:int = groups[g].indexOf(asset);
+				if (index != -1) groups[g].splice(index, 1);
+			}
+		}
+		
+		public function trash(asset:Object):Asset {
+			if (asset is String) asset = a(asset as String);
+			asset.trash = true;
+			return asset as Asset;
 		}
 		
 		// ====================================================================
 		// 								- Events -
 		// ====================================================================
-		
 		/**
 		 * Removes trash, updates all assets.
 		 */
 		public function update():void {
 			clearTrash();
-			for (var assetName:String in assets) {
-				if (assets[assetName].live) assets[assetName].update();
-				if (assets[assetName].trash) trash.push(assetName);
+			for (var id:String in assets)
+				if (assets[id].live) assets[id].preUpdate();
+			
+			// --- PRE UPDATE
+			for (id in assets)
+				if (assets[id].live) assets[id].preUpdate();
+			// --- UPDATE
+			for (id in assets) {
+				if (assets[id].live) assets[id].update();
+				if (assets[id].trash) garbage.push(id);
 			}
 		}
 		
 		private function clearTrash():void {
-			while (trash.length > 0) kill(trash.shift());
+			while (garbage.length > 0) kill(garbage.shift());
 		}
 		
 		/**
@@ -219,13 +171,8 @@ package relic.data
 		 */
 		public function destroy():void {
 			clearTrash();
-			for each(var layer:Layer in layers) {
-				layer.destroy();
-				target.removeChild(layer);
-			}
-			layers = null;
 			target = null;
-			trash = null;
+			garbage = null;
 		}
 		
 	}

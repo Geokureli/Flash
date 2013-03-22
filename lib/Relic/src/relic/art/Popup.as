@@ -65,7 +65,7 @@ package relic.art {
 				btn.x = x;
 				btn.y = _height - 30 - MARGIN;
 				x += 100 + MARGIN;
-				btn.name = "ok";
+				btn.id = "ok";
 				btn.addEventListener(MouseEvent.CLICK, onBtnClick);
 			}
 			if (buttons & CANCEL > 0) {
@@ -73,7 +73,7 @@ package relic.art {
 				btn.x = x;
 				x += 100 + MARGIN;
 				btn.y = _height - 30 - MARGIN;
-				btn.name = "cancel";
+				btn.id = "cancel";
 				btn.addEventListener(MouseEvent.CLICK, onBtnClick);
 			}
 			

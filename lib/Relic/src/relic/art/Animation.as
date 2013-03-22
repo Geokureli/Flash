@@ -28,6 +28,7 @@ package relic.art
 			sheet.drawFrame(getSpriteFrame(num), target, dest);
 		}
 		public function getFrameRect(num:int):Rectangle {
+			if (sheet.frames == null) return sheet.rect;
 			return sheet.frames[getSpriteFrame(num)];
 		}
 		private function getSpriteFrame(frame:int):int {

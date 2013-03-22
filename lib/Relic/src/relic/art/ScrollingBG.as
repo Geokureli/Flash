@@ -1,52 +1,99 @@
 package relic.art 
 {
-	import flash.display.Bitmap;
-	import flash.display.BitmapData;
-	import flash.geom.Matrix;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
 	import relic.art.blitting.Blit;
+	import relic.data.xml.IXMLParam;
 	
 	/**
 	 * ...
 	 * @author George
 	 */
-	public class ScrollingBG extends Blit
+	public class ScrollingBG extends Asset
 	{
-		public var parallax:Number;
-		public var rows:int, columns:int;
 		public function ScrollingBG() { super(); }
+		
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
-			parallax = 1;
-			columns = -1;
-			rows = 1;
+			graphic = new ScrollBlit();
 		}
-		//public function update():void { super.update(); }
-		override public function drawToStage(target:BitmapData):void {
-			if (visible) {
-				var o:Point = origin.point;
-				position.add(o);
-				if (anim != null)
-					anim.drawFrame(_currentFrame, target, position);
-				else if (graphic != null) {
-					var size:Rectangle = (graphic as BitmapData).rect;
-					var p:Point = position.add(o);
-					p.x *= parallax;
-					p.x = p.x % size.width;
-					if (p.x > 0) p.x -= size.width;
-					var r:int = 0, c:int = 0;
-					for (c = 0; p.x < map.width; p.x += size.width) {
-						p.y = position.y + o.y;
-						for (r = 0; r != rows; r++) {
-							target.copyPixels(graphic as BitmapData, size, p);
-							p.y += size.height;
-						}
-					}
-				}
-				position.subtract(o);
-			}
+		public function get parallax():Number { return blit.parallax.x; }
+		public function set parallax(value:Number):void {
+			blit.parallax.x = value;
 		}
+		
+		public function get rows():Number { return rows; }
+		public function set rows(value:Number):void { blit.rows = value; }
+		
+		public function get columns():Number { return columns; }
+		public function set columns(value:Number):void { blit.columns = value; }
+		
+		public function get blit():ScrollBlit { return graphic as ScrollBlit; }
 	}
+}
+import flash.events.Event;
+import flash.geom.Point;
+import relic.art.SpriteSheet;
+import relic.art.blitting.Blit;
+import relic.data.helpers.Random;
+class ScrollBlit extends Blit {
+	
+	
+	public var frames:Vector.<Vector.<int>>;
 
+	override protected function setDefaultValues():void {
+		super.setDefaultValues();
+		columns = 0;
+	}
+	override protected function init(e:Event):void {
+		super.init(e);
+		//setFrameData();
+	}
+	
+	override public function draw():void {
+		super.draw();
+	}
+	//override protected function getTile(x:int, y:int):int {
+		//var sheet:SpriteSheet = image as SpriteSheet;
+		//if (sheet && sheet.numFrames > 1 && asset.id == "bg_darkGrass")
+			//return defaultFrame = (((x + y) % sheet.numFrames) + sheet.numFrames) % sheet.numFrames;
+		//return 0;
+	//}
+	private function setFrameData():void {
+		//if (stage) {
+			//if (rows < 1) rows = stage.stageHeight / rect.height;
+			//if (columns < 1) columns = stage.stageHeight / rect.height;
+		//}
+		//
+		//frames = new Vector.<Vector.<int>>();
+		//for (var i:int = 0; i < columns; i++) {
+			//frames.push(new Vector.<int>());
+			//frames[i].push(Random.random(numFrames));
+		//}
+	}
+	//public function update():void { super.update(); }
+	//override public function draw():void {
+		//if (anim != null || image != null) {
+			//var oldPosition:Point = position.clone();
+			//var size:Rectangle = rect;
+			//position.x *= parallax;
+			//position.x = position.x % size.width;
+			//var frameOffset:int = numFrames;
+			//if (position.x > 0) position.x -= size.width;
+			//var r:int = 0, c:int = 0;
+			//for (c = 0; c; position.x += size.width) {
+				//position.y = oldPosition.y;
+				//for (r = 0; r != rows; r++) {
+					//frame = Random.random(numFrames);
+					//super.draw();
+					//position.y += size.height;
+				//}
+			//}
+			//position = oldPosition;
+		//}
+	//}
+	
+	override public function get rows():int { return super.rows; }
+	override public function set rows(value:int):void { super.rows = value; setFrameData(); }
+	
+	override public function get columns():int { return super.columns; }
+	override public function set columns(value:int):void { super.columns = value; setFrameData(); }
 }

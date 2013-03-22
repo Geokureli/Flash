@@ -9,6 +9,7 @@ package relic.audio
 	 * @author George
 	 */
 	public class SoundManager {
+		static public var ENABLED:Boolean = true;
 		static private var sounds:Object;
 		static private var songs:Object;
 		static private var channels:Object;
@@ -29,6 +30,7 @@ package relic.audio
 		}
 		
 		static public function play(name:String, startTime:Number = -1, loops:int = -1, volume:Number = -1, pan:Number = -2):SoundChannel {
+			if (!ENABLED) return null;
 			if (name in sounds)
 				return (sounds[name] as SoundDescription).play(startTime, loops, volume, pan);
 			else if (name in songs) {
@@ -65,6 +67,7 @@ import flash.media.Sound;
 import flash.media.SoundChannel;
 import flash.media.SoundTransform;
 import relic.data.xml.IXMLParam;
+import relic.data.xml.XMLParser;
 class SoundDescription implements IXMLParam {
 	private var transform:SoundTransform;
 	public var startTime:Number;
@@ -74,8 +77,13 @@ class SoundDescription implements IXMLParam {
 		this.sound = sound;
 		transform = new SoundTransform();
 	}
-	public function setParameters(params:Object):void {
-		for (var i:String in params) this[i] = params[i];
+	public function setParameters(params:Object):IXMLParam {
+		if (params is XML) {
+			XMLParser.setProperties(this, params as XML);
+		} else {
+			for (var i:String in params) this[i] = params[i];
+		}
+		return this;
 	}
 	public function play(startTime:Number = -1, loops:int = -1, volume:Number = -1, pan:Number = -2):SoundChannel {
 		if (startTime < 0) startTime = this.startTime;

@@ -1,9 +1,11 @@
 package baseball.scenes 
 {
+	import baseball.art.Cloud;
 	import baseball.art.Obstacle;
 	import relic.beat.BeatKeeper;
 	import relic.data.Global;
-	import relic.data.xml.XMLClasses;
+	import relic.data.helpers.Random;
+	import relic.data.serial.Serializer;
 	import relic.data.xml.XMLParser;
 	
 	import relic.art.Asset;
@@ -37,15 +39,28 @@ package baseball.scenes
 	 * @author George
 	 */
 	public class GameScene extends BlitScene {
+		static private const NUM_CLOUDS:Number = 6;
+		static public var BackGrass:SpriteSheet;
+		static public var FrontGrass:SpriteSheet;
+		
 		{
-			XMLClasses.addRef(Bomb, "ball");
-			XMLClasses.addRef(Rock, "rock");
-			XMLClasses.addRef(Gap, "gap");
-			XMLClasses.addRef(Block, "block");
+			BackGrass = new SpriteSheet(new Imports.BackGrass().bitmapData);
+			BackGrass.createGrid(32, 16);
+			BackGrass.createDefualtAnimation(false, 1);
+			
+			FrontGrass = new SpriteSheet(new Imports.ForeGrass().bitmapData);
+			FrontGrass.createGrid(32, 16);
+			FrontGrass.createDefualtAnimation(false, 1);
+			
+			Serializer.addRef(Bomb, "ball");
+			Serializer.addRef(Rock, "rock");
+			Serializer.addRef(Gap, "gap");
+			Serializer.addRef(Block, "block");
 		}
 		private var count:int;
 		private var back:Sprite, mid:Sprite, front:Sprite;
 		private var songStarted:Boolean;
+		private var updateBlits:Boolean;
 		protected var strikes:int;
 		protected var bombTime:Number, defaultTime:Number, songOffset:Number;
 		protected var level:XML, spawned:Vector.<int>
@@ -53,13 +68,13 @@ package baseball.scenes
 		protected var levelParser:LevelParser;
 		
 		public function GameScene() {
-			super(new BitmapData(800, 400, false, 0));
+			super(new BitmapData(Global.stage.stageWidth, Global.stage.stageHeight, false, 0));
 			BeatKeeper.init();
 		}
 		
 		protected function setLevelProperties():void {
 			Bomb.SPEED = 0;
-			Obstacle.HERO = new Vec2(100, 280);
+			Obstacle.HERO = new Vec2(100, bitmapData.height-112);
 			if ("userLevel" in Global.VARS) level = Global.VARS.userLevel;
 			else level = new XML(new Imports.testLevel);
 		}
@@ -76,7 +91,7 @@ package baseball.scenes
 			Global.VARS.song = null;
 			trace(level.toXMLString());
 			defaultUpdate = mainUpdate;
-			//bgColor = 0xFFFFFF;
+			updateBlits = true;
 			spawned = new Vector.<int>();
 			songStarted = false;
 			strikes = 3;
@@ -85,45 +100,74 @@ package baseball.scenes
 		
 		override protected function createLayers():void {
 			super.createLayers();
-			autoGroup(Bomb, "bombs,obstacles");
-			autoGroup(Gap, "gaps,obstacles");
-			autoGroup(Rock, "rocks,obstacles");
-			autoGroup(Block, "blocks,obstacles");
+			assets.autoGroup(Bomb, "bombs,obstacles");
+			assets.autoGroup(Gap, "gaps,obstacles");
+			assets.autoGroup(Rock, "rocks,obstacles");
+			assets.autoGroup(Block, "blocks,obstacles");
+			assets.autoGroup(BG, "bg");
+			assets.autoGroup(Cloud, "bg,clouds");
 			
-			autoName("bomb");
-			autoName("gap");
-			autoName("rock");
-			autoName("block");
+			assets.autoID("bomb");
+			assets.autoID("gap");
+			assets.autoID("rock");
+			assets.autoID("block");
+			assets.autoID("cloud");
 		}
 		override protected function addStaticChildren():void {
 			super.addStaticChildren();
 			
-			//var bgSheet:SpriteSheet = new SpriteSheet(new Imports.Ground().bitmapData);
-			//bgSheet.createGrid(64, 64);
-			//bg = new ScrollingBG(800, 64, false);
-			//bg.tile = bgSheet.frames[0];
-			//bg.y = 280 + 64;
-			//bg.speed = -10;
-			//back.addChild(bg);
-			var hero:Hero = add(new Hero(), "hero") as Hero;
-			Obstacle.HERO = new Vec2(hero.right, hero.y);
-			place("mid", "hero");
-			place("back", add(new BG(), "bg_stands", "bg"), { graphic:new Imports.Crowd().bitmapData, y:hero.y-112, parallax:.5 } );
-			place("back", add(new BG(), "bg_darkGrass", "bg"), { graphic:new Imports.BackGrass().bitmapData, y:hero.y, parallax:.75, rows:2 } );
-			place("back", add(new BG(), "bg_line", "bg"), { graphic:new Imports.Ground().bitmapData, y:hero.y+32 } );
-			place("back", add(new BG(), "bg_lightGrass", "bg"), { graphic:new Imports.ForeGrass().bitmapData, y:hero.y+96, parallax:1.5} );
+			var hero:Hero = assets.add(new Hero(), "hero") as Hero;
+			place(hero, "mid");
+			Cloud.CLOUD_RANGE = hero.y - 128;
+			createBG();
+		}
+		protected function createBG():void {
+			
+			// --- CLOUDS --- 
+			for (var i:int = 0; i < NUM_CLOUDS; i++)
+				place(assets.add(new Cloud()), "back").x = stage.stageWidth / NUM_CLOUDS * i;
+			
+			// --- STANDS --- 
+			var asset:Asset = assets.add(new BG(), "bg_stands");
+			asset.setParameters( {
+				graphic:new Imports.Crowd().bitmapData,
+				y:hero.y - 112,
+				parallax:.5
+			} );
+			place(asset, "back" );
+			
+			// --- BACK GRASS ---
+			asset = assets.add(new BG(), "bg_darkGrass");
+			asset.setParameters( {
+				graphic:BackGrass,
+				y:hero.y,
+				parallax:.75,
+				rows:2
+			} );
+			place(asset, "back" );
+			
+			// --- LINE ---
+			asset = assets.add(new BG(), "bg_line")
+			asset.setParameters( {
+				graphic:new Imports.Ground().bitmapData,
+				y:hero.y + 32
+			} );
+			place(asset, "back");
+			
+			// --- FRONT GRASS ---
+			asset = assets.add(new BG(), "bg_lightGrass");
+			asset.setParameters( {
+				graphic:FrontGrass,
+				y:hero.y + 96,
+				parallax:1.5
+			});
+			place(asset, "back");
 		}
 		override protected function init(e:Event):void {
 			super.init(e);
 			BeatKeeper.frameRate = stage.frameRate;
-			bombTime = BeatKeeper.beatsPerMinute * -(stage.stageWidth+200) / 60 / (Bomb.SPEED + Obstacle.SCROLL) / stage.frameRate;
+			bombTime = BeatKeeper.beatsPerMinute * -(stage.stageWidth + 200) / 60 / (Bomb.SPEED + Obstacle.SCROLL) / stage.frameRate;
 			defaultTime = BeatKeeper.beatsPerMinute * -(stage.stageWidth + 200) / 60 / Obstacle.SCROLL / stage.frameRate;
-		}
-		
-		override protected function keyHandle(e:KeyboardEvent):void {
-			super.keyHandle(e);
-			if (e.keyCode == 27)
-				dispatchEvent(new SceneEvent(SceneEvent.SCENE_CHANGE, { next:"main" } ));
 		}
 		
 		override public function update():void {
@@ -144,10 +188,6 @@ package baseball.scenes
 		
 		protected function mainUpdate():void 
 		{
-			hero.u = up;
-			hero.d = down;
-			hero.l = left;
-			hero.r = right;
 			BeatKeeper.update();
 			
 			if (song != null && BeatKeeper.time > songOffset && !songStarted){
@@ -160,7 +200,7 @@ package baseball.scenes
 				//Global.game.setText("offset", (int(SoundManager.currentSongPosition) - (BeatKeeper.time - songOffset)).toString());
 			//}
 			//bg.update();
-			for each(var bomb:Bomb in group("bombs")){
+			for each(var bomb:Bomb in assets.group("bombs")){
 				if (bomb.left <= hero.right && bomb.isRhythm) {
 					if (hero.currentAnimation == "swing") {
 						bomb.vel.x = 40;
@@ -169,34 +209,34 @@ package baseball.scenes
 						SoundManager.play("swing");
 						bomb.isRhythm = false;
 					} else {
-						removeFromGroup(bomb, "bombs");
+						assets.removeFromGroup(bomb, "bombs");
 						addStrike();
 					}
 				}
 			}
-			for each(var gap:Gap in group("gaps")) {
+			for each(var gap:Gap in assets.group("gaps")) {
 				if (hero.isTouching(gap) && hero.currentAnimation != "jump") {
-					removeFromGroup(gap, "gaps");
+					assets.removeFromGroup(gap, "gaps");
 					addStrike();
 				}
 			}
-			hero.hitBlock = false;
-			for each(var block:Block in group("blocks")) {
+			hero.onBlock = false;
+			for each(var block:Block in assets.group("blocks")) {
 				if (hero.isTouching(block)) {
-					hero.hitBlock = true;
+					hero.onBlock = true;
 					if (hero.currentAnimation != "duck" || hero.currentAnimation == "duck_end") {
-						removeFromGroup(block, "blocks");
+						assets.removeFromGroup(block, "blocks");
 						addStrike();
 					}
 				}
 			}
-			for each(var rock:Rock in group("rocks")) {
+			for each(var rock:Rock in assets.group("rocks")) {
 				if (hero.isTouching(rock) && rock.currentAnimation == "idle") {
 					if (hero.currentAnimation == "slide" || hero.currentAnimation == "slide_end") {
 						rock.currentAnimation = "break";
 						SoundManager.play("break");
 					} else {
-						removeFromGroup(rock, "rocks");
+						assets.removeFromGroup(rock, "rocks");
 						addStrike();
 					}
 				}
@@ -214,6 +254,7 @@ package baseball.scenes
 			defaultUpdate = updateEnd;
 			hero.disableKeys();
 			updateBlits = false;
+			assets.setGroupParams("clouds", { live:false } );
 			BeatKeeper.stopSync();
 			count = 0;
 		}
@@ -228,13 +269,14 @@ package baseball.scenes
 		protected function reset():void { 
 			trace("reset");
 			BeatKeeper.reset();
-			killGroup("obstacles");
+			assets.trashGroup("obstacles");
 			defaultUpdate = mainUpdate;
 			hero.currentAnimation = "idle";
 			updateBlits = true;
 			songStarted = false;
 			while (spawned.length > 0) spawned.shift();
 			strikes = 3;
+			assets.setGroupParams("clouds", { live:true } );
 		}
 		
 		override public function destroy():void {
@@ -247,11 +289,12 @@ package baseball.scenes
 			Global.VARS.song = null;
 		}
 		
-		public function get hero():Hero { return getBlit("hero") as Hero; }
+		public function get hero():Hero { return a("hero") as Hero; }
 	}
 
 }
 import baseball.art.Obstacle;
+import relic.art.Asset;
 import relic.art.IScene;
 import relic.art.ScrollingBG;
 import relic.beat.BeatKeeper;
@@ -274,6 +317,9 @@ class BG extends ScrollingBG {
 	public function BG() { super(); }
 	override public function update():void {
 		super.update();
-		x = Obstacle.HERO.x + BeatKeeper.toBeatPixels(Obstacle.SCROLL) * BeatKeeper.beat;
+		x = Obstacle.HERO.x + BeatKeeper.toBeatPixels(Obstacle.SCROLL) * BeatKeeper.beat - stage.stageWidth*2;
+	}
+	override public function draw():void {
+		super.draw();
 	}
 }

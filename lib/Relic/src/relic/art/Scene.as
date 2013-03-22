@@ -13,7 +13,8 @@ package relic.art {
 	 * @author George
 	 */
 	public class Scene extends Sprite implements IScene {
-		protected var assets:AssetManager;
+		private var _assets:AssetManager;
+		protected var layers:Object;
 		protected var up:Boolean, down:Boolean, left:Boolean, right:Boolean, 
 						updateAssets:Boolean;
 		protected var defaultUpdate:Function;
@@ -24,7 +25,6 @@ package relic.art {
 			
 			setDefaultValues();
 			createLayers();
-			assets.addLayer("draw");
 			addStaticChildren();
 			
 			if (stage) init();
@@ -51,9 +51,46 @@ package relic.art {
 		 * (whether super is called or not) a draw layer will be added to the front
 		 */
 		protected function createLayers():void {
-			assets.addLayer("back");
-			assets.addLayer("mid");
-			assets.addLayer("front");
+			layers = { };
+			addLayer("back");
+			addLayer("mid");
+			addLayer("front");
+		}
+		
+		/**
+		 * Creates a new layer and adds it to the asset manager's control target
+		 * @param	name: The key used to reference the layer.
+		 * @return	The created Layer
+		 */
+		public function addLayer(name:String):Layer {
+			var layer:Layer = new Layer();
+			layer.name = name;
+			addChild(layer);
+			layers[name] = layer;
+			return layer;
+		}
+		
+		/**
+		 * Changes the depth order of the 2 specified layers
+		 * @param	layer1: The layer.
+		 * @param	layer2: The other layer.
+		 */
+		public function swapLayers(layer1:String, layer2:String):void {
+			swapChildren(layers[layer1], layers[layer2]);
+		}
+		
+		/**
+		 * Sends the specified layer to show above all other layers except the draw layer.
+		 * @param	name: The name of the target layer.
+		 */
+		public function layerToFront(name:String):void { addChild(layers[name]); }
+		
+		/**
+		 * Sends the specified layer behind all other layers. 
+		 * @param	name: The name of the target layer.
+		 */
+		public function layerToBack(name:String):void {
+			addChildAt(layers[name], 0);
 		}
 		
 		/** Called automatically by constructor
@@ -67,7 +104,6 @@ package relic.art {
 		 */
 		protected function init(e:Event = null):void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			up = left = down = right = false;
 			updateAssets = true;
 			addListeners();
 		}
@@ -115,15 +151,25 @@ package relic.art {
 		
 		/**
 		 * Adds the target
-		 * @param	parent: If a string is specified, a layer or asset with a matching name will be used. 
-		 * If a DisplayObjectContainer is specified, it is used.
-		 * @param	asset: If a string is provided, it must be the identifier of the target asset. Otherwise use the actual asset
+		 * @param	layer: The name of the layer to add the blit to.
+		 * @param	blit: The target blit to be placed. if a string is passed, the blit with the matching identifier is used. Otherwise pass in the actual blit.
 		 * @param	params(optional): an object containing variables that will be set on the target asset(for awesome 1 line defs).
-		 * @return	The asset that was Added.
+		 * @return	The blit that was Added.
 		 */
-		public function place(parent:Object, asset:Object, params:Object = null):Asset {
-			if (asset is Asset) return assets.place(parent, asset.name, params);
-			return assets.place(parent, asset as String, params);
+		public function place(asset:Asset, layer:Object = "front"):Asset {
+			// --- ADD TO LAYER
+			layers[layer].place(asset);
+			return asset;
+		}
+		
+		/**
+		 * Removes an blit from it's parent.
+		 * @param	name: The name the blit is registered to, or the actual blit itself.
+		 * @return	The blit that was removed.
+		 */
+		public function remove(asset:Asset):Asset {
+			asset.parent.remove(asset);
+			return asset;
 		}
 		
 		/**
@@ -131,14 +177,14 @@ package relic.art {
 		 * @param	name: the name the asset is registered to.
 		 * @return	The asset that was killed
 		 */
-		protected function kill(asset:String):Asset { return assets.kill(asset); }
+		protected function trash(asset:String):Asset { return assets.trash(asset); }
 		
 		/**
 		 * Retrieves the target group.
 		 * @param	name: the identifier of the group.
 		 * @return the target group
 		 */
-		protected function asset(name:String):Asset { return assets.getAsset(name); }
+		protected function a(name:String):Asset { return assets.a(name); }
 		
 		/**
 		 * 
@@ -195,6 +241,9 @@ package relic.art {
 			stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyHandle);
 			stage.removeEventListener(KeyboardEvent.KEY_UP, keyHandle);
 		}
+		
+		public function get assets():AssetManager { return _assets; }
+		public function set assets(value:AssetManager):void { _assets = value; }
 	}
 
 }

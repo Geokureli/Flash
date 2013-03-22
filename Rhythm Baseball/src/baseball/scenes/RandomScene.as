@@ -7,7 +7,7 @@ package baseball.scenes {
 	import relic.art.Scene;
 	import relic.audio.SoundManager;
 	import relic.data.Global;
-	import relic.data.Random;
+	import relic.data.helpers.Random;
 	
 	/**
 	 * ...
@@ -45,14 +45,14 @@ package baseball.scenes {
 		private function onBeat(e:BeatEvent):void {
 			SoundManager.play("onBeat");
 		}
-		override public function update():void {
+		override protected function mainUpdate():void {
 			bombTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / (Bomb.SPEED + Obstacle.SCROLL) / stage.frameRate;
 			defaultTime = BeatKeeper.beatsPerMinute * -stage.stageWidth / 60 / Obstacle.SCROLL / stage.frameRate;
 			
-			super.update();
+			super.mainUpdate();
 			BeatKeeper.beatsPerMinute += 2 / stage.frameRate;
 			
-			if (beatCount >= -.25) playCharge();
+			//if (beatCount >= -.25) playCharge();
 			
 			if (beatCount-BeatKeeper.beat < 10) {
 				addRandomObstacle();

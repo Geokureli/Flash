@@ -14,6 +14,14 @@ package relic.data.helpers {
 			graphic.threshold(graphic, graphic.rect, new Point(), "==", color, 0, 0xFFFFFFFF, true);
 		}
 		
+		static public function drawTo(src:BitmapData, target:BitmapData, dest:Point = null, rect:Rectangle = null):void {			
+			target.copyPixels(
+				src,
+				rect == null ? src.rect : rect,
+				dest == null ? new Point() : dest
+			);
+		}
+		
 		static public function apply9Grid(src:BitmapData, grid:Rectangle, width:int, height:int):BitmapData {
 			return apply9GridTo(src, grid, new BitmapData(width, height));
 		}

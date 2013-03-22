@@ -41,9 +41,11 @@ package relic.data
 		protected function init(e:Event = null):void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			Asset.defaultBounds = new Rectangle(0, 0, stage.stageWidth, stage.stageHeight);
-			scene = "main";
 			addEventListener(Event.ENTER_FRAME, enterFrame);
 			stage.addEventListener(FocusEvent.FOCUS_IN, onFocusLost);
+			Keys.init(stage);
+			Global.stage = stage;
+			scene = "main";
 		}
 		
 		private function onFocusLost(e:FocusEvent):void {

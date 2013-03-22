@@ -16,13 +16,13 @@ package relic.art
 		public function SpriteSheet(graphic:BitmapData) {
 			super(graphic.width, graphic.height);
 			copyPixels(graphic, rect, new Point());
-			animations = { };
+			animations = { idle:new Animation(this, Vector.<int>([0])) };
 		}
 		public function createGrid(width:int = 0, height:int = 0):void {
 			if (width == 0)
 				width = height = Math.min(this.width, this.height);
 			else if (height == 0)
-				height = width;
+				height = Math.min(width, this.height);
 				
 			frames = new Vector.<Rectangle>();
 			var r:Rectangle = new Rectangle(0, 0, width, height);
@@ -32,6 +32,12 @@ package relic.art
 					frames.push(r.clone());
 				}
 			}
+		}
+		public function createDefualtAnimation(loop:Boolean = true, rate:int = 2):void {
+			var frames:Vector.<int> = new Vector.<int>();
+			for (var i:int = 0; i < numFrames; i++)
+				frames.push(i);
+			addAnimation("idle", frames, loop, rate);
 		}
 		public function clearBG(color:int = -1):void {
 			BitmapHelper.clearBG(this, color);
@@ -48,12 +54,10 @@ package relic.art
 			animations[name].rate = rate;
 			return animations[name];
 		}
-		public function drawFrame(num:int, target:BitmapData, dest:Point = null):void {			
-			if (dest == null)
-				dest = new Point();
-			
-			target.copyPixels(this, frames[num], dest);
+		public function drawFrame(num:int, target:BitmapData, dest:Point = null):void {
+			BitmapHelper.drawTo(this, target, dest, frames != null ? frames[num] : rect);
 		}
+		public function get numFrames():int { return frames.length; }
 	}
 
 }

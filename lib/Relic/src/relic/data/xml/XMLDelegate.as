@@ -1,5 +1,5 @@
 package relic.data.xml {
-	import relic.data.StringHelper;
+	import relic.data.helpers.StringHelper;
 	/**
 	 * ...
 	 * @author George

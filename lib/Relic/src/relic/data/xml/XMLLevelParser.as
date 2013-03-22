@@ -2,7 +2,8 @@ package relic.data.xml {
 	import relic.art.Asset;
 	import relic.art.IScene;
 	import relic.art.Scene;
-	import relic.data.StringHelper;
+	import relic.data.helpers.StringHelper;
+	import relic.data.serial.Serializer;
 	/**
 	 * ...
 	 * @author George
@@ -23,9 +24,9 @@ package relic.data.xml {
 		override protected function parseNode(node:XML):void {
 			super.parseNode(node);
 			var special:Object = XMLParser.removeAttributes(node, SPECIAL_PARAMS);
-			var obj:Asset = XMLClasses.createObject(node) as Asset;
+			var obj:Asset = Serializer.createXMLObject(node) as Asset;
 			if (special.layer == "") special.layer = "front";
-			scene.place(special.layer, scene.add(obj, obj.name, special.groups));
+			scene.place(scene.assets.add(obj, obj.id, special.groups), special.layer);
 		}
 		protected function get scene():IScene { return target as IScene; }
 	}

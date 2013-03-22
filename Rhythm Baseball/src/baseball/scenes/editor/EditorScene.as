@@ -72,10 +72,10 @@ package baseball.scenes.editor {
 			assets.autoGroup(Slider, "sliders");
 			assets.autoGroup(Obstacle, "obstacles");
 			
-			assets.autoName("bomb");
-			assets.autoName("gap");
-			assets.autoName("rock");
-			assets.autoName("block");
+			assets.autoID("bomb");
+			assets.autoID("gap");
+			assets.autoID("rock");
+			assets.autoID("block");
 			
 			add(new SongPopup(), "popup");
 			
@@ -270,7 +270,7 @@ package baseball.scenes.editor {
 			song = e.params as String;
 			if (SoundManager.hasMusic(song)) {
 				Global.VARS.song = song;
-				asset("popup").removeEventListener(PopupEvent.COMPLETE, popopEnd);
+				a("popup").removeEventListener(PopupEvent.COMPLETE, popopEnd);
 				assets.remove("popup");
 			} else song = null;
 		}
@@ -290,7 +290,7 @@ package baseball.scenes.editor {
 						
 						btn.selected = true;
 						
-						selected = OBSTACLES[btn.name.split('_')[1]];
+						selected = OBSTACLES[btn.id.split('_')[1]];
 					}
 			}
 		}
@@ -381,8 +381,8 @@ package baseball.scenes.editor {
 			selected = null;
 			level = null;
 		}
-		private function get staff():Staff { return asset("staff") as Staff; }
-		private function slider(name:String):Slider { return asset(name) as Slider; }
+		private function get staff():Staff { return a("staff") as Staff; }
+		private function slider(name:String):Slider { return a(name) as Slider; }
 	}
 }
 import baseball.Imports;

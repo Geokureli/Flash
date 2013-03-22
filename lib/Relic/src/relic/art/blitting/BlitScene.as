@@ -17,19 +17,7 @@ package relic.art.blitting {
 		override protected function init(e:Event):void {
 			super.init(e);
 			
-			createLayers();
 			addStaticChildren();
-		}
-		
-		/** Called automatically by constructor
-		 * Override this to create custom layers, you do not have to call super.
-		 * super will create a back, mid, and front layer. After this method is finished
-		 * (whether super is called or not) a draw layer will be added to the front
-		 */
-		protected function createLayers():void {
-			addLayer("back");
-			addLayer("mid");
-			addLayer("front");
 		}
 		
 		/** Called automatically by constructor

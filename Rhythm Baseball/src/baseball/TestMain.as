@@ -9,6 +9,7 @@ package baseball {
 	import flash.events.Event;
 	import relic.art.blitting.Blit;
 	import relic.art.blitting.Blitmap;
+	import relic.audio.SoundManager;
 	import relic.data.Game;
 	import relic.data.Vec2;
 	
@@ -24,6 +25,7 @@ package baseball {
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
 			scenes = { main:RandomScene };
+			SoundManager.ENABLED = false;
 		}
 		override protected function init(e:Event = null):void {
 			super.init(e);

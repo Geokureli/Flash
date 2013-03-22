@@ -1,18 +1,18 @@
 package relic.art {
 	import flash.events.IEventDispatcher;
 	import flash.display.IBitmapDrawable;
+	import relic.data.AssetManager;
+	import relic.data.IAssetHolder;
 	/**
 	 * ...
 	 * @author George
 	 */
-	public interface IScene extends IEventDispatcher, IBitmapDrawable{
+	public interface IScene extends IEventDispatcher, IBitmapDrawable, IAssetHolder{
 		function destroy():void;
 		
 		function update():void;
 		
-		function place(parent:Object, asset:Object, params:Object = null):Asset;
-		
-		function add(asset:Asset, name:String = null, groups:String = null):Asset;
+		function get assets():AssetManager;
 	}
 	
 }

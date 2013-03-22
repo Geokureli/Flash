@@ -11,25 +11,24 @@ package baseball.art.obstacles
 	 * @author George
 	 */
 	public class Rock extends Obstacle {
-		static public var sprites:SpriteSheet;
+		
+		static public var SPRITES:SpriteSheet;
+		
 		{
-			sprites = new SpriteSheet(new Imports.Rock().bitmapData);
-			sprites.clearBG();
-			sprites.createGrid(48, 48);
-			sprites.addAnimation("idle", Vector.<int>([0]));
-			sprites.addAnimation("break", Vector.<int>([1, 2, 3, 4, 5]), false);
+			SPRITES = new SpriteSheet(new Imports.Rock().bitmapData);
+			SPRITES.clearBG();
+			SPRITES.createGrid();
+			SPRITES.addAnimation("idle", Vector.<int>([0]));
+			SPRITES.addAnimation("break", Vector.<int>([1, 2, 3, 4, 5]), false);
 		}
 		
-		public function Rock() { super(); name = "rock"; }
+		public function Rock() { super(); id = "rock"; }
 		override protected function setDefaultValues():void {
 			super.setDefaultValues();
 			
-			addAnimationSet(sprites);
-			currentAnimation = "idle";
+			blit.addAnimationSet(SPRITES);
 			shape = new Box(0, 16, 8, 32);
 			y += 16;
-		}
-		
+		}	
 	}
-
 }

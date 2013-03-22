@@ -26,6 +26,8 @@ package baseball {
 		static public const Rock:Class;
 		[Embed(source = "../../res/sprites/block.png", mimeType = "image/png")]
 		static public const Block:Class;
+		[Embed(source = "../../res/sprites/cloud.png", mimeType = "image/png")]
+		static public const Cloud:Class;
 		[Embed(source = "../../res/sprites/buttons.png", mimeType = "image/png")]
 		static private const ButtonSrc:Class;
 		[Embed(source = "../../res/sprites/testBtn.png", mimeType = "image/png")]

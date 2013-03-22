@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'3/20/2013'</value>
+      <value>'3/22/2013'</value>
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
@@ -26,12 +26,12 @@
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\Rhythm Baseball\src\baseball\Main.as</path-element>
+    <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\Rhythm Baseball\src\baseball\TestMain.as</path-element>
   </file-specs>
   <default-background-color>#A4E4FC</default-background-color>
   <default-frame-rate>30</default-frame-rate>
   <default-size>
-    <width>800</width>
-    <height>400</height>
+    <width>600</width>
+    <height>340</height>
   </default-size>
 </flex-config>
