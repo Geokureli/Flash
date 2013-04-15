@@ -63,12 +63,13 @@ package relic.audio
 	}
 
 }
+import flash.events.EventDispatcher;
 import flash.media.Sound;
 import flash.media.SoundChannel;
 import flash.media.SoundTransform;
-import relic.data.xml.IXMLParam;
-import relic.data.xml.XMLParser;
-class SoundDescription implements IXMLParam {
+import relic.xml.IXMLParam;
+import relic.xml.XMLParser;
+class SoundDescription extends EventDispatcher implements IXMLParam {
 	private var transform:SoundTransform;
 	public var startTime:Number;
 	public var loops:int;

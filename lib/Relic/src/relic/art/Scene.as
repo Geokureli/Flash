@@ -1,8 +1,9 @@
 package relic.art {
 	import flash.display.DisplayObjectContainer;
-	import relic.data.AssetManager;
-	//import relic.data.events.AssetEvent;
-	import relic.data.Vec2;
+	import flash.utils.Dictionary;
+	import relic.AssetManager;
+	//import relic.events.AssetEvent;
+	import relic.Vec2;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -13,15 +14,18 @@ package relic.art {
 	 * @author George
 	 */
 	public class Scene extends Sprite implements IScene {
+		private var autoLayers:Dictionary;
+		
 		private var _assets:AssetManager;
 		protected var layers:Object;
+		
 		protected var up:Boolean, down:Boolean, left:Boolean, right:Boolean, 
 						updateAssets:Boolean;
+						
 		protected var defaultUpdate:Function;
 		
 		public function Scene() {
 			super();
-			
 			
 			setDefaultValues();
 			createLayers();
@@ -36,6 +40,7 @@ package relic.art {
 		 */
 		protected function setDefaultValues():void {
 			assets = defaultAssetManager;
+			autoLayers = new Dictionary();
 		}
 		
 		/** Called automatically by constructor
@@ -64,10 +69,18 @@ package relic.art {
 		 */
 		public function addLayer(name:String):Layer {
 			var layer:Layer = new Layer();
+			
 			layer.name = name;
 			addChild(layer);
 			layers[name] = layer;
 			return layer;
+		}
+		
+		protected function autoLayer(layer:String, type:Class, ...args):void {
+			args.push(type);
+			
+			for each(var type:Class in args)
+				autoLayers[type] = layer;
 		}
 		
 		/**
@@ -151,21 +164,36 @@ package relic.art {
 		
 		/**
 		 * Adds the target
-		 * @param	layer: The name of the layer to add the blit to.
-		 * @param	blit: The target blit to be placed. if a string is passed, the blit with the matching identifier is used. Otherwise pass in the actual blit.
-		 * @param	params(optional): an object containing variables that will be set on the target asset(for awesome 1 line defs).
-		 * @return	The blit that was Added.
+		 * @param	asset: The target asset to be placed. if a string is passed, the asset with the matching identifier is used. Otherwise pass in the actual asset.
+		 * @return	The asset that was Added.
 		 */
-		public function place(asset:Asset, layer:Object = "front"):Asset {
+		public function place(asset:Asset):Asset {
+			var layer:String = "front";
+			
+			for (var key:Object in autoLayers)
+				if (asset is Class(key))
+					layer = autoLayers[key];
+			
+			return placeOnLayer(layer, asset);
+		}
+		
+		/**
+		 * Adds the target
+		 * @param	layer: The name of the layer to add the asset to.
+		 * @param	asset: The target asset to be placed. if a string is passed, the asset with the matching identifier is used. Otherwise pass in the actual asset.
+		 * @return	The asset that was Added.
+		 */
+		public function placeOnLayer(layer:Object, asset:Asset):Asset {
+			if(layer is String) layer = layers[layer]
 			// --- ADD TO LAYER
-			layers[layer].place(asset);
+			layer.place(asset);
 			return asset;
 		}
 		
 		/**
-		 * Removes an blit from it's parent.
-		 * @param	name: The name the blit is registered to, or the actual blit itself.
-		 * @return	The blit that was removed.
+		 * Removes an asset from it's parent.
+		 * @param	name: The name the asset is registered to, or the actual asset itself.
+		 * @return	The asset that was removed.
 		 */
 		public function remove(asset:Asset):Asset {
 			asset.parent.remove(asset);
@@ -203,6 +231,7 @@ package relic.art {
 			graphics.lineTo(end.x - head.x + head.y, end.y - head.y - head.x);
 			graphics.lineTo(end.x, end.y);
 		}
+		
 		protected function drawLine(p1:Vec2, p2:Vec2, color:uint = 0x808080, extend:Boolean = false):void {
 			var start:Vec2 = new Vec2(0, 0), end:Vec2 = new Vec2(stage.stageWidth, stage.stageHeight);
 			if (p2.y == p1.y) { 
@@ -231,6 +260,7 @@ package relic.art {
 			removeListeners();
 			assets.destroy();
 			
+			autoLayers = null;
 			defaultUpdate = null;
 		}
 		

@@ -1,10 +1,13 @@
 package relic.art.blitting {
+	import flash.display.BitmapData;
+	import flash.display.IBitmapDrawable;
+	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import relic.art.Animation;
+	import relic.Asset;
 	import relic.art.IAnimated;
-	import relic.art.SpriteSheet;
-	import relic.data.events.AnimationEvent;
+	import relic.events.AnimationEvent;
+	import relic.helpers.StringHelper;
 	
 	/**
 	 * ...
@@ -18,11 +21,13 @@ package relic.art.blitting {
 		
 		private var _frame:int;
 		
+		private var _defaultAnimation:String;
+		
 		public var isPlaying:Boolean;
 		
-		public function AnimatedBlit(sheet:SpriteSheet = null) {
-			super();
-			if(sheet != null) addAnimationSet(sheet);
+		public function AnimatedBlit(child:BitmapData = null) {
+			super(child);
+			defaultAnimation = "idle";
 		}
 		
 		override protected function setDefaultValues():void {
@@ -30,16 +35,38 @@ package relic.art.blitting {
 			animations = { };
 			frame = 0;
 			isPlaying = true;
+			defaultAnimation = "idle";
 		}
 		
-		public function addAnimationSet(sheet:SpriteSheet):void {
-			if ("idle" in sheet.animations && currentAnimation == null)
-				currentAnimation = "idle"
-			for (var i:String in sheet.animations){
-				animations[i] = sheet.animations[i];
-				if (currentAnimation == null)
-					currentAnimation = "idle";
-			}
+		override protected function init(e:Event):void {
+			super.init(e);
+			
+			if (!(defaultAnimation in animations) && sheet != null)
+				addAnimationSet(sheet);
+		}
+		
+		public function addAnimation(name:String, anim:Animation):void {
+			if (currentAnimation == null) 
+				currentAnimation = name;
+			
+			animations[name] = anim;
+		}
+		
+		public function addAnimationSet(sheet:SpriteSheet, group:String = null):void {
+			child = sheet;
+			if ((asset == null || asset.id == null) && group == null)
+				return;
+			
+			if (group == null) group = StringHelper.parseID(asset.id);
+			if (!(group in sheet.groups)) group = "default";
+			if (!(group in sheet.groups)) return;
+			
+			if (defaultAnimation in sheet.groups[group])
+				currentAnimation = defaultAnimation;
+			
+			for (var i:String in sheet.groups[group])
+				addAnimation(i, sheet.groups[group][i]);
+			
 			setGraphicBounds();
 		}
 		
@@ -57,20 +84,47 @@ package relic.art.blitting {
 			if(isPlaying)
 				frame++;
 		}
+		
+		override protected function drawBorder():void {
+			if (border != null && "default" in border.groups && currentAnimation != null)
+				border.groups["default"][currentAnimation].drawFrame(frame, map.bitmapData, position);
+			else
+				super.drawBorder();
+		}
+		
 		override protected function drawTile(position:Point, xIndex:int, yIndex:int):void {
-			if (anim != null) 
-				anim.drawFrame(frame, map.bitmapData, position);
+			
+			if (sheet != null && (currentAnimation in animations || defaultAnimation in animations))
+				(currentAnimation in animations ? anim : animations[defaultAnimation] ).drawFrame(frame, map.bitmapData, position);
 			else
 				super.drawTile(position, xIndex, yIndex);
 			
 		}
+		
 		override public function destroy():void {
 			animations = null;
 			_currentAnimation = null;
 			super.destroy();
 		}
 		
+		public function hasAnimation(name:String):Boolean { return name in animations; }
+		
 		public function get anim():Animation { return animations[currentAnimation]; }
+		
+		override public function set asset(value:Asset):void {
+			
+			var init:Boolean = asset == null && sheet != null && value != null;
+			super.asset = value;
+			
+			if (init)
+				addAnimationSet(sheet);
+			
+		}
+		
+		override public function set sheet(value:SpriteSheet):void {
+			super.sheet = value;
+			if(asset != null) addAnimationSet(value);
+		}
 		
 		public function get currentAnimation():String { return _currentAnimation; }
 		public function set currentAnimation(value:String):void {
@@ -90,6 +144,10 @@ package relic.art.blitting {
 			if (anim != null) return anim.getFrameRect(frame);
 			return super.rect;
 		}
+		
+		public function get defaultAnimation():String { return _defaultAnimation; }
+		public function set defaultAnimation(value:String):void { _defaultAnimation = value; }
+		
 	}
 
 }

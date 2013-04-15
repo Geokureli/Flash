@@ -4,10 +4,10 @@ package relic.art.blitting {
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.utils.Dictionary;
-	import relic.art.Asset;
+	import relic.Asset;
 	import relic.art.IScene;
-	import relic.data.AssetManager;
-	import relic.data.IAssetHolder;
+	import relic.AssetManager;
+	import relic.IAssetHolder;
 	
 	/**
 	 * ...
@@ -16,15 +16,18 @@ package relic.art.blitting {
 	public class Blitmap extends Bitmap implements IAssetHolder {
 		static private const NULL_BG:uint = 0x01FFFFFF;
 		
+		private var autoLayers:Dictionary;
 		private var layerOrder:Vector.<BlitLayer>;
 		private var layers:Object;
 		
 		protected var _assets:AssetManager;
 		
 		public var bgColor:uint;
+		public var transparent:Boolean;
 		
 		public function Blitmap(bitmapData:BitmapData=null, pixelSnapping:String="auto", smoothing:Boolean=false) {
 			super(bitmapData, pixelSnapping, smoothing);
+			
 			setDefaultValues();
 			createLayers();
 			addEventListener(Event.ADDED_TO_STAGE, init);
@@ -35,6 +38,8 @@ package relic.art.blitting {
 			layerOrder = new Vector.<BlitLayer>();
 			layers = { };
 			bgColor = NULL_BG;
+			transparent = false;
+			autoLayers = new Dictionary();
 		}
 		
 		private function get defaultAssetManager():AssetManager { return new AssetManager(this); }
@@ -45,8 +50,10 @@ package relic.art.blitting {
 		 */
 		protected function init(e:Event):void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
+			//if(bgColor == NULL_BG) bgColor = stage.color;
+			if (bitmapData == null)
+				bitmapData = new BitmapData(stage.stageWidth, stage.stageHeight, transparent || bgColor > 0xFFFFFF, bgColor);
 			addListeners();
-			if(bgColor == NULL_BG) bgColor = stage.color;
 		}
 		
 		/** Called automatically by constructor
@@ -55,13 +62,22 @@ package relic.art.blitting {
 		 * (whether super is called or not) a draw layer will be added to the front
 		 */
 		protected function createLayers():void {
+			addLayer("BG");
 			addLayer("back");
 			addLayer("mid");
 			addLayer("front");
+			addLayer("UI");
 		}
 
 		protected function addListeners():void {
 			
+		}
+		
+		protected function autoLayer(layer:String, type:Class, ...args):void {
+			args.push(type);
+			
+			for each(var type:Class in args)
+				autoLayers[type] = layer;
 		}
 		
 		/**
@@ -76,6 +92,10 @@ package relic.art.blitting {
 			layers[name] = layer;
 		}
 		
+		public function a(id:String):Asset{
+			return assets.a(id);
+		}
+		
 		/**
 		 * Adds the target
 		 * @param	layer: The name of the layer to add the blit to.
@@ -83,9 +103,19 @@ package relic.art.blitting {
 		 * @param	params(optional): an object containing variables that will be set on the target asset(for awesome 1 line defs).
 		 * @return	The blit that was Added.
 		 */
-		public function place(asset:Asset, layer:Object = "front"):Asset {
-			// --- ADD TO LAYER
-			layers[layer].place(asset);
+		public function place(asset:Asset):Asset {
+			var layer:String = "front";
+			
+			for (var key:Object in autoLayers)
+				if (asset is Class(key))
+					layer = autoLayers[key];
+			
+			return placeOnLayer(layer, asset);
+		}
+		
+		public function placeOnLayer(layer:Object, asset:Asset):Asset {
+			if (layer is String) layer = layers[layer];
+			layer.place(asset);
 			return asset;
 		}
 		
@@ -98,8 +128,6 @@ package relic.art.blitting {
 			asset.parent.remove(asset);
 			return asset;
 		}
-		
-		protected function a(name:String):Asset { return assets.a(name); }
 		
 		// ====================================================================
 		// 								- Events -
@@ -129,15 +157,16 @@ package relic.art.blitting {
 			while (layerOrder.length > 0)
 				layerOrder.shift().destroy();
 			
+			autoLayers = null;
 			layerOrder = null;
 			layers = null;
+			
 		}
 		
 		/**
 		 * Removes listeners from the scene.
 		 */
 		protected function removeListeners():void { }
-		
 		
 		public function get assets():AssetManager { return _assets; }
 		public function set assets(value:AssetManager):void { _assets = value; }

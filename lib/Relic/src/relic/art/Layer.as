@@ -2,7 +2,7 @@ package relic.art
 {
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import relic.data.IAssetHolder;
+	import relic.IAssetHolder;
 	
 	/**
 	 * ...
@@ -15,7 +15,7 @@ package relic.art
 		
 		/* INTERFACE relic.data.IAssetHolder */
 		
-		public function place(asset:Asset, parent:Object = "front"):Asset {
+		public function place(asset:Asset):Asset {
 			return addChild(asset.graphic as DisplayObject) as Asset;
 		}
 		

@@ -1,8 +1,9 @@
 package relic.art {
 	import flash.events.IEventDispatcher;
 	import flash.display.IBitmapDrawable;
-	import relic.data.AssetManager;
-	import relic.data.IAssetHolder;
+	import relic.Asset;
+	import relic.AssetManager;
+	import relic.IAssetHolder;
 	/**
 	 * ...
 	 * @author George
@@ -11,6 +12,8 @@ package relic.art {
 		function destroy():void;
 		
 		function update():void;
+		
+		function placeOnLayer(layer:Object, asset:Asset):Asset;
 		
 		function get assets():AssetManager;
 	}

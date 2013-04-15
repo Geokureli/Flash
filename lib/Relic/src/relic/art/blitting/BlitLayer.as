@@ -3,9 +3,8 @@ package relic.art.blitting
 	import flash.display.BitmapData;
 	import flash.display.Stage;
 	import flash.events.Event;
-	import relic.art.Asset;
-	import relic.data.Asset2;
-	import relic.data.IAssetHolder;
+	import relic.Asset;
+	import relic.IAssetHolder;
 	/**
 	 * ...
 	 * @author George
@@ -16,7 +15,7 @@ package relic.art.blitting
 		public function BlitLayer() {
 			children = new Vector.<Asset>();
 		}
-		public function place(asset:Asset, parent:Object = "front"):Asset {
+		public function place(asset:Asset):Asset {
 			if (asset.parent)
 				asset.parent.remove(asset);
 			children.push(asset);

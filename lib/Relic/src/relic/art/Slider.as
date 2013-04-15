@@ -16,12 +16,12 @@ package relic.art {
 					_tickInterval:Number,
 					_width:Number,
 					_value:Number;
-					
+		
 		private var _prefix:String,
 					_suffix:String;
-					
+		
 		private var drag:Dragger;
-					
+		
 		private var _allowTextEdit:Boolean;
 		private var _enabled:Boolean;
 		

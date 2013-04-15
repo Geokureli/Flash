@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<tileset>
+	<tileDefs>
+		<tileDef ref=" " frames="0"/>
+		<tileDef ref="-" frames="1"/>
+		<tileDef ref="x" frames="2" solid="true" />
+		<tileDef ref="X" frames="3" solid="true" />
+	</tileDefs>
+	
+	<tiles>
+		<row>            </row>
+		<row>         X  </row>
+		<row>         X  </row>
+		<row>         X  </row>
+		<row>         X  </row>
+		<row>         X  </row>
+		<row>         X  </row>
+		<row>         X  </row>
+		<row> xxx  xXxX  </row>
+		<row>            </row>
+		<row>            </row>
+		<row>            </row>
+	</tiles>
+	
+</tileset>

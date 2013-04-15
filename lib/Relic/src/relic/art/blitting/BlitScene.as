@@ -14,6 +14,7 @@ package relic.art.blitting {
 		public function BlitScene(bitmapData:BitmapData=null, pixelSnapping:String="auto", smoothing:Boolean=false) {
 			super(bitmapData, pixelSnapping, smoothing);
 		}
+		
 		override protected function init(e:Event):void {
 			super.init(e);
 			

@@ -1,12 +1,12 @@
 package relic.beat 
 {
-	import baseball.data.events.BeatEvent;
+	//import baseball.data.events.BeatEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.media.SoundChannel;
 	import flash.utils.getTimer;
 	import relic.audio.SoundManager;
-	import relic.data.Global;
+	import relic.Global;
 	/**
 	 * ...
 	 * @author George
