@@ -22,6 +22,7 @@
     <source-path append="true">
       <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\tests\starPunkTest\src</path-element>
       <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\lib\starling\src</path-element>
+      <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\lib\StarlingPunk-master\lib</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
