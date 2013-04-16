@@ -8,7 +8,8 @@ package baseball.art {
 		public function Bomb() {
 			super(30);
 			loadGraphic(SHEET, true, false, 16, 16);
-			addAnimation("hit", [0,1,2,3,4,5,6,7], 15)
+			addAnimation("idle", [0]);
+			addAnimation("hit", [0, 1, 2, 3, 4, 5, 6, 7], 15);
 		}
 		override public function pass():void {
 			super.pass();
@@ -17,6 +18,12 @@ package baseball.art {
 			velocity.y = -800;
 			acceleration.y = 1600;
 			play("hit");
+		}
+		override public function revive():void {
+			super.revive();
+			play("idle");
+			velocity.x = velocity.y = acceleration.y = 0;
+			y = HERO.y + 30;
 		}
 	}
 

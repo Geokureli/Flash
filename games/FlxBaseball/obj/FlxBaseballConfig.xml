@@ -16,13 +16,24 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'4/15/2013'</value>
+      <value>'4/16/2013'</value>
+    </define>
+    <define append="true">
+      <name>CONFIG::air</name>
+      <value>false</value>
+    </define>
+    <define append="true">
+      <name>CONFIG::mobile</name>
+      <value>false</value>
+    </define>
+    <define append="true">
+      <name>CONFIG::desktop</name>
+      <value>false</value>
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
       <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\games\FlxBaseball\src</path-element>
-      <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\lib\Flixel - Beta 3-29-13</path-element>
-      <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\lib\Krakel\src</path-element>
+      <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\lib</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>

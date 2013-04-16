@@ -6,6 +6,7 @@ package baseball.states.play {
 	import baseball.art.Obstacle;
 	import baseball.art.Rock;
 	import baseball.Imports;
+	import com.greensock.TweenMax;
 	import flash.geom.Rectangle;
 	import krakel.beat.BeatKeeper;
 	import krakel.KrkDepthBG;
@@ -24,6 +25,9 @@ package baseball.states.play {
 	import org.flixel.FlxU;
 	import org.flixel.plugin.photonstorm.FlxScrollZone;
 	
+	import com.greensock.easing.*;
+	import com.greensock.easing.Strong;
+	import com.greensock.easing.FastEase;
 	/**
 	 * ...
 	 * @author George
@@ -31,7 +35,6 @@ package baseball.states.play {
 	public class GameState extends KrkState {
 		
 		// --- --- --- --- --- GFX --- --- --- --- ---
-		[Embed(source = "../../../../res/sprites/tee.png")] static private var TEE:Class;
 		[Embed(source = "../../../../res/sprites/field.png")] static private var BG:Class;
 		[Embed(source = "../../../../res/sprites/out_bar.png")] static private var OUT_BAR:Class;
 		[Embed(source = "../../../../res/sprites/out_light.png")] static private var OUT_LIGHT:Class;
@@ -52,6 +55,9 @@ package baseball.states.play {
 		[Embed(source="../../../../res/audio/sfx/swing.mp3")] static private const SND_SWING:Class;
 		[Embed(source="../../../../res/audio/sfx/onBeat.mp3")] static private const SND_BEAT_ON:Class;
 		[Embed(source="../../../../res/audio/sfx/offBeat.mp3")] static private const SND_BEAT_OFF:Class;
+		
+		static private const MSG_X:Number = 300, 
+							MSG_Y:Number = 150;
 		
 		static protected var messages:Object;
 		{
@@ -112,7 +118,7 @@ package baseball.states.play {
 			addSounds();
 			startGame();
 			FlxG.bgColor = 0xFFa4e4fc;
-			
+			gameOver = true;
 		}
 		
 		protected function initLayers():void {
@@ -158,7 +164,7 @@ package baseball.states.play {
 			UI.add(strikes = new CountLight(240, 16, STRIKE_BAR, STRIKE_LIGHT));
 			UI.add(outs = new CountLight(310, 16, OUT_BAR, OUT_LIGHT));
 			
-			UI.add(txt_message = new FlxSprite(300,150));
+			UI.add(txt_message = new FlxSprite(MSG_X, MSG_Y));
 			txt_message.scale.x =
 				txt_message.scale.y = 2;
 		}
@@ -194,9 +200,7 @@ package baseball.states.play {
 		}
 		
 		protected function startRun():void {
-			var prebeat:uint = meter;
-			if (prebeat % 2 == 0) prebeat = int(prebeat / 2);
-			BeatKeeper.init(checkpoint-prebeat);
+			
 			
 			if (checkpoint == 0) {
 				// --- metronome
@@ -204,16 +208,23 @@ package baseball.states.play {
 			
 			FlxScrollZone.startScrolling();
 			
-			gameOver = false;
 			message = "ready";
+			txt_message.x = -txt_message.width;
+			TweenMax.to(txt_message, 1, { x:MSG_X,  ease:com.greensock.easing.Sine.easeOut, onComplete:onReadyIn } );
+			txt_message.visible = true;
 			hero.play("idle");
 			strikes.value = 0;
 			songStarted = false;
 			lastSpawn = checkpoint - .01;
 		}
 		
-		protected function endIntro():void {
+		private function onReadyIn():void {
 			
+		}
+		
+		protected function endIntro():void {
+			BeatKeeper.init(checkpoint-(meter % 2 == 0 ? int(meter / 2) : meter));
+			gameOver = false;
 			
 			hero.x = Obstacle.HERO.x;
 			hero.velocity.x = 0;
@@ -232,11 +243,13 @@ package baseball.states.play {
 			
 			if (BeatKeeper.time > songOffset && !songStarted && song != null) {
 				song.position = BeatKeeper.time-songOffset;
-				trace("start: " + song.position);
+				//trace("start: " + song.position);
 				song.play();
 				songStarted = true;
 			}
-			if (txt_message.alpha > 0) txt_message.alpha -= .025;
+			
+			spawnAssets();
+			
 		}
 		
 		public function addEffect(x:Number, y:Number, graphic:Class, animated:Boolean = false, width:uint = 0, height:uint = 0, unique:Boolean = false):void {
@@ -250,7 +263,7 @@ package baseball.states.play {
 		}
 		
 		private function updateIntro():void {
-			txt_message.alpha = (BeatKeeper.beat+100) % 1;
+			//txt_message.alpha = (BeatKeeper.beat+100) % 1;
 			if (hero.x > Obstacle.HERO.x) {
 				hero.x = Obstacle.HERO.x;
 				
@@ -261,13 +274,17 @@ package baseball.states.play {
 			var heroAnim:String = hero.animName;
 			
 			hero.forceDuck = false;
-			FlxG.overlap(hero, bombs, onBomb);
-			FlxG.overlap(hero, rocks, onRock);
-			FlxG.overlap(hero, blocks, onBlock);
-			FlxG.overlap(hero, gaps, onGap);
+			if(
+				FlxG.overlap(hero, bombs, onBomb) ||
+				FlxG.overlap(hero, rocks, onRock) ||
+				FlxG.overlap(hero, blocks, onBlock) ||
+				FlxG.overlap(hero, gaps, onGap)
+			) {
+				//trace("hit");
+			}
 			FlxG.overlap(hero, bases, onBase);
 			
-			spawnAssets();
+			//if (txt_message.alpha > 0) txt_message.alpha -= .025;
 		}
 		private function updateLose():void { }
 		
@@ -281,12 +298,9 @@ package baseball.states.play {
 					switch(node.name().toString()) {
 						case "bomb" :
 							obstacle =  bombs.recycle(Bomb)  as Obstacle;
-							tee = tees.recycle(Obstacle) as Obstacle;
+							tee = tees.recycle(Tee) as Obstacle;
 							XMLParser.setProperties(tee, node);
 							tee.revive();
-							tee.loadGraphic(TEE);
-							tee.y = Obstacle.HERO.y + 34;
-							tee.offset.x = 1;
 							break;
 						
 						case "rock" : obstacle =  rocks.recycle(Rock)  as Obstacle; break;
@@ -297,6 +311,7 @@ package baseball.states.play {
 					
 					XMLParser.setProperties(obstacle, node);
 					obstacle.revive();
+					//trace(obstacle);
 					lastSpawn = spawn;
 					break;
 				}
@@ -305,10 +320,10 @@ package baseball.states.play {
 		
 		private function onBomb(hero:Hero, bomb:Bomb):void {
 			if (bomb.alive) {
-				s_swing.play(true);
 				
+				bomb.alive = false;
 				if (hero.animName == "swing") {
-					bomb.alive = false;
+					s_swing.play(true);
 					bomb.pass();
 				}
 				
@@ -367,6 +382,7 @@ package baseball.states.play {
 			hero.flicker(15 / BeatKeeper.beatsPerMinute);
 			addEffect(hero.x, hero.y, strikes.value == 0 ? OUT_TXT : STRIKE_TXT);
 		}
+		
 		private function out():void {
 			message = "out"
 			if (outs.value == 2) lose();
@@ -405,11 +421,14 @@ package baseball.states.play {
 			tees.revive();
 			bases.revive();
 			
+			
+			BeatKeeper.init(checkpoint - (meter % 2 == 0 ? int(meter / 2) : meter));
+			gameOver = false;
 			startRun();
 			defaultUpdate = updateMain;
 			
 			outs.value++;
-			trace("reset", checkpoint, -meter);
+			//trace("reset", checkpoint, -meter);
 		}
 		
 		override public function destroy():void {
@@ -442,6 +461,7 @@ package baseball.states.play {
 	}
 
 }
+import baseball.art.Obstacle;
 import org.flixel.FlxGroup;
 import org.flixel.FlxSprite;
 import org.flixel.system.FlxList;
@@ -473,5 +493,15 @@ class CountLight extends FlxGroup {
 		
 		while ( _value > value)
 			lights[--_value].visible = false;
+	}
+}
+
+class Tee extends Obstacle {
+	
+	[Embed(source = "../../../../res/sprites/tee.png")] static private var TEE:Class;
+	
+	public function Tee() {
+		super(34, TEE);
+		offset.x = 1;
 	}
 }

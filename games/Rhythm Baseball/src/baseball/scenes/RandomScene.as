@@ -13,7 +13,7 @@ package baseball.scenes {
 	 * ...
 	 * @author George
 	 */
-	public class RandomScene extends GameScene {
+	public class RandomScene extends GameScene {		
 		static public const TYPES:Array = ["ball", "block", "rock", "gap"];
 		
 		private var beatCount:int;

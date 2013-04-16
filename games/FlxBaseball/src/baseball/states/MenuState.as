@@ -1,6 +1,7 @@
 package baseball.states {
 	import baseball.Imports;
 	import baseball.states.editor.EditorState;
+	import baseball.states.play.ChargeState;
 	import baseball.states.play.GameState;
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
@@ -36,9 +37,12 @@ package baseball.states {
 			title.scale.x = title.scale.y = 2;
 			
 			add(playBtn = new FlxButton(200, 200, null, playClick).loadGraphic(BALL_1));
-			add(playBtn = new FlxButton(250, 200, null, playClick).loadGraphic(BALL_2));
-			add(playBtn = new FlxButton(300, 200, null, playClick).loadGraphic(BALL_3));
-			add(playBtn = new FlxButton(350, 200, null, playClick).loadGraphic(BALL_4));
+			add(playBtn = new FlxButton(250, 200).loadGraphic(BALL_2));
+			playBtn.alpha = .5;
+			add(playBtn = new FlxButton(300, 200).loadGraphic(BALL_3));
+			playBtn.alpha = .5;
+			add(playBtn = new FlxButton(350, 200).loadGraphic(BALL_4));
+			playBtn.alpha = .5;
 			add(chargeBtn = new FlxButton(200, 250, "Charge", chargeClick));
 			add(editorBtn = new FlxButton(300, 250, "Editor", editorClick));
 			
@@ -53,7 +57,7 @@ package baseball.states {
 		}
 		
 		private function chargeClick():void {
-			
+			FlxG.switchState(new ChargeState());
 		}
 		
 		private function editorClick():void {
