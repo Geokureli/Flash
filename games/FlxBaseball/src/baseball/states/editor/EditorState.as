@@ -14,6 +14,7 @@ package baseball.states.editor {
 	import flash.display.BitmapData;
 	import flash.system.System;
 	import krakel.beat.BeatKeeper;
+	import krakel.KrkSound;
 	import krakel.xml.XMLParser;
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
@@ -68,7 +69,7 @@ package baseball.states.editor {
 		
 		private var timeline:Timeline;
 		private var playback:FlxSprite;
-		private var song:FlxSound
+		private var song:KrkSound;
 		
 		private var playbackBeat:Number;
 		
@@ -76,15 +77,16 @@ package baseball.states.editor {
 		
 		public function EditorState() {
 			super();
+		}
+		
+		override public function create():void {
+			super.create();
+			
 			
 			obstacles = [];
 			addUI();
 			playbackBeat = 0;
 			songStarted = false;
-		}
-		
-		override public function create():void {
-			super.create();
 			
 			Obstacle.HERO = new FlxPoint(50, 200);
 			FlxG.bgColor = 0xFFa4e4fc;
@@ -211,7 +213,7 @@ package baseball.states.editor {
 			
 			if ("@song" in level) {
 				songName = level.@song.toString();
-				song = new FlxSound();
+				song = new KrkSound();
 				song.loadEmbedded(Imports.getSong(songName), false, true);
 			}
 			

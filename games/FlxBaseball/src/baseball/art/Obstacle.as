@@ -18,7 +18,7 @@ package baseball.art {
 		]);
 		static public const NO_FILTERS:Vector.<BitmapFilter> = new Vector.<BitmapFilter>();
 		
-		static public var HERO:FlxPoint = new FlxPoint();
+		static public var HERO:FlxPoint;
 		static public var SCROLL:Number;
 		
 		private var _glow:Boolean;

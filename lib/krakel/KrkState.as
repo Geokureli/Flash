@@ -12,13 +12,10 @@ package krakel {
 		
 		public function KrkState() { super(); }
 		override public function create():void {
+			members = [];
 			super.create();
 			
-			initVars();
 		}
-		
-		protected function initVars():void { }
-		
 		override public function update():void {
 			super.update();
 			
@@ -26,9 +23,16 @@ package krakel {
 		}
 		
 		protected function debugUpdate():void {
-			if (FlxG.keys.ESCAPE && parentState != null) FlxG.switchState(parentState);
+			if (FlxG.keys.ESCAPE && parentState != null) toParentState();
 		}
 		
+		protected function toParentState():void {
+			FlxG.switchState(parentState);
+		}
+		override public function destroy():void {
+			super.destroy();
+			parentState = null;
+		}
 	}
 
 }

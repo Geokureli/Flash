@@ -3,6 +3,7 @@ package baseball {
 	import flash.geom.Rectangle;
 	import krakel.audio.SoundManager;
 	import krakel.helpers.BitmapHelper;
+	import org.flixel.FlxSound;
 	/**
 	 * ...
 	 * @author George
@@ -10,8 +11,13 @@ package baseball {
 	public class Imports {
 		
 		[Embed(source = "../../res/levels/level_tmottbg.xml", mimeType = "application/octet-stream")] static private var TMOTTBG_LEVEL:Class;
+		[Embed(source = "../../res/levels/level_test.xml", mimeType = "application/octet-stream")] static private var TEST_LEVEL:Class;
 		
 		[Embed(source = "../../res/audio/songs/tmottbg.mp3")] static private const TMOTTBG:Class;
+		[Embed(source = "../../res/audio/songs/menu_theme.mp3")] static private const MENU_THEME:Class;
+		[Embed(source = "../../res/audio/sfx/onBeat.mp3")] static private const TICK_EMBED:Class;
+		[Embed(source = "../../res/audio/sfx/offBeat.mp3")] static private const TOCK_EMBED:Class;
+		
 		[Embed(source="../../res/sprites/scalerButton.png")]static private const BTN_TEMPLATE:Class;
 		
 		static public var BUTTON:BitmapData;
@@ -20,9 +26,17 @@ package baseball {
 		static private const levels:Object = { };
 		static private const buttons:Object = { };
 		
-		{
+		static public var TICK:FlxSound, TOCK:FlxSound;
+		
+		{	// --- STATIC INIT
+			
+			SoundManager.Add("menu", MENU_THEME, 1, true);
+			
+			TICK = new FlxSound().loadEmbedded(TICK_EMBED);
+			TOCK = new FlxSound().loadEmbedded(TOCK_EMBED);
 			songs["tmottbg"] = TMOTTBG;
 			levels["tmottbg"] = new XML(new TMOTTBG_LEVEL());
+			levels["test"] = new XML(new TEST_LEVEL());
 			BUTTON = new BTN_TEMPLATE().bitmapData;
 		}
 		static public function getLevel(name:String):XML {

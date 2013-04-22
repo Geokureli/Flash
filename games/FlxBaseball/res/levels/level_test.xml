@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<level bpm="120" speed="15" meter="4">
+  <assets>
+    <base beat="2"/>
+  </assets>
+</level>

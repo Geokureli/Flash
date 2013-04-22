@@ -1,0 +1,171 @@
+/* General */
+body { font-size: 73% !important; }
+
+/* Set sticky footer */
+* html #page { height: 100% !important; } /* for ie */
+
+
+/* layout */
+* html #header ul#nav { height: 1%; }
+* html #header ul#nav li a.active { height: 1%; position: relative; }
+* html #header ul#nav li a.active:hover /* For IE */ { background: url(../../images/g_nav_large.gif) no-repeat 0 -0px; z-index: 2; position: relative; cursor: default;  }
+* html ul.bullet li { position: relative; }
+
+.tabs { height: 1.9em; }
+
+#sub-nav li.active a { display: block; text-align: center; position: relative; margin: 0 auto; zoom:1;}
+
+/* Forms */
+* html ul.form li { zoom: 1; }
+* html ul.form li ul.list li label { zoom:1; } /* IE bad margins */
+* html ul.form li .column { margin-right: 33px; position: relative; height: 1%;}
+
+ul.form li ul.list li input{ margin: 0; padding: 0; }
+
+input.b-delete,
+input.b-creategame,
+input.b-createleaderboard,
+input.b-createlb,
+input.b-upload2,
+input.b-yescreate,
+input.b-delete2 { padding: 50px 0 0 0; cursor: pointer; }
+
+* html #page_help a { display: inline; padding: 3px 20px 3px 5px; border: 0px solid white; height: 1%; position: relative; } /* ie doesnt have transparent */
+* html #page_help a:hover { border: 1px solid #dbccb6; }
+* html .error-panel,
+* html .success-panel,
+* html .warning-panel { height: 1%; }
+
+
+/* @group Dashboard */
+
+* html #dashboard #earnings #current #today { width: 150px; } /* fixing the min-width for ie6 */
+#dashboard #games h2 { margin-bottom: 20px; }  /* odd little margin inconsistency in ie7 */
+#dashboard #earnings { height: 1%; } /* Can has layout? */
+#earnings #status div.paynumbers strong, #dashboard #earnings #current #this_month strong { line-height: 1.2em; }
+#earnings #status div.paynumbers strong sup, #earnings #current li strong sup { position: relative; top: -.4em;}
+#dashboard #earnings #status p { font-size: .9em; }
+
+#dashboard #side { position: static; z-index: 0;} /* it was showing over the dropdown windown */
+
+#dashboard #graph { z-index: 2; }
+#dashboard #games { z-index: 1; }
+
+* html #dashboard #graph a#multi_drop_down { width: 7em; border-color: #fffafa; }
+* html #dashboard #graph #item_all { height: 1%; }
+
+* html #dashboard .date { right: 22px; } /* IE6 */
+* html #dashboard #graph { padding-right: 0;}
+* html #dashboard #side #forums ul li, 
+* html #dashboard #side #forums ul,
+* html #dashboard #side #forums,
+* html #dashboard #side
+ { overflow: hidden; } /* this hack prevents long words in urls from ruining the layout */
+* html #dashboard #side #contest p { height: 40px; }
+
+/* @end */
+
+/* @group Game Details */
+
+#game-details #side #time-selector li.active { background: url("../images/g_selectarrow.gif") no-repeat bottom center;  }
+#game-details #side #time-selector li.active a { display: block; background: none; }
+#game-details #code #in-game-panel { zoom: 100%; } /* gimmeh layout */
+#game-details .b-deactivate { padding-top: 50px; }
+
+/* @end */
+
+/* @group Game Settings */
+#game-settings #profile .category ul li { padding-bottom: 1px; margin-bottom: 0px; border: 1px solid white; }
+#game-settings #distribution .wrapper { position: relative;  height: 1%; }
+
+* html #addgame.step3 #profile .category ul li { padding-bottom: 1px; margin-bottom: 0px; }
+* html #game-settings #main { position: relative; height: 1%; }
+* html #game-settings #distribution_edit_form,
+* html #game-settings #distribution_edit_form .wrapper { position: relative; height: 1%; }
+
+/* @end */
+
+/* @group Leaderboards */
+
+#lb.list .board_title { zoom: 1; position: relative; }
+#lb.list .board_title .tabs { zoom: 1; right: -5px; float: right; }
+#lb.list .lb_picker { zoom: 1; position: relative; }
+#lb.list #main .manage .all input { width: 15px; height: 15px; }
+
+
+* html #lb.list .lb_picker { height: 1%; }
+* html #lb.list #side { height: 300px; }
+* html #lb.list #side a.b-addlb { margin-bottom: 0px; position: relative; zoom: 1;  }
+* html #lb.list #side ul { margin-top: 10px; }
+* html #lb.list #side ul li a { position: relative; zoom: 1; }
+* html #lb.list .board_title h3 { width: 450px; }
+
+#lb.create_1 #colors .colorinput { margin-right: 5px; }
+#lb.create_1 #code #widget_code { height: 1.3em; overflow: hidden; }
+#lb.create_1 h3 span { font-size: .8em; }
+
+* html #lb.create_1 #step_title, * html #lb.create_2 #step_title { zoom: 1; }
+* html #lb.create_1 ul.form #type .column { width: 250px; }
+* html #lb.create_1 ul.form #type #score { width: 325px; }
+
+* html #lb.create_1 #advanced_panel, 
+* html #lb.create_1 #advanced_panel ul { position: relative; height: 1%; zoom: 1; }
+
+* html #lb.create_2 h2,
+* html #lb.create_2 h3,
+* html #lb.create_2 ol li { zoom: 1; position: relative; height: 1%;}
+
+* html #lb.create_2 textarea { height: 3em; font-size: .9em; }
+
+/* @end */
+
+/* Game Instructions */
+#game-inst ol li h2 { height: 30px; }
+
+
+/* Intercept page */
+#intercept .buttons { margin: 10px 0 0 65px; padding-left: 0; zoom:1; }
+
+/* @group Account */
+
+/* account settings */
+#account-info #address { background: url("../images/g_envelope.gif") no-repeat; width: 526px; height: 155px; position: relative; }
+#account-info #address h4 { position: relative; top: 26px; left: 50px; color: #ddd;  }
+#account-info #address address { position: relative !important; top: 51px; left: 40px; display: block; width: 20em; height: 61px; padding: 0 10px; background: url("../images/g_envelopelines.gif") no-repeat left top; line-height: 15px; }
+.section, .section form, .section form table, .section form table tbody, .section form table tbody tr, .section form table tbody tr td { position: relative; height: 1%; zoom: 1; }
+
+#account-info table td { position: relative; } /* weird bug with address */
+
+/* @end */
+
+
+/* Traffic Sharing */
+#acc-traffic #main h2.title { margin-left: 11px; }
+
+/* Game Instructions */
+#game-inst ol { position: relative; } /* peekaboo */
+#game-inst ol h2 { height: 20px; }
+#game-inst textarea { font-size: .9em; width: 600px; height: 15px; line-height: 15px;}
+
+/* @group Help / Help Panel */
+
+/* Help FAQ, Docs */
+
+* html #help.docs blockquote.code { padding-bottom: 0; } 
+
+* html #help.faq #main ul ul li { position: relative; }
+* html #help.faq #content #main h2 { position: relative; }
+* html #help_search .textbox { width: 179px; }
+
+* html #help_panel #help_index, 
+* html #help_panel #help_content 
+
+{ height: 200px; }
+
+/* @end */
+
+/* @group MochiPass */
+
+#mochipass a { border: none; }
+
+/* @end */

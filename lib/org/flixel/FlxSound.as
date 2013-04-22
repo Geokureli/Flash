@@ -472,9 +472,6 @@ package org.flixel
 				_volume = 1;
 			updateTransform();
 		}
-		//george
-		public function get position():Number { return _position; }
-		public function set position(value:Number):void { _position = value; }
 		
 		/**
 		 * Returns the currently selected "real" volume of the sound (takes fades and proximity into account).

@@ -5,7 +5,9 @@ package baseball{
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import krakel.KrkGame;
+	import krakel.KrkSound;
 	import krakel.KrkState;
+	import mochi.MochiBot;
 	import org.flixel.FlxG;
 	import krakel.beat.BeatKeeper;
 	import org.flixel.plugin.photonstorm.FlxMouseControl;
@@ -20,7 +22,7 @@ package baseball{
 		
 		public function Main() {
 			
-			super(600, 340, MenuState);
+			super(600, 400, MenuState);
 		}
 		override protected function create(e:Event):void {
 			super.create(e);
@@ -29,6 +31,9 @@ package baseball{
 			stage.removeEventListener(Event.DEACTIVATE, onFocusLost);
             stage.removeEventListener(Event.ACTIVATE, onFocus);
 			FlxG.mouse.show();
+			if(!FlxG.debug)
+				MochiBot.track(this, "88255b00");
+			//KrkSound.enabled = false;
 		}
 	}
 	

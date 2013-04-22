@@ -4,11 +4,11 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin\FlxBasebase.swf" />
+    <movie path="bin-debug\FlxBasebase.swf" />
     <movie fps="30" />
     <movie width="600" />
-    <movie height="340" />
-    <movie version="10" />
+    <movie height="400" />
+    <movie version="11" />
     <movie minorVersion="1" />
     <movie platform="Flash Player" />
     <movie background="#FFFFFF" />

@@ -1,7 +1,7 @@
 package baseball.states.play {
+	import krakel.KrkSound;
+	import krakel.KrkSprite;
 	import org.flixel.FlxG;
-	import org.flixel.FlxSound;
-	import org.flixel.FlxSprite;
 	import org.flixel.system.FlxAnim;
 	import org.flixel.system.input.Keyboard;
 	
@@ -9,7 +9,7 @@ package baseball.states.play {
 	 * ...
 	 * @author George
 	 */
-	public class Hero extends FlxSprite {
+	public class Hero extends KrkSprite {
 		
 		[Embed(source = "../../../../res/sprites/hero2.png")] static private const SPRITES:Class;
 		
@@ -25,15 +25,15 @@ package baseball.states.play {
 					l:Boolean, _l:Boolean,
 					d:Boolean;
 		
-		protected var s_jump:FlxSound,
-					s_slide:FlxSound,
-					s_duck:FlxSound;
+		protected var s_jump:KrkSound,
+					s_slide:KrkSound,
+					s_duck:KrkSound;
 		
 		public var forceDuck:Boolean;
 		
 		private var lastFrame:uint, jumpTime:int;
 		public function Hero(frameRate:Number = 15) {
-			super(100, 230);
+			super(-1000, 230);
 			initGraphic(frameRate);
 			width = 20;
 			height = 64;
@@ -58,9 +58,9 @@ package baseball.states.play {
 		}
 		
 		protected function initSfx():void {
-			s_jump	  = new FlxSound().loadEmbedded( SND_JUMP );
-			s_slide   = new FlxSound().loadEmbedded( SND_SLIDE );
-			s_duck    = new FlxSound().loadEmbedded( SND_DUCK );
+			s_jump	  = new KrkSound().embed( SND_JUMP );
+			s_slide   = new KrkSound().embed( SND_SLIDE );
+			s_duck    = new KrkSound().embed( SND_DUCK );
 		}
 		
 		override public function update():void {
@@ -99,17 +99,6 @@ package baseball.states.play {
 				case "duck_end":
 				case "swing": if (finished) play("idle"); break;
 			}
-		}
-		override public function draw():void {
-			var flicker:Boolean = _flicker;
-			color = 0xFFFFFF;
-			if (_flickerTimer != 0 && flicker) {
-				color = 0xFF4040;
-				_flicker = true;
-			}
-			super.draw();
-			
-			_flicker = !flicker;
 		}
 		
 		private function setKeys():void {

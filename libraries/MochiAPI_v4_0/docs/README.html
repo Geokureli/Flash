@@ -1,0 +1,1996 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>MochiAd Documentation</title>
+    <link media="screen" href="css/screen.css" type="text/css" rel="stylesheet" />
+    <!--[if IE]>
+        <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen" />
+    <![endif]-->
+</head>
+<body id="help" class="docs dev">
+    <div id="page">
+        <div id="content">
+                <!--! TOC -->
+                <div id="toc">
+                    <h1><a name="toc"></a>Table of Contents</h1>
+                    <ol>
+                        <li>
+                            <h2><a href="#MochiEvents" title="Analytics API Documentation">Analytics API Documentation</a></h2>
+                            <ol>
+                                <li><a href="#tracking_ov" title="Overview">1.1 Overview</a></li>
+                                <li><a href="#tracking_pre" title="Prerequisites">1.2 Prerequisites</a></li>
+                                <li><a href="#tracking_services" title="Connecting to MochiServices">1.3 Connecting to MochiServices</a></li>
+                            </ol>
+                        </li>
+                        <li>
+                            <!--! MOCHIADS -->
+                            <h2><a href="#MochiAds" title="Ads API Documentation">Ads API</a></h2>
+                            <ol>
+                                <li><a href="#Prerequisites:" title="Prerequisites">1.1 Prerequisites</a></li>
+                                <li><a href="#The_MochiAds_Codes:" title="The Mochi Ads API Ad Codes">1.2 The Mochi API Ad Codes</a>
+                                    <ol>
+                                        <li><a href="#Include_File_Installation:" title="Include Folder Installation">Include Folder Installation</a></li>
+                                        <li><a href="#Adding_the_In-game_Code:" title="Adding the In-game Code">Adding the In-game Code</a></li>
+                                        <li><a href="#Pregame_Code:" title="Using the Pre Game Ad">Pre-game Ad</a></li>
+                                        <li><a href="#Interlevel_Code:" title="Using the Interlevel Ad">Interlevel Ad</a></li>
+                                        <li><a href="#Clickaway_Code:" title="Using the Click-away Ad">Click-away Ad</a></li>
+                                        <li><a href="#Common_CPA_Code:" title="Using the Showcase and Dock Ads">Showcase and Dock Ads</a></li>
+                                         <li> <ol>
+                                            <li><a href="#Showcase_Code:" title="Using the Showcase Ads">Showcase Ads</a></li>
+                                            <li><a href="#Dock_Code:" title="Using the Dock Ads">Dock Ads</a></li>
+                                            </ol>
+                                         </li>
+                                    </ol>
+                                </li>
+                                <li><a href="#Customizing_Your_Ad" title="Customizing Your Ad">1.3 Customizing Your Ad</a></li>
+                                <li><a href="#Changing_Ad_Behaviors" title="Changing Ad Behaviors">1.4 Changing Ad Behaviors</a></li>
+                                <li><a href="#MTASC_and_MXMLC" title="MTASC and MXMLC">1.5 MTASC and MXMLC</a></li>
+                                <li><a href="#Flex" title="Adobe Flex">1.6 Adobe Flex</a></li>
+                                <li><a href="#AS3_Preloader" title="AS3 Preloader">1.7 ActionScript 3.0 Preloader</a></li>
+                                <li><a href="#FlashDevelop" title="AS3 Preloader">1.8 Flash Develop</a></li>
+                                <li><a href="#More_Resources" title="More Resources">1.9 More Resources</a></li>
+                            </ol>
+                        </li>
+                        <li>
+                            <!--! MOCHISERVICES -->
+                            <h2><a href="#MochiServices" title="Scores API Documentation">Scores API</a></h2>
+                            <ol>
+                                <li>
+                                    <!--! MochiServices -->
+                                    <h3><a href="#serv_ov" title="MochiServices Documentation">1.0 Overview</a></h3>
+                                    <ol>
+                                        <li><a href="#serv_ov" title="Prerequisites">1.1 Overview</a></li>
+                                        <li><a href="#serv_pre" title="Prerequisites">1.2 Prerequisites</a></li>
+                                        <li><a href="#serv_api" title="Prerequisites">1.3 Connecting to MochiServices</a></li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    <!--! LEADERBOARDS -->
+                                    <h3><a href="#MochiScores" title="Scores Documentation">2.0 Scores</a></h3>
+                                    <ol>
+                                        <li><a href="#score_ov" title="Prerequisites">2.1 Overview</a></li>
+                                        <li><a href="#score_pre" title="Prerequisites">2.2 Prerequisites</a></li>
+                                        <li><a href="#Displaying_the_Leaderboard_Widget" title="Displaying the Scores Widget">2.3 Displaying the Leaderboard Widget</a></li>
+                                        <li><a href="#Saving_Your_Board_ID" title="Saving Your Board ID">2.4 Saving Your Board ID</a></li>
+                                        <li><a href="#Other_Leaderboard_Options" title="Other Scores Options">2.5 Other Scores Options</a></li>
+                                        <li><a href="#The_MochiScores_API" title="The Mochi Scores API">2.6 Scores API Reference</a></li>
+                                        <li><a href="#Error_Handling">2.7 Error Handling</a></li>
+                                        <li><a href="#Scores_Data_Format" title="Scores Data Format">2.8 Custom Scores and Scores Data</a></li>
+                                        <li><a href="#Close_Leaderboard" title="Scores Data Format">2.9 Closing the leaderboard</a></li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    <h3><a href="#MochiAchieve" title="Achievements Documentation">3.0 Achievements API</a></h3>
+                                    <ol>
+                                        <li><a href="#achieve_ov" title="Overview">3.1 Overview</a></li>
+                                        <li><a href="#achieve_pre" title="Prerequisites">3.2 Prerequisites</a></li>
+                                        <li><a href="#achieve_use" title="Usage">3.3 Usage</a></li>
+                                        <li><a href="#achieve_api" title="API Reference">3.4 API Reference</a></li>
+                                        <li><a href="#achieve_events" title ="API EVENTS">3.5 API Events</a></li>
+                                    </ol>
+                                </li>
+                                <li>
+                                    <!--! LEADERBOARDS -->
+                                    <h3><a href="#MochiDigits" title="MochiDigits Documentation">4.0 MochiDigits</a></h3>
+                                    <ol>
+                                        <li><a href="#digits_ov" title="Overview">4.1 Overview</a></li>
+                                        <li><a href="#digits_pre" title="Prerequisites">4.2 Prerequisites</a></li>
+                                        <li><a href="#digits_use" title="Reference">4.3 Usage</a></li>
+                                    </ol>
+                                </li>
+                            </ol>
+
+
+                            <h2><a href="#LinkTracking" title="Link Tracking Documentation">Link Tracking API</a></h2>
+
+                            <ol>
+                                <!--! LINK TRACKING -->
+                                <li><a href="#link_ov" title="Overview">1.1 Overview</a></li>
+                                <li><a href="#link_pre" title="Prerequisites">1.2 Prerequisites</a></li>
+                                <li><a href="#link_api" title="API Reference">1.3 API Reference</a></li>
+                            </ol>
+                        </li>
+                    </ol>
+                    <div class="clear"></div>
+                </div>
+
+                <!--! MochiEvents -->
+                <div class="section_1">
+                    <a name="MochiEvents"></a>
+                    <h1>Analytics API Documentation</h1>
+
+                    <div class="section_2">
+                        <a name="tracking_ov"></a>
+                        <h2>1.1 Overview</h2>
+                        <p>
+                            The Analytics API provides developers with a means of tracking user game information.  This includes session durations, how long the average 
+                            player spends in an average round of play, as well as tracking other events such as item pick-ups, reaching waypoints.
+                        </p>
+                    </div>
+
+                    <div class="section_2">
+                        <a name="tracking_pre"></a>
+                        <h2>1.2 Prerequisites</h2>
+                        <p>
+                            MochiAPI is not compatible with versions prior to Flash Player 9, and is no longer compatible with ActionScript 1.0.
+                        </p>
+
+                        <h4>Installing the Mochi Analytics Tracking API</h4>
+                        <ol>
+                            <li>Download and unzip the latest MochiAPI.</li>
+                            <li>Copy the &ldquo;mochi&rdquo; folder and paste it into the root classpath of your game. Most often this is the same as the location of your game&rsquo;s FLA file.</li>
+                        </ol>
+
+                        <div class="download">
+                            <a href="http://www.mochimedia.com/dl/MochiAPI_v4_0.zip">MochiAPI 4.0</a>
+                        </div>
+                    </div>
+                    
+                    <div class="section_2">
+                        <a name="tracking_services"></a>
+                        <h2>1.3 Connecting to MochiServices</h2>
+
+                        <div class="method">
+                            <h3>connect</h3>
+                            <div class="function">
+                                <div class="signature">
+                                    connect(id:String, clip:Object, onError:Function):void
+                                </div>
+
+                                <div class="description">
+                                    <h4>Description:</h4>
+                                    <p>
+                                        Retrieves and initializes the MochiServices.swf from Mochi servers. Any API calls executed prior to the complete download and initialization
+                                        of the MochiServices.swf are queued and will be executed once the API is available
+                                    </p>
+                                </div>
+
+                                <div class="parameters">
+                                    <h4>Parameters:</h4>
+                                    <dl>
+                                        <dt><strong>id</strong>:String</dt>
+                                        <dd>Mochi game ID</dd>
+                                        <dt><strong>clip</strong>:Object</dt>
+                                        <dd>the MovieClip or Sprite in which to load the API (optional for all but AS3, defaults to _root).  In as3 the clip must be dynamic.</dd>
+                                        <dt><strong>onError</strong>:Function</dt>
+                                        <dd>
+                                            This method will be invoked if MochiServices cannot connect to the server or any IO errors occur in any other API calls.
+                                            onError handlers will receive status codes that describe the error.  The possible errors are:
+                                            <ul>
+                                                <li>NotConnected &mdash; Services were unable to connect or attach to a clip in the current movie.</li>
+                                                <li>IOError &mdash; Services has connected but cannot transfer data to and from the server.</li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+
+
+
+
+                                <div class="example">
+                                    <h4>AS3 Example:</h4>
+
+<blockquote class="code"><pre>
+mochi.as3.MochiServices.connect("xxx", root, onConnectError);  // use mochi.as2.MochiServices.connect for AS2 API
+
+public function onConnectError(status:String):void {
+<span class="comment">// handle error here...</span>
+}
+</pre></blockquote>
+
+                                    <p>&hellip; where &lsquo;xxx&rsquo; is your Mochi game ID, in quotes. Test your movie, and you should see the following text in your output panel:</p>
+
+                                    <blockquote class="code trace">
+                                        MochiServices Connecting&hellip;<br />
+                                        Waiting for Mochi services to connect&hellip;<br />
+                                        connected!
+                                    </blockquote>
+
+                                    <p>
+                                        If you see the text above, then that means you have the "mochi" folder in the correct location, and have
+                                        supplied MochiServices the correct Mochi game ID.  Keep in mind that you want to connect to MochiServices as early as
+                                        possible in your game, and before you make any other API calls.  You only need to make this call once in the
+                                        beginning of your game.
+                                    </p>
+
+                                    <h3>AS3 Requirement - The <em>clip</em> parameter</h3>
+                                    <p>
+                                        In ActionScript 3, the root of the Stage cannot be accessed globally.  If a Sprite or MovieClip does not have access to the root
+                                        or to another Display Container that has been added to the display list, then it can not be shown visually on the screen.  For
+                                        this reason, you must supply either the root of your stage or a reference to a Sprite or MovieClip that is a child of the stage
+                                        to the clip parameter when you call MochiServices.connect.  Please note the clip passed must also be dynamic.
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!--! MOCHIADS -->
+                <div class="section_1">
+                <a name="MochiAds"></a>
+                <h1>Ads API Documentation</h1>
+
+                   <p>This is a simple step-by-step guide to getting Mochi Ads API working with your Flash
+                    game.
+                    The first two sections describe all that is required to get your ads running.</p>
+
+                    <p><strong>NOTE:</strong>  The easiest way to implement MochiAds is by simply using our <a href="#LiveUpdates" title="Mochi Live Updates">Live Updates</a>
+                    system</p>
+
+                <div class="section_2">
+                    <h2><a name="Prerequisites:"></a>1.1 Prerequisites:</h2>
+
+                    <p>
+                        MochiAPI is not compatible with versions prior to Flash Player 9, and is no longer compatible with ActionScript 1.0.
+                    </p>
+
+                    <p>Before you get started, make sure you have done the following:</p>
+
+                    <ol>
+                        <li> Sign up for a Mochi Developer account on <a href='http://www.mochimedia.com'>www.mochimedia.com</a></li>
+                        <li> Log in and add a new game to your account.</li>
+                        <li> Download the MochiAPI classes ZIP package.</li>
+                        <li> Choose your code options and copy the Mochi Ads API in-game code.</li>
+                    </ol>
+
+                    <div class="download">
+                        <a href="http://www.mochimedia.com/dl/MochiAPI_v4_0.zip?MMREF=docs">MochiAPI 4.0</a>
+                    </div>
+                </div>
+
+                <div class="section_2">
+                    <h2> <a name="The_MochiAds_Codes:"></a>1.2 The Mochi API Ad Codes:</h2>
+                    <p>
+                    If you ever find yourself forgetting how to implement the ad code, you can find a customized code
+                    snippet by going to your Mochi developer dashboard, selecting your game, click on "Ads" on the left
+                    and then "Mochi Ads Code: Get the ad code and installation instructions" beneath the Default Ad Settings.
+                    </p>
+                    <p>
+                      Also, there are different examples for ads in the "examples" directory.
+                      </p>
+                    <div class="figure" style="width: 240px;">
+                      <a name="figA"> <img alt="The MochiAP ZIP folder structure" src="img/mochiads_zip_folders.jpg" width="212" height="199" /> </a>
+                    </div>
+                         <p><em><strong>Figure a:</strong> The MochiAPI ZIP package folder structure.</em></p>
+                         <div class="spacer"></div>
+
+                    <p>You need two things for Mochi Ads API to work properly in your game -- The mochi <em>include folder</em>, and the <em>in-game code</em>.</p>
+
+                    <p>The <em>include folder</em> contains the ActionScript code that your game will
+                    reference to display your ad. You will never need to edit this code.
+                    You just need to make sure that it is in the proper location so that it is
+                    imported or included when you publish or compile your game. You only need
+                    to do this once for each game, no matter how many ads you show in the game.</p>
+
+                    <p>The <em>in-game code</em> is the code you paste into your game to display the ad
+                    at a specific point in the game. This may be placed in a specific frame on
+                    the main timeline of your movie, or called when a specific event is called in
+                    your game code. Depending on how you created your game,
+                    where you place this code will differ. Just remember, when you make the
+                    call to the Mochi Ads API, that's when the ad will show.</p>
+
+                    <h3><a name="Include_File_Installation:"></a>Include Folder Installation:</h3>
+
+                    <div class="figure" style="width: 320px;">
+                        <!--! This unintuitive onclick has the effect of restarting the animated GIF -->
+                           <img onclick="this.src = this.src;" alt="copying mochi folder" src="img/copy_include.gif" width="300" height="230" />
+                        <p><strong>Figure b:</strong> Copying the mochi folder to the directory of your .fla.<br />(Click image to restart animation)</p>
+                        <div class="spacer"></div>
+                    </div>
+
+                    <p>The MochiAPI ZIP package contains the include code necessary for your
+                    game. UnZIP the package to a location on your hard drive. If you browse to
+                    that location, you will see a group of folders <cite>(<a href="#figA">fig.a</a>)</cite>.</p>
+
+                    <p>Make sure to read the README.TXT file for information regarding the latest
+                    release of the MochiAPI file include.</p>
+
+                    <p>Each folder in the package corresponds to a particular coding environment.
+                    It's up to you to choose which one is best for you:</p>
+
+                    <ul>
+                        <li><strong>docs</strong>: MochiAPI usage documentation.</li>
+                        <li><strong>examples</strong>: Examples using MochiAPI.</li>
+                        <li><strong>mochi</strong>: MochiAPI include folder.</li>
+                    </ul>
+
+                    <p>Simply copy the <code>mochi</code> folder and paste it into the
+                    location where you are publishing your game. You do not need to create a
+                    special folder for the include <cite>(fig.b)</cite>.</p>
+
+                    <p>These instructions also apply to the examples.  Simply copy the
+                    <code>mochi</code> folder into the example project direct that you wish to use,
+                    and publish to test.</p>
+
+                    <h3><a name="Adding_the_In-game_Code:"></a>Adding the In-game Code: </h3>
+
+                    <p>The <em>in-game code</em> is a one-line code snippet that you copy from the
+                    Mochi Developer web site. This code is a method call that tells <code>MochiAPI</code> to launch your ad. You will paste
+                    this code into your game in the place where you want the ad to appear.
+                    Your code looks something like this:</p>
+
+                    <strong>AS2:</strong>
+                    <p class="codetext">import mochi.as2.*;<br/>
+                    MochiAd.showPreGameAd({id:&quot;xxxxxxxxxxxxxxxx&quot;,
+                    res:&quot;360x240&quot;});</p>
+
+                    <strong>AS3:</strong>
+                    <p class="codetext">import mochi.as3.*;<br/>
+                    MochiAd.showPreGameAd({id:&quot;xxxxxxxxxxxxxxxx&quot;,
+                    res:&quot;360x240&quot;});</p>
+
+                    <p><strong>NOTE:</strong> In the 3.0 revision of the API, we changed namespaces for
+                    our libraries to unify and organize our packages.  Now you must explicitly call the
+                    API corresponding to your ActionScript version: <code>mochi.as2.*</code>  or
+                    <code>mochi.as3.*</code> respectively.  For the purposes of this
+                    documentation we will show examples specifying the ActionScript 2.0 MochiAPI.  Simply remove
+                    <code>mochi.as2.</code> from the code samples, and add <code>import mochi.as3.*;</code>
+                    to the beginning of your code block to use the ActionScript 3.0 MochiAPI.</p>
+
+                    <p>There are five types of ads you can place in your game -- a <em>pre-game ad</em>,
+                    an <em>inter-level ad</em>, <em> showcase ads</em>, <em>dock ads</em> and a <em>Click-away ad</em>.
+                      Pre-game ads include a preloader bar that grows as your game file is loaded from the web to the player's computer.
+                    An inter-level ad is an ad that appears at some point during game-play.
+                    The most convenient and unobtrusive time to show ads is usually between game
+                    levels, hence the name inter-level ad.  Click-away ads are 300x250 ads that can be
+                    placed anywhere you specify and will only disappear on a user-initiated action.
+                    Both the Showcase and the Dock type load a group of small, thumbnail ads into a frame.
+                    Each ad in the frame has its own tracking and clickthrough URLs, and a mouse-over caption bubble.
+                    Showcase and Dock types are essentially the same except for their visual appearance and behavior in the game window,
+                    and one additional API call available to the Dock type.</p>
+
+                    <p>You can use the Mochi Developer web site to customize your code for the particular type
+                    of ad and version of ActionScript you need.</p>
+
+                    <p><span style="color: #cc0000">ACTIONSCRIPT 3 NOTE:</span> ActionScript 3 developers
+                    will also notice that there is an additional parameter named <em>clip</em> which
+                    passes a reference to the DisplayObject container for your ad to appear.
+                    This is required, and by default this is set to root for pre-game and inter-level ads.
+                    See below for more info regarding customizing this parameter.</p>
+
+                    <h3><a name="Pregame_Code:"></a>Pre-game Ad:</h3>
+                    <div class="figure">
+                        <!--! This unintuitive onclick has the effect of restarting the animated GIF -->
+                        <img onclick="this.src = this.src;" src="img/paste_pregame_code.gif" alt="Pregame Code" width="480" height="320" />
+                        <p><strong>Figure c:</strong> Pasting the pre-game code into a game FLA.<br />(Click image to restart animation)</p>
+                        <div class="spacer"></div>
+                    </div>
+
+                    <p>To add a <em>pre-game ad </em>with a preloader to your game, simply get the
+                    appropriate in-game code from the Mochi Developer web site, and paste it into the main
+                    timeline of your movie, in the place you've designated for a preloader <cite>(fig.c)</cite>.</p>
+
+                    <p>If your game is ready, you can test your movie, and you should see the pre-game
+                    ad appear as your movie loads. You may test your ads as much as you like
+                    while you develop your game. Keep in mind that your ads will not earn
+                    money until you complete your game profile which includes a URL to the completed
+                    game. You may also upload your SWF file from the Game Settings page for free hosting.</p>
+
+                    <h3><a name="Interlevel_Code:"></a>Inter-level Ad</h3>
+                    <div class="figure">
+                        <!--! This unintuitive onclick has the effect of restarting the animated GIF -->
+                        <img onclick="this.src = this.src;" alt="Pasting inter-level code" src="img/paste_interlevel_code.gif" width="480" height="320" />
+                        <p><strong>Figure d:</strong> Pasting the inter-level code into a game FLA.<br />(Click image to restart animation)</p>
+                        <div class="spacer"></div>
+                    </div>
+
+                    <p>To add an <em>inter-level ad</em> to your game, simply get the appropriate code
+                    from the Mochi Developer web site, and paste it into the main timeline of your movie,
+                    in the place you've designated for your inter-level screen <cite>(fig.d)</cite>.</p>
+
+                    <p>Just like the pre-game ad, you can test your game and see the inter-level ads in action.</p>
+
+
+                    <h3><a name="Clickaway_Code:"></a>Click-away ad</h3>
+
+                    <p>To add a <em>Click-away ad</em> to your game, simply get the appropriate code
+                    from the Mochi Developer web site.  Pass in the DisplayObject container / MovieClip which
+                    will contain the Click-away ad in the <em>clip</em> parameter.  The upper left corner
+                    of the 300x250 Click-away ad will be placed at the upper left corner of the DisplayObject
+                    container / MovieClip you specify.  When you wish to stop displaying the Click-away ad
+                    pass your <em>clip</em> to <code>MochiAd.unload()</code> depending on your respective ActionScript version
+                    publish settings.</p>
+
+                    <p>You must assign a MovieClip? to the clip parameter when using a Click Away ad. The reason you must do this
+                    is so our Ads API knows where to put the Click Away ad in your game. If you didn't do this, we wouldn't know
+                    where to put the ad. Should it appear in your main menu? On your game's stage?
+                    Inside an inventory window? On top of the avatar's head?</p>
+
+                    <p><strong>NOTE:</strong> The easiest thing to do is create an empty MovieClip?, name it appropriately like
+                    clickAwayAdMovieClip and place it somewhere on your stage. This is now the clip you assign to the
+                    Click Away ad clip parameter.</p>
+
+
+                    <h3><a name="Common_CPA_Code:"></a>Showcase and Dock Ads (AS3 ONLY)</h3>
+                    <br/>
+                    <p>Two new ad methods were introduced with version 4.0 of the MochiAds API. These methods are <bold>AS3 ONLY</bold>!</p>
+                    <p>
+                      To add a showcase or dock type to your game, use the example code below.
+                      The Showcase or Dock will display a row or column of ads in a rectangle.
+                      </p>
+
+                    <p>A game can contain one Showcase and one Dock ad which will remain available for the duration of the game,
+                    but can be hidden or revealed by calling the appropriate methods on the API. See specific methods below.</p>
+
+                    <p>You must assign an empty MovieClip to the 'clip' property when using a Showcase or Dock ad.
+                      This MovieClip instance must be above all other game assets in the display list and must be positioned
+                      at the top left corner of the game area. (0,0) <br/></p>
+
+                    <h3><a name="Showcase_Only_Code:"></a>Showcase Ads</h3>
+                    <p>
+                      The API call will load a Mochi Showcase Ad into the clip.
+                      The Showcase loads a number of small, static ads
+                      into a horizontal row of thumbnails, and by default centers it in the game area with an optional 'close' button.
+                    </p>
+                    <p>To load a Showcase Ad make a call to the MochiAds API using the example code below: </p>
+
+                    <p class="codetext">
+                      import mochi.as3.*;<br/>
+                      // This clip must be above all other game assets in the display list and must be positioned at screen coordinate (0,0) <br/>
+                      var clip:MovieClip = new MovieClip();<br/>
+                      var game_id:String = &quot;REPLACE WITH YOUR GAME ID&quot;; <br/>
+                      <br/>
+                      MochiAd.loadShowcase({<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;clip:clip, <br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;id:game_id,<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;position:&quot;0x0&quot;, // This represents an X, Y offset from the center.<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;ad_count:5, // The number of ads to display in the showcase. (Choose a lower number for small games)<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;ad_size:90, // Force dimensions for all Ads displayed. <br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;user_close:true, // Allow the use to close the Showcase ad. <br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;ad_loaded: function(w:int, h:int):void { }, // A callback that occurs when ad is first displayed. <br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;ad_closed: function():void {} // A callback that occurs when user closes Showcase. <br/>
+
+                      });
+
+                    </p>
+
+                    <p>Additional control methods are available to hide the Showcase and redisplay it at appropriate times (for example: between levels).
+                      These methods are :
+                    </p>
+                    <p class="codetext"> MochiAd.openAdGroup(clip) </p>
+                    <p class="codetext"> MochiAd.closeAdGroup(clip) </p>
+
+                    <p>
+                      In both cases 'clip' is the MovieClip reference assigned to the 'clip' property when calling <em>loadShowcase()</em>.
+                    </p>
+
+                    <h3><a name="Dock_Code:"></a>Dock Ads</h3>
+                    <p>
+                      The API call will load a Dock into the clip.
+                      The Dock will load a number of small, static ads
+                      into an "auto-hide" dock on one edge of the game window.
+                      The Dock is initially visible and fully extended into the game area.
+                      After a short time the Dock will retract out of view, leaving only
+                      a small mouse-over tab visible in the game area. If the user rolls the
+                      mouse pointer over the tab the Dock will extend back into view for a short time.
+                    </p>
+                    <p>To load a Dock ad make the following call to the MochiAds API : </p>
+                    <p class="codetext">
+                      import mochi.as3.*;<br/>
+                      // This clip must be above all other game assets in the display list and must be positioned at screen coordinate (0,0) <br/>
+                      var clip:MovieClip = new MovieClip();<br/>
+                      var game_id:String = &quot;REPLACE WITH YOUR GAME ID&quot;; <br/>
+                      <br/>
+                      MochiAd.loadDock({<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;clip:clip, <br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;id:game_id,<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;position:&quot;bottom&quot;, // See below for explanation.<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;ad_count:5, // The number of ads to display in the showcase. (Choose a lower number for small games)<br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;ad_size:90, // Force dimensions for all Ads displayed. <br/>
+
+                      &nbsp;&nbsp;&nbsp;&nbsp;ad_loaded: function(w:int, h:int):void { }, // A callback that occurs when ad is first displayed. <br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;ad_opened: function():void {}, // A callback that occurs when the user opens the Dock by mousing over the tab. <br/>
+                      &nbsp;&nbsp;&nbsp;&nbsp;ad_closed: function():void {} // A callback that occurs when the Dock auto-hides. <br/>
+
+                      });
+
+                    </p>
+
+                    <p>The location and orientation of the Dock can be selected to
+                keep the mouse-over tab away from the gameplay area where the mouse is most active.
+                Location and orientation are parsed from a 'position' property on
+                the 'options' object. The available options for the value of 'position'
+                are:</p>
+                  <p>
+                   <div style="float:left">   
+                <ul>
+                <li><strong>"top"</strong> : </li>
+                <li><strong>"bottom" </strong> :</li>
+                <li><strong>"left" </strong> :</li>
+                <li><strong>"right" </strong> : </li>
+                <li><strong>"top_left"</strong> :</li>
+                <li><strong>"top_right"</strong> :</li>
+                <li><strong>"bottom_left"</strong> : </li>
+                <li><strong>"bottom_right"</strong> : </li>
+                <li><strong>"left_top"</strong> :</li>
+                <li><strong>"left_bottom"</strong> : </li>
+                <li><strong>"right_top"</strong> :</li>
+                <li><strong>"right_bottom"</strong> :</li>
+                </ul>
+                </div>
+                   <div>   
+                <ul>
+                <li>&nbsp;&nbsp;A horizontal dock will be centered on the top edge. </li>
+                <li>&nbsp;&nbsp;A horizontal dock will be centered on the bottom edge. </li>
+                <li>&nbsp;&nbsp;A vertical dock will be centered on the left edge. </li>
+                <li>&nbsp;&nbsp;A vertical dock will be centered on the right edge. </li>
+                <li>&nbsp;&nbsp;A horizontal dock will be located at the left end of the top edge. </li>
+                <li>&nbsp;&nbsp;A horizontal dock will be located at the right end of the top edge. </li>
+                <li>&nbsp;&nbsp;A horizontal dock will be located at the left end of the bottom edge. </li>
+                <li>&nbsp;&nbsp;A horizontal dock will be located at the right end of the bottom edge. </li>
+                <li>&nbsp;&nbsp;A vertical dock will be located at the top of the left edge. </li>
+                <li>&nbsp;&nbsp;A vertical dock will be located at the bottom of the left edge. </li>
+                <li>&nbsp;&nbsp;A vertical dock will be located at the top of the right edge. </li>
+                <li>&nbsp;&nbsp;A vertical dock will be located at the bottom of the right edge. </li>
+                </ul>
+                </div>
+                <br/>
+
+                    <p>The default 'position' is "bottom" if this property is not assigned.</p>
+                </p>
+
+                    <p>Additional control methods are available :
+                    </p>
+                    <p class="codetext"> MochiAd.closeAdGroup(clip); // Hide Dock completly, including mouse-over tab. </p>
+                    <p class="codetext"> MochiAd.openAdGroup(clip); // Redisplay hidden Dock (without opening slider). </p>
+                    <p class="codetext"> MochiAd.openDockSlider(clip); // Cause displayed Dock to slide open. </p>
+
+                    <p>
+                      In all cases 'clip' is the MovieClip reference used when calling <em>loadDock()</em>.
+                    </p>
+
+
+                    <p>
+                        <h3><a name="Fitting_Showcase_and_Dock_Ads_in_Small_Games:"></a>Fitting Showcase and Dock Ads Into Small Games</h3>
+                        <p>
+                            The default configuration of five 90 pixel ads in a row or column may not fit in smaller games.
+                            There are two approaches you can take to work around this problem:
+                            </p>
+                               <p>You can set an 'ad_size' property on the object you pass into MochiAd:loadDock() or MochiAd:loadShowcase()
+                            This will force one dimension of the individual thumbnails
+                            (width, in the case of Showcase and horizontal Docks, height,
+                            in the case of vertically oriented Docks)  the default ad_size is 90 pixels,
+                            if not supplied.
+                            </p>
+                            <p>
+                                You can also change the number of ads displayed in a Dock or Showcase
+                                by setting the 'ad_count'  property on the object you pass into the load method.
+                                The default is 5.
+                            </p>
+                            </p>
+                    </p>
+
+                  <p> </p>
+
+                    <h3> Flash Player Security Settings: </h3>
+                    <p>If you are testing locally outside of the Flash authoring environment and want
+                    to be able to see ads, you will need to change the default local playback
+                    security settings. In Flash, go to &quot;File -&gt; Publish Settings,&quot; then click on
+                    the &quot;Flash&quot; tab. At the bottom, under &quot;Local Playback Security&quot;, choose &quot;Access
+                    network only&quot; and then publish again. Keep in mind that if you are loading any
+                    local data that it will no longer be accessible until you change your settings
+                    back to &quot;Access local files only.&quot; These settings will not affect playback on
+                    the web.</p>
+
+                    <p>Alternatively, you may wish to add the location of your development files to
+                    your global security settings in the <a href="http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04a.html" title="Adobe Flash Player Settings Manager">Adobe
+                    Flash Player Settings Manager</a>. This way, you can give all SWF files in this
+                    location local-trusted access, allowing access to both local and remote data.</p>
+
+                    <p>You will not need to do this if you are only testing your games in the Flash
+                    authoring environment, although you will see Sandbox Violation warnings in the
+                    Output panel. Warnings pertaining to MochiAPI can be safely ignored.</p>
+
+                    <h3>Alternate In-game Code Placement </h3>
+                    <p>Since there are many different ways to architect Flash games, it is very likely
+                    that your game development setup is not the same as what you see above.
+                    You may have nested MovieClips, or perhaps you are not using the timeline at
+                    all. It is possible to place your in-game code in the timeline of a
+                    MovieClip as well, and it will execute when the frame where you placed the code
+                    is reached.</p>
+
+                    <h3>And You're Done!</h3>
+                    <p>That's all that is required to get MochiAPI Ads running in your game. When
+                    you've completed your game and released it to the world, be sure to complete
+                    your profile so that your game can be approved and you can start earning money
+                    right away!</p>
+                </div>
+
+                <div class="section_2">
+                    <h2><a name="Customizing_Your_Ad"></a>1.3 Customizing Your Ad</h2>
+
+                    <p><strong>NOTE:</strong>  The easiest way to customize the ads shown in your game is to use the Ad Code code generator in the developer dashboard. You can find this code generator by going to your Mochi developer dashboard, selecting your game, clicking on "Ads" on the left and then "Mochi Ads Code: Get the ad code and installation instructions" beneath the Default Ad Settings." Inside you will be provided the option to customize the options. </p>
+
+                    <p>It is possible to customize many of the visual elements and behaviors of your
+                    Mochi Ads. The Mochi Ads API in-game code allows you to simply tailor
+                    the display to suit your needs. Here's some of the things you can tweak:</p>
+
+                    <ul>
+                        <li><strong>MovieClip container:</strong> You can place your ad into any MovieClip on the stage, or into MovieClips you create with Actionscript.</li>
+                        <li><strong>Timing:</strong> You can customize fade time of your ads.</li>
+                        <li><strong>Colors:</strong> Change the colors of the ad preloader bar, background and outline.  You can also turn off the solid background.</li>
+                        <li><strong>Event Handlers:</strong> You can assign custom functions to be called when ads start, load, and end.</li>
+                    </ul>
+
+                    <h3> The Mochi Ads API </h3>
+                    <p>Your ads can be customized by sending special parameters via your in-game code.
+                    Depending on whether you've chosen to display a pre-game or inter-level ad, your
+                    options will be slightly different.</p>
+
+                    <p>The in-game code is passed an object with keys and values to pass to the server.
+                    The default code contains two keys -- id, the unique Mochi game ID, and
+                    res, the height x width of your game. These parameters are required.</p>
+
+                    <p class="codetext">import mochi.as2.*;<br/>
+                    MochiAd.showPreGameAd({id:&quot;xxxxxxxxxxxxxxxx&quot;,
+                    res:&quot;360x240&quot;});</p>
+
+                    <p>You may add more key: value pairs to the object by separating them with commas.
+                    You may add the following optional parameters to your object:</p>
+
+                    <ul>
+                        <li><strong>clip</strong><span class="vartype">:MovieClip</span> - a MovieClip reference in which to place the ad. Required for click-away, showcase and dock ads or if you're using Actionscript 3.0. Otherwise the default is _root. <span class="default">(default: _root)</span></li>
+                        <li><strong>no_bg</strong><span class="vartype">:Boolean</span> - setting to <em>true</em> allows you to disable the background entirely. <span class="default">(default: false)</span></li>
+                    </ul>
+
+                    <p>The following additional options apply to pre-game ads only:</p>
+
+                    <ul>
+                        <li><strong>color</strong><span class="vartype">:Number</span> - the color of the preloader bar as a number. <span class="default">(default: 0xFF8A00)</span></li>
+                        <li><strong>background</strong><span class="vartype">:Number</span> - the inside color of the preloader bar as a number. <span class="default">(default: 0xFFFFC9)</span></li>
+                        <li><strong>outline</strong><span class="vartype">:Number</span> - the outline color of the preloader bar as a number. <span class="default">(default: 0xD58B3C)</span></li>
+                        <li><strong>no_progress_bar</strong><span class="vartype">:Boolean</span> - setting to <em>true</em> allows you to disable the preload progress bar. <span class="default">(default: false)</span></li>
+                    </ul>
+
+                    <p>You can find out the width and height of your ad when it loads. You can
+                    use this information to create a custom frame around your ad that matches your
+                    game.</p>
+
+                     <ul>
+                        <li><strong>ad_loaded</strong><span class="vartype">:Function</span> - ad_loaded is called just before an ad is displayed with the width and height of the ad.
+                            <span class="default">(default: function(width:Number, height:Number):Void { }).</span></li>
+                    </ul>
+
+                    <p>You can also find out the progress of the preloader bar. You can
+                    use this information to create your own preloader bar when used with the no_progress_bar option.</p>
+
+                     <ul>
+                        <li><strong>ad_progress</strong><span class="vartype">:Function</span> - ad_progress is called with the progress of the preloader bar.  The progress is a percent (represented from 0 to 100).
+                            <span class="default">(default: function(percent:Number):Void { }).</span></li>
+                    </ul>
+
+
+                    <p>Here is an example of how the code might look if you were to add more options:</p>
+
+                    <p class="codetext">import mochi.as2.*;<br/>
+                    MochiAd.showPreGameAd({id:&quot;xxxxxxxxxxxxxxxx&quot;, res:&quot;360x240&quot;, clip: _root.myClip, no_bg: true, color: 0x006699, outline: 0xFFFFFF});</p>
+
+                    <p>If you need to add many options, or define functions to handle ad events, you
+                    may consider creating an object first, and then referencing that object when you
+                    call the Mochi Ads API.</p>
+
+<p class="codetext">import mochi.as2.*;<br/>
+<br/>
+var myOptions:Object = {<br/>
+id: &quot;xxxxxxxxxxxxxxxx&quot;,<br/>
+res: &quot;360x240&quot;,<br/>
+clip: _root.myClip,<br/>
+color: 0x006699,<br/>
+background: 0x333333,<br/>
+outline: 0xFFFFFF,<br/>
+ad_loaded: function (width, height) { trace("ad loaded: " + width + "x" + height); }<br/>
+ad_progress: function (percent) { trace("preloader percent: " + percent); }<br/>
+}<br/>
+MochiAd.showPreGameAd({myOptions});</p>
+
+                    <p>There is also a tool on the Mochi Developer web site to customize the appearance of
+                    your ad when you set up your in-game code. Often, this is easier than
+                    editing the code by hand.</p>
+                </div>
+
+                <div class="section_2">
+                    <h2><a name="Changing_Ad_Behaviors"></a>1.4 Changing Ad Behaviors</h2>
+
+                    <p>The Mochi Ads API described above also allows you to assign your own event
+                    handlers to be called by your ad. There are six events:</p>
+
+                    <ul>
+                        <li><strong>ad_started</strong><span class="vartype">:Function</span> - a function to call when the ad has started playing. <span class="default">(default: function ():Void { this.clip.stop() })</span></li>
+                        <li><strong>ad_loaded</strong><span class="vartype">:Function</span> - a function to call just before an ad is displayed with the width and height of the ad. If it is called, it is called after ad_started.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 <span class="default">(default: function(width:Number, height:Number):Void { }).</span></li>
+                        <li><strong>ad_finished</strong><span class="vartype">:Function</span> - a function to call when the ad has finished playing. <span class="default">(default: function ():Void { this.clip.play() })</span></li>
+                        <li><strong>ad_failed</strong><span class="vartype">:Function</span> - a function to call if an ad can not be displayed, this is usually due to the user having ad blocking software installed or issues with retrieving the ad over the network. If it is called, then it is called before ad_finished. <span class="default">(default: function ():Void { })</span></li>
+                        <li><strong>ad_skipped</strong><span class="vartype">:Function</span> - a function to call if the ad was skipped, this is usually due to frequency capping, or developer initiated domain filtering.  If it is called, then it is called before ad_finished. <span class="default">(default: function ():Void { })</span></li>
+                        <li><strong>ad_progress</strong><span class="vartype">:Function</span> - a function to call when the progress of the preloader bar has changed.  The progress is a percent (represented from 0 to 100). <span class="default">(default: function(percent:Number):Void { }).</span></li>
+                    </ul>
+
+                    <p>When you assign custom functions to ad_started and ad_finished in your options object, your ad
+                    will no longer stop and play the timeline. Instead, your custom functions will be called.</p>
+
+<blockquote class="code"><pre>import mochi.as2.*;<br/>
+var myOptions:Object = {
+id: &quot;xxxxxxxxxxxxxxxx&quot;,
+res: &quot;360x240&quot;,
+clip: _root.myClip,
+ad_started: function ():Void { _global.game.pause(); },
+ad_finished: function ():Void { _global.game.resume(); }
+}<br/>
+MochiAd.showPreGameAd({myOptions});</pre></blockquote>
+
+                    <p>It is best to explicitly pass a function literal in your options object instead
+                    of referencing a function in a separate class. That way, you do not need
+                    to worry about losing scope or relying on the Delegate class. If you are
+                    using ActionScript 3, though, you can pass a reference to your function without
+                    losing scope.</p>
+
+                    <p>Keep in mind that, if you define custom ad_started or ad_finished event handlers,
+                    your timeline will no longer be stopped during the playback of your ad. So, if you still wish to
+                    stop your timeline, you will need to be sure your event handler does this.</p>
+                </div>
+
+                <div class="section_2">
+                    <h2><a name="MTASC_and_MXMLC"></a>1.5 MTASC and MXMLC</h2>
+
+                    <p>For those developers who are developing in environments that don't use the Flash
+                    IDE, the process for adding the Mochi Ads API will be slightly different. In order
+                    to get your ads functioning in your game, you will need to:</p>
+
+                    <ol>
+                        <li> Make sure that the <code>mochi</code> folder is in your root project classpath.</li>
+                        <li> You've added the in-game code in a method that is executed in an instantiated class in your game. </li>
+                    </ol>
+                </div>
+
+                <div class="section_2">
+                    <h2><a name="Flex"></a>1.6 Adobe Flex</h2>
+
+                    <p>To use the Mochi Ads API as an Adobe Flex application's preloader, you will need to:</p>
+
+                    <ol>
+                        <li> Make sure that you use the <code>MochiPreloader.as</code> from the <i>examples/flex</i> folder from the MochiAPI ZIP package.</li>
+                        <li> Make sure that the <code>mochi</code> folder and <code>MochiPreloader.as</code> are in your project classpath.</li>
+                        <li> Tell your MXML application the preloader you want to use:
+                             <blockquote class="code"><pre>&lt;mx:Application xmlns:mx=&quot;http://www.adobe.com/2006/mxml&quot; preloader=&quot;MochiPreloader&quot;&gt;
+&lt;/mx:Application&gt;</pre></blockquote>
+                         </li>
+                        <li> NOTE: With inter-level ads, the Mochi API is unable to tell your game when it has finished via the <code>MovieClip.stop()</code> and <code>MovieClip.start()</code> methods. You must use the <code>ad_started</code> and <code>ad_finished</code> callback methods in your game's options object (described in <a href="#Changing_Ad_Behaviors">Section 1.4</a>) to be notified when to start and stop your game.</li>
+                    </ol>
+                </div>
+
+                <div class="section_2">
+                    <h2><a name="AS3_Preloader"></a>1.7 ActionScript 3.0 Preloader</h2>
+
+                                        <p>The <em>mxmlc</em> folder includes a preloader class (Preloader.as) that provides an example of how to properly compile a preloader into an AS3 SWF compiled with Adobe Flex mxmlc compiler.  For the preloader to function correctly, it must load first and execute before your base class and other SWF assets load.  In order for this to happen, the Preloader class is included on the first frame of your SWF and all of the other assets are included on the next frame.  The Preloader class contains a weak reference to your document class that it uses to instantiate your class after it completely loads your game.</p>
+
+<blockquote class="code"><pre>// Change this class name to your main class
+public static var MAIN_CLASS:String = "Test";
+</pre></blockquote>
+
+                                        <p>For Flex Builder, there is a makefile included in the example
+                                        which tells the mxmlc compiler to include your Document Class in the
+                                        second "frame" of your SWF so that the preloader will load first:</p>
+
+<blockquote class="code"><pre>mxmlc \
+           -default-frame-rate 31 \
+           -default-size 550 400 \
+           -use-network \
+           -optimize=true \
+           -output $@ \
+           -frame=Test,Test \
+           Preloader.as
+</pre></blockquote>
+
+                                        <p><em>Notice the compiler option '-frame=Test,Test'.</em></p>
+
+                                        <p>If you are using FlashDevelop, you need to make sure you're passing "-frame Test, Test" to the mxmlc compiler,
+                                        which you can set under <em>Compiler Options</em> in <em>Project Properties</em>. Don't forget to change 'Test'
+                                        to the actual name of your base class.</p>
+
+                </div>
+
+
+                <div class="section_2">
+                    <h2><a name="FlashDevelop"></a>1.8 Flash Develop</h2>
+
+                    <p>Our example uses the <code>AS3 Empty Project Template</code> as it's basis.  Using our API within this framework is no more difficult
+                    than that of a standard Flash IDE project.  Simply copy the <code>mochi</code> folder into the <code>src</code> folder created for your
+                    project.  After you have done this, it is simply a matter of using that standard API calls</p>
+                </div>
+
+
+                <div class="section_2">
+                    <h2><a name="More_Resources"></a>1.9 More Resources</h2>
+
+                    <p>If you have questions about using the Mochi Ads API, you can view our <a href="https://www.mochimedia.com/support/dev_faq" >FAQs</a> or visit the <a href="https://www.mochimedia.com/community/">support forums</a>
+                    for help. Also, if you have suggestions regarding this help document, we
+                    encourage your feedback.</p>
+                </div>
+
+            </div><!-- mochiads -->
+
+                <!--! MOCHICRYPT --> <!-- AAA -->
+                <div class="section_1">
+                    <a name="MochiCrypt"></a>
+                    <a name="LiveUpdates"></a>
+                    <h1>Live Updates</h1>
+                    <div class="section_2">
+                        <h2><a name="mc_overview"></a>1.1 Overview</h2>
+
+                        <div class="figure">
+                            <img class="diagram" src="img/g_mochicrypt-system.gif" alt="mochicrypt system" width="199" height="220" />
+                        </div>
+                        <p>
+                            Our Live Updates service enables you to create a special version of your SWF which can be updated at any time and
+                            contains an extra layer of encryption to protect against decompiling.
+                        </p>
+                        <h3>Benefits of Mochi Live Updates</h3>
+                        <ul>
+                            <li><strong>Update</strong> anything about your game, at any time. The updated version will be instantly available to players around the world.</li>
+                            <li>The game does <em>not</em> require Mochi servers to be played &ndash; Your file is <strong>completely stand alone</strong>.</li>
+                            <li>Your game can be played <strong>offline</strong> as well as online &ndash; Offline players simply get the original packaged version</li>
+                            <li>Increased <strong>encryption</strong> and protection from decompiling.</li>
+                            <li>Downloading the new updates are <strong>quick</strong> and <strong>transparent</strong>, players only need the differences between versions. </li>
+                        </ul>
+                        <h3>Live Updates works great for</h3>
+                        <ul>
+                            <li>Fixing those nasty bugs that crop up after your game is released.</li>
+                            <li>Recently changed your logo? No problem, upload a new version with a new splash screen.</li>
+                            <li>Made a hot new sequel to your game? Add in a link and screenshot pointing users to the sequel to generate awareness and traffic.</li>
+                            <li>Sell a timed sponsorship to someone for a fixed period of time. Simply upload the new version with their links and splash screen and revert to the old version when you're done.</li>
+                        </ul>
+                        <h3>How it works</h3>
+                        <p>
+                            Live Updates games play just like any other game to the user. However behind the scenes when the game is first loaded it checks with Mochi
+                            servers to see if there is a new version available. If so, the game will be patched while during the loading process (it only sends minimum
+                            differences, so it doesn’t have to download the whole game over again).
+                        </p>
+
+                    </div>
+                    <div class="section_2">
+                        <h2><a name="mc_install"></a>1.2 General Installation</h2>
+                        <h3>Adding a new game</h3>
+                        <ol>
+                            <li>Click on 'add game' like normal to add a game to the Mochi service.</li>
+                            <li>Check the box 'Use Live Updates' to enable the feature.</li>
+                            <li>Add a verification code to your game - this ensures you have access to the source code.</li>
+                            <li>Upload your game, a pre-loader is automatically added so you don't have to include any ad-code for a pre-loader. Other in-game ad formats are ok.</li>
+                        </ol>
+                        <h3>Updating your game</h3>
+                        <ol>
+                            <li>Click on your game from your developer dashboard.</li>
+                            <li>Click on the 'game settings' link</li>
+                            <li>Under the 'game files' section, click on 'upload new version'.</li>
+                            <li>Select 'use Live Updates' for the new game version.</li>
+                            <li>Follow the on-screen instructions and upload your new version.</li>
+                        </ol>
+                        <h3>That's it!</h3>
+                        <p>
+                            Distribute your new version anywhere you like! If at any time you want to change your game, visit your <em>game settings</em> tab and upload the new version. Within minutes
+                            players will be enjoying your new awesomeness.
+                        </p>
+
+
+                    </div>
+                    <div class="section_2">
+                        <h2><a name="mc_test"></a>1.3 Test Your Game For Compatibility</h2>
+                        <p>
+                            The Live Updates service embeds games into an AS3 loader SWF. The Flash Player treats games differently when loaded this way
+                            than when loaded by either through an HTML page or directly into a browser.
+                        </p>
+                        <p>
+                            To test for compatibility, loading your game using the <a href="http://www.mochimedia.com/~matthew/loadertest/LoaderTest.html">LoaderTest</a> utility to
+                            see if you can reproduce the problem. LoaderTest uses the same underlying Flash features that the Live Updates loader SWF uses.
+                            If the problems are still present when using LoaderTest, then you will need to make changes to your game. If the problems are not present,
+                            then notify us, and we will investigate the problem.
+                        </p>
+
+
+                    </div>
+                    <div class="section_2">
+                        <h2><a name="mc_as3"></a>1.4 Preparing AS3 games</h2>
+
+
+                        <h3>AS3 display list membership</h3>
+                        <p>
+                            Adobe&rsquo;s Flash Player treats AS3 SWFs loaded into another AS3 SWF differently than when it&rsquo;s loaded directly by the browser. In particular,
+                            the main object is not added to the display list until after the constructor is called whereas when loaded directly the main object is already
+                            attached to the display list. This results in the <code>stage</code> and <code>parent</code> properties being set to &lsquo;null&rsquo; (and likely resulting in null object references).
+                        </p>
+                        <p>
+                            This can usually be worked around by moving any code that needs to interact with the stage being moved to an event listener.
+                            <code>Event.ENTER_FRAME</code>, <code>Event.INIT</code>, or <code>Event.ADDED_TO_STAGE</code> events are good candidates for this.
+                        </p>
+                        <h3>AS3 LoaderInfo, third party APIs</h3>
+                        <p>
+                            Since Live Updates loads your code with a <code>flash.display.Loader</code>, the FlashVars and URL
+                            should be accessed somewhat differently than normal. Some third party APIs may need small changes to use this LoaderInfo instead of root.loaderInfo. This code will get the true LoaderInfo in a game using Live Updates (but also works if not using Live Updates):
+                        </p>
+<blockquote class="code"><pre>
+public function getMainLoaderInfo():LoaderInfo {
+    var loaderInfo:LoaderInfo = root.loaderInfo;
+    if (loaderInfo.loader != null) {
+        loaderInfo = loaderInfo.loader.loaderInfo;
+    }
+    return loaderInfo;
+}
+</pre></blockquote>
+                    </div>
+                    <div class="section_2">
+                        <h2><a name="mc_as2"></a>1.5 Preparing AS2 games</h2>
+
+                        <div class="section_3">
+                            <h3>AS2 Sound</h3>
+                            <p>
+                                Some sounds may not play properly in AS2 games within an AS3 loader when the sound is not attached to a movieclip.
+                                To get around this, you should ensure your sounds are always attached to a movieclip:
+                            </p>
+<blockquote class="code"><pre>
+var s = new Sound(mc);
+</pre></blockquote>
+                            <p>
+                                The following is an example of how you can handle sounds in your AS2 games so they are always compatible with AS3 loaders.
+                                At the top level of the .as files, the following code initially creates all of the different Sound objects on their own MovieClip:
+                            </p>
+
+<blockquote class="code"><pre>var core = this;
+var make_sound = function (mc_name, depth, volume, name) {
+var mc = core.createEmptyMovieClip(mc_name, depth);
+var snd = new Sound(mc);
+snd.setVolume(volume);
+snd.attachSound(name);
+return snd;
+};
+var s_newline = make_sound('so_newline', 200, 30, 'newlineMP3');
+var s_skull = make_sound('so_skull', 201, 100, 'skullMP3');
+var s_doubleskull = make_sound('so_doubleskull', 202, 100, 'doubleskullMP3');
+var s_success = make_sound('so_success', 203, 30, 'successMP3');
+var s_timer = make_sound('so_timer', 204, 100, 'timerMP3');
+</pre></blockquote>
+                            <p>
+                                Later, when a sound should be played, there's a line like:
+                            </p>
+<blockquote class="code"><pre>core.s_skull.start(0, 1);</pre></blockquote>
+
+                        </div>
+
+                        <div class="section_3">
+                            <h3>Using _root and _level0</h3>
+                            <p>
+                                It is not recommended to use <code>_root</code> as references in your game. If you are experiencing problems when <a href="#mc_test">testing your
+                                game</a> for compatibility, replace these references and test again.
+                                Using <code>_level0</code>, _level<em>n</em> or doing a <code>loadMovie</code> into a level is not
+                                supported at all by <a href="http://livedocs.adobe.com/flex/2/langref/flash/display/AVM1Movie.html">AVM1Movie</a>, so you must change code that depends on it.
+                            </p>
+                        </div>
+
+                        <div class="section_3">
+                            <h3>Moving _root makes MovieClip.hitTest behave strangely</h3>
+                            <p>
+                                If you change <code>_root._x</code> or <code>_root._y</code> you may notice that <code>MovieClip.hitTest</code> no longer behaves
+                                the same way. This is because <code>MovieClip.hitTest</code> is based off of global coordinates when inside the AS3 container but it's based on <code>_root</code> coordinates otherwise. The following code snippet that you can place in your initialization code will detect the container and swap out the <code>MovieClip.hitTest</code> implementation with one that does this translation for you.
+                            </p>
+                            <blockquote class="code"><pre>/* detect AS3 container and patch MovieClip.hitTest */
+if (_level0 === undefined &amp;&amp; MovieClip.prototype.oldHitTest === undefined) {
+var realRootForReal = this;
+MovieClip.prototype.oldHitTest = MovieClip.prototype.hitTest;
+MovieClip.prototype.hitTest = function (x, y, shapeflag) {
+   if (arguments.length === 1) return this.oldHitTest(x);
+   var obj = {x: x, y: y};
+   realRootForReal.localToGlobal(obj);
+   return this.oldHitTest(obj.x, obj.y, shapeflag);
+}
+}</pre></blockquote>
+                        </div>
+
+                        <div class="section_3">
+                            <h3>Using FlashVars</h3>
+                            <p>
+                                In order for AS2 to properly pick up FlashVars, you will need to use the URL to the SWF instead. Here's an example of how you can pass variables from the HTML to your Flash:
+                            </p>
+                            <blockquote class="code"><pre>&lt;embed src="game.swf?variable=awesome"&gt;&lt;/embed&gt;</pre></blockquote>
+                        </div>
+                        <div class="section_3">
+                            <h3>Strings no longer work as MovieClip references</h3>
+                            <p>
+                                In some older versions of Flash it would let you use strings where MovieClip references were expected. When this content is loaded into an AS3 container Flash no longer allows this and you must change to references instead. For example:
+
+                            </p>
+                            <blockquote class="code"><pre>// BROKEN: "mc2" is a String, not a MovieClip
+mc.setMask("mc2");
+
+// FIXED: mc2 is a variable that references a MovieClip
+mc.setMask(mc2);</pre></blockquote>
+                        </div>
+                        <div class="section_3">
+                            <h3>AS2 games encrypted with SWF Protect</h3>
+                            <p>
+                                Using SWF Protect mangles the AS2 byte code, making it impossible to find the verification token. A workaround is
+                                to instead place the verification token as an export identifier. Here are instructions on how to do this:
+                            </p>
+                            <ol>
+                                <li>Open the Library window in Flash.</li>
+                                <li>Right click on any asset that is not already exported (but preferably one that is used anyways).</li>
+                                <li>Select &ldquo;Linkage&hellip;&rdquo;</li>
+                                <li>Check &ldquo;Export for ActionScript"</li>
+                                <li>In text box labeled &ldquo;Identifier&rdquo;, enter &ldquo;XXXXXXXX&rdquo;</li>
+                                <li>Click &ldquo;OK&rdquo;.</li>
+                            </ol>
+                            <p class="note">
+                                NOTE: Where 'XXXXXXXX' should be replaced with your game's Mochi game ID
+                            </p>
+                        </div>
+                    </div>
+                    <div class="section_2">
+                        <h2><a name="mc_as1"></a>1.6 Preparing AS1 games</h2>
+                        <p>
+                            <strong>Case-sensitivity:</strong>
+                            Users have reported that AS1 games loaded into <a href="http://livedocs.adobe.com/flex/2/langref/flash/display/AVM1Movie.html">AVM1Movie</a> are suddenly case sensitive, whereas normally they are case-insensitive.
+                        </p>
+                    </div>
+                    <div class="section_2">
+                        <h2><a name="mc_third"></a>1.7 Third Party APIs written in AS2</h2>
+                        <p>
+                            Usually these APIs work by cross-scripting a SWF to inject new code into AS2 games. However, Flash does not support cross-scripting between AS2 and AS3,
+                            and the Live Updates loader SWF uses AS3, preventing the API from being injected correctly.
+                        </p>
+                        <p>
+                            <strong>NOTE:</strong> LocalConnection APIs will still work, but sites may not provide these for AS2.
+                        </p>
+                    </div>
+                    <div class="section_2">
+                        <h2><a name="mc_tls"></a>1.8 Flash 10 games using TLF Text (Text Layout Framework)</h2>
+                        <p>
+                            TLF Text causes your SWF file to be wrapped in an additional preloader, which is not compatible with Live Updates. The workaround
+                            is to follow "Solution 1" in this Tech Note: <a href="http://kb2.adobe.com/cps/838/cpsid_83812.html" rel="nofollow">http://kb2.adobe.com/cps/838/cpsid_83812.html</a>
+                        </p>
+                        <p>
+                            Go to "File" -&gt; "ActionScript Settings" and then change "Default linkage" to "Merged into code". This will allow SWFs with TLF text to be used with Live Updates.
+                        </p>
+                    </div>
+                    <div class="section_2">
+                        <h2><a name="mc_fpt"></a>1.9 Flash Player targeting options</h2>
+                        <p>
+                           You can select the version of Flash Player that you would like to target, starting from Flash Player 10 and continuing through to the latest version. There is a drop-down menu in the Live Updates settings page, which is accessible both when uploading a new game (and selecting Live Updates) and the Live Updates settings for an existing game. Simply select the Flash Player version you would like to target from this menu.
+                        </p>
+                        
+                    </div>
+                </div>
+
+                 <!--! MOCHISERVICES -->
+                <div class="section_1">
+                    <a name="MochiServices"></a>
+                    <h1>Scores API Documentation</h1>
+
+                    <div class="section_2">
+                        <a name="serv_ov"></a>
+                        <h2>1.1 Overview</h2>
+                        <p>
+                            MochiServices is all Mochi APIs except for the Mochi Ads API. The API is dynamically loaded from Mochi servers and must be
+                            initialized in either the first frame of your game or during Document Class initialization.
+                        </p>
+                        
+                        <p><strong>NOTE:</strong> The easiest way to start implementing Leaderboards is to do so through the developer dashboard. First go to the Mochi developer dashboard, select your game, click on Scores and then click on Create Leaderboard. After you fill in the appropriate information, you will see a list of all your leaderboards. Click "Actionscript Code" to find step by step instructions on how to use the leaderboards!</p>
+                    </div>
+
+                    <div class="section_2">
+                        <a name="serv_pre"></a>
+                        <h2>1.2 Prerequisites</h2>
+                        <p>
+                            MochiAPI is not compatible with versions prior to Flash Player 9, and is no longer compatible with ActionScript 1.0.
+                        </p>
+
+                        <h4>Installing the Mochi Scores API</h4>
+                        <ol>
+                            <li>Download and unzip the latest MochiAPI.</li>
+                            <li>Copy the &ldquo;mochi&rdquo; folder and paste it into the root classpath of your game. Most often this is the same as the location of your game&rsquo;s FLA file.</li>
+                        </ol>
+
+                        <p><span style="color: #cc0000">NOTE:</span> In the 3.0 revision of the API, we changed namespaces for
+                        our libraries to unify and organize our packages.  Now you must explicitly call the
+                        MochiAPI that is specific version: <code>mochi.as2.*</code>  or
+                        <code>mochi.as3.*</code> respectively.  For the purposes of this
+                        documentation we will show examples specifying the ActionScript 2.0 API.  Simply change
+                        <code>mochi.as2.</code> from the code samples, and add <code>import mochi.as3.*;</code>
+                        to the beginning of your code block to use the ActionScript 3.0 API.</p>
+
+                        <div class="download">
+                            <a href="http://www.mochimedia.com/dl/MochiAPI_v4_0.zip?MMREF=docs">MochiAPI 4.0</a>
+                        </div>
+
+                    </div>
+
+                    <div class="section_2">
+                        <a name="serv_api"></a>
+                        <h2>1.3 Connecting to MochiServices</h2>
+
+                        <div class="method">
+                            <h3>connect</h3>
+                            <div class="function">
+                                <div class="signature">
+                                    connect(id:String, clip:Object, onError:Function):Void
+                                </div>
+
+                                <div class="description">
+                                    <h4>Description:</h4>
+                                    <p>
+                                        Retrieves and initializes the MochiServices.swf from Mochi Ads servers. Any API calls executed prior to the complete download and initialization
+                                        of the MochiServices.swf are queued and will be executed once the API is available
+                                    </p>
+                                </div>
+
+                                <div class="parameters">
+                                    <h4>Parameters:</h4>
+                                    <dl>
+                                        <dt><strong>id</strong>:String</dt>
+                                        <dd>Mochi game ID</dd>
+                                        <dt><strong>clip</strong>:Object</dt>
+                                        <dd>the MovieClip or Sprite in which to load the API (optional for all but AS3, defaults to _root).  In as3 the clip must be dynamic.</dd>
+                                        <dt><strong>onError</strong>:Function</dt>
+                                        <dd>
+                                            This method will be invoked if MochiServices cannot connect to the server or any IO errors occur in any other API calls.
+                                            onError handlers will receive status codes that describe the error.  The possible errors are:
+                                            <ul>
+                                                <li>NotConnected &mdash; Services were unable to connect or attach to a clip in the current movie.</li>
+                                                <li>IOError &mdash; Services has connected but cannot transfer data to and from the server.</li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+
+
+
+
+                                <div class="example">
+                                    <h4>AS2 Example:</h4>
+
+<blockquote class="code"><pre>
+mochi.as2.MochiServices.connect("xxx", root, onConnectError);
+
+public function onConnectError(status:String):Void {
+<span class="comment">// handle error here...</span>
+}
+</pre></blockquote>
+
+                                    <p>&hellip; where &lsquo;xxx&rsquo; is your Mochi game ID, in quotes.  Test your movie, and you should see the following text in your output panel:</p>
+
+                                    <blockquote class="code trace">
+                                        MochiServices Connecting&hellip;<br />
+                                        Waiting for Mochi services to connect&hellip;<br />
+                                        connected!
+                                    </blockquote>
+
+                                    <p>
+                                        If you see the text above, then that means you have the "mochi" folder in the correct location, and have
+                                        supplied MochiServices the correct Mochi game ID.  Keep in mind that you want to connect to MochiServices as early as
+                                        possible in your game, and before you make any other API calls.  You only need to make this call once in the
+                                        beginning of your game.
+                                    </p>
+
+                                    <h3>AS3 Requirement - The <em>clip</em> parameter</h3>
+                                    <p>
+                                        In ActionScript 3, the root of the Stage cannot be accessed globally.  If a Sprite or MovieClip does not have access to the root
+                                        or to another Display Container that has been added to the display list, then it can not be shown visually on the screen.  For
+                                        this reason, you must supply either the root of your stage or a reference to a Sprite or MovieClip that is a child of the stage
+                                        to the clip parameter when you call MochiServices.connect.  Please note the clip passed must also be dynamic.
+                                    </p>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="section_2">
+                        <a name="MochiScores"></a>
+                        <h1>Leaderboards</h1>
+
+                        <div class="section_3">
+                            <a name="score_ov"></a>
+                            <h2>2.1 Overview</h2>
+                            <p>
+                                Mochi Scores gives developers a simple drop-in solution to in-game scores. Developers can create any number of leaderboards
+                                they want for their game to track player scores. Scores are ranked and tracked
+                                in daily, weekly and monthly intervals.  Each game that you add to Mochi can have many leaderboards, but you must
+                                have at least one in order to use the Mochi Scores API.
+                            </p>
+
+                            <h3>Benefits of Mochi Scores:</h3>
+                            <ul>
+                                <li>Use one line of code to show our complete in-game leaderboard.</li>
+                                <li>Create as many leaderboards as you want for each game.</li>
+                                <li>Track any kind of score &ndash; track by time or numbers and configure the sort order.</li>
+                                <li>Automatically remembers users name, and last score, and displays the users' country.</li>
+                                <li>Management tools let you delete player scores or ban them altogether.</li>
+                                <li>Encrypted communication from your game to Mochi Scores servers.</li>
+                                <li><!-- Social network, -->Mochi Publisher integration.</li>
+                            </ul>
+                        </div>
+
+                        <div class="section_3">
+                            <a name="score_pre"></a>
+                            <h2>2.2 Prerequisites</h2>
+                            <p>
+                                MochiAPI is not compatible with versions prior to Flash Player 9, and is no longer compatible with ActionScript 1.0.
+                            </p>
+                            <p>
+                                Before you get started, make sure you have done the following:
+                            </p>
+                            <ol>
+                                <li> Sign up for a Mochi Developer account on www.mochimedia.com</li>
+                                <li> Log in and add a new game to your account.</li>
+                                <li> Create a leaderboard for your game.</li>
+                                <li> Download the latest version of MochiAPI and copy the include folder to your .fla directory.</li>
+                                <li> Call <code>connect()</code> to initialize the Mochi Scores API.</li>
+                            </ol>
+                        </div>
+                        <div class="clear"></div>
+
+                        <div class="section_3">
+                            <a name="Displaying_the_Leaderboard_Widget"></a>
+                            <h2>2.3 Displaying the Leaderboard</h2>
+
+                            <p>If you merely want to display the top scores for your game, then simply add the following script to your game:</p>
+
+                            <blockquote class="code">
+                                <span class="comment">// stop the main timeline and display the leaderboard</span><br />
+                                mochi.as2.MochiScores.showLeaderboard({boardID: ”xxx”});
+                            </blockquote>
+
+                            <p>&hellip; where &lsquo;xxx&rsquo; is your board ID, in quotes.  If you&rsquo;ve already connected to MochiServices and set your board ID, then the leaderboard widget will call <strong>stop();</strong> to stop the timeline and then display itself.  Players cannot submit a high score this way &mdash; they can only see the scores.  This is handy if you want to allow players to see the high scores before they play the game.</p>
+
+                            <p>By default, the showLeaderboard method will call <strong>stop();</strong> on the main timeline of your game, and then <strong>play();</strong> on the timeline once the leaderboard has been closed by the user.  This only occurs if you do not provide a container MovieClip for the leaderboard or your clip is the root of your movie.  If you wish to override this behavior, read about providing your own custom onDisplay and onClose handlers <a href="#Other_Leaderboard_Options">Section 2.8: Other Leaderboard Options</a>.</p>
+
+                            <p>You will also notice that there is a preloader graphic that appears before the leaderboard displays.  This graphic will appear in the top left-hand corner of your game unless you provide a resolution in the leaderboard options.  If you provide a resolution, then the preloader graphic will appear centered in the area where the leaderboard will display.  You can also turn off the preloader graphic entirely by setting a variable in the leaderboard options.  Further information on options is detailed below.</p>
+
+                            <p>In order to allow a player to submit a score after they&rsquo;ve played your game, then you would call the same method, but also supply an object containing their score, like so:</p>
+
+                            <blockquote class="code">
+                                <span class="comment">// stop the main timeline and submit a score to the leaderboard</span><br />
+                                mochi.as2.MochiScores.showLeaderboard({boardID: ”xxx”, score: 128472});
+                            </blockquote>
+
+                            <p>&hellip; where 128472 is the player&rsquo;s actual score.  If you are tracking scores as times, like in a racing game, send the player score in milliseconds.  For instance, if the
+                            player completed the game in 12.5 seconds, send the integer 12500.</p>
+
+
+                            <p>When the leaderboard widget appears, there will be an input box where they can type in their username.  After they enter their name, they can then submit their score.</p>
+                            <p>If you have your own registration system within your game, or wish to prevent the player from entering any name they wish, you can supply the username in code, like so:</p>
+
+                            <blockquote class="code">
+                                <span class="comment">// stop the main timeline and submit a score and username to the leaderboard</span><br />
+                                mochi.as2.MochiScores.showLeaderboard({boardID: ”xxx”, score: 128472, name: “janedoe”});
+                            </blockquote>
+
+                            <p>&hellip; where &lsquo;janedoe&rsquo; is the username, in quotes.  This will show the leaderboard widget with the player name already entered, and not editable.</p>
+                            <p>That&rsquo;s all you need to know to get started!  If you&rsquo;d like to do more advanced customization, read on.</p>
+                        </div>
+                        <div class="section_3">
+                            <a name="Saving_Your_Board_ID"></a>
+                            <h2>2.4 Saving Your Board ID</h2>
+
+                            <p>If you do not wish to pass the board ID to the showLeaderboard call every time, you can save your board ID by adding the following code to your game:</p>
+
+                            <blockquote class="code">
+                                <span class="comment">// set the board ID for all subsequent leaderboard calls</span><br />
+                                mochi.as2.MochiScores.setBoardID(”xxx”);
+                            </blockquote>
+
+                            <p>&hellip; where &lsquo;xxx&rsquo; is your board ID, in quotes.   This API method sets the board ID for future API calls, so you no longer need to pass the boardID parameter in your API calls.  You can always change this by calling this method with a different board ID.</p>
+                        </div>
+                        <div class="section_3">
+                            <a name="Other_Leaderboard_Options"></a>
+                            <h2>2.5 Other Leaderboard Options</h2>
+
+                            <p>The <code>{}</code> in the showScores API call is an ActionScript object that is referred to as the options object.  These options change the way the leaderboard widget behaves.  You can enter as many supported optional parameters into this object as you wish.  Below is a list of all possible options.</p>
+
+                            <h3>Basic Options:</h3>
+
+                            <blockquote>
+                                    score &mdash; the player's score to submit (integer, or time in milliseconds)<br />
+                                    name &mdash; the player's name<br />
+                                    boardID &mdash; board ID (overrides setBoardID)
+                            </blockquote>
+
+                            <h3>Callback Options:</h3>
+
+                            <blockquote>
+                                    onDisplay - the function to call when the GUI has displayed. default: function () { clip.stop(); }<br />
+                                    onClose - the function to call when the GUI is finished or could not load. default: function () { clip.play(); }<br />
+                                    onError - the function to call if the leaderboard cannot load.  default: onClose();
+                            </blockquote>
+
+                            <h3>Display Options:</h3>
+
+                            <blockquote>
+                                    res &mdash; the dimensions of the background behind your leaderboard. (i.e. &quot;500x400&quot;)<br />
+                                    width &mdash; exact width for the leaderboard (optional).  The <em>height</em> must also be set.<br />
+                                    height &mdash; exact height for the leaderboard (optional). The <em>width</em> must also be set.<br />
+                                    preloaderDisplay &mdash; show a preloader graphic while the leaderboard loads.  The default is true.<br />
+                                    numScores &mdash; maximum number of scores to display.  You can specify any number from 1 to 25, and the default is 10.  Changing this alters the height of the leaderboard.<br />
+                                    hideDoneButton &mdash; set to true if you wish to hide the 'done' button and instead close the leaderboard in code by calling closeLeaderboard.<br />
+                                    showTableRank &mdash; set to true if you wish to show the player's rank at the bottom of the table.<br />
+                                    previewScores &mdash; set to true if you wish to display the top scores before the user submits their name and score.
+                                    scoreMessage &mdash; allows the developer to change the messages used for the leaderboard.  This should
+                                        be passed as an object in this format:
+                                        { highscore: "Beat my highscore of $${highscore} in $${game}!",
+                                            latestscore: "I just scored $${score} in $${game}!",
+                                            gameinvite: "Come play $${game}!" }
+                            </blockquote>
+
+                            <h3>Replacement tokens used for customizing social link sharing</h3>
+                            <blockquote>
+                                $${game} &mdash; Name of the game containing the leaderboard<br />
+                                $${board} &mdash; Name of the leaderboard<br />
+                                $${score} &mdash; Score user just submitted<br />
+                                $${highscore} &mdash; Highest score user has submitted<br />
+                            </blockquote>
+                            
+                            <h3>Controlling Leaderboard Size:</h3>
+
+                            <p>When you use the "res" option, your leaderboard will display centered in a background rectangle that matches those dimensions.  If you would like to specify the exact pixel dimensions of your leaderboard, you can supply two separate parameters, <em>width</em> and <em>height</em>.  If you use <em>width</em> and <em>height</em> but omit <em>res</em>, the background will disappear, and the leaderboard will move to 0,0 in _root or in the (optional) clip you specified in MochiServices.connect().  See the diagram below to see how the options work together:</p>
+
+                            <img alt="leaderboard" src="img/leaderboard_width_height_api.png" border="1" width="738" height="560" />
+
+                        </div>
+                        <div class="section_3">
+                            <a name="The_MochiScores_API"></a>
+                            <h2>2.6 API Reference</h2>
+
+                            <p>This is the complete list of Mochi Scores API calls.  Most developers will only need to use connect, setBoardID, and showLeaderboard.  The other calls offer additional functionality to allow advanced developers to create their own custom leaderboards using the MochiServices back-end.</p>
+
+                            <dl>
+                                <dt>mochi.as2.MochiScores.setBoardID(boardID:String):Void </dt>
+                                    <dd>Sets the name of the mode to use for categorizing submitted and displayed scores.<br />
+                                    @param boardID &mdash; The unique string name of the mode</dd>
+
+                                <dt>mochi.as2.MochiScores.showLeaderboard(options:Object):Void</dt>
+                                    <dd>Displays the leaderboard GUI showing the current top scores.<br />
+                                    @param options &mdash; optional parameters &lt;see: Leaderboard Options&gt;</dd>
+
+                                <dt>mochi.as2.MochiScores.closeLeaderboard():Void</dt>
+                                    <dd>Closes the leaderboard GUI (Same as if the player clicked 'Done' on the leaderboard)</dd>
+
+                                <dt>mochi.as2.MochiScores.submit (score:Number, username:String, callbackObj:Object, callbackMethod:Object):Void</dt>
+                                    <dd>Submits a score to the server. Will send a scores object to the callback &lt;see: Scores data format&gt;<br />
+                                    @param name &mdash; the string name of the user.<br />
+                                    @param score &mdash; the number representing a score. If the score is time, send it in milliseconds.<br />
+                                    @param callbackObj &mdash; the object or class instance containing the callback method<br />
+                                    @param callbackMethod &mdash; the string name of the method to call when the score has been sent</dd>
+
+                                <dt>mochi.as2.MochiScores.requestList (callbackObj:Object, callbackMethod:Object):Void</dt>
+                                    <dd>Returns an array of at most 50 score objects. Will send a scores object to the callback &lt;see: <a href="#Scores_Data_Format">Scores data format</a>&gt;<br />
+                                    @param callbackObj &mdash; the object or class instance containing the callback method<br />
+                                    @param callbackMethod &mdash; the string name of the method to call when the score has been sent. default: &quot;onLoad&quot;</dd>
+
+                                <dt>mochi.as2.MochiScores.scoresArrayToObjects (scores:Object):Void</dt>
+                                    <dd>Converts the array of arrays returned by requestList into an array of objects whose keys are derived from cols.<br />
+                                    @param scores &mdash; the scores object returned to the requestList callback method</dd>
+
+                                <dt>mochi.as2.MochiScores.getPlayerInfo (callbackObj:Object, callbackMethod:Object):Void</dt>
+                                    <dd>Retrieves all persistent player data that has been saved in a SharedObject.</dd>
+
+                            </dl>
+                        </div>
+                        
+                        <div class="section_3">
+                            <a name="Error_Handling"></a>
+                            <h2>2.7 Error Handling</h2>
+
+                            <p>All web services such as this require an internet connection in order to function properly.  Since it is possible that a player's internet connection
+                            becomes unavailable during gameplay, it's possible that these services may not become available.  In order to handle this possibility, there are additional
+                            error handlers you can pass to the services.</p>
+
+                              <p>
+                                The <code>mochi.as2.MochiServices.connect</code> method also includes the ability to pass an onError method.  You can also pass an optional onError handler showLeaderboard in the options object.  This will be invoked if the leaderboard
+                                cannot load for some reason.  By default, the onClose method is called if an error occurs.
+                            </p>
+                            <p>Other methods, such as requestList and submit, do not have onError handlers.  However, you can check the results that are returned to see if an error occurred.  Upon error,
+                            the result object will return a variable named 'error' whose value will be true.  Also, a variable named 'errorCode' will return one of the above status codes.</p>
+
+                        </div>
+
+                        <div class="section_3">
+                        <a name="Scores_Data_Format"></a>
+                        <h2>2.8 Custom Leaderboards and Scores Data</h2>
+
+                        <p>If you would like to create your own custom Leaderboard, you can use the Mochi Scores API to submit scores and retrieve up to 50 scores from your leaderboard.  To retrieve scores data, you must first set your board ID using the <strong>setBoardID</strong> method, and then call <strong>requestList</strong>, providing a callback method to receive the scores data object.</p>
+
+                        <blockquote class="code">mochi.as2.MochiScores.setBoardID("xxxxxxxxxxxxxxxx");
+                        <span class="comment"> // set the board ID to the leaderboard you wish to work with</span><br />
+                        mochi.as2.MochiScores.requestList(this, "onScoresReceived");
+                        <span class="comment"> // request the scores and send them to the onScoresReceived method in this object or class</span>
+                        </blockquote>
+
+                        <p>Your callback method should accept a single parameter of type <code>Object</code>.  This object will contain the scores object.  If there is an error, the object will contain a variable named <em>error</em> whose value is true, as well as a variable named <em>errorCode</em> which explains the error.</p>
+
+
+<blockquote class="code"><pre>//
+//
+
+public function onScoresReceived (args:Object):Void {
+
+if (args.scores != null) {
+
+    trace("Scores received!");
+
+    var newScores:Object = mochi.as2.MochiScores.scoresArrayToObjects(args.scores);
+
+} else {
+
+    if (args.error) {
+        trace("Error: " + args.errorCode);
+    }
+
+}
+
+}
+</pre></blockquote>
+
+
+                        <p>If you are using the submit and requestList API calls to create your own custom Leaderboard, you will receive your scores data in the following format:</p>
+<blockquote class="code trace">{
+    now: 1197420828414.14,<br />
+    places: { daily: "100%", weekly: "100%", monthly: "100%" },<br />
+    counts: { daily: 2, weekly: 4, monthly: 8 },<br />
+    daily: { cols: [&quot;name&quot;, &quot;geo&quot;, &quot;score&quot;, &quot;timestamp&quot;], rows: [[&quot;george&quot;, &quot;us&quot;, 3333, 1197420828414.14], &hellip;]},<br />
+    weekly: { cols: [&quot;name&quot;, &quot;geo&quot;, &quot;score&quot;, &quot;timestamp&quot;], rows: [[&quot;george&quot;, &quot;us&quot;, 3333, 1197420828414.14], &hellip;]},<br />
+    monthly: { cols: [&quot;name&quot;, &quot;geo&quot;, &quot;score&quot;, &quot;timestamp&quot;], rows: [[&quot;george&quot;, &quot;us&quot;, 3333, 1197420828414.14], &hellip;]}<br />
+}</blockquote>
+                        <p>This is an ActionScript object that contains four variables:</p>
+                        <blockquote>
+                                now &mdash; the current server timestamp in milliseconds since the epoch<br />
+                                places &mdash; the percentile that the player's score achieved in each table<br />
+                                counts &mdash; the number of scores in each table<br />
+                                daily &mdash; scores for the daily table<br />
+                                weekly &mdash; scores for the weekly table<br />
+                                monthly &mdash; scores for the monthly table
+                        </blockquote>
+                        <p>The daily, weekly and monthly variables are objects that contain the following variables:</p>
+                        <blockquote>
+                                cols &mdash; an array containing the column keys<br />
+                                rows &mdash; an array of row arrays.  each row array contains the values that correspond to each column key
+                        </blockquote>
+
+                        <p>You may also convert your scores from rows and columns to a list of objects by sending the scores data to <code>MochiScores.scoresArrayToObjects</code>.  This will return a new object where each row is an object with key-value pairs.  Shown below is an example of how the <em>daily</em> scores would be converted:</p>
+
+                        <blockquote class="code trace">
+                            daily { [{name: "george", geo: "us", score: 3333, timestamp, 11974208328414.14}, {name: "george", geo: "us", score: 3333, timestamp, 11974208328414.14}, &hellip;] }
+                        </blockquote>
+
+                    </div>
+
+                    <div class="section_3">
+                        <a name="Close_Leaderboard"></a>
+                        <h2>2.9 Closing the Leaderboard</h2>
+
+                        <p>When you click on Close for a leaderboard, it will automatically call Play() and start 
+                            playing your SWF file. This sometimes causes your game to reset since it was on the last 
+                            frame of your game. If you don't want this to occur, add the following parameter into the 
+                            showLeaderBoard code:</p>
+
+                          <blockquote class="code trace">
+                              <p><code>MochiScores.showLeaderboard({boardID: boardID, score: playerscore, onClose: function() {} });</code></p>
+                            </blockquote>
+
+                        <p>The <code>onClose: function() {}</code> piece is very important. It tells the leaderboard that 
+                            when it closes to run that function. In this specific example, the function listed does nothing. 
+                            Because it does nothing, closing the leaderboard will not call Play() and your game will stay on 
+                            the frame where the leaderboard was called. This is also useful if you want your game to call 
+                            another function when it closes.</p>
+
+                    </div>
+
+                    </div><!-- mochiscores -->
+
+                    <!-- mochidigits -->
+                    <div class="section_2">
+                        <a name="MochiAchieve"></a>
+                        <h1>MochiEvents Achievements API</h1>
+                        <div class="section_3">
+                            <a name="achieve_ov"></a>
+                            <h2>3.1 Overview</h2>
+                            <p>
+                                The achievements API allows developers to track and score users progress though gameplay by using badges with various values.
+                                These achievements are tracked by IDs, and are stored locally as well as globally using a handful of simple calls and events.
+                            </p>
+                        </div>
+                        <div class="section_3">
+                            <a name="achieve_pre"></a>
+                            <h2>3.2 Prerequisites</h2>
+
+                            <h4>Installing the Mochi Scores API</h4>
+                            <ol>
+                                <li>Download and unzip the latest MochiAPI.</li>
+                                <li>Copy the &ldquo;mochi&rdquo; folder and paste it into the root classpath of your game. Most often this is the same as the location of your game&rsquo;s FLA file.</li>
+                            </ol>
+
+                            <div class="download">
+                                <a href="http://www.mochimedia.com/dl/MochiAPI_v4_0.zip">MochiAPI 4.0</a>
+                            </div>
+                        </div>
+                        <div class="section_3">
+                            <a name="achieve_use"></a>
+                            <h2>3.3 Usage</h2>
+                            <p>
+                                The achievements system really only requires one call to use, and that is unlock achievements.
+                                The majority of the system is tailored around asynchronous events which should be tracks when you start your game.
+                            
+                                For ease of use, you may use MochiSocial.showProfile to display a user's achievements (under the medals tab), even
+                                when the user is in their logged out state.  If the user is not logged in, they will not be asked to join Mochi Games.
+                                
+                                Below is a basic example of how to use the achievements API.
+                            </p>
+
+                            <blockquote class="code"><pre>
+import mochi.as2.MochiEvents;
+
+var _gameAchievements:Object;
+
+// These should be added before, or shortly after MochiServices.connect
+MochiEvents.addEventListener( MochiEvents.GAME_ACHIEVEMENTS, this, onGameAchievements );
+MochiEvents.addEventListener( MochiEvents.ACHIEVEMENTS_OWNED, this, onUserAchievements );
+MochiEvents.addEventListener( MochiEvents.ACHIEVEMENT_NEW, this, onNewAchievement );
+
+MochiServices.connect( 'xxx' );
+
+function onGameAchievements( ach:Array ):Void
+{
+for( var i = 0; i &lt; ach.length; i++ )
+{
+    _gameAchievements[ ach[i].id ] = ach[i];                                        
+    _gameAchievements[ ach[i].id ].unlocked = false;
+}
+}
+
+function onUserAchievements( ach:Array ):Void
+{
+for( var i = 0; i &lt; ach.length; i++ )
+{
+    _gameAchievements[ ach[i].id ] = ach[i];                                        
+    _gameAchievements[ ach[i].id ].unlocked = true;
+}                                        
+}
+
+function onNewAchievement( ach:Object ):Void
+{
+_gameAchievements[ ach.id ] = ach;                                        
+_gameAchievements[ ach.id ].unlocked = true;
+}
+
+MochiEvents.unlockAchievement( { id: 'xxx' } );
+                        </pre></blockquote>
+
+                            <p>
+                                Obviously, you can create a much more robust example.   Please note that these events will be dispatched any time
+                                the user login state changes, so it would be to your best interest to handle these events globally.
+                            </p>
+                        </div>
+                        <div class="section_3">
+                            <a name="achieve_api"></a>
+                            <h2>3.4 API Reference</h2>
+
+                            <div class="function">
+                                <div class="signature">
+                                    setNotifications(parameters:Object):void
+                                </div>
+
+                                <div class="description">
+                                    <h4>Description:</h4>
+                                    <p>
+                                        Set the display style for the achievements 'toaster'.  These are the notifications that will be
+                                        displayed when an achievement is awarded.
+                                    </p>
+                                </div>
+
+                                <div class="parameters">
+                                    <h4>Parameters:</h4>
+                                    <dl>
+                                        <dt><strong>parameters</strong>:Object</dt>
+                                        <dd>
+                                            This is a property bundle which controls 
+                                            <ul>
+                                                <li>format:String &mdash; The display style used for achievements
+                                                <ul>
+                                                    <li>FORMAT_NONE &mdash; Hide all achievement toasters</li>
+                                                    <li>FORMAT_SHORT &mdash; Small form achievement, only displays icon and name</li>
+                                                    <li>FORMAT_LONG &mdash; Long form, displays icon, description and name</li>
+                                                </ul>
+                                                </li>
+                                                <li>align:String &mdash; Relative on screen position for the achievement.
+                                                  <ul>
+                                                    <li>ALIGN_TOP_LEFT</li>
+                                                    <li>ALIGN_TOP</li>
+                                                    <li>ALIGN_TOP_RIGHT</li>
+                                                    <li>ALIGN_LEFT</li>
+                                                    <li>ALIGN_CENTER</li>
+                                                    <li>ALIGN_RIGHT</li>
+                                                    <li>ALIGN_BOTTOM_LEFT</li>
+                                                    <li>ALIGN_BOTTOM</li>
+                                                    <li>ALIGN_BOTTOM_RIGHT</li>
+                                                  </ul>
+                                                </li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+
+                                <div class="example">
+                                    <h4>Example:</h4>
+                                    <blockquote class="code"><pre>
+import mochi.as2.MochiEvents;
+
+MochiEvents.setNotifications( {
+format: MochiEvents.FORMAT_SHORT,
+align: MochiEvents.ALIGN_BOTTOM_RIGHT
+} );
+                                    </pre></blockquote>
+                                </div>
+                            </div>
+
+                            <div class="function">
+                                <div class="signature">
+                                    unlockAchievement(properties:Object):void
+                                </div>
+
+                                <div class="description">
+                                    <h4>Description:</h4>
+                                    <p>
+                                        Award user a registered game achievement (based on id
+                                    </p>
+                                </div>
+
+                                <div class="parameters">
+                                    <h4>Parameters:</h4>
+                                    <dl>
+                                        <dt><strong>parameters</strong>:Object</dt>
+                                        <dd>
+                                            This is a property bundle which controls 
+                                            <ul>
+                                                <li>id:String &mdash; Achievement ID, supplied on the developer dash board</li>
+                                            </ul>
+                                        </dd>
+                                    </dl>
+                                </div>
+
+                                <div class="example">
+                                    <h4>Example:</h4>
+                                    <blockquote class="code"><pre>
+import mochi.as2.MochiEvents;
+MochiEvents.unlockAchievement( { id: 'xxx' } );
+                                    </pre></blockquote>
+                                </div>
+                            </div>
+
+                            <div class="function">
+                                <div class="signature">
+                                    showAwards(properties:Object):void
+                                </div>
+
+                                <div class="description">
+                                    <h4>Description:</h4>
+                                    <p>
+                                        Display a modal dialog containing the current user's medals and achievements.
+                                    </p>
+                                </div>
+
+                                <div class="parameters">
+                                    <h4>Parameters:</h4>
+                                    <dl>
+                                        <dt><strong>parameters</strong>:Object</dt>
+                                        <dd>
+                                            Unused, added for future upgrades.
+                                        </dd>
+                                    </dl>
+                                </div>
+
+                                <div class="example">
+                                    <h4>Example:</h4>
+                                    <blockquote class="code"><pre>
+import mochi.as2.MochiEvents;
+MochiEvents.showAwards();
+                                    </pre></blockquote>
+                                </div>
+                            </div>
+
+                            <div class="function">
+                                <div class="signature">
+                                    getAchievements( parameters:Object ):void
+                                </div>
+
+                                <div class="description">
+                                    <h4>Description:</h4>
+                                    <p>
+                                        Request the game's achievements (Normally sent automatically
+                                    </p>
+                                </div>
+
+                                <div class="parameters">
+                                    <h4>Parameters:</h4>
+                                    <dl>
+                                        <dt><strong>parameters</strong>:Object</dt>
+                                        <dd>
+                                            Unused, for future expansion.
+                                        </dd>
+                                    </dl>
+                                </div>
+
+                                <div class="example">
+                                    <h4>Example:</h4>
+                                    <blockquote class="code"><pre>
+import mochi.as2.MochiEvents;
+
+MochiEvents.addEventListener( MochiEvents.GAME_ACHIEVEMENTS, this, processGameAchievements );
+MochiEvents.getAchievements();
+                                    </pre></blockquote>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="section_3">
+                            <a name="achieve_events"></a>
+                            <h2>3.5 Event definitions</h2>
+                            <p>Events as well as any arguments your event handler will receive are listed below</p>
+
+                            <dl>
+                                <dt><strong>MochiEvents.GAME_ACHIEVEMENTS</strong> [ { "name": "Bouncy", "id": "xxx", "score": 100, "imgURL": "http://...", "type": "leaderboards", "hidden": false, "description": "Score 20 or higher to get a Bronze Medal!" }, { "name": "Dead-Eye", "id": "xxx", "score": 120, "imgURL": "http://...", "type": "ingame", "hidden": false, "description": "Shoot 10 monsters with only a single shot." }]</dt>
+                                <dd>List of all the achievements available in the game, and information about their unlocked state</dd>
+                            </dl>
+
+                            <dl>
+                                <dt><strong>MochiEvents.ACHIEVEMENTS_OWNED</strong> [ { "name": "Bronze Medal", "timestamp": 1300214011842, "description": "Pretty Good! Bronze Medal Score! Score 1,000 or higher to get a Silver Medal!", "score": 25, "imgURL": "http://...", "hidden": false, "id": "xxx" }, { "name": "Dead-Eye", "timestamp": 1299707446000, "description": "Shoot 10 monsters with only a single shot.", "score": 120, "imgURL": "http://...", "hidden": false, "id": "xxx" }]</dt>
+                                <dd>A List of all the user's currently unlocked achievements</dd>
+                            </dl>
+
+                            <dl>
+                                <dt><strong>MochiEvents.ACHIEVEMENT_NEW</strong> { "name": "Dead-Eye", "timestamp": 1299707446000, "description": "Shoot 10 monsters with only a single shot.", "score": 120, "imgURL": "http://...", "hidden": false, "id": "xxx" }</dt>
+                                <dd>Event dispatched when a user is awarded a new achievement</dd>
+                            </dl>
+
+                            <dl>
+                                <dt><strong>MochiEvents.ERROR</strong> { type: MochiCoins.IO_ERROR }</dt>
+                                <dd>An error occurred.  Values for type are listed below:
+                                    <ul>
+                                        <li>MochiCoins.IO_ERROR: There was a network error.</li>
+                                        <li>MochiCoins.IO_PENDING: The game has not finished starting up (achievement list has not been received).</li>
+                                    </ul>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <!-- mochidigits -->
+                    <div class="section_2">
+                        <a name="MochiDigits"></a>
+                        <h1>MochiDigits</h1>
+                        <div class="section_3">
+                            <a name="digits_ov"></a>
+                            <h2>4.1 Overview</h2>
+                            <p>
+                                MochiDigits provides a quick, and easy way for developers to encode their sensitive numbers in memory.  While there is no foolproof solution to
+                                the problem of hacking, this at least provides another layer of security for developers hoping to keep their scores from being modified with
+                                memory editing tools.
+                            </p>
+                        </div>
+                        <div class="section_3">
+                            <a name="digits_pre"></a>
+                            <h2>4.2 Prerequisites</h2>
+
+                            <h4>Installing the Mochi Scores API</h4>
+                            <ol>
+                                <li>Download and unzip the latest MochiAPI.</li>
+                                <li>Copy the &ldquo;mochi&rdquo; folder and paste it into the root classpath of your game. Most often this is the same as the location of your game&rsquo;s FLA file.</li>
+                            </ol>
+
+                            <div class="download">
+                                <a href="http://www.mochimedia.com/dl/MochiAPI_v4_0.zip">MochiAPI 4.0</a>
+                            </div>
+                        </div>
+                        <div class="section_3">
+                            <a name="digits_use"></a>
+                            <h2>4.3 Usage</h2>
+                            <p>
+                                Getting started using MochiDigits is simple.  MochiDigits operates like any other object, and can be modified using a set of easy to use functions
+                                or simply by directly altering a single property.
+                            </p>
+
+                            <blockquote class="code">
+                                import mochi.as2.MochiDigits;<br />
+                                <br />
+                                var score:MochiDigits;<br />
+                                score = new MochiDigits(0);
+                            </blockquote>
+
+                            <p>
+                                This creates a score object with the value "0".  Now you can alter the score simply by calling two easy to use functions
+                            </p>
+
+                            <dl>
+                                <dt>public function setValue(digit:Number):void</dt>
+                                <dd>Sets the value of a MochiDigits object to a specified number<br/>
+                                @param digit &mdash; The value to apply to the object</dd>
+
+                                <dt>public function addValue(inc:Number):void</dt>
+                                <dd>Increments the value of a MochiDigits object by a specified number<br/>
+                                @param digit &mdash; The value to increment the object by</dd>
+
+                                <dt>public function get value():Number<br/>
+                                public function set value(v:Number):void</dt>
+                                <dd>Property allowing direct access to the unencoded score</dd>
+                            </dl>
+
+
+                            <p>
+                                To use a real-world example, if you wished to say, give the player 100 points for grabbing an acorn, you would simply call addValue
+                            </p>
+
+                            <blockquote class="code">
+                                score.addValue(100);
+                            </blockquote>
+
+                            <p>
+                                It is just that easy.  Now, lets say the player has started a new level.  While you could create a new score object, it may be cleaner
+                                to simply set the value to zero.
+                            </p>
+
+                            <blockquote class="code">
+                                score.setValue(0);
+                            </blockquote>
+
+                            <p>
+                                Finally, you might be wondering how you can retrieve your score?  Simply using the .value property
+                            </p>
+
+                            <blockquote class="code">
+                                mochi.as2.MochiScores.showLeaderboard({boardID: ”xxx”, score: score.value});
+                            </blockquote>
+
+                            <p>
+                                You can use this property to do advanced tricks, like applying multipliers, or whatever else you can think of.  Just remember
+                                that so long as you are working on an unencrypted score, your data is vulnerable to attack.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- mochidigits -->
+
+                    <div class="section_2">
+                        <a name="LinkTracking"></a>
+                        <h1>Link Tracking API Documentation</h1>
+                        <div class="section_1">
+
+                            <a name="link_ov"></a>
+                            <h2>1.1 Overview</h2>
+                            <p>
+                                Mochi Link Tracking allows game developers can track all the traffic coming from their games. By using the Mochi Link Tracking
+                                method call you can get important stats for any link in your game. You can track as many in-game links as you want, and you
+                                can dynamically change the URL players are sent even after your game is spread across the internet.
+                            </p>
+
+                            <h3>Benefits of Link Tracking:</h3>
+                            <ul>
+                                <li>Track as many links in your game as you want.</li>
+                                <li>Dynamically change the URL the link points to at any time.</li>
+                                <li>Includes enhanced pop-up blocking protection so your link works in as many situations as possible.</li>
+                                <li>Get valuable reporting telling you how much traffic your getting from each link.</li>
+                            </ul>
+
+                            <h3>Link Tracking works great for:</h3>
+                            <ul>
+                                <li>Find out which link placements draw the most visitors.</li>
+                                <li>Learn about which hosts work best for driving traffic.</li>
+                                <li>Help determine the value of your game for sponsors with real traffic numbers.</li>
+                                <li>Sell timed sponsorship by dynamically changing the links to different sponsors on the fly.</li>
+                            </ul>
+                        </div>
+                        <div class="section_1">
+                            <a name="link_pre"></a>
+                            <h2>1.2 Prerequisites</h2>
+
+                            <p>
+                                MochiAPI is not compatible with versions prior to Flash Player 9, and is no longer compatible with ActionScript 1.0.
+                            </p>
+
+                            <h4>Installing the Mochi Ads API</h4>
+                            <ol>
+                                <li>Download and unzip the latest MochiAPI.</li>
+                                <li>Copy the &ldquo;mochi&rdquo; folder and paste it into the root classpath of your game. Most often this is the same as the location of your game&rsquo;s FLA file.</li>
+                            </ol>
+
+                            <p><span style="color: #cc0000">NOTE:</span> In the 3.0 revision of the API, we changed namespaces for
+                            our libraries to unify and organize our packages.  Now you must explicitly call the
+                            MochiAPI that is specific version: <code>mochi.as2.*</code>  or
+                            <code>mochi.as3.*</code> respectively.  For the purposes of this
+                            documentation we will show examples specifying the ActionScript 2.0 API.  Simply change
+                            <code>mochi.as2.</code> from the code samples, and add <code>import mochi.as3.*;</code>
+                            to the beginning of your code block to use the ActionScript 3.0 API.</p>
+
+                            <div class="download">
+                                <a href="http://www.mochimedia.com/dl/MochiAPI_v4_0.zip">MochiAPI 4.0</a>
+                            </div>
+                        </div>
+                        <div class="section_1">
+                            <a name="link_api"></a>
+                            <h2>1.3 Link Tracking API</h2>
+
+                            <div class="function">
+                                <h3>addLinkEvent()</h3>
+                                <div class="signature">
+                                    <code>function addLinkEvent(url:String, backupUrl:String, container:DisplayObjectContainer, [callback:Function]):Void</code>
+                                </div>
+
+                                <div class="description">
+                                    <h4>Description</h4>
+                                    <p>
+                                        Adds click event listening to a DisplayObjectContainer that directs the user to an external website.
+                                    </p>
+                                </div>
+
+                                <div class="parameters">
+                                    <h4>Parameters</h4>
+                                    <dl>
+                                        <dt><strong>url</strong>:String</dt>
+                                        <dd>Redirect URL provided to you by Mochi when you create a new link.</dd>
+                                        <dt><strong>backupUrl</strong>:String</dt>
+                                        <dd>URL to fall back on if Mochi servers do not respond.</dd>
+                                        <dt><strong>container</strong>:DisplayObjectContainer</dt>
+                                        <dd>Reference to a valid DisplayObjectContainer (or MovieClip in AS2) to attach the click event to.</dd>
+                                        <dt><strong>callback</strong>:Function</dt>
+                                        <dd>Function to call when the click event occurs. No parameters are passed.</dd>
+                                    </dl>
+                                </div>
+
+                                <div class="example">
+                                    <h4>AS3 Example:</h4>
+<blockquote class="code example"><pre>var container:Sprite = new Sprite(); <span class="comment">//If your using SimpleButton, you'll need a display container</span>
+container.addChild(mySimpleButton); <span class="comment">//reference to your button</span>
+mochi.as2.MochiServices.addLinkEvent(
+'http://link.mochiads.com/link/XXXXXXXXXXX',  <span class="comment">//Mochi provided URL</span>
+'http://mygamesite.com', <span class="comment">//Backup URL in case Mochi servers are unavailable</span>
+container, <span class="comment">//Sprite/Movie Clip to connect the click event to</span>
+onMenuClick <span class="comment">//Callback function</span>
+);
+
+<span class="comment">//...</span>
+
+public function onMenuClick():Void {
+<span class="comment">// insert and callback code here</span>
+}</pre></blockquote>
+                                    <p class="note">
+                                        <code>addLinkEvent</code> needs a reference to any DisplayObjectContainer. For example if you use a Sprite
+                                        with <code>buttonMode = true</code> you can pass a reference to the Sprite itself. If you use a TextField of SimpleButton you'll
+                                        need to add it to a containing Sprite.
+                                    </p>
+                                </div>
+                            </div><!--! end function -->
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+</html>

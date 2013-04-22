@@ -1,4 +1,5 @@
 package krakel.audio {
+	import krakel.KrkSound;
 	import org.flixel.FlxSound;
 	/**
 	 * ...
@@ -10,9 +11,9 @@ package krakel.audio {
 		static private const sounds:Object = {};
 		
 		
-		static public function Add(name:String, embed:Class, volume:Number = 1, loops:Boolean = false) {
+		static public function Add(name:String, embed:Class, volume:Number = 1, loops:Boolean = false):void {
 			
-			var sound:KrkSound = new KrkSound().loadEmbedded(embed, loops);
+			var sound:KrkSound = new KrkSound().embed(embed, loops);
 			
 			sounds[name] = sound;
 			sound.volume = volume;
@@ -22,13 +23,13 @@ package krakel.audio {
 			if (group == null) group == "all";
 			
 		}
-		static public function play(name:String, forceRestart:Boolean = false) {
+		static public function play(name:String, forceRestart:Boolean = false):void {
 			if (ENABLED) sounds[name].play(forceRestart);
 		}
-		static public function pause(name:String) {
+		static public function pause(name:String):void {
 			sounds[name].pause();
 		}
-		static public function resume(name:String) {
+		static public function resume(name:String):void {
 			if (ENABLED) sounds[name].resume();
 		}
 		
@@ -36,9 +37,4 @@ package krakel.audio {
 		
 	}
 
-}
-import org.flixel.FlxSound;
-class KrkSound extends FlxSound {
-	
-	public function KrkSound() { super(); }
 }

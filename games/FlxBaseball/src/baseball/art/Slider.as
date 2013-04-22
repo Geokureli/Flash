@@ -1,15 +1,14 @@
 package baseball.art {
 	import krakel.helpers.MathHelper;
+	import krakel.KrkNest;
 	import org.flixel.FlxGroup;
 	
 	/**
 	 * ...
 	 * @author George
 	 */
-	public class Slider extends FlxGroup {
-		private var _x:Number,
-					_y:Number,
-					_min:Number,
+	public class Slider extends KrkNest {
+		private var _min:Number,
 					_max:Number,
 					_interval:Number,
 					_tickInterval:Number,
@@ -73,15 +72,15 @@ package baseball.art {
 			}
 		}
 		
-		public function get x():Number { return _x; }
-		public function set x(value:Number):void {
-			_x = txt_value.x = txt_label.x = drag.x = line.x = drag.boundsRect.x = value;
+		override public function get x():Number { return _x; }
+		override public function set x(value:Number):void {
+			super.x = value;// txt_value.x = txt_label.x = drag.x = line.x = drag.boundsRect.x = value;
 			drag.boundsRect.x = drag.x = value - drag.width / 2;
 			this.value = this.value;
 		}
 		
-		public function get y():Number { return _y; }
-		public function set y(value:Number):void {
+		override public function get y():Number { return _y; }
+		override public function set y(value:Number):void {
 			_y = txt_value.y = txt_label.y = drag.y = line.y = drag.boundsRect.y = value;
 		}
 		public function get width():Number { return _width; }

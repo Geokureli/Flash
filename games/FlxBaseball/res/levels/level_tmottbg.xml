@@ -96,5 +96,6 @@
     <rock beat="48"/>
     <rock beat="48.5"/>
     <bomb beat="49.25"/>
+    <base beat="50.75"/>
   </assets>
 </level>

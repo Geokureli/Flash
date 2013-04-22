@@ -61,7 +61,7 @@ package org.flixel.plugin.photonstorm
 			
 			members[source] = data;
 			
-			createZone(source, region, distanceX, distanceY, clearRegion);
+			//createZone(source, region, distanceX, distanceY, clearRegion);
 		}
 		
 		/**
@@ -144,6 +144,7 @@ package org.flixel.plugin.photonstorm
 		{
 			for each (var obj:ScrollSprite in members)
 			{
+				members[obj.source].destroy();
 				delete members[obj.source];
 			}
 		}
@@ -193,6 +194,10 @@ package org.flixel.plugin.photonstorm
 			}
 		}
 		
+		public static function setScroll(source:FlxSprite, zone:int, distanceX:Number, distanceY:Number):void {
+			members[source].zones[zone].distanceX = distanceX;
+			members[source].zones[zone].distanceY = distanceY;
+		}
 		/**
 		 * Stops scrolling on the given FlxSprite. If no FlxSprite is given it stops scrolling on all FlxSprites currently added.<br />
 		 * Scrolling is enabled by default, but this can be used to stop it.<br />
@@ -216,39 +221,10 @@ package org.flixel.plugin.photonstorm
 		
 		override public function draw():void
 		{
-			for each (var obj:Object in members)
+			for each (var obj:ScrollSprite in members)
 			{
-				if ((obj.onlyScrollOnscreen == true && obj.source.onScreen()) && obj.scrolling == true && obj.source.exists)
-				{
-					scroll(obj);
-				}
+				obj.scroll();
 			}
-		}
-		
-		private function scroll(data:Object):void
-		{
-			//	Loop through the scroll zones defined in this object
-			for each (var zone:Zone in data.zones)
-			{
-				zone.scrollMatrix.tx += zone.distanceX;
-				zone.scrollMatrix.ty += zone.distanceY;
-				zone.buffer.graphics.clear();
-				zone.buffer.graphics.beginBitmapFill(zone.texture, zone.scrollMatrix, true, false);
-				zone.buffer.graphics.drawRect(0, 0, zone.region.width, zone.region.height);
-				zone.buffer.graphics.endFill();
-				// George bug fix
-				zone.scrollMatrix.tx %= zone.region.width;
-				zone.scrollMatrix.ty %= zone.region.height;
-				
-				if (zone.clearRegion)
-				{
-					data.source.pixels.fillRect(zone.region, 0x0);
-				}
-				
-				data.source.pixels.draw(zone.buffer, zone.drawMatrix);
-			}
-			
-			data.source.dirty = true;
 		}
 		
 		override public function destroy():void
@@ -270,7 +246,21 @@ class ScrollSprite {
 	public var scrolling:Boolean;
 	public var onlyScrollOnscreen:Boolean;
 	public var zones:Vector.<Zone>;
-	public function ScrollSprite(){ }
+	public function ScrollSprite() { }
+	public function scroll():void {
+		if (onlyScrollOnscreen && source.onScreen() && scrolling && source.exists) {
+			
+			for each (var zone:Zone in zones)
+				zone.scroll(this);
+			
+			source.dirty = true;
+		}
+	}
+	
+	public function destroy():void {
+		while (zones.length > 0)
+			zones.pop().destroy();
+	}
 }
 
 class Zone {
@@ -282,5 +272,33 @@ class Zone {
 	public var distanceY:Number;
 	public var scrollMatrix:Matrix;
 	public var drawMatrix:Matrix;
+	
 	public function Zone() { }
+	public function scroll(data:ScrollSprite):void {
+		scrollMatrix.tx += distanceX;
+		scrollMatrix.ty += distanceY;
+		// George bug fix
+		scrollMatrix.tx %= region.width;
+		scrollMatrix.ty %= region.height;
+		
+		buffer.graphics.clear();
+		buffer.graphics.beginBitmapFill(texture, scrollMatrix, true, false);
+		buffer.graphics.drawRect(0, 0, region.width, region.height);
+		buffer.graphics.endFill();
+		
+		
+		if (clearRegion){
+			data.source.pixels.fillRect(region, 0x0);
+		}
+		
+		data.source.pixels.draw(buffer, drawMatrix);
+	}
+	
+	public function destroy():void {
+		scrollMatrix = null;
+		drawMatrix = null;
+		buffer = null;
+		texture = null;
+		region = null;
+	}
 }

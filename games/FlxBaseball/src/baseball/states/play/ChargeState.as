@@ -32,20 +32,32 @@ package baseball.states.play {
 		public function ChargeState() {
 			super(<level bpm="80" speed="15" meter="4"><assets/></level>);
 			
+		}
+		override public function create():void {
+			super.create();
+			
 			beatCount = 0;
 			
 			for (var i:int = 0; i < 10; i++)
 				addRandomObstacle();
 				
 			time = BeatKeeper.beatsPerMinute * -(FlxG.width + 200) / 60 / Obstacle.SCROLL / FlxG.flashFramerate;
-			//var on:FlxSound = new FlxSound().loadEmbedded(ON_BEAT);
-			//var off:FlxSound = new FlxSound().loadEmbedded(OFF_BEAT);
+		}
+		
+		override protected function setIntroMetronome():void {
+			//super();
+			
 			BeatKeeper.setMetronome([
 				new FlxSound().loadEmbedded(_A), null,
 				new FlxSound().loadEmbedded( F), null,
 				new FlxSound().loadEmbedded( G), null,
 				new FlxSound().loadEmbedded( A), null
 			]);
+		}
+		
+		override protected function onZero(beat:Number):void {
+			super.onZero(beat);
+			message = "charge";
 		}
 		
 		override public function update():void {
@@ -71,6 +83,10 @@ package baseball.states.play {
 		}
 		private function get randomName():String {
 			 return TYPES[Random.randomIndex(TYPES)];
+		}
+		override public function replay():void {
+			super.replay();
+			BeatKeeper.beatsPerMinute = level.@bpm;
 		}
 	}
 
