@@ -33,6 +33,9 @@ package krakel {
 			super.destroy();
 			parentState = null;
 		}
+		
+		public function pause():void{}
+		public function unpause():void{}
 	}
 
 }

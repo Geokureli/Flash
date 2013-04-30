@@ -5,8 +5,12 @@ package baseball.states {
 	import baseball.states.play.GameState;
 	import com.greensock.easing.Cubic;
 	import com.greensock.TweenMax;
+	import krakel.ads.AdBox;
 	import krakel.audio.SoundManager;
+	import krakel.KrkButtonGroup;
+	import krakel.KrkSound;
 	import krakel.KrkState;
+	import mochi.as3.MochiAd;
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
@@ -19,21 +23,22 @@ package baseball.states {
 	 */
 	public class MenuState extends KrkState {
 		
-		[Embed(source = "../../../res/sprites/ts_gfx - Copy.png")] static private const TITLE:Class;
+		[Embed(source = "../../../res/sprites/ts_gfx.png")] static private const TITLE:Class;
+		[Embed(source="../../../res/sprites/Charge_txt.png")] static private var CHARGE_TXT:Class;
 		
 		static private const LEVELS:Vector.<String> = Vector.<String>(["tmottbg", "test", "test", "test"]);
 		
 		static private const LVL_BTN_Y:Number = 234;
-		static private const HAS_EDITOR:Boolean = true;
+		static private const HAS_EDITOR:Boolean = FlxG.debug;
 		static private const LVL_BTN_GAP:Number = 50;
 		
 		static public var CHARGE_UNLOCKED:Boolean = true;
 		
 		public var title:FlxSprite,
-					chargeBtn:FlxSprite,
-					editorBtn:FlxSprite;
+					chargeBtn:FlxButton,
+					editorBtn:FlxButton;
 		
-		public var buttons:FlxGroup;
+		public var buttons:KrkButtonGroup;
 		
 		private var game:GameState;
 		private var editor:EditorState;
@@ -42,7 +47,7 @@ package baseball.states {
 		
 		private var levelsUnlocked:Number;
 		private var chargeUnlocked:Boolean;
-		public var pan:Boolean;
+		public var isFromLevel:Boolean;
 		
 		public function MenuState() {
 			super();
@@ -54,7 +59,7 @@ package baseball.states {
 			editor.level = Imports.getLevel("tmottbg");
 			game = new GameState();
 			charge = new ChargeState();
-			pan = false;
+			isFromLevel = false;
 		}
 		override public function create():void {
 			super.create();
@@ -64,7 +69,7 @@ package baseball.states {
 			add(title = new FlxSprite(182, 48, TITLE));
 			title.scale.x = title.scale.y = 2;
 			// --- BUTTONS
-			add(buttons = new FlxGroup(LEVELS.length + 1 + int(HAS_EDITOR)));
+			add(buttons = new KrkButtonGroup());
 			
 			LevelButton.ID_COUNT = 0;
 			var btnLevel:LevelButton;
@@ -72,31 +77,61 @@ package baseball.states {
 			
 			for (var i:int = 0; i < LEVELS.length; i++) {
 				
-				buttons.add( btnLevel = new LevelButton(
+				buttons.addButton( btnLevel = new LevelButton(
 					x,
 					LVL_BTN_Y,
 					playLevel,
-					levelsUnlocked > i ? 1 : .5
+					levelsUnlocked > i || FlxG.debug ? 1 : .5
 				));
 				x += LVL_BTN_GAP;
 			}
-			buttons.add(chargeBtn = new FlxButton(200, LVL_BTN_Y+50, "Charge", chargeClick));
-			if(HAS_EDITOR) buttons.add(editorBtn = new FlxButton(300, LVL_BTN_Y+50, "Editor", editorClick));
+			buttons.addButton(chargeBtn = new FlxButton(260, LVL_BTN_Y + 35, null, chargeClick), 1);
+			chargeBtn.loadGraphic(CHARGE_TXT);
+			chargeBtn.scale.x = 2;
+			// --- EDITOR
+			if (HAS_EDITOR)
+				buttons.addButton(editorBtn = new FlxButton(250, LVL_BTN_Y + 75, "Editor", editorClick), 2);
 			
 			FlxG.bgColor = 0xFFa4e4fc;
-			if (pan && !FlxG.debug) startPanIn();
 			
-			FlxG.setDebuggerLayout(FlxG.DEBUGGER_LEFT);
-			SoundManager.play("menu");
+			if (isFromLevel && !FlxG.debug)
+				showAd();
+			else if(!FlxG.debug)
+				startPanIn();
+			else if (KrkSound.enabled)
+				playMusic();
+		}
+		
+		private function showAd():void {
+			exists =
+				title.exists =
+				buttons.exists = false;
+			AdBox.showInterLevelAd(startPanIn);
 		}
 		
 		private function checkUnlocks():void {
-			if (game.won)
+			if (game.won){
 				levelsUnlocked++;
+				AdBox.sendVar("levelsCleared", levelsUnlocked);
+			}
 		}
+		
+		private function startPanIn():void {
+			TweenMax.allFrom([title].concat(buttons.members), 1, { y:"-350", ease:Cubic.easeOut } );
+			exists =
+				title.exists =
+				buttons.exists = true;
+			playMusic();
+		}
+		
+		private function playMusic():void {
+			FlxG.playMusic(Imports.getSong("menu"));
+			FlxG.music.survive = false;
+		}
+		
 		private function startPanOut(nextState:FlxState):void {
 			targetState = nextState;
-			pan = true;
+			isFromLevel = true;
 			if (!FlxG.debug) {
 				
 				removeButtonListeners();
@@ -105,9 +140,6 @@ package baseball.states {
 		}
 		
 		private function panOutDone():void { FlxG.switchState(targetState); }
-		private function startPanIn():void {
-			TweenMax.allFrom([title].concat(buttons.members), 1, { y:"-350", ease:Cubic.easeOut } );
-		}
 		
 		private function removeButtonListeners():void {
 			buttons.setAll("onUp", null);
@@ -120,7 +152,7 @@ package baseball.states {
 		private function chargeClick():void { startPanOut(charge); }
 		
 		private function editorClick():void {
-			pan = false;
+			isFromLevel = false;
 			FlxG.switchState(editor);
 		}
 		
@@ -128,7 +160,7 @@ package baseball.states {
 			super.destroy();
 			title = chargeBtn = editorBtn = null;
 			targetState = null;
-			SoundManager.pause("menu");
+			FlxG
 			
 		}
 	}

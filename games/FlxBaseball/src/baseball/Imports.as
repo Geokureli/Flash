@@ -1,9 +1,10 @@
 package baseball {
 	import flash.display.BitmapData;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import krakel.audio.SoundManager;
+	//import krakel.audio.SoundManager;
 	import krakel.helpers.BitmapHelper;
-	import org.flixel.FlxSound;
+	import krakel.KrkSound;
 	/**
 	 * ...
 	 * @author George
@@ -18,7 +19,7 @@ package baseball {
 		[Embed(source = "../../res/audio/sfx/onBeat.mp3")] static private const TICK_EMBED:Class;
 		[Embed(source = "../../res/audio/sfx/offBeat.mp3")] static private const TOCK_EMBED:Class;
 		
-		[Embed(source="../../res/sprites/scalerButton.png")]static private const BTN_TEMPLATE:Class;
+		[Embed(source="../../res/sprites/scalerButton.png")] static private const BTN_TEMPLATE:Class;
 		
 		static public var BUTTON:BitmapData;
 		
@@ -26,14 +27,15 @@ package baseball {
 		static private const levels:Object = { };
 		static private const buttons:Object = { };
 		
-		static public var TICK:FlxSound, TOCK:FlxSound;
+		static public var TICK:KrkSound, TOCK:KrkSound;
 		
 		{	// --- STATIC INIT
 			
-			SoundManager.Add("menu", MENU_THEME, 1, true);
+			//SoundManager.Add("menu", MENU_THEME, 1, true);
 			
-			TICK = new FlxSound().loadEmbedded(TICK_EMBED);
-			TOCK = new FlxSound().loadEmbedded(TOCK_EMBED);
+			TICK = new KrkSound().embed(TICK_EMBED);
+			TOCK = new KrkSound().embed(TOCK_EMBED);
+			songs["menu"] = MENU_THEME;
 			songs["tmottbg"] = TMOTTBG;
 			levels["tmottbg"] = new XML(new TMOTTBG_LEVEL());
 			levels["test"] = new XML(new TEST_LEVEL());
@@ -45,17 +47,17 @@ package baseball {
 			return levels[name];
 		}
 		static public function getSong(name:String):Class { return songs[name]; }
-		static public function getButtonGraphic(width:int, height:int):BitmapData {
+		static public function getButtonGraphic(width:int, height:int, frames:int = 4):BitmapData {
 			var id:String = width + ',' + height;
 			if (id in buttons) return buttons[id];
-			var graphic:BitmapData = new BitmapData(width * 4, height);
+			var graphic:BitmapData = new BitmapData(width * frames, height);
 			buttons[id] = graphic;
 			var srcRect:Rectangle = BUTTON.rect.clone();
 			var dest:Rectangle = graphic.rect.clone();
 			
-			srcRect.width *= .25;
-			dest.width *= .25;
-			for (var i:int = 0; i < 4; i++) {
+			srcRect.width *= 1/4;
+			dest.width *= 1/frames;
+			for (var i:int = 0; i < frames; i++) {
 				BitmapHelper.apply9GridTo(
 					BUTTON,
 					graphic,
@@ -68,6 +70,7 @@ package baseball {
 			}
 			return graphic;
 		}
+		
 	}
 
 }

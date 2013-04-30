@@ -1,9 +1,12 @@
 package baseball.states.play {
 	import baseball.art.Obstacle;
+	import krakel.ads.AdBox;
 	import krakel.beat.BeatKeeper;
 	import krakel.helpers.Random;
+	import krakel.KrkSound;
 	import org.flixel.FlxG;
-	import org.flixel.FlxSound;
+	import org.flixel.FlxText;
+	import org.flixel.FlxTimer;
 	/**
 	 * ...
 	 * @author George
@@ -13,6 +16,8 @@ package baseball.states.play {
 		[Embed(source="../../../../res/audio/sfx/onBeat.mp3")] static private const ON_BEAT:Class;
 		[Embed(source="../../../../res/audio/sfx/offBeat.mp3")] static private const OFF_BEAT:Class;
 		
+		// ---
+		[Embed(source="C:/Windows/Fonts/StarPerv.ttf", fontFamily="StarPerv", embedAsCFF="false")] 	public	var	FONT_STAR_PERV:String;
 		
 		// --- --- --- --- --- NOTE SAMPLES --- --- --- --- ---
 		[Embed(source="../../../../res/audio/sfx/notes/F5.mp3")]	static private const  F:Class;
@@ -22,20 +27,20 @@ package baseball.states.play {
 		[Embed(source="../../../../res/audio/sfx/notes/A5.mp3")]	static private const  A:Class;
 		[Embed(source="../../../../res/audio/sfx/notes/A#5.mp3")]	static private const _A:Class;
 		//[Embed(source="../../../../res/audio/sfx/notes/B5.mp3")]	static private const  B:Class;
-		//[Embed(source="../../../../res/audio/sfx/notes/C6.mp3")]	static private const _C:Class;
-		
-		
+		//[Embed(source="../../../../res/audio/sfx/notes/C6.mp3")]	static private const  C:Class;
+		static private const notes:Object = { F:new KrkSound().embed(F), G:new KrkSound().embed(G), A:new KrkSound().embed(A), _A:new KrkSound().embed(_A) };
 		static public const TYPES:Array = ["bomb", "block", "rock", "gap"];
+		
+		static public var farthest:int = 0;
+		
+		public var txt_score:FlxText,
+					txt_hiScore:FlxText;
 		
 		private var beatCount:int;
 		
-		public function ChargeState() {
-			super(<level bpm="80" speed="15" meter="4"><assets/></level>);
-			
-		}
 		override public function create():void {
+			level = <level id="charge" bpm="80" speed="15" meter="4"><assets/></level>;
 			super.create();
-			
 			beatCount = 0;
 			
 			for (var i:int = 0; i < 10; i++)
@@ -43,15 +48,22 @@ package baseball.states.play {
 				
 			time = BeatKeeper.beatsPerMinute * -(FlxG.width + 200) / 60 / Obstacle.SCROLL / FlxG.flashFramerate;
 		}
-		
+		override protected function addUI():void {
+			super.addUI();
+			
+			UI.add(txt_score = new FlxText(150, 10, 50, '0').setFormat("StarPerv", 24));
+			UI.add(txt_hiScore = new FlxText(400, 10, 50, farthest.toString()).setFormat("StarPerv", 24));
+			
+			//outs.visible = false;
+		}
 		override protected function setIntroMetronome():void {
 			//super();
 			
 			BeatKeeper.setMetronome([
-				new FlxSound().loadEmbedded(_A), null,
-				new FlxSound().loadEmbedded( F), null,
-				new FlxSound().loadEmbedded( G), null,
-				new FlxSound().loadEmbedded( A), null
+				notes._A, null,
+				notes.F, null,
+				notes.G, null,
+				notes.A, null
 			]);
 		}
 		
@@ -65,6 +77,8 @@ package baseball.states.play {
 			
 			if (beatCount-BeatKeeper.beat < 10)
 				addRandomObstacle();
+			if (BeatKeeper.beat > 0)
+				txt_score.text = int(BeatKeeper.beat).toString();
 		}
 		
 		override protected function updateMain():void {
@@ -73,21 +87,40 @@ package baseball.states.play {
 			time = BeatKeeper.beatsPerMinute * -(FlxG.width + 200) / 60 / Obstacle.SCROLL / FlxG.flashFramerate;
 		}
 		
-		private function addRandomObstacle():XML {
+		private function addRandomObstacle():void {
 			var name:String = randomName;
 			var node:XML = <{name} beat={beatCount}/>;
 			//trace(level.assets[0]);
 			level.assets[0].appendChild(node);
 			beatCount++;
-			return node;
 		}
+		
 		private function get randomName():String {
-			 return TYPES[Random.randomIndex(TYPES)];
+			return TYPES[Random.index(TYPES)];
 		}
-		override public function replay():void {
-			super.replay();
+		override protected function stopRun():void {
+			AdBox.sendVar("charge", BeatKeeper.beat);
+			super.stopRun();
+		}
+		override protected function reset(timer:FlxTimer):void {
+			if (int(BeatKeeper.beat) > farthest) {
+				farthest = int(BeatKeeper.beat);
+				txt_hiScore.text = farthest.toString();
+			}
 			BeatKeeper.beatsPerMinute = level.@bpm;
+			super.reset(timer);
+			//outs.value--;
 		}
+		
+		override protected function get topUI():Array {
+			return super.topUI.concat(txt_hiScore, txt_score);
+		}
+		
+		override public function destroy():void {
+			super.destroy();
+			
+		}
+		
 	}
 
 }

@@ -13,7 +13,7 @@ package baseball.states.play {
 		public function TestMode(level:XML = null) {
 			super(level);
 		}
-		override protected function startGame():void {
+		override protected function enterGame():void {
 			startRun();
 			defaultUpdate = updateMain;
 		}

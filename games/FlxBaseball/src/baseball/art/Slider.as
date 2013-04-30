@@ -13,14 +13,11 @@ package baseball.art {
 					_interval:Number,
 					_tickInterval:Number,
 					_width:Number,
-					_height:Number,
 					_value:Number;
 		
 		private var _prefix:String,
 					_suffix:String,
 					_label:String;
-		
-		private var _enabled:Boolean;
 		
 		public var dragInterval:Number;
 		public var precision:int;

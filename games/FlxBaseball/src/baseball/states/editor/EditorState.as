@@ -82,14 +82,13 @@ package baseball.states.editor {
 		override public function create():void {
 			super.create();
 			
+			Obstacle.HERO = new FlxPoint(50, 200);
+			FlxG.bgColor = 0xFFa4e4fc;
 			
 			obstacles = [];
 			addUI();
 			playbackBeat = 0;
 			songStarted = false;
-			
-			Obstacle.HERO = new FlxPoint(50, 200);
-			FlxG.bgColor = 0xFFa4e4fc;
 			
 			createLevel();
 		}
@@ -154,7 +153,7 @@ package baseball.states.editor {
 			isPlaying = !isPlaying;
 			if(isPlaying){
 				BeatKeeper.beat = playbackBeat;
-				BeatKeeper.init(songStart);
+				BeatKeeper.start(songStart);
 			} else {
 				songStarted = false;
 				song.stop();
@@ -196,7 +195,7 @@ package baseball.states.editor {
 				case sld_bpm:		BeatKeeper.beatsPerMinute = slider.value; break;
 				case sld_offset:	songOffset = slider.value*1000; return;
 			}
-			timeline.drawGraphic(BeatKeeper.toBeatPixels( -Obstacle.SCROLL / 4), meter);
+			timeline.drawGraphic(BeatKeeper.pixelsPerBeat( -Obstacle.SCROLL / 4), meter);
 		}
 		
 		private function createLevel():void {
@@ -220,8 +219,8 @@ package baseball.states.editor {
 			if (level.assets.length() > 0)
 				createAssets(level.assets[0]);
 			
-			BeatKeeper.init(0);
-			timeline.drawGraphic(BeatKeeper.toBeatPixels( -Obstacle.SCROLL / 4), meter);
+			BeatKeeper.start(0);
+			timeline.drawGraphic(BeatKeeper.pixelsPerBeat( -Obstacle.SCROLL / 4), meter);
 		}
 		private function createAssets(assets:XML):void {
 			var obs:Obstacle;
@@ -237,7 +236,7 @@ package baseball.states.editor {
 		
 		override public function update():void {
 			if (isPlaying) {
-				BeatKeeper.update();
+				//BeatKeeper.update();
 				playbackBeat = BeatKeeper.beat;
 				if (BeatKeeper.time > songOffset && !songStarted && song != null) {
 					song.position = BeatKeeper.time-songOffset;
@@ -256,8 +255,8 @@ package baseball.states.editor {
 			if (!isPlaying)
 				mouseHandle(FlxG.mouse);
 			
-			timeline.x = Obstacle.HERO.x + BeatKeeper.toBeatPixels( Obstacle.SCROLL) * BeatKeeper.beat;
-			playback.x = Obstacle.HERO.x + BeatKeeper.toBeatPixels( Obstacle.SCROLL) * (BeatKeeper.beat - playbackBeat);
+			timeline.x = Obstacle.HERO.x + BeatKeeper.pixelsPerBeat( Obstacle.SCROLL) * BeatKeeper.beat;
+			playback.x = Obstacle.HERO.x + BeatKeeper.pixelsPerBeat( Obstacle.SCROLL) * (BeatKeeper.beat - playbackBeat);
 		}
 		
 		private function mouseHandle(mouse:Mouse):void {
@@ -297,7 +296,7 @@ package baseball.states.editor {
 			}
 		}
 		private function getBeat(x:Number):Number {
-			return BeatKeeper.beat + (Obstacle.HERO.x - x) / BeatKeeper.toBeatPixels(Obstacle.SCROLL);
+			return BeatKeeper.beat + (Obstacle.HERO.x - x) / BeatKeeper.pixelsPerBeat(Obstacle.SCROLL);
 		}
 		public function get songStart():int {
 			return playbackBeat;

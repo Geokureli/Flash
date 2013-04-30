@@ -27,6 +27,7 @@ package org.flixel.system
 		[Embed(source="../data/logo_corners.png")] protected var ImgLogoCorners:Class;
 		[Embed(source="../data/logo_light.png")] protected var ImgLogoLight:Class;
 
+		protected var canExit:Boolean;
 		/**
 		 * @private
 		 */
@@ -87,6 +88,7 @@ package org.flixel.system
 			stop();
             stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.align = StageAlign.TOP_LEFT;
+			canExit = true;
 			
 			//Check if we are on debug or release mode and set _DEBUG accordingly
             try
@@ -147,7 +149,7 @@ package org.flixel.system
 			}
             graphics.clear();
 			var time:uint = getTimer();
-            if((framesLoaded >= totalFrames) && (time > _min))
+            if((framesLoaded >= totalFrames) && (time > _min) && canExit)
             {
                 removeEventListener(Event.ENTER_FRAME, onEnterFrame);
                 nextFrame();
@@ -231,12 +233,11 @@ package org.flixel.system
 			}
 			bitmap.blendMode = "overlay";
 			bitmap.alpha = 0.25;
-			_buffer.addChild(bitmap);
+			//_buffer.addChild(bitmap);
 		}
 		
 		protected function destroy():void
 		{
-			removeChild(_buffer);
 			_buffer = null;
 			_bmpBar = null;
 			_text = null;

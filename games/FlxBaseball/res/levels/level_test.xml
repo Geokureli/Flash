@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <level bpm="120" speed="15" meter="4">
-  <assets>
-    <base beat="2"/>
-  </assets>
+	<assets>
+		<gap beat="0" duration=".75"/>
+		<gap beat=".25"/>
+		<gap beat=".5"/>
+		<gap beat=".75"/>
+		<block beat="0" duration=".75"/>
+		<block beat=".25"/>
+		<block beat=".5"/>
+		<block beat=".75"/>
+		<base beat="1"/>
+	</assets>
 </level>

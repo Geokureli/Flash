@@ -1,4 +1,5 @@
 package baseball.states.play {
+	import baseball.art.Obstacle;
 	import krakel.KrkSound;
 	import krakel.KrkSprite;
 	import org.flixel.FlxG;
@@ -31,9 +32,10 @@ package baseball.states.play {
 		
 		public var forceDuck:Boolean;
 		
-		private var lastFrame:uint, jumpTime:int;
+		private var jumpTime:int;
+		
 		public function Hero(frameRate:Number = 15) {
-			super(-1000, 230);
+			super(-1000, Obstacle.HERO.y);
 			initGraphic(frameRate);
 			width = 20;
 			height = 64;
@@ -71,7 +73,6 @@ package baseball.states.play {
 		override protected function updateAnimation():void {
 			super.updateAnimation();
 			
-			var onEndFrame:Boolean = _curFrame == _curAnim.frames.length - 1;
 			jumpTime++;
 			switch(_curAnim.name) {
 				case "idle":

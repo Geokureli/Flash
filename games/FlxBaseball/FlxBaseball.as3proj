@@ -7,11 +7,11 @@
     <movie path="bin-debug\FlxBasebase.swf" />
     <movie fps="30" />
     <movie width="600" />
-    <movie height="400" />
+    <movie height="350" />
     <movie version="11" />
     <movie minorVersion="1" />
     <movie platform="Flash Player" />
-    <movie background="#FFFFFF" />
+    <movie background="#A4E4FC" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
@@ -51,7 +51,7 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="lib\NewgroundsAPI.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

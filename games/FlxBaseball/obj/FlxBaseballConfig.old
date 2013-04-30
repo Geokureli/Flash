@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'4/22/2013'</value>
+      <value>'4/30/2013'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -38,14 +38,17 @@
       <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\lib</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
+    <library-path append="true">
+      <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\games\FlxBaseball\lib\NewgroundsAPI.swc</path-element>
+    </library-path>
   </compiler>
   <file-specs>
     <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\games\FlxBaseball\src\baseball\Main.as</path-element>
   </file-specs>
-  <default-background-color>#FFFFFF</default-background-color>
+  <default-background-color>#A4E4FC</default-background-color>
   <default-frame-rate>30</default-frame-rate>
   <default-size>
     <width>600</width>
-    <height>400</height>
+    <height>350</height>
   </default-size>
 </flex-config>

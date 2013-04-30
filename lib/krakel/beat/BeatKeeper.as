@@ -2,8 +2,8 @@ package krakel.beat {
 	//import baseball.data.events.BeatEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.media.SoundChannel;
 	import flash.utils.getTimer;
+	import org.flixel.FlxBasic;
 	import org.flixel.FlxG;
 	import krakel.KrkSound;
 	import org.flixel.FlxSound;
@@ -11,69 +11,95 @@ package krakel.beat {
 	 * ...
 	 * @author George
 	 */
-	public class BeatKeeper {
+	public class BeatKeeper extends FlxBasic {
 		static public var frameRate:int = 30,
 							time:int;
 		
 		static private var startTime:int,
 							frame:int,
-							songOffset:int;
+							songOffset:int,
+							pauseTime:int;
 		
 		static public var beatsPerMinute:Number,
 							beat:Number,
 							nextBeat:Number,
 							volume:Number;
 		
-		
 		static private var soundBeats:Vector.<FlxSound>;
-		static private var lastSound:FlxSound;
+		static private var lastSound:FlxSound,
+							song:KrkSound;
 		
 		static public var beatCallback:Function;
 		static public var beatWatchers:Vector.<BeatWatcher>;
 		
-		{	// --- STATIC INIT
+		static private var isRunning:Boolean,
+							songStarted:Boolean,
+							paused:Boolean;
+		
+		public function BeatKeeper(){
+			isRunning = false;
 			beatWatchers = new Vector.<BeatWatcher>();
+			startTime = 0;
+			beat = 0;
+			frame = 0;
+			songStarted = false;
 		}
 		
-		static public function init(startBeat:Number = 0):void {
+		static public function start(startBeat:Number = 0):void {
 			startTime = getTimer() - startBeat * 60000 / beatsPerMinute;
 			beat = startBeat;
 			nextBeat = int(beat * 4) / 4 + .25;
-			frame = 0;
+			songStarted = false;
+			isRunning = true;
 		}
-		static public function update():void {
-			time = getTimer() - startTime;
-			//if(songChannel != null){
-				//time = songChannel.position + songOffset;
-				//time = time / 2;
-			//}
-			beat = time / 60000 * beatsPerMinute;
-			if (beat > nextBeat >= 1) { 
+		static public function stop():void {
+			isRunning = false;
+			if (song != null) song.stop();
+			if (lastSound != null) lastSound.stop();
+		}
+		override public function update():void {
+			if (isRunning) {
 				
-				// --- TRIGGER BEAT EVENT
-				if (beatCallback != null) beatCallback(nextBeat);
+				time = getTimer() - startTime;
 				
-				for (var i:int = 0; i < beatWatchers.length; i++)
-					if (beat > beatWatchers[i].beat) {
-						
-						beatWatchers[i].trigger();
-						beatWatchers.splice(i, 1);
-					}
-				
-				// --- METRONOME
-				if (soundBeats != null) {
-					
-					var sound:FlxSound = soundBeats[(((nextBeat * 4) % soundBeats.length) + soundBeats.length) % soundBeats.length];
-					if (sound != null) {
-						if(lastSound != null) lastSound.stop();
-						sound.play(true);
-						lastSound = sound;
-					}
+				if (song != null && !songStarted && time > songOffset) {
+					song.position = time-songOffset;
+					song.play();
+					songStarted = true;
 				}
 				
-				nextBeat += .25;
+				if (songStarted) {
+					time = song.position+songOffset;
+				}
+				beat = time / 60000 * beatsPerMinute;
+				if (beat > nextBeat) { 
+					
+					// --- TRIGGER BEAT EVENT
+					if (beatCallback != null) beatCallback(nextBeat);
+					
+					for (var i:int = 0; i < beatWatchers.length; i++)
+						if (beat > beatWatchers[i].beat) {
+							
+							beatWatchers[i].trigger();
+							beatWatchers.splice(i, 1);
+						}
+					
+					// --- METRONOME
+					if (soundBeats != null) {
+						
+						var sound:FlxSound = soundBeats[(((nextBeat * 4) % soundBeats.length) + soundBeats.length) % soundBeats.length];
+						if (sound != null) {
+							if(lastSound != null) lastSound.stop();
+							sound.play(true);
+							lastSound = sound;
+						}
+					}
+					
+					nextBeat += .25;
+				}
+				
+				frame++;
 			}
-			frame++;
 		}
 		
 		static public function addWatch(beat:Number, callback:Function):void {
@@ -100,22 +126,22 @@ package krakel.beat {
 			
 			setMetronome(sndArr, volume);
 		}
-		//static public function syncWithSong(song:String, offset:int):void {
-			//songChannel = SoundManager.getSongChannel(song);
-			//songChannel.addEventListener(Event.SOUND_COMPLETE, onSongOver);
-			//songOffset = offset;
-		//}
-		//static public function stopSync():void {
-			//songChannel = null;
-			//songOffset = 0;
-		//}
-		//static private function onSongOver(e:Event):void { stopSync(); }
-		
-		static public function toBeatPixels(speed:Number):Number{
-			return speed * frameRate * 60 / beatsPerMinute;
+		static public function syncWithSong(sound:KrkSound, offset:int):void {
+			song = sound;
+			songOffset = offset;
 		}
-		static public function toFramePixels(speed:Number):Number{
-			return speed / frameRate / 60 * beatsPerMinute;
+		static public function stopSync():void {
+			song = null;
+			songOffset = 0;
+		}
+		
+		static private function onSongOver(e:Event):void { stopSync(); }
+		
+		static public function pixelsPerBeat(frameSpeed:Number):Number{
+			return frameSpeed * frameRate * 60 / beatsPerMinute;
+		}
+		static public function pixelsPerFrame(beatSpeed:Number):Number{
+			return beatSpeed / frameRate / 60 * beatsPerMinute;
 		}
 		static public function toSeconds(beats:Number):Number {
 			return beats / beatsPerMinute * 60;
@@ -128,9 +154,27 @@ package krakel.beat {
 			clearMetronome();
 			
 			beatCallback = null;
+			beat = -1000;
 			
 			while (beatWatchers.length > 0)
 				beatWatchers.pop().destroy();
+		}
+		
+		static public function pause():void {
+			if (isRunning) {
+				if (song != null) song.pause();
+				if (lastSound != null) lastSound.pause();
+				pauseTime = getTimer();
+				paused = true;
+			}
+		}
+		static public function unpause():void {
+			if (paused) {
+				paused = false;
+				if (lastSound != null) lastSound.resume();
+				if (song != null) song.resume();
+				startTime += getTimer() - pauseTime;
+			}
 		}
 	}
 }

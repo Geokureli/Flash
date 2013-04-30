@@ -40,8 +40,8 @@ package baseball.art {
 			super.update();
 			
 			if(isRhythm){
-				x = HERO.x + BeatKeeper.toBeatPixels(SCROLL) * (BeatKeeper.beat - beat);
-				if (x < -width*2 && !isEditor)
+				x = HERO.x + BeatKeeper.pixelsPerBeat(SCROLL) * (BeatKeeper.beat - beat);
+				if (x < -frameWidth && !isEditor)
 					kill();
 			}
 		}
