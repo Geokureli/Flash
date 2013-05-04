@@ -10,14 +10,21 @@ package krakel.ads {
 	public class AdBox extends MovieClip {
 		
 		static public var instance:AdBox;
+		static public var minAdFrequency:int = 5 * 60000;// --- 5 minutes
 		
 		public var _width:Number, _height:Number;
+		public var lastAdTime:int;
+		
+		
+		protected var scoreIDs:Object;
 		
 		public function AdBox() {
 			super();
 			instance = this;
 			name = "adBox";
 			addEventListener(Event.ADDED_TO_STAGE, onAdded);
+			scoreIDs = { };
+			lastAdTime = int.MIN_VALUE;
 		}
 		
 		protected function onAdded(e:Event):void {
@@ -32,9 +39,18 @@ package krakel.ads {
 		
 		protected function interLevelAd(onComplete:Function):void {}
 		
-		public function sendVar(target:String, value:int):void {}
+		public function submit(target:String, value:int, args:Object = null):void {}
 		
 		public function clickAwayAd(onComplete:Function):void {}
+		
+		public function clean():void {}
+		/**
+		 * sets a reference string that will be replaced by the target string,
+		 * useful if you set up different variables on different publisher scoreboards.
+		 * @param	target: The publishers variable used to display scores
+		 * @param	id: The handle used to refer to it.
+		 */
+		public function setScoreTarget(target:String, id:String):void { scoreIDs[id] = target; }
 		
 		static public function createDock(position:String = "top"):void {
 			trace("AdBox: Dock created");
@@ -68,10 +84,14 @@ package krakel.ads {
 			instance.clickAwayAd(onComplete);
 		}
 		
-		static public function sendVar(target:String, value:int):void {
+		static public function cleanAds(leaveDock:Boolean = true):void {
+			if (instance != null) instance.clean();
+		}
+		
+		static public function submitScore(target:String, value:int, args:Object = null):void {
 			trace("AdBox: " + target + " = " + value);
 			if (instance != null)
-				instance.sendVar(target, value);
+				instance.submit(target, value);
 		}
 		
 	}

@@ -54,7 +54,8 @@ package krakel.ads {
 			if (onComplete != null) onComplete();
 		}
 		
-		override public function sendVar(target:String, value:int):void {
+		override public function submit(target:String, value:int, args:Object = null):void {
+			super.submit(target, value, args);
 			kongregate.stats.submit(target, value);
 		}
 	}

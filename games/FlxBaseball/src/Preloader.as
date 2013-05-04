@@ -1,4 +1,5 @@
 package  {
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
@@ -7,9 +8,11 @@ package  {
 	import flash.utils.getQualifiedClassName;
 	import krakel.ads.AdBox;
 	import krakel.ads.FlxMochiBox;
+	import krakel.ads.HighScore;
 	import krakel.ads.MochiBox;
 	import mochi.as3.MochiServices;
 	import org.flixel.FlxG;
+	import rawr.BorderMaker;
 	//import krakel.helpers.Random;
 	import org.flixel.system.FlxPreloader;
 	
@@ -20,7 +23,10 @@ package  {
 	public dynamic class Preloader extends FlxPreloader {
 		static public const MOCHI_ID:String = "9b3b1ff9c740acfd";
 		static private const SHOW_AD:Boolean = true;
+		
 		private var loadBar:LoadBar;
+		public var hiScore:HighScore;
+		
 		public function Preloader() {
 			super();
 			Mouse.show();
@@ -33,10 +39,13 @@ package  {
 			if (!FlxG.debug) {
 				canExit = false;
 				createAdBox();
+				createHiScore();
 				AdBox.showPreLoaderAd(onAdDone);
 				MochiServices.connect(MOCHI_ID, this);
 			}
         }
+		
+		protected function createHiScore():void { }
 		
 		public function createAdBox():void {
 			addChild(new FlxMochiBox(MOCHI_ID));
@@ -53,6 +62,7 @@ package  {
 		override protected function destroy():void {
 			removeChild(_buffer);
 			super.destroy();
+			AdBox.cleanAds();
 		}
 	}
 

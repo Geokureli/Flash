@@ -112,7 +112,7 @@ package baseball.states {
 		private function checkUnlocks():void {
 			if (game.won){
 				levelsUnlocked++;
-				AdBox.sendVar("levelsCleared", levelsUnlocked);
+				AdBox.submitScore("levelsCleared", levelsUnlocked);
 			}
 		}
 		
@@ -133,7 +133,6 @@ package baseball.states {
 			targetState = nextState;
 			isFromLevel = true;
 			if (!FlxG.debug) {
-				
 				removeButtonListeners();
 				TweenMax.allTo([title].concat(buttons.members), 1, { y:"-350", ease:Cubic.easeIn, onComplete:panOutDone } );
 			} else panOutDone();

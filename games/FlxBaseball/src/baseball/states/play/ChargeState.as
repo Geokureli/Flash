@@ -98,11 +98,11 @@ package baseball.states.play {
 		private function get randomName():String {
 			return TYPES[Random.index(TYPES)];
 		}
-		override protected function stopRun():void {
-			AdBox.sendVar("charge", BeatKeeper.beat);
-			super.stopRun();
+		override protected function out():void {
+			AdBox.submitScore("charge", BeatKeeper.beat);
+			super.out();
 		}
-		override protected function reset(timer:FlxTimer):void {
+		override protected function reset(timer:FlxTimer = null):void {
 			if (int(BeatKeeper.beat) > farthest) {
 				farthest = int(BeatKeeper.beat);
 				txt_hiScore.text = farthest.toString();

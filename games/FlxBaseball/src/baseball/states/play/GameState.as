@@ -17,7 +17,7 @@ package baseball.states.play {
 	import krakel.KrkEffect;
 	import krakel.KrkSound;
 	import krakel.KrkSprite;
-	import krakel.KrkState;
+	import krakel.KrkGameState;
 	import krakel.serial.Serializer;
 	import krakel.xml.XMLParser;
 	import mochi.as3.MochiEvents;
@@ -35,12 +35,11 @@ package baseball.states.play {
 	
 	import com.greensock.easing.*;
 	import com.greensock.easing.Strong;
-	import com.greensock.easing.FastEase;
 	/**
 	 * ...
 	 * @author George
 	 */
-	public class GameState extends KrkState {
+	public class GameState extends KrkGameState {
 		// --- --- --- --- --- GFX --- --- --- --- ---
 		[Embed(source = "../../../../res/sprites/field_signs_2.png")] static private var BG:Class;
 		[Embed(source = "../../../../res/sprites/out_bar.png")] static private var OUT_BAR:Class;
@@ -135,7 +134,8 @@ package baseball.states.play {
 					GOTimer:FlxTimer;
 		
 		private var checkpoint:Number;
-		private var levelSpeed:Number;
+		private var _levelSpeed:Number;
+		private var heroBeat:Number;
 		
 		public function GameState(level:XML = null) {
 			this.level = level;
@@ -145,10 +145,7 @@ package baseball.states.play {
 		
 		override public function create():void {
 			super.create();
-			setLevelProperties();
-			initLayers();
-			addSounds();
-			enterGame();
+			
 			BeatKeeper.clearMetronome();
 			FlxG.bgColor = 0xFFa4e4fc;
 			gameOver = true;
@@ -158,13 +155,13 @@ package baseball.states.play {
 			metronomeRunning = false;
 		}
 		
-		protected function setLevelProperties():void {
+		override protected function setLevelProperties():void {
 			if (level == null)
 				level = Imports.getLevel(null);
 				
 			BeatKeeper.beatsPerMinute = level.@bpm;
 			Obstacle.HERO = new FlxPoint(100, FlxG.height - 110);
-			levelSpeed = Obstacle.SCROLL = -level.@speed;
+			_levelSpeed = Obstacle.SCROLL = -level.@speed;
 			BG_Y = FlxG.height - 224;
 			songOffset = 0;
 			meter = level.@meter;
@@ -180,7 +177,7 @@ package baseball.states.play {
 			GOTimer = new FlxTimer();
 		}
 		
-		protected function initLayers():void {
+		override protected function addBG():void {
 			// --- CLOUDS
 			add(clouds = new FlxGroup(NUM_CLOUDS));
 			var cloud:Cloud;
@@ -197,7 +194,10 @@ package baseball.states.play {
 			}
 			
 			FlxScrollZone.stopScrolling();
-			
+		}
+		
+		override protected function addMG():void {
+			super.addMG();
 			obstacles = [];
 			
 			add(gaps	= new FlxGroup());
@@ -208,23 +208,18 @@ package baseball.states.play {
 			add(rocks	= new FlxGroup());
 			add(bombs	= new FlxGroup());
 			
-			addUI();
-			
-			add(effects = new FlxGroup());
-			
+			hero.x = -hero.frameWidth;
 			hero.delay = 120 / FlxG.flashFramerate / BeatKeeper.beatsPerMinute;
 			hero.play("idle");
 		}
 		
-		protected function addSounds():void {
-			s_swing   = new KrkSound().embed( SND_SWING );
-			s_break   = new KrkSound().embed( SND_BREAK );
-			s_hit     = new KrkSound().embed( SND_HIT );
-			s_onBeat  = new KrkSound().embed( SND_BEAT_ON );
-			s_offBeat = new KrkSound().embed( SND_BEAT_OFF );
+		override protected function addFG():void {
+			super.addFG();
+			add(effects = new FlxGroup());
 		}
 		
-		protected function addUI():void {
+		override protected function addUI():void {
+			super.addUI();
 			
 			add(UI = new FlxGroup());
 			
@@ -254,51 +249,63 @@ package baseball.states.play {
 			
 		}
 		
+		override protected function addSounds():void {
+			super.addSounds();
+			
+			s_swing   = new KrkSound().embed( SND_SWING );
+			s_break   = new KrkSound().embed( SND_BREAK );
+			s_hit     = new KrkSound().embed( SND_HIT );
+			s_onBeat  = new KrkSound().embed( SND_BEAT_ON );
+			s_offBeat = new KrkSound().embed( SND_BEAT_OFF );
+		}
+		
 		private function replayHilite():void { replayBtn.color = 0x00FF00; }
 		private function replayUnlite():void { replayBtn.color = 0xFFFFFF; }
 		public function replay():void {
-			reset(null);
 			//strikes.value = 0;
 			outs.value = 0;
 			replayBtn.onUp = mainBtn.onUp = null;
 			replayBtn.visible = mainBtn.visible = false;
 			checkpoint = 0;
+			
+			startReset();
 		}
 		
 		private function mainHilite():void { mainBtn.color = 0x00FF00; }
 		private function mainUnlite():void { mainBtn.color = 0xFFFFFF; }
 		
-		protected function enterGame():void {
+		override protected function startGameIntro():void {
 			FlxScrollZone.startScrolling();
 			
 			if (FlxG.debug)
-				onPanDone();
+				super.startGameIntro();
 			else {
-				TweenMax.from(bg, 1, { y:FlxG.height, ease:Cubic.easeOut, onComplete:onPanDone} );
+				TweenMax.from(bg, 1, { y:FlxG.height, ease:Cubic.easeOut, onComplete:super.startGameIntro} );
 				TweenMax.allFrom(topUI, 1, { y:-100 } );
 				TweenMax.allFrom(clouds.members, 1, { y:FlxG.height } );
 			}
 		}
-		
-		private function onPanDone():void {
+
+		override protected function endGameIntro():void {
+			clouds.setAll("moves", true);
+			
 			if (FlxG.debug) {
 				hero.x = Obstacle.HERO.x;
+				super.endGameIntro();
 			} else {
+				levelSpeed = Obstacle.SCROLL;
 				hero.x = -hero.frameWidth;
-				hero.velocity.x = -Obstacle.SCROLL * 15;
-				hero.acceleration.x = Obstacle.SCROLL * 10;
+				hero.play("idle");
+				TweenMax.to(hero, 2, {x:Obstacle.HERO.x, ease:Cubic.easeOut, onComplete:super.endGameIntro} );
 			}
-			
-			startRun();
-			
-			defaultUpdate = updateIntro;
 		}
 		
-		protected function startRun():void {
+		override protected function startRound():void {
+			super.startRound();
+			
+			defaultUpdate = updateMain;
+			
 			MochiEvents.startPlay(level.@id.toString());
-			FlxScrollZone.startScrolling();
-			clouds.setAll("moves", true);
-			hero.play("idle");
 			
 			message = "ready";
 			txt_message.y = -txt_message.height * txt_message.scale.y;
@@ -403,15 +410,6 @@ package baseball.states.play {
 			}
 		}
 		
-		private function updateIntro():void {
-			
-			if (hero.x >= Obstacle.HERO.x) {
-				hero.reset(Obstacle.HERO.x, hero.y);
-				hero.acceleration.x = 0;
-				
-				defaultUpdate = updateMain;
-			}
-		}
 		protected function updateMain():void {
 			var heroAnim:String = hero.animName;
 			hero.forceDuck = false;
@@ -425,27 +423,11 @@ package baseball.states.play {
 			}
 			FlxG.overlap(hero, bases, onBase);
 		}
-		private function updateLose():void { }
-		private function updateWin():void {
-			if (levelSpeed < 0) {
-				
-				levelSpeed += .15;
-				
-				for (var i:int = 0; i < ZONE_HEIGHTS.length; i++)
-					FlxScrollZone.setScroll(bg, i, levelSpeed * ZONE_SPEEDS[i], 0);
-				
-			} else {
-				FlxScrollZone.clear();
-				levelSpeed = 0;
-				gameOver = true;
-				BeatKeeper.stop();
-				defaultUpdate = null;
-				
-				if (FlxG.debug) onLeaveDone();
-				else {
-					leaveGame();
-				}
-			}
+		
+		protected function updateReset():void {
+			BeatKeeper.beat -= BeatKeeper.pixelsPerFrame(levelSpeed/30);
+			
+			hero.x = Obstacle.HERO.x + BeatKeeper.pixelsPerBeat(Obstacle.SCROLL) * (BeatKeeper.beat - heroBeat);
 		}
 		
 		private function onBomb(hero:Hero, bomb:Bomb):void {
@@ -518,27 +500,33 @@ package baseball.states.play {
 			addEffect(hero.x, hero.y, strikes.value == 0 ? OUT_TXT : STRIKE_TXT);
 		}
 		
-		private function out():void {
+		protected function out():void {
 			messagePos = "_top";
-			TweenMax.to(txt_message, 1.5, { y:MSG_Y, ease:Bounce.easeOut } );
-			if (outs.value == 2) lose();
-			else {
-				message = "out";
-				restartTimer.start(2, 1, reset);
-			}
-			stopRun();
-		}
-		
-		protected function stopRun():void {
-			gameOver = true;
-			BeatKeeper.stop();
+			hero.play(lastHit is Bomb || lastHit is Block ? "hit1" : "hit2");
 			
 			clouds.setAll("moves", false);
-			FlxScrollZone.stopScrolling();
 			
-			hero.play(lastHit is Bomb || lastHit is Block ? "hit1" : "hit2");
-			defaultUpdate = updateLose;
+			BeatKeeper.stop();
+			levelSpeed = 0;
 			
+			defaultUpdate = updateReset;
+			heroBeat = BeatKeeper.beat;
+			
+			if (outs.value == 2) {
+				TweenMax.to(txt_message, 1.5, { y:MSG_Y, ease:Bounce.easeOut } );
+				lose();
+				gameOver = true;
+			}
+			else {
+				TweenMax.to(txt_message, 1.5, { y:MSG_Y, ease:Bounce.easeOut, onComplete:startReset} );
+				message = "out";
+				//restartTimer.start(2, 1, reset);
+			}
+		}
+		
+		private function startReset():void {
+			TweenMax.to(this, 1.25, { levelSpeed:-Obstacle.SCROLL*4, repeat:1, yoyo:true, ease:Strong.easeIn, onComplete:reset } );
+			TweenMax.allTo(clouds.members, 2.5, { x:"+100", ease:Strong.easeInOut} );
 		}
 		
 		private function lose():void {
@@ -547,45 +535,59 @@ package baseball.states.play {
 			
 			replayBtn.visible = mainBtn.visible = true;
 			replayBtn.onUp = replay;
-			mainBtn.onUp = leaveGame;
+			mainBtn.onUp = startGameOutro;
 			
 			MochiEvents.endPlay();
 		}
 		
 		private function win():void {
-			defaultUpdate = updateWin;
-			hero.acceleration.x = 200;
-			won = true;
 			setKongVars();
+			defaultUpdate = null;
+			won = true;
+			
+			if (FlxG.debug) winEnd();
+			else {
+				
+				TweenMax.to(this, 2, { levelSpeed:0, ease:Linear.easeNone, onComplete:winEnd} );
+				TweenMax.to(hero, 3, { x:FlxG.width, ease:Cubic.easeIn} );
+			}
+			//hero.acceleration.x = 200;
+		}
+		
+		private function winEnd():void {
+			FlxScrollZone.clear();
+			//levelSpeed = 0;
+			gameOver = true;
+			BeatKeeper.stop();
+			defaultUpdate = null;
+			
+			if (FlxG.debug) endGameOutro();
+			else startGameOutro();
 		}
 		
 		protected function setKongVars():void {
 			var level:int = levelNum;
-			AdBox.sendVar("outs_lvl_" + level, outs.value);
-			AdBox.sendVar("strikes_lvl_" + level, strikes.value + outs.value*3);
+			AdBox.submitScore("outs_lvl_" + level, outs.value);
+			AdBox.submitScore("strikes_lvl_" + level, strikes.value + outs.value*3);
 		}
 		
-		private function leaveGame():void {
+		override protected function startGameOutro():void {
 			if (FlxG.debug) {
-				onLeaveDone();
+				super.startGameOutro();
 			} else {
 				txt_message.visible = false;
 				mainBtn.visible = replayBtn.visible = false;
-				TweenMax.allTo([hero, bg].concat(obstacles), 1, { y:'+' + (FlxG.height - bg.y), ease:Cubic.easeIn, onComplete:onLeaveDone } );
+				TweenMax.allTo([hero, bg].concat(obstacles), 1, { y:'+' + (FlxG.height - bg.y), ease:Cubic.easeIn, onComplete:super.startGameOutro } );
 				TweenMax.allTo(clouds.members, .95, { y:FlxG.height, ease:Cubic.easeIn } );
 				TweenMax.allTo(topUI, .5, { y:-50, ease:Cubic.easeIn } );
 			}
 		}
 		
-		protected function get topUI():Array {
-			return strikes.members.concat(outs.members);
-		}
-		
-		private function onLeaveDone():void {
+		override protected function endGameOutro():void {
 			toParentState();
 		}
 		
-		protected function reset(timer:FlxTimer):void {
+		protected function reset(timer:FlxTimer = null):void {
 			
 			bombs.kill();
 			rocks.kill();
@@ -601,8 +603,8 @@ package baseball.states.play {
 			tees.revive();
 			bases.revive();
 			
-			startRun();
-			defaultUpdate = updateMain;
+			defaultUpdate = null;
+			endGameIntro();
 			
 			if(outs.value < 3)outs.value++;
 		}
@@ -689,8 +691,22 @@ package baseball.states.play {
 			BeatKeeper.unpause();
 		}
 		
+		protected function get topUI():Array {
+			return strikes.members.concat(outs.members);
+		}
+		
 		public function get levelNum():int {
 			return LEVEL_IDS.indexOf(level.@id.toString()) + 1;
+		}
+		
+		public function get levelSpeed():Number { return _levelSpeed; }
+		public function set levelSpeed(value:Number):void {
+			if (_levelSpeed == value) return;
+			
+			_levelSpeed = value;
+			
+			for (var i:int = 0; i < ZONE_HEIGHTS.length; i++)
+				FlxScrollZone.setScroll(bg, i, levelSpeed * ZONE_SPEEDS[i], 0);
 		}
 	}
 
