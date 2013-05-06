@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'5/4/2013'</value>
+      <value>'5/5/2013'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -32,13 +32,13 @@
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\games\FlxGreed\src</path-element>
-      <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\lib</path-element>
-      <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>C:\Users\GeoKureli\Documents\FlashDevelop\Git\Flash\games\FlxGreed\src</path-element>
+      <path-element>C:\Users\GeoKureli\Documents\FlashDevelop\Git\Flash\lib</path-element>
+      <path-element>C:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
   </compiler>
   <file-specs>
-    <path-element>C:\Users\Yeehaw McKickass\Documents\Flash Develop\games\FlxGreed\src\greed\Main.as</path-element>
+    <path-element>C:\Users\GeoKureli\Documents\FlashDevelop\Git\Flash\games\FlxGreed\src\greed\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>

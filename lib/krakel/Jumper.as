@@ -147,7 +147,7 @@ package krakel {
 		private function updateKeys():void {
 			l = FlxG.keys.A || FlxG.keys.LEFT;
 			r = FlxG.keys.D || FlxG.keys.RIGHT;
-			u = FlxG.keys.W || FlxG.keys.UP;
+			u = FlxG.keys.W || FlxG.keys.UP || FlxG.keys.SPACE;
 			d = FlxG.keys.S || FlxG.keys.DOWN;
 			if (!u) {
 				_u = true;

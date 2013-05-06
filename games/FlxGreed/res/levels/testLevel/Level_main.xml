@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level name="main" minx="0" miny="0" maxx="320" maxy="176" bgColor = "0xff777777" >
+	<layer name="coins" xScroll="1.000" yScroll="1.000" >
+		<sprite class="coin" x="104" y="128" angle="0" flip="false" xScale="1" yScale="1" />
+		<sprite class="coin" x="112" y="128" angle="0" flip="false" xScale="1" yScale="1" />
+		<sprite class="coin" x="128" y="128" angle="0" flip="false" xScale="1" yScale="1" />
+		<sprite class="coin" x="120" y="128" angle="0" flip="false" xScale="1" yScale="1" />
+		<sprite class="coin" x="248" y="136" angle="0" flip="false" xScale="1" yScale="1" />
+		<sprite class="coin" x="224" y="112" angle="0" flip="false" xScale="1" yScale="1" />
+		<sprite class="coin" x="200" y="88" angle="0" flip="false" xScale="1" yScale="1" />
+		<sprite class="coin" x="176" y="64" angle="0" flip="false" xScale="1" yScale="1" />
+		<sprite class="coin" x="152" y="40" angle="0" flip="false" xScale="1" yScale="1" />
+		<sprite class="coin" x="128" y="16" angle="0" flip="false" xScale="1" yScale="1" />
+	</layer>
+	<layer name="bg" xScroll="1.000" yScroll="1.000" >
+		<map csv="testLevel/mapCSV_main_bg.csv" tiles="../graphics/testTile.png" tileWidth="8" tileHeight="8" hasHits="false" collIdx="1" drawIdx="1" />
+	</layer>
+</level>

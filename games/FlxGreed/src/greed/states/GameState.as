@@ -1,7 +1,9 @@
 package greed.states {
+	import greed.art.Gold;
+	import greed.art.GreedLevel;
 	import greed.art.Hero;
-	import greed.tilemaps.Level_test;
 	import krakel.KrkGameState;
+	import krakel.KrkLevel;
 	import org.flixel.FlxG;
 	import org.flixel.FlxRect;
 	import org.flixel.FlxTilemap;
@@ -11,9 +13,15 @@ package greed.states {
 	 * @author George
 	 */
 	public class GameState extends KrkGameState {
+		
+		[Embed(source = "../../../res/levels/testLevel/main.csv", mimeType = "application/octet-stream")] static private const LEVEL_CSV:Class;
+		[Embed(source = "../../../res/levels/testLevel/Level_main.xml", mimeType = "application/octet-stream")] static private const LEVEL_XML:Class;
+		[Embed(source = "../../../res/graphics/testTile.png")] static private const TILES:Class;
+		
+		
 		static public const DEFAULT_REFS:Object = {X:1, ' ':0};
 		private var hero:Hero;
-		private var level:FlxTilemap;
+		private var level:GreedLevel;
 		
 		override public function create():void {
 			super.create();
@@ -22,41 +30,9 @@ package greed.states {
 		override protected function addBG():void {
 			super.addBG();
 			
-			add(level = new Level_test(false));
+			add(level = new GreedLevel(new XML(new LEVEL_XML()), LEVEL_CSV, TILES));
 			
-			//add(level = new FlxTilemap());
-			//level.loadMap(
-				//createMap(
-					//"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                                      X\n" +
-					//"X                XXXX                  X\n" +
-					//"X                XXXX                  X\n" +
-					//"X    XXXX        XXXX                  X\n" +
-					//"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n"
-				//),
-				//FlxTilemap.ImgAuto,
-				//8,
-				//8,
-				//FlxTilemap.AUTO
-			//);
-			
+			FlxG.visualDebug = true;
 			
 			FlxG.worldBounds.width = level.width;
 			
@@ -73,7 +49,12 @@ package greed.states {
 		
 		override public function update():void {
 			super.update();
-			FlxG.collide(hero, level);
+			FlxG.collide(hero, level.map);
+			FlxG.overlap(hero, level.coins, hitCoin);
+		}
+		
+		private function hitCoin(hero:Hero, gold:Gold):void {
+			gold.kill();
 		}
 		
 		override public function destroy():void {

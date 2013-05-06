@@ -5,11 +5,13 @@ package greed.art {
 	 * ...
 	 * @author George
 	 */
-	public class gold extends FlxSprite {
+	public class Gold extends FlxSprite {
 		
-		public function gold(X:Number=0, Y:Number=0, SimpleGraphic:Class=null) {
-			super(X, Y);
-			makeGraphic(4, 4);
+		public function Gold() {
+			super();
+			makeGraphic(4, 4, 0xFFFFFF00);
+			//offset.x = -2;
+			//offset.y = -2;
 		}
 		
 	}
