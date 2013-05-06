@@ -1,5 +1,5 @@
 package greed.art {
-	import krakel.Jumper;
+	import krakel.jump.Jumper;
 	/**
 	 * ...
 	 * @author George

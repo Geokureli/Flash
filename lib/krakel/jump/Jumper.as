@@ -1,4 +1,5 @@
-package krakel {
+package krakel.jump {
+	import krakel.KrkProp;
 	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxU;
@@ -6,7 +7,7 @@ package krakel {
 	* ...
 	* @author George
 	*/
-   public class Jumper extends FlxSprite {
+   public class Jumper extends KrkProp {
 		
 		
 		private var l:Boolean,
@@ -32,7 +33,9 @@ package krakel {
 		public var canSkidJump:Boolean,
 					canWallJump:Boolean,
 					canWallSlide:Boolean,
-					changeDirOnHop:Boolean;
+					changeDirOnHop:Boolean,
+					hitLadder:Boolean,
+					onLadder:Boolean;
 		
 		public var maxWallFall:Number,
 					groundDrag:Number,
@@ -77,10 +80,18 @@ package krakel {
 			right = x + width;
 			bottom = y + height;
 			
-			var onFloor:Boolean = isTouching(FLOOR);
-			var onWall:Boolean = isTouching(WALL);
+			var hitFloor:Boolean = isTouching(FLOOR);
+			var hitWall:Boolean = isTouching(WALL);
 			
-			if (onFloor)
+			if (hitLadder) {
+				if (u && !onLadder) {
+					
+					velocity.x = 0;
+					velocity.y = 0;
+				}
+			}
+			
+			if (hitFloor)
 				hopCount = 0;
 			else {
 				jumpTime++;
@@ -92,7 +103,7 @@ package krakel {
 				//velocity.x = FlxU.applyDrag(velocity.x, drag.x);
 				
 				// --- SKID JUMP
-				if (u && _u && onFloor && canSkidJump) {
+				if (u && _u && hitFloor && canSkidJump) {
 					_u = false;
 					velocity.y = -jumpSkidV;
 					velocity.x = maxVelocity.x * ((r ? 1 : 0) - (l ? 1 : 0));
@@ -100,15 +111,15 @@ package krakel {
 				}
 			}
 			if(canWallSlide)
-				maxVelocity.y = (falling && onWall && (l || r) && !u ? maxWallFall : maxFall);
+				maxVelocity.y = (falling && hitWall && (l || r) && !u ? maxWallFall : maxFall);
 			
-			drag.x = onFloor ? groundDrag : airDrag;
+			drag.x = hitFloor ? groundDrag : airDrag;
 			
 			if (u && _u) {
 				_u = false;
-				if (onFloor)
+				if (hitFloor)
 					jump();
-				else if (onWall && canWallJump)
+				else if (hitWall && canWallJump)
 					wallJump();
 				else if (hopCount < numHops)
 					hop();
@@ -116,7 +127,7 @@ package krakel {
 			
 			acceleration.x = 0;
 			if(lockDirection-- <= 0)
-				acceleration.x = ((r ? 1 : 0) - (l ? 1 : 0)) * (onFloor ? acc : airAcc);
+				acceleration.x = ((r ? 1 : 0) - (l ? 1 : 0)) * (hitFloor ? acc : airAcc);
 			//trace(velocity.y);
 		}
 		
