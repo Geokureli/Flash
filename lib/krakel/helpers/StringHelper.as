@@ -1,4 +1,5 @@
 package krakel.helpers {
+	import org.flixel.FlxObject;
 	/**
 	 * ...
 	 * @author George
@@ -15,12 +16,26 @@ package krakel.helpers {
 							COMMAS:RegExp = /\s*,\s*/g,
 							OUTER_BRACKETS:RegExp = /(^\s*{\s*)|(\s*}\s*$)/g;
 		
+		static public const CONSTANTS:Object = {
+			"true"	:true,
+			"false"	:false,
+			CEILING	:FlxObject.CEILING,
+			FLOOR	:FlxObject.FLOOR,
+			ANY		:FlxObject.ANY,
+			WALL	:FlxObject.WALL,
+			LEFT	:FlxObject.LEFT,
+			RIGHT	:FlxObject.RIGHT,
+			DOWN	:FlxObject.DOWN,
+			UP		:FlxObject.UP,
+			NONE	:FlxObject.NONE
+		};
 		static public const UNIT_CONVERSIONS:Object = {
 			s:1000,
 			f:1000 / 30
 		}
 		static public function AutoTypeString(value:String):Object {
 			if (value.match(IS_FORCE_STRING)) return value.substring(1, -1);
+			if (value in CONSTANTS) return CONSTANTS[value];
 			if (value.match(IS_FORCE_XML)) return value.substring(4, -1);
 			if (value.match(IS_NUMBER)) return Number(value);
 			if (value.match(IS_COLOR)) return parseInt(value.split(/^(0x|#)/)[1], 16);

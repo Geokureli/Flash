@@ -9,7 +9,7 @@ package greed{
 	 * @author George
 	 */
 	public class Main extends KrkGame {
-		static private const SCALE:Number = 4;
+		static private const SCALE:Number = 2;
 		
 		public function Main():void {
 			super(640 / SCALE, 360 / SCALE, GameState, SCALE);

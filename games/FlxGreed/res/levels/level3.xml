@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level name="level3" minx="0" miny="0" maxx="1280" maxy="400" bgColor = "0xff777777" >
+	<layer name="Map2" xScroll="1.000" yScroll="1.000" >
+		<map tiles="../graphics/greed_props.png" x="0.000" y="0.000" tileWidth="16" tileHeight="16" collIdx="2" drawIdx="1" >
+			<properties>
+				<tile id="5" kills="true" range="6" />
+				<tile id="11" cloud="true" range="2" />
+				<tile id="17" type="fade" killTime="2" />
+				<tile id="22" type="ladder" range="2" edges="NONE" />
+				<tile id="23" cloud="true" />
+				<tile id="25" type="spring" edges="CEILING" />
+			</properties>
+		</map>
+	</layer>
+</level>

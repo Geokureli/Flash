@@ -6,6 +6,7 @@ package krakel.xml {
 	 */
 	public class XMLParser {
 		static private const DEFAULT_METHODS:Object = { };
+		static private const CONSTANTS:Object = { };
 		static public const DEFAULT_ATTRIBUTES:XML = <defaults/>;
 		
 		protected var methods:Object,
@@ -72,8 +73,12 @@ package krakel.xml {
 		static public function setProperties(obj:Object, node:XML):Object {
 			if (obj == null) obj = { };
 			setDefaultAttributes(node);
-			for each(var att:XML in node.attributes())
-				obj[att.name().toString()] = StringHelper.AutoTypeString(att.toString());
+			for each(var att:XML in node.attributes()) {
+				var attName:String = att.name().toString();
+				if(attName in obj)
+					obj[attName] = StringHelper.AutoTypeString(att.toString());
+			}
+			
 			return obj;
 		}
 		static public function removeNodes(parent:XML, names:String):XMLList {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level name="testLevel" minx="0" miny="0" maxx="640" maxy="320" bgColor = "0xff777777" >
+	<layer name="map" xScroll="1.000" yScroll="1.000" >
+		<map tiles="../graphics/greed_props.png" x="0.000" y="0.000" tileWidth="16" tileHeight="16" collIdx="2" drawIdx="1" >
+			<properties>
+				<tile id="5" kills="true" range="6" />
+				<tile id="11" cloud="true" range="2" />
+				<tile id="17" type="fade" killTime="2" />
+				<tile id="22" type="ladder" range="2" edges="NONE" />
+				<tile id="23" cloud="true" />
+				<tile id="25" type="spring" edges="CEILING" />
+			</properties>
+		</map>
+		<properties solid="true"/>
+	</layer>
+	<layer name="sprites" xScroll="1.000" yScroll="1.000" >
+		<sprite type="KrkSprite" x="560.00" y="16.00" flip="false" xScale="1.00" yScale="9.00" graphic="beam" solid="true" resets="true" immovable="true" group="beam1" />
+		<sprite type="Avatar" x="22.00" y="280.00" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="Button" x="512.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" target="beam1" />
+	</layer>
+</level>

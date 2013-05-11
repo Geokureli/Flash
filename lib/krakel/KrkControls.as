@@ -1,25 +1,16 @@
 package krakel {
-	import krakel.KrkScheme;
-	import org.flixel.FlxG;
-	
 	/**
 	 * ...
 	 * @author George
 	 */
-	public class KrkControlScheme extends KrkScheme {
-		static public const KEY_DIRECTIONS:Object = {
-			l:"A,LEFT",
-			r:"D,RIGHT",
-			u:"W,UP",
-			d:"S,DOWN"
-		}
+	public class KrkControls {
 		
 		public var keyBinds:Object;
 		
-		override public function preUpdate():void {
-			super.preUpdate();
-			setKeys();
+		public function KrkControls(binds:Object) {
+			
 		}
+		
 		public function setKeys():void {
 			for (var bind:String in keyBinds) {
 				this[bind] = false;
