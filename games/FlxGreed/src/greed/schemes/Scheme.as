@@ -18,7 +18,7 @@ package greed.schemes {
 							WALL_SPEED:int = 75,
 							DRAG:int = 600,
 							DRAG_MIN:int = 100,
-							AIR_DRAG:int = 100,
+							AIR_DRAG:int = 300,
 							GRAVITY:Number = 1800,
 							NUM_HOPS:Number = 1,
 							CLIMB:Number = 120,

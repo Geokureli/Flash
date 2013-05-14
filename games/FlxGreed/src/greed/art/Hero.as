@@ -19,11 +19,11 @@ package greed.art {
 		
 		public function Hero(x:Number = 0, y:Number = 0) {
 			super(x, y);
-			spawn = new FlxPoint(x, y);
 			//numHops = 1;
 			
-			offset.x = 11;
-			offset.y = 2;
+			this.x += offset.x = 11;
+			this.y += offset.y = 2;
+			spawn = new FlxPoint(this.x, this.y);
 			
 			loadGraphic(SHEET, true, true, 32, 24);
 			
@@ -32,30 +32,34 @@ package greed.art {
 			
 			addAnimation("idle", [3]);
 			addAnimation("walk", [0,1,2,3,4,5], 10);
+			addAnimation("skid", [7]);
+			addAnimation("jumpSkid", [6]);
 			addAnimation("jump", [8]);
 			addAnimation("c_idle", [14]);
 			addAnimation("climb", [14,15,16,17], 10);
-			
+			addAnimation("duck", [22]);
+			addAnimation("slide", [23]);
 			
 			scheme = new Scheme();
 			weight = 0;
 		}
-		
 		override public function update():void {
 			super.update();
+			
 			var anim:String = "idle";
 			if (jumpScheme.onLadder) {
 				anim = velocity.x == 0 && velocity.y == 0 ? "c_idle" : "climb";
 			} else if (isTouching(FLOOR)) {
 				if (velocity.x != 0) {
-					anim = "walk";
 					facing = velocity.x > 0 ? RIGHT : LEFT;
 					offset.x = velocity.x > 0 ? 11 : 10;
+					anim = jumpScheme.isDecelX ? "skid" : "walk";
 				}
 			} else
-				anim = "jump";// + (velocity.y > 0 ? "_rise" : "_fall");
+				anim = (acceleration.x < 0) == (facing == RIGHT) ? "jumpSkid" : "jump";
 			
 			play(anim);
+			
 		}
 		
 		override public function revive():void {

@@ -98,6 +98,11 @@ package krakel {
 				delete node.@callback;
 			}
 			
+			if ("@group" in node) {
+				setGroup(sprite, node.@group.toString())
+				delete node.@group;
+			}
+			
 			if (Number(node.@xScale) == 1)
 				delete node.@xScale;
 			

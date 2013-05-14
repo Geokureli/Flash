@@ -41,7 +41,7 @@
 		<sprite type="Gold" x="512.00" y="128.00" flip="true" xScale="1.00" yScale="1.00" callback="true" recenter="true" resets="true" />
 		<sprite type="Gold" x="304.00" y="16.00" flip="true" xScale="1.00" yScale="1.00" callback="true" recenter="true" resets="true" />
 		<sprite type="Gold" x="96.00" y="160.00" flip="false" xScale="1.00" yScale="1.00" callback="true" recenter="true" resets="true" />
-		<sprite type="Door" x="608.00" y="24.00" flip="false" xScale="1.00" yScale="1.00" callback="hit" />
+		<sprite type="Door" x="608.00" y="24.00" flip="false" xScale="1.00" yScale="1.00" callback="true" />
 		<sprite type="Avatar" x="22.00" y="360.00" flip="false" xScale="1.00" yScale="1.00" />
 		<sprite type="Button" x="32.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" target="beams1" />
 		<sprite type="Treasure" x="16.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" anim="diamond" callback="true" recenter="true" resets="true" />

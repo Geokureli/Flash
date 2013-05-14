@@ -19,6 +19,9 @@ package  {
 		[Embed(source="../res/levels/maps/level2.csv",mimeType="application/octet-stream")]	static private const LEVEL2_CSV:Class;
 		[Embed(source="../res/levels/level2.xml",mimeType = "application/octet-stream")]	static private const LEVEL2_XML:Class;
 		
+		[Embed(source="../res/levels/maps/level4.csv",mimeType="application/octet-stream")]	static private const LEVEL3_CSV:Class;
+		[Embed(source="../res/levels/level4.xml",mimeType = "application/octet-stream")]	static private const LEVEL3_XML:Class;
+		
 		[Embed(source="../res/levels/maps/testLevel.csv",mimeType="application/octet-stream")]	static private const TEST_CSV:Class;
 		[Embed(source="../res/levels/testLevel.xml",mimeType = "application/octet-stream")]	static private const TEST_XML:Class;
 		
@@ -30,7 +33,8 @@ package  {
 		static public const levels:Object = {
 			0:new <Class>[LEVEL0_XML, LEVEL0_CSV],
 			1:new <Class>[LEVEL1_XML, LEVEL1_CSV],
-			2:new <Class>[LEVEL2_XML, LEVEL2_CSV]
+			2:new <Class>[LEVEL2_XML, LEVEL2_CSV],
+			3:new <Class>[LEVEL3_XML, LEVEL3_CSV]
 			// --- TEST LEVEL
 			//,test:new <Class>[TEST_XML, TEST_CSV]
 		}

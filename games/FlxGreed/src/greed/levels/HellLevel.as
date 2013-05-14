@@ -1,4 +1,5 @@
 package greed.levels {	
+	import greed.art.Gold;
 	import krakel.KrkSprite;
 	import org.flixel.FlxSprite;
 	import greed.art.Hero;
@@ -17,7 +18,8 @@ package greed.levels {
 		
 		override protected function parseSprite(node:XML):FlxSprite {
 			var sprite:FlxSprite = super.parseSprite(node);
-			sprite.color = 0xFF0000;
+			if(sprite is Gold && !(sprite && treasure))
+				sprite.color = 0xFF0000;
 			return sprite;
 		}
 		

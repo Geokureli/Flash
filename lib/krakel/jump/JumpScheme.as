@@ -76,9 +76,9 @@ package krakel.jump {
 				maxWallFall = 10000;
 			
 			changeDirOnHop =
+				sprung =
 				canSkidJump =
-				sprung = false;
-			canWallSlide = true;
+				canWallSlide = false;
 			
 			keyBinds = KEY_DIRECTIONS;
 			_r = _l = _u = _d = true;
@@ -184,7 +184,7 @@ package krakel.jump {
 		}
 		
 		private function get falling():Boolean { return velY > 0; }
-		private function get isDecelX():Boolean { return accX != 0 && velX != 0 && (velX > 0 == accX < 0); }
+		public function get isDecelX():Boolean { return accX != 0 && velX != 0 && (velX > 0 == accX < 0); }
 		
 	}
 

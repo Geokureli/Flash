@@ -41,6 +41,7 @@ package krakel {
 		override public function update():void {
 			super.update();
 			if (scheme != null) scheme.update();
+			//trace(this, color.toString(16));
 		}
 		override public function postUpdate():void {
 			super.postUpdate();
@@ -49,7 +50,7 @@ package krakel {
 		
 		override public function draw():void {
 			var flicker:Boolean = _flicker;
-			color = 0xFFFFFF;
+			//color = 0xFFFFFF;
 			if (_flickerTimer != 0 && flicker) {
 				color = 0xFF4040;
 				_flicker = true;
@@ -101,6 +102,8 @@ package krakel {
 		public function set graphic(value:String):void {
 			_graphic = value;
 			(GRAPHICS[value] as KrkGraphic).load(this);
+			if (scale.x != 1) xScale = scale.x;
+			if (scale.y != 1) yScale = scale.y;
 		}
 		
 		public function get edges():uint { return allowCollisions; }

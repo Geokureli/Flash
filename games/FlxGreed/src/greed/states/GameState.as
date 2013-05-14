@@ -16,7 +16,7 @@ package greed.states {
 	 */
 	public class GameState extends KrkGameState {
 		
-		static public const NUM_LEVELS:int = 3;
+		static public const NUM_LEVELS:int = 4;
 		
 		private var level:GreedLevel;
 		private var levelNum:Number;
@@ -33,7 +33,7 @@ package greed.states {
 			
 			startLevel();
 			
-			FlxG.visualDebug = true;
+			//FlxG.visualDebug = true;
 			
 		}
 		override protected function addUI():void {

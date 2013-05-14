@@ -119,8 +119,7 @@ package greed.levels {
 				//return;
 			//}
 			if (obj is Button && (obj as Button).state == "up") {
-				
-				buttonsLeft--;
+				groups[(obj as Button).target].kill()
 			} else if (obj is Door && isLevelComplete) {
 				gameOver = true;
 			} else if (obj is Gold) {
@@ -133,7 +132,7 @@ package greed.levels {
 		}
 		
 		private function get isLevelComplete():Boolean {
-			return buttonsLeft == 0 && hero.isTouching(FlxObject.FLOOR) && (
+			return hero.isTouching(FlxObject.FLOOR) && (
 				(isThief && treasure == totalTreasure) || !isThief
 			);
 		}
