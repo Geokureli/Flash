@@ -2,7 +2,9 @@ package greed{
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import greed.states.GameState;
+	import greed.states.LoaderState;
 	import krakel.KrkGame;
+	import org.flixel.FlxObject;
 	
 	/**
 	 * ...

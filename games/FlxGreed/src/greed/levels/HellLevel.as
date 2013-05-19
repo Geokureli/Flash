@@ -11,8 +11,8 @@ package greed.levels {
 		
 		[Embed(source = "../../../res/graphics/greed_hell.png")] static public const TILES:Class;
 		
-		public function HellLevel(levelData:XML, csv:Class=null) {
-			super(levelData, csv, TILES);
+		public function HellLevel(csv:String) {
+			super(csv, TILES);
 			
 		}
 		
@@ -25,7 +25,7 @@ package greed.levels {
 		
 		override public function update():void {
 			super.update();
-			if (isThief) hero.kill();
+			if (isThief) _hero.kill();
 		}
 		
 	}

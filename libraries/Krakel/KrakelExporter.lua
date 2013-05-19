@@ -31,9 +31,7 @@ layerPropsString = "%%ifproplength%%"..tab2.."<properties"
 	layerPropsString = layerPropsString.."%%proploop%% %propname%=\"%propvalue%\"%%proploopend%%"
 layerPropsString = layerPropsString.."/>\n%%endifproplength%%"
 
-groupPropsText = "%%ifproplength%%"..tab1.."<properties>\n"
-	groupPropsText = groupPropsText.."%%proploop%%"..tab2.."<prop name=\"%propname%\" value=\"%propvalue%\" />\n%%proploopend%%"
-groupPropsText = groupPropsText..tab1.."</properties>\n%%endifproplength%%"
+groupPropsText = "%%ifproplength%%%%proploop%%%propname%=\"%propvalue%\" %%proploopend%%%%endifproplength%%"
 
 linkAssignText = "%%if link%%"
 	linkAssignText = linkAssignText.."linkId=\"%linkid%\" "
@@ -133,7 +131,7 @@ spriteText = tab2.."<sprite type=\"%class%\" "..
 			"xScale=\"%scalex%\" "..
 			"yScale=\"%scaley%\" "..
 			"%%if parent%%"..
-				" pathId=\"%getparent%\" attachNode=\"%attachedsegment%\" attachT=\"%attachedsegment_t%\" "..
+				" pathId=\"%getparent%\" ".."startNode=\"%attachedsegment%\" pathT=\"%attachedsegment_t%\" "..
 			"%%endifparent%%"..
 			linkAssignText..spritePropsText.."/>\n"
 
@@ -141,7 +139,7 @@ function generateSprites( )
 	for i,v in ipairs(spriteLayers) do
 		layer = spriteLayers[i][2]
 		
-		layerText = as3.tolua(DAME.CreateTextForSprites(layer,spriteText,"Avatar"))
+		layerText = as3.tolua(DAME.CreateTextForSprites(layer,spriteText,"KrkSprite"))
 		layerIndex = spriteLayers[i][4]
 		layers[layerIndex][4] = layerText
 	end
@@ -208,13 +206,13 @@ for groupIndex = 0,groupCount do
 				
 				layerText = layerText..tab2..
 							"<map "
-							-- .."csv=\""..mapFileName.."\" "
+							.."csv=\""..mapFileName.."\" "
 							.."tiles=\""..as3.tolua(DAME.GetRelativePath(dataDir, layer.imageFile)).."\" "
 							.."x=\""..string.format("%.3f",x).."\" "
 							.."y=\""..string.format("%.3f",y).."\" "
 							.."tileWidth=\""..as3.tolua(layer.map.tileWidth).."\" "
 							.."tileHeight=\""..as3.tolua(layer.map.tileHeight).."\" "
-							-- .."hasHits=\""..hasHitsString.."\" "
+							.."collide=\""..hasHitsString.."\" "
 							.."collIdx=\""..as3.tolua(layer.map.collideIndex).."\" "
 							.."drawIdx=\""..as3.tolua(layer.map.drawIndex).."\" "
 				
@@ -264,7 +262,12 @@ for groupIndex = 0,groupCount do
 		-- output the actual file text for all the layers now that any object references and layer text has been parsed.
 
 		fileText = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-		fileText = fileText.."<level name=\""..groupName.."\" minx=\""..minx.."\" miny=\""..miny.."\" maxx=\""..maxx.."\" maxy=\""..maxy.."\" bgColor = \""..as3.tolua(DAME.GetBackgroundColor()).."\" >\n"
+		fileText = fileText
+			.."<level name=\""..groupName.."\" "
+			.."bounds.x=\""..minx.."\" bounds.y=\""..miny.."\" "
+			.."bounds.width=\""..maxx.."\" bounds.height=\""..maxy.."\" "
+			.."bgColor = \""..as3.tolua(DAME.GetBackgroundColor()).."\" "
+			..as3.tolua(DAME.GetTextForProperties( groupPropsText, group.properties ))..">\n"
 		
 		for i,v in ipairs(layers) do
 			layer = layers[i][2]
@@ -291,7 +294,7 @@ for groupIndex = 0,groupCount do
 		end
 		
 		-- group properties.
-		fileText = fileText..as3.tolua(DAME.GetTextForProperties( groupPropsText, group.properties ))
+		-- fileText = fileText..as3.tolua(DAME.GetTextForProperties( groupPropsText, group.properties ))
 		
 		fileText = fileText.."</level>\n"
 			

@@ -19,7 +19,9 @@ package krakel.events {
 				callbacks.slice(index, 1);
 		}
 		
-		public function trigger(){}
+		public function trigger(...args) {
+			//for each(var
+		}
 		
 	}
 

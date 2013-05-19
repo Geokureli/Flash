@@ -5,6 +5,7 @@ package greed.levels {
 	import greed.art.Gold;
 	import greed.art.Hero;
 	import greed.art.Treasure;
+	import greed.art.WeightForm;
 	import greed.tiles.FadeTile;
 	import krakel.helpers.StringHelper;
 	import krakel.KrkLevel;
@@ -12,11 +13,14 @@ package greed.levels {
 	import krakel.KrkText;
 	import krakel.KrkTile;
 	import krakel.KrkTilemap;
+	import krakel.Trigger;
 	import org.flixel.FlxBasic;
+	import org.flixel.FlxCamera;
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxRect;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTilemap;
 	import org.flixel.system.FlxTile;
@@ -31,7 +35,8 @@ package greed.levels {
 			CLASS_REFS.Treasure = Treasure;
 			CLASS_REFS.Door = Door;
 			CLASS_REFS.Button = Button;
-			CLASS_REFS.Avatar = Hero;
+			CLASS_REFS.hero = Hero;
+			CLASS_REFS.weightForm = WeightForm;
 			
 			//CLASS_REFS.flipScheme = TileScheme;
 			
@@ -44,95 +49,88 @@ package greed.levels {
 			KrkTilemap.TILE_TYPES.fade = FadeTile;
 		}
 		
-		protected var hero:Hero;
+		protected var _hero:Hero;
 		protected var buttonsLeft:int;
 		
 		protected var isThief:Boolean,
-					gameOver:Boolean;
+					gameOver:Boolean,
+					cameraSet:Boolean;
 		
 		public var endLevel:Function;
 		
 		public var totalCoins:uint,
 					totalTreasure:uint;
-					
+		
 		private var _coins:uint,
 					_treasure:uint;
 		
 		public var name:String;
 		
-		public function GreedLevel(levelData:XML, csv:Class = null, tiles:Class = null) {
-			buttonsLeft = 0;
-			coins = 0;
-			super(levelData, csv, tiles);
+		public function GreedLevel(csv:String, tiles:Class) {
+			buttonsLeft = 
+				coins = 0;
+			
+			super(csv, tiles);
 			gameOver = false;
+			cameraSet = false;
 		}
 		
 		override protected function createLayer(layer:XML):void {
-			if (layer.sprite.(@type.toString() == "Avatar").length() > 0) {
-				var heroNode:XML = layer.sprite.(@type.toString() == "Avatar")[0];
-				add(hero = new Hero(Number(heroNode.@x), Number(heroNode.@y)));
-				FlxG.camera.follow(hero);
-				delete layer.sprite.(@type.toString() == "Avatar")[0];
-			}
 			super.createLayer(layer);
 		}
 		override protected function parseSprite(node:XML):FlxSprite {
 			var sprite:FlxSprite = super.parseSprite(node);
 			
+			if (sprite is Hero) {
+				FlxG.camera.follow(_hero = sprite as Hero);
+				var w:Number = 32;
+				var h:Number = FlxG.height/3;
+				FlxG.camera.deadzone = new FlxRect((FlxG.width-w)/2,(FlxG.height-h)/2 - h*0.25,w,h);
+			}
 			if (sprite is Button) buttonsLeft++;
 			if (sprite is Treasure) {
 				sprite.play(Treasure.ORDER[totalTreasure]);
 				totalTreasure++;
-			}
-			else if (sprite is Gold) totalCoins++;
-			
-			if (node.@recenter.toString() == "true") {
-				sprite.x += sprite.offset.x;
-				sprite.y += sprite.offset.y;
-			}
+			} else if (sprite is Gold) totalCoins++;
 			
 			return sprite;
 		}
 		
 		override public function preUpdate():void {
 			super.preUpdate();
-			cloudsEnabled = !hero.jumpScheme.d;
+			cloudsEnabled = !_hero.jumpScheme.d;
 		}
 		
-		override public function update():void {
-			super.update();
-			FlxG.collide(hero, solidGroup);
-			FlxG.overlap(hero, overlapGroup, hitSprite);
-		}
 		override public function postUpdate():void {
 			super.postUpdate();
 			if (FlxG.keys.justReleased("R"))
-				hero.kill();
+				_hero.kill();
 			
-			if (!hero.alive || !hero.onScreen(FlxG.camera)) reset();
-			if (gameOver) endLevel();
+			if (!cameraSet && _hero.onScreen(FlxG.camera)) cameraSet = true;
+			if (!_hero.alive || (!_hero.onScreen(FlxG.camera) && cameraSet)) reset();
+			if (gameOver && endLevel != null) endLevel();
 		}
-		protected function hitSprite(hero:Hero, obj:FlxSprite):void {
-			//if (this.hero == null) {
-				// --- QUICK BUG FIXER
-				//trace("hitsprite");
-				//return;
-			//}
-			if (obj is Button && (obj as Button).state == "up") {
-				groups[(obj as Button).target].kill()
-			} else if (obj is Door && isLevelComplete) {
+		override protected function hitSprite(obj1:KrkSprite, obj2:KrkSprite):void {
+			super.hitSprite(obj1, obj2);
+			
+			if (obj2 is Door && isLevelComplete) {
 				gameOver = true;
-			} else if (obj is Gold) {
+			} else if (obj2 is Gold) {
 				isThief = true;
-				if (obj is Treasure) treasure++;
+				if (obj2 is Treasure) treasure++;
 				else coins++;
 			}
-			
-			hero.hitObject(obj);
 		}
 		
+		override public function hitTrigger(trigger:Trigger, collider:FlxObject):void {
+			if (!(trigger is Button) && trigger.alive)
+				trigger.bounce(-16);
+			super.hitTrigger(trigger, collider);
+		}
+		
+		
 		private function get isLevelComplete():Boolean {
-			return hero.isTouching(FlxObject.FLOOR) && (
+			return _hero.isTouching(FlxObject.FLOOR) && (
 				(isThief && treasure == totalTreasure) || !isThief
 			);
 		}
@@ -145,12 +143,12 @@ package greed.levels {
 					//obj.revive();
 					//if (obj is Button) buttonsLeft++;
 				//}
-			
+			cameraSet = false;
 			map.revive();
 			
 			coins = 0;
 			treasure = 0;
-			hero.revive();
+			_hero.revive();
 			isThief = false;
 		}
 		
@@ -158,8 +156,10 @@ package greed.levels {
 			trace("destroy");
 			super.destroy();
 			
+			FlxG.camera.follow(null);
+			
 			endLevel = null;
-			hero = null;
+			_hero = null;
 		}
 		
 		public function get coins():int { return _coins; }
@@ -167,6 +167,8 @@ package greed.levels {
 		
 		public function get treasure():uint { return _treasure; }
 		public function set treasure(value:uint):void { _treasure = value; }
+		
+		public function get map():KrkTilemap { return maps[0]; }
 		
 		override public function toString():String {
 			if(name == null)

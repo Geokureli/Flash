@@ -13,22 +13,21 @@ package greed.art {
 	public class Hero extends KrkSprite {
 		
 		[Embed(source="../../../res/graphics/theif.png")] static private const SHEET:Class;
-		private var _weight:int;
 		
-		private var spawn:FlxPoint;
+		private var jumpDecrease:int;
 		
 		public function Hero(x:Number = 0, y:Number = 0) {
 			super(x, y);
 			//numHops = 1;
 			
-			this.x += offset.x = 11;
-			this.y += offset.y = 2;
-			spawn = new FlxPoint(this.x, this.y);
-			
 			loadGraphic(SHEET, true, true, 32, 24);
+			
+			moves = true;
 			
 			width = 10;
 			height = 22;
+			jumpDecrease = 6;
+			//scale.x = scale.y = 1 / 1.75;
 			
 			addAnimation("idle", [3]);
 			addAnimation("walk", [0,1,2,3,4,5], 10);
@@ -43,6 +42,22 @@ package greed.art {
 			scheme = new Scheme();
 			weight = 0;
 		}
+		
+		override public function setParameters(data:XML):void {
+			
+			x += offset.x = 11;
+			y += offset.y = 2;
+			
+			super.setParameters(data);
+			
+			if (maxFall == 10000) maxFall = maxVelocity.y;
+			if (maxRise == 10000) maxRise = maxFall;
+			if (groundDrag == 0) groundDrag = drag.x;
+			if (airDrag == 0) airDrag = groundDrag;
+			
+			Scheme.JUMP_MAX = jumpMax;
+		}
+		
 		override public function update():void {
 			super.update();
 			
@@ -64,40 +79,113 @@ package greed.art {
 		
 		override public function revive():void {
 			super.revive();
-			x = spawn.x;
-			y = spawn.y;
 			weight = 0;
 		}
 		
-		public function hitObject(obj:FlxObject):void {
+		override public function hitObject(obj:FlxObject):void {
 			
-			if (obj is Gold || obj is Button) {
+			if (obj is Gold) {
 				obj.kill();
 				if (obj is Treasure) weight++;
-			}
-			else if (scheme != null) jumpScheme.hitObject(obj);
+			} else
+				super.hitObject(obj);
+			
+			var str:String = 
+				(justTouched(UP) ? "UP" : "") + 
+				(justTouched(LEFT) ? "LEFT" : "") + 
+				(justTouched(DOWN) ? "DOWN" : "") +
+				(justTouched(RIGHT) ? "RIGHT" : "");
+			
+			if (str != "") trace(str);
 		}
 		
 		override public function destroy():void {
 			super.destroy();
-			spawn = null;
 		}
 		
-		public function get weight():int { return _weight; }
+		public function get weight():int { return mass-1; }
 		public function set weight(value:int):void {
-			_weight = value;
+			mass = value+1;
 			//jumpScheme.dragOnDecel = value == 0;
-			jumpScheme.jumpMax = Scheme.JUMP_MAX - _weight * 6;
-			if (jumpScheme.jumpMax < jumpScheme.jumpMin)
-				jumpScheme.jumpMax = jumpScheme.jumpMin;
+			jumpMax = Scheme.JUMP_MAX - weight * jumpDecrease;
+			if (jumpMax < jumpMin)
+				jumpMax = jumpMin;
 			
-			//jumpScheme.groundDrag = Scheme.DRAG - _weight * 40;
+			//jumpScheme.groundDrag = Scheme.DRAG - weight * 40;
 			//if (jumpScheme.groundDrag < Scheme.DRAG_MIN)
 				//jumpScheme.groundDrag = Scheme.DRAG_MIN;
 		}
 		
 		public function get jumpScheme():Scheme { return scheme as Scheme; }
 		
+		public function get maxWallFall():Number { return jumpScheme.maxWallFall; }
+		public function set maxWallFall(value:Number):void { jumpScheme.maxWallFall = value; }
+		
+		public function get groundDrag():Number { return jumpScheme.groundDrag; }
+		public function set groundDrag(value:Number):void { jumpScheme.groundDrag = value; }
+		
+		public function get jumpSkidV():Number { return jumpScheme.jumpSkidV; }
+		public function set jumpSkidV(value:Number):void { jumpScheme.jumpSkidV = value; }
+		
+		public function get airDrag():Number { return jumpScheme.airDrag; }
+		public function set airDrag(value:Number):void { jumpScheme.airDrag = value; }
+		
+		public function get maxRise():Number { return jumpScheme.maxRise; }
+		public function set maxRise(value:Number):void { jumpScheme.maxRise = value; }
+		
+		public function get maxFall():Number { return jumpScheme.maxFall; }
+		public function set maxFall(value:Number):void { jumpScheme.maxFall = value; }
+		
+		public function get numHops():Number { return jumpScheme.numHops; }
+		public function set numHops(value:Number):void { jumpScheme.numHops = value; }
+		
+		public function get airAcc():Number { return jumpScheme.airAcc; }
+		public function set airAcc(value:Number):void { jumpScheme.airAcc = value; }
+		
+		public function get jumpV():Number { return jumpScheme.jumpV; }
+		public function set jumpV(value:Number):void { jumpScheme.jumpV = value; }
+		
+		public function get hopV():Number { return jumpScheme.hopV; }
+		public function set hopV(value:Number):void { jumpScheme.hopV = value; }
+		
+		public function get acc():Number { return jumpScheme.acc; }
+		public function set acc(value:Number):void { jumpScheme.acc = value; }
+		
+		
+		// --- ABILITIES
+		public function get canSkidJump():Boolean { return jumpScheme.canSkidJump; }
+		public function set canSkidJump(value:Boolean):void { jumpScheme.canSkidJump = value; }
+		
+		public function get canWallJump():Boolean { return jumpScheme.canWallJump; }
+		public function set canWallJump(value:Boolean):void { jumpScheme.canWallJump = value; }
+		
+		public function get canWallSlide():Boolean { return jumpScheme.canWallSlide; }
+		public function set canWallSlide(value:Boolean):void { jumpScheme.canWallSlide = value; }
+		
+		public function get changeDirOnHop():Boolean { return jumpScheme.changeDirOnHop; }
+		public function set changeDirOnHop(value:Boolean):void { jumpScheme.changeDirOnHop = value; }
+		
+		public function get dragOnDecel():Boolean { return jumpScheme.dragOnDecel; }
+		public function set dragOnDecel(value:Boolean):void { jumpScheme.dragOnDecel = value; }
+		
+		
+		public function get jumpMin():int { return jumpScheme.jumpMin; }
+		public function set jumpMin(value:int):void { jumpScheme.jumpMin = value; }
+		
+		public function get jumpMax():int { return jumpScheme.jumpMax; }
+		public function set jumpMax(value:int):void { jumpScheme.jumpMax = value; }
+		
+		public function get hopMin():int { return jumpScheme.hopMin; }
+		public function set hopMin(value:int):void { jumpScheme.hopMin = value; }
+		
+		public function get hopMax():int { return jumpScheme.hopMax; }
+		public function set hopMax(value:int):void { jumpScheme.hopMax = value; }
+		
+		public function get wallMin():int { return jumpScheme.wallMin; }
+		public function set wallMin(value:int):void { jumpScheme.wallMin = value; }
+		
+		public function get wallMax():int { return jumpScheme.wallMax; }
+		public function set wallMax(value:int):void { jumpScheme.wallMax = value; }
 	}
 
 }

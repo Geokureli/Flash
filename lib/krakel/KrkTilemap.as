@@ -56,7 +56,9 @@ package krakel {
 					
 					var isAdvanced:Boolean =
 						tileData.@kills.toString() == "true"
-						|| "@type" in tileData;
+						|| "@type" in tileData
+						|| "@frames" in tileData
+						|| "@frameTimer" in tileData;
 					
 					for (var i:int = 0; i < range; i++) {
 						// --- STORE ALL CLOUD TILES
@@ -99,7 +101,7 @@ package krakel {
 			}
 		}
 		
-		protected function hitCallback(tile:FlxTile, object:FlxSprite):void {
+		protected function hitCallback(tile:FlxTile, object:KrkSprite):void {
 			if (tile is KrkTile)
 				(tile as KrkTile).hitObject(object);
 		}
@@ -133,11 +135,12 @@ package krakel {
 				: null;
 			
 			if (type != null && type in TILE_TYPES)
-				tile = _tileObjects[index] = new TILE_TYPES[type](tile, data);
+				tile = _tileObjects[index] = new TILE_TYPES[type](tile);
 			else 
-				tile = _tileObjects[index] = new KrkTile(tile, data);
+				tile = _tileObjects[index] = new KrkTile(tile);
 				
-			(tile as KrkTile).type = type;
+			(tile as KrkTile).setParameters(data);
+			
 			return tile as KrkTile;
 		}
 		

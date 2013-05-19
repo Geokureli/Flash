@@ -18,7 +18,7 @@ package krakel {
 		/**
 		 * @inheritDoc
 		 */
-		public function KrkGame(width:Number, height:Number, state:Class, zoom:Number = 1, gameFrameRate:uint = 60, flashFrameRate:uint = 30, useSystemCursor:Boolean = false) {
+		public function KrkGame(width:Number, height:Number, state:Class, zoom:Number = 1, gameFrameRate:uint = 60, flashFrameRate:uint = 30, useSystemCursor:Boolean = true) {
 			super(width, height, state, zoom, gameFrameRate, flashFrameRate, useSystemCursor);
 			_trackFocus = true;
 		}

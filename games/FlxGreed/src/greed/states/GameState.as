@@ -21,7 +21,10 @@ package greed.states {
 		private var level:GreedLevel;
 		private var levelNum:Number;
 		private var hellMode:Boolean;
-		
+		public function GameState() {
+			super();
+			trace("state constructor");
+		}
 		override public function create():void {
 			levelNum = 0;
 			hellMode = false;
@@ -33,7 +36,7 @@ package greed.states {
 			
 			startLevel();
 			
-			//FlxG.visualDebug = true;
+			FlxG.visualDebug = true;
 			
 		}
 		override protected function addUI():void {

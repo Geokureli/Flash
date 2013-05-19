@@ -14,8 +14,8 @@ package greed.levels {
 		
 		private var coinsUI:FlxText;
 		
-		public function ChoiceLevel(levelData:XML, csv:Class=null) {
-			super(levelData, csv, TILES);
+		public function ChoiceLevel(csv:String) {
+			super(csv, TILES);
 		}
 		override protected function addHUD():void {
 			add(hud = new Hud());

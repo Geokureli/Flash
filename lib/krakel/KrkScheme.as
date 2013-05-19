@@ -92,6 +92,8 @@ package krakel {
 		public function update():void { }
 		public function postUpdate():void { }
 		
+		public function hitObject(obj:FlxObject):void { }
+		
 		public function kill():void { target = null; }
 		public function revive():void { init(); }
 		

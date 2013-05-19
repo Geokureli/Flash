@@ -866,7 +866,7 @@ package org.flixel
 			FlxG.cameras.length = 0;
 			
 			if(NewCamera == null)
-				NewCamera = new FlxCamera(0,0,FlxG.width,FlxG.height)
+				NewCamera = new FlxCamera(0,0,FlxG.width,FlxG.height);
 			FlxG.camera = FlxG.addCamera(NewCamera);
 		}
 		

@@ -1,5 +1,6 @@
 package greed.art {
 	import krakel.KrkTile;
+	import org.flixel.FlxObject;
 	import org.flixel.FlxSprite;
 	import org.flixel.system.FlxTile;
 	
@@ -9,12 +10,9 @@ package greed.art {
 	 */
 	public class CallbackTile extends KrkTile {
 		
-		public function CallbackTile(tile:FlxTile, data:XML) {
-			super(tile, data);
-		}
+		public function CallbackTile(tile:FlxTile) { super(tile); }
 		
-		
-		override public function hitObject(obj:FlxSprite):void {
+		override public function hitObject(obj:FlxObject):void {
 			super.hitObject(obj);
 			if (obj is Hero)
 				(obj as Hero).hitObject(this);

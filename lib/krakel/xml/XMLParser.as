@@ -73,13 +73,24 @@ package krakel.xml {
 		static public function setProperties(obj:Object, node:XML):Object {
 			if (obj == null) obj = { };
 			setDefaultAttributes(node);
-			for each(var att:XML in node.attributes()) {
-				var attName:String = att.name().toString();
-				if(attName in obj)
-					obj[attName] = StringHelper.AutoTypeString(att.toString());
-			}
 			
+			for each(var att:XML in node.attributes()) {
+				var test:String = att.name();
+				setProperty(obj, att.name().toString(), att.toString());
+			}
 			return obj;
+		}
+		static public function setProperty(obj:Object, varName:String, value:String):void {
+			if(varName in obj)
+				obj[varName] = StringHelper.AutoTypeString(value);
+			else if(varName.indexOf('.') != -1){
+				var arr:Array = varName.split('.');
+				varName = arr.shift();
+				if(obj[varName] != null)
+					setProperty(obj[varName], arr.join('.'), value);
+				else throw new Error("Cannot serialize property:" + arr.join('.') + " on null property: " + varName);;
+			} else if (false)// --- DISABLED
+				trace("Property: " + varName + " not found on object:" + obj);
 		}
 		static public function removeNodes(parent:XML, names:String):XMLList {
 			var list:XMLList = new XMLList();

@@ -1,5 +1,6 @@
 package greed.tiles {
 	import krakel.KrkTile;
+	import org.flixel.FlxObject;
 	import org.flixel.FlxSprite;
 	import org.flixel.system.FlxTile;
 	
@@ -16,10 +17,10 @@ package greed.tiles {
 					reviveTime:Number;
 		
 		public var triggerFrame:uint,
-					killFrame:int;
+					killFrame:uint;
 		
-		public function FadeTile(tile:FlxTile, data:XML) {
-			super(tile, data);
+		public function FadeTile(tile:FlxTile) {
+			super(tile);
 			triggered = {};
 			gone = {};
 			killTime = 1;
@@ -27,7 +28,7 @@ package greed.tiles {
 			triggerFrame = index;
 			killFrame = 0;
 		}
-		override public function hitObject(obj:FlxSprite):void {
+		override public function hitObject(obj:FlxObject):void {
 			super.hitObject(obj);
 			
 			if (triggered[mapIndex] == undefined && gone[mapIndex] == undefined) {
