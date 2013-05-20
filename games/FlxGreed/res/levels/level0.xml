@@ -6,7 +6,7 @@
 				<tile id="5" kills="true" range="6" />
 				<tile id="11" cloud="true" range="2" />
 				<tile id="13" triggerEdge="DOWN" hitFrame="14" />
-				<tile id="17" type="fade" killTime="0.500000" reviveTime="2" />
+				<tile id="17" type="fade" killTime="0.5" reviveTime="2" />
 				<tile id="20" frames="#,0" frameTimer="3" />
 				<tile id="22" type="ladder" range="2" edges="NONE" />
 				<tile id="23" cloud="true" />

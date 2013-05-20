@@ -6,7 +6,7 @@
 				<tile id="5" kills="true" range="6" />
 				<tile id="11" cloud="true" range="2" />
 				<tile id="13" triggerEdge="DOWN" hitFrame="14" />
-				<tile id="17" type="fade" killTime="0.500000" reviveTime="2" />
+				<tile id="17" type="fade" killTime="0.5" reviveTime="2" />
 				<tile id="20" frames="#,0" frameTimer="3" />
 				<tile id="22" type="ladder" range="2" edges="NONE" />
 				<tile id="23" cloud="true" />
@@ -24,11 +24,11 @@
 		<sprite type="KrkSprite" x="208.00" y="160.00" flip="false" xScale="1.00" yScale="1.00" graphic="platform" moves="true" cloud="true" immovable="true" pathId="0" startNode="2" />
 		<sprite type="KrkSprite" x="152.00" y="121.00" flip="false" xScale="1.00" yScale="1.00" graphic="platform" moves="true" cloud="true" immovable="true" pathId="0" startNode="1" />
 		<sprite type="KrkSprite" x="96.00" y="160.00" flip="false" xScale="1.00" yScale="1.00" graphic="platform" moves="true" cloud="true" immovable="true" pathId="0" startNode="0" />
-		<sprite type="KrkSprite" x="608.00" y="144.00" flip="false" xScale="1.00" yScale="1.00" moves="true" solid="true" resets="true" falls="true" graphic="safe" maxVelocity.y="180.000000" drag.x="1000" callback="true" group="safe" exists="false" />
-		<sprite type="KrkSprite" x="336.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" moves="true" solid="true" resets="true" falls="true" graphic="safe" maxVelocity.y="180.000000" drag.x="1000" callback="true" />
-		<sprite type="KrkSprite" x="304.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" moves="true" solid="true" resets="true" falls="true" graphic="safe" maxVelocity.y="180.000000" drag.x="1000" callback="true" />
-		<sprite type="KrkSprite" x="272.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" moves="true" solid="true" resets="true" falls="true" graphic="safe" maxVelocity.y="180.000000" drag.x="1000" callback="true" />
-		<sprite type="KrkSprite" x="240.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" moves="true" solid="true" resets="true" falls="true" graphic="safe" maxVelocity.y="180.000000" drag.x="1000" callback="true" triggeringEdge="CEILING" />
+		<sprite type="KrkSprite" x="608.00" y="144.00" flip="false" xScale="1.00" yScale="1.00" moves="true" solid="true" resets="true" falls="true" graphic="safe" maxVelocity.y="180" drag.x="1000" callback="true" group="safe" exists="false" />
+		<sprite type="KrkSprite" x="336.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" moves="true" solid="true" resets="true" falls="true" graphic="safe" maxVelocity.y="180" drag.x="1000" callback="true" />
+		<sprite type="KrkSprite" x="304.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" moves="true" solid="true" resets="true" falls="true" graphic="safe" maxVelocity.y="180" drag.x="1000" callback="true" />
+		<sprite type="KrkSprite" x="272.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" moves="true" solid="true" resets="true" falls="true" graphic="safe" maxVelocity.y="180" drag.x="1000" callback="true" />
+		<sprite type="KrkSprite" x="240.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" moves="true" solid="true" resets="true" falls="true" graphic="safe" maxVelocity.y="180" drag.x="1000" callback="true" triggeringEdge="CEILING" />
 		<sprite type="weightForm" x="80.00" y="240.00" flip="false" xScale="1.00" yScale="1.00" graphic="platform" moves="true" cloud="true" drop="16" callback="true" />
 		<sprite type="Trigger" x="592.00" y="96.00" flip="false" xScale="1.00" yScale="1.00" graphic="hitBlock" solid="true" triggeringEdge="FLOOR" immovable="true" callback="true" anim="idle" killAnim="hit" action="safe:revive();this:kill()" />
 	</layer>
