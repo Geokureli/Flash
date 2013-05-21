@@ -39,7 +39,7 @@ package  {
 			2:new <Class>[LEVEL2_XML, LEVEL2_CSV],
 			3:new <Class>[LEVEL3_XML, LEVEL3_CSV]
 			// --- TEST LEVEL
-			//,test:new <Class>[TEST_XML, TEST_CSV]
+			,test:new <Class>[TEST_XML, TEST_CSV]
 		}
 		
 		{
