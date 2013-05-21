@@ -98,20 +98,25 @@ package greed.levels {
 		
 		override public function preUpdate():void {
 			super.preUpdate();
+			//trace("greedLevel: preupdate");
 			cloudsEnabled = !_hero.jumpScheme.d;
 		}
 		
 		override public function postUpdate():void {
 			super.postUpdate();
-			if (FlxG.keys.justReleased("R"))
+			if (!_hero.alive) {
+				reset();
+				return;
+			}
+			
+			if (FlxG.keys.justReleased("R") || (!_hero.onScreen(FlxG.camera) && cameraSet))
 				_hero.kill();
 			
 			if (!cameraSet && _hero.onScreen(FlxG.camera)) cameraSet = true;
-			if (!_hero.alive || (!_hero.onScreen(FlxG.camera) && cameraSet)) reset();
 			if (gameOver && endLevel != null) endLevel();
 		}
-		override protected function hitSprite(obj1:KrkSprite, obj2:KrkSprite):void {
-			super.hitSprite(obj1, obj2);
+		override protected function hitSprite(obj1:KrkSprite, obj2:KrkSprite):Boolean {
+			if (!super.hitSprite(obj1, obj2)) return false;
 			
 			if (obj2 is Door && isLevelComplete) {
 				gameOver = true;
@@ -120,6 +125,7 @@ package greed.levels {
 				if (obj2 is Treasure) treasure++;
 				else coins++;
 			}
+			return true;
 		}
 		
 		override public function hitTrigger(trigger:Trigger, collider:FlxObject):void {
@@ -136,6 +142,8 @@ package greed.levels {
 		}
 		
 		override protected function reset():void {
+			cameraSet = false;
+			trace("reset");
 			super.reset();
 			//var obj:FlxBasic;
 			//for each(obj in overlapGroup.members)
@@ -143,7 +151,6 @@ package greed.levels {
 					//obj.revive();
 					//if (obj is Button) buttonsLeft++;
 				//}
-			cameraSet = false;
 			map.revive();
 			
 			coins = 0;

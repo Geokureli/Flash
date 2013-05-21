@@ -28,7 +28,7 @@ package greed.levels {
 			//gold.alpha = .5
 			gold.play("ui");
 			
-			(hud as Hud).treasureTotal = totalTreasure;
+			(hud as Hud).treasureTotal = 3;
 		}
 		
 		override public function set coins(value:int):void {

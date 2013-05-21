@@ -1,4 +1,5 @@
 package krakel {
+	import org.flixel.FlxBasic;
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
 	
@@ -14,11 +15,10 @@ package krakel {
 		override public function create():void {
 			members = [];
 			super.create();
-			
 		}
+		
 		override public function update():void {
-			super.update();
-			
+			super.update()
 			if (FlxG.debug) debugUpdate();
 		}
 		
@@ -29,6 +29,7 @@ package krakel {
 		protected function toParentState():void {
 			FlxG.switchState(parentState);
 		}
+		
 		override public function destroy():void {
 			super.destroy();
 			parentState = null;

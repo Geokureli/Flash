@@ -8,7 +8,7 @@ package krakel {
 	 * @author George
 	 */
 	
-	public class KrkNest extends FlxGroup {
+	public class KrkNest extends KrkGroup {
 		public var _x:Number,
 					_y:Number;
 		

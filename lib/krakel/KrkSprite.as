@@ -10,6 +10,7 @@ package krakel {
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
+	import org.flixel.FlxU;
 	/**
 	 * ...
 	 * @author George
@@ -26,7 +27,7 @@ package krakel {
 		
 		static public const GRAPHICS:Object = { };
 		
-		private var _overlapArgs:Object;
+		protected var _overlapArgs:Object;
 		
 		private var _graphic:String,
 					_anim:String;
@@ -34,25 +35,28 @@ package krakel {
 		public var startNode:int,
 					pathT:Number;
 		
-		public var triggeringEdge:uint;
+		public var triggeringEdge:uint,
+					movePairs:uint;
 		
 		public var passClouds:Boolean,
 					falls:Boolean,
 					recenter:Boolean,
 					collides:Boolean,
-					callback:Boolean;
+					callback:Boolean,
+					dragOnDecel:Boolean;
 		
 		public var filters:Vector.<Function>;
 		
 		protected var spawn:FlxPoint;
 		
 		public var hitAnim:String,
-					killAnim:String;
+					killAnim:String,
+					type:String;
 		
 		private var _scheme:KrkScheme;
 		private var data:XML;
-		protected var pairs:Vector.<KrkSprite>,
-					framePairs:Vector.<KrkSprite>;
+		public var pairs:Object,
+					framePairs:Object;
 		
 		
 		public function KrkSprite(x:Number = 0, y:Number = 0, graphic:Class = null) {
@@ -60,17 +64,29 @@ package krakel {
 			
 			passClouds =
 				moves = 
-				falls = false;
+				falls =
+				dragOnDecel = false;
 			
 			startNode = 
+				movePairs =
 				pathT = 0;
 			
 			triggeringEdge = ANY;
 			
 			spawn = new FlxPoint(x, y);
 			
-			framePairs = new <KrkSprite>[];
-			pairs = new <KrkSprite>[];
+			framePairs = {
+				0x1000:new <KrkSprite>[],
+				0x0100:new <KrkSprite>[],
+				0x0010:new <KrkSprite>[],
+				0x0001:new <KrkSprite>[]
+			}
+			pairs = {
+				0x1000:new <KrkSprite>[],
+				0x0100:new <KrkSprite>[],
+				0x0010:new <KrkSprite>[],
+				0x0001:new <KrkSprite>[]
+			}
 			_overlapArgs = { };
 		}
 		public function setParameters(data:XML):void {
@@ -107,14 +123,35 @@ package krakel {
 			if (scheme != null) scheme.postUpdate();
 			
 			var pair:KrkSprite;
-			while (pairs.length > 0) {
-				pair = pairs.pop();
-				if (framePairs.indexOf(pair) == -1)
-					separateObject(pair);
+			for(var i:String in pairs){
+				while (pairs[i].length > 0) {
+					pair = pairs[i].pop();
+					if (framePairs[i].indexOf(pair) == -1)
+						leaveObject(pair);
+				}
 			}
-			var temp:Vector.<KrkSprite> = pairs;
+			var temp:Object = pairs;
 			pairs = framePairs;
 			framePairs = temp;
+		}
+		
+		override protected function updateMotion():void {
+			super.updateMotion();
+			if ((last.x != x || last.y != y) && movePairs > 0) {
+				for (var i:String in pairs) {
+					if ((uint(i) & movePairs) > 0) {	
+						for each(var pair:KrkSprite in pairs[i]) {
+							trace(x - last.x, y - last.y);
+							pair.x += x-last.x;
+							pair.y += y-last.y;
+						}
+					}
+				}
+			}
+			if (dragOnDecel) {
+				if(isDecelX) velocity.x = FlxU.applyDrag(velocity.x, drag.x);
+				if(isDecelY) velocity.y = FlxU.applyDrag(velocity.y, drag.y);
+			}
 		}
 		
 		override public function draw():void {
@@ -138,31 +175,34 @@ package krakel {
 		public function checkHit(obj:FlxObject):Boolean {
 			var isHit:Boolean = !collides || triggeringEdge == ANY;
 			if (!isHit) {
-				if (pairs.indexOf(obj)) {
-					if ((triggeringEdge & DOWN) > NONE)
-						isHit ||= isTouching(DOWN);
-					
-					if ((triggeringEdge & LEFT) > NONE)
-						isHit ||= isTouching(LEFT);
-					
-					if ((triggeringEdge & RIGHT) > NONE)
-						isHit ||= isTouching(RIGHT);
-					
-					if ((triggeringEdge & UP) > NONE)
-						isHit ||= isTouching(UP);
-				} else {
-					
-					if ((triggeringEdge & DOWN) > NONE)
-						isHit ||= justTouched(DOWN);
-					
-					if ((triggeringEdge & LEFT) > NONE)
-						isHit ||= justTouched(LEFT);
-					
-					if ((triggeringEdge & RIGHT) > NONE)
-						isHit ||= justTouched(RIGHT);
-					
-					if ((triggeringEdge & UP) > NONE)
-						isHit ||= justTouched(UP);
+				if ((triggeringEdge & DOWN) > NONE)
+					isHit ||= justTouched(DOWN);
+				
+				if ((triggeringEdge & UP) > NONE)
+					isHit ||= justTouched(UP);
+				
+				if ((triggeringEdge & RIGHT) > NONE)
+					isHit ||= justTouched(RIGHT);
+				
+				if ((triggeringEdge & LEFT) > NONE)
+					isHit ||= justTouched(LEFT);
+			}
+			
+			if (_overlapArgs != null) {
+				var colliderArgs:Object = _overlapArgs.collider;
+				if (colliderArgs != null) {
+					for (var i:String in colliderArgs) {
+						
+						if (i in obj && obj[i] != colliderArgs[i])
+							return false;
+					}
+				}
+				var args:Object = _overlapArgs["this"];
+				if (args != null) {
+					for (i in args) {
+						if (i in this && this[i] != args[i])
+							return false;
+					}
 				}
 			}
 			
@@ -172,21 +212,78 @@ package krakel {
 		public function hitObject(obj:FlxObject):void {
 			if (scheme != null)
 				scheme.hitObject(obj);
-				
-			if (framePairs.indexOf(obj) == -1 && obj is KrkSprite)
-				framePairs.push(obj);
+			
+			// --- GET LAST FRAMES PAIR
+			var edge:uint = isPaired(obj as KrkSprite);
+			// --- RESET IF
+			if (!isTouching(edge)) edge = 0;
+			// --- FIRST HIT WITH PLAYER?
+			var isEnter:Boolean = false;
+			
+			if (edge == 0) {
+				isEnter = true;
+				edge = touching & ~wasTouching;
+				// --- CANT DETERMINE NEW EDGE
+				if (edge == 0 || !(edge in framePairs)) {
+					// --- DETERMINE EDGE FROM OBJECT
+					edge = obj.touching & ~obj.wasTouching;
+					// --- FLIP EDGE SIDE
+					switch(edge) {
+						case UP:	edge = DOWN; break;
+						case DOWN:	edge = UP; break;
+						case LEFT:	edge = RIGHT; break;
+						case RIGHT:	edge = LEFT; break;
+					}
+				}
+			}
+			//var msg:String =
+				//((edge & 0x1000) > 0 ? "DOWN " : "") + 
+				//((edge & 0x0100) > 0 ? "UP " : "") + 
+				//((edge & 0x0010) > 0 ? "RIGHT " : "") + 
+				//((edge & 0x0001) > 0 ? "LEFT " : "");
+			//if (msg != "") trace(msg);
+			if (obj is KrkSprite && edge > 0) {
+				if (edge in framePairs && framePairs[edge].indexOf(obj) == -1) {
+					if (isEnter) enterObject(obj);
+					framePairs[edge].push(obj);
+				}
+				//else
+					//trace(this + "has hit multiple sides, cannot determine pair direction");
+			}
 			
 			if (hitAnim != null) play(hitAnim);
 		}
-		public function separateObject(obj:FlxObject):void {
-			
+		
+		public function enterObject(obj:FlxObject):void { }
+		
+		public function leaveObject(obj:FlxObject):void { }
+		
+		public function isPaired(obj:KrkSprite):uint {
+			for (var i:String in pairs) {
+				if (pairs[i].indexOf(obj) != -1)
+					return uint(i);
+			}
+			return 0;
 		}
+		
 		override public function kill():void {
 			alive = false;
 			if(killAnim == null)
 				exists = false;
 			else play(killAnim);
+			
+			removePairs();
 		}
+		
+		public function removePairs():void {
+			for (var i:String in pairs) {
+				while (pairs[i].length > 0)
+					pairs.pop();
+				while (framePairs[i].length > 0)
+					framePairs.pop();
+			}
+		}
+		
 		override public function revive():void {
 			super.revive();
 			x = spawn.x;
@@ -207,6 +304,9 @@ package krakel {
 			_graphic = null;
 			_anim = null;
 		}
+		
+		public function get isDecelX():Boolean { return acceleration.x != 0 && velocity.x != 0 && (velocity.x > 0 == acceleration.x < 0); }
+		public function get isDecelY():Boolean { return acceleration.y != 0 && velocity.y != 0 && (velocity.y > 0 == acceleration.y < 0); }
 		
 		public function get scheme():KrkScheme { return _scheme; }
 		public function set scheme(value:KrkScheme):void {
@@ -271,6 +371,11 @@ package krakel {
 		}
 		static public function outline(bmd:BitmapData):void {
 			bmd.applyFilter(bmd, bmd.rect, ZERO, new GlowFilter(0, 1, 2, 2, 3, 1));
+		}
+		
+		override public function toString():String {
+			return (type != "KrkSprite" || graphic == null ? type : graphic) 
+				+ "( " + int(x).toString() + ", " + int(y).toString() + ')';
 		}
 	}
 

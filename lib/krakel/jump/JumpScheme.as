@@ -121,7 +121,7 @@ package krakel.jump {
 			}
 			// --- PLAYER HAS CHANGED DIRECTION
 			if (isDecelX) {
-				if(dragOnDecel) velX = FlxU.applyDrag(velX, dragX);
+				//if(dragOnDecel) velX = FlxU.applyDrag(velX, dragX);
 				// --- SKID JUMP
 				if (u && _u && touchFloor && canSkidJump) {
 					_u = false;

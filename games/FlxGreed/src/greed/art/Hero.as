@@ -90,13 +90,13 @@ package greed.art {
 			} else
 				super.hitObject(obj);
 			
-			var str:String = 
-				(justTouched(UP) ? "UP" : "") + 
-				(justTouched(LEFT) ? "LEFT" : "") + 
-				(justTouched(DOWN) ? "DOWN" : "") +
-				(justTouched(RIGHT) ? "RIGHT" : "");
-			
-			if (str != "") trace(str);
+			//var str:String = 
+				//(justTouched(UP) ? "UP" : "") + 
+				//(justTouched(LEFT) ? "LEFT" : "") + 
+				//(justTouched(DOWN) ? "DOWN" : "") +
+				//(justTouched(RIGHT) ? "RIGHT" : "");
+			//
+			//if (str != "") trace(str);
 		}
 		
 		override public function destroy():void {
@@ -163,11 +163,7 @@ package greed.art {
 		public function set canWallSlide(value:Boolean):void { jumpScheme.canWallSlide = value; }
 		
 		public function get changeDirOnHop():Boolean { return jumpScheme.changeDirOnHop; }
-		public function set changeDirOnHop(value:Boolean):void { jumpScheme.changeDirOnHop = value; }
-		
-		public function get dragOnDecel():Boolean { return jumpScheme.dragOnDecel; }
-		public function set dragOnDecel(value:Boolean):void { jumpScheme.dragOnDecel = value; }
-		
+		public function set changeDirOnHop(value:Boolean):void { jumpScheme.changeDirOnHop = value; }		
 		
 		public function get jumpMin():int { return jumpScheme.jumpMin; }
 		public function set jumpMin(value:int):void { jumpScheme.jumpMin = value; }

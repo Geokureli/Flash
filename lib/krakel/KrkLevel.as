@@ -4,7 +4,6 @@ package krakel {
 	import krakel.xml.XMLParser;
 	import org.flixel.FlxBasic;
 	import org.flixel.FlxG;
-	import org.flixel.FlxGroup;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPath;
 	import org.flixel.FlxRect;
@@ -24,11 +23,11 @@ package krakel {
 		
 		public var maps:Vector.<KrkTilemap>;
 		
-		public var resetGroup:FlxGroup,
-					solidGroup:FlxGroup,
-					overlapGroup:FlxGroup,
-					cloudGroup:FlxGroup,
-					antiCloudGroup:FlxGroup;
+		public var resetGroup:KrkGroup,
+					solidGroup:KrkGroup,
+					overlapGroup:KrkGroup,
+					cloudGroup:KrkGroup,
+					antiCloudGroup:KrkGroup;
 		
 		public var gravity:Number;
 		
@@ -53,11 +52,11 @@ package krakel {
 			this.tiles = tiles;
 			
 			groups = { };
-			resetGroup = new FlxGroup();
-			cloudGroup = new FlxGroup();
-			solidGroup = new FlxGroup();
-			overlapGroup = new FlxGroup();
-			antiCloudGroup = new FlxGroup();
+			resetGroup = new KrkGroup();
+			cloudGroup = new KrkGroup();
+			solidGroup = new KrkGroup();
+			overlapGroup = new KrkGroup();
+			antiCloudGroup = new KrkGroup();
 			
 			maps = new <KrkTilemap>[];
 			
@@ -103,7 +102,7 @@ package krakel {
 			var name:String = layer.@name.toString();
 			
 			if (layer.sprite.length() > 0 || layer.shape.length() > 0) {
-				var group:FlxGroup = new FlxGroup();
+				var group:KrkGroup = new KrkGroup();
 				
 				for each (var node:XML in layer.sprite)
 					group.add(parseSprite(node));
@@ -169,7 +168,7 @@ package krakel {
 			}
 			
 			if ("@pathId" in node) {
-				sprite.followPath(paths[int(node.@pathId)], 20, FlxObject.PATH_LOOP_FORWARD);
+				sprite.followPath(paths[int(node.@pathId)], 30, FlxObject.PATH_LOOP_FORWARD);
 				delete node.@pathId;
 			}
 			
@@ -201,7 +200,7 @@ package krakel {
 		}
 		
 		private function setGroup(sprite:FlxSprite, group:String):void {
-			if (!(group in groups)) groups[group] = new Group();
+			if (!(group in groups)) groups[group] = new KrkGroup();
 			groups[group].add(sprite);
 		}
 		
@@ -215,9 +214,13 @@ package krakel {
 		
 		protected function addHUD():void { add(hud = new HUD()); }
 		
+		override public function preUpdate():void {
+			super.preUpdate();
+		}
 		override public function update():void {
-			super.update();
 			//var _cloudsEnabled:Boolean = cloudsEnabled;
+			
+			FlxG.overlap(overlapGroup, overlapGroup, hitSprite);
 			
 			FlxG.collide(antiCloudGroup, solidGroup, hitSolidSprite);
 			
@@ -228,8 +231,8 @@ package krakel {
 			
 			if (!_cloudsEnabled)
 				cloudsEnabled = false;
-				
-			FlxG.overlap(overlapGroup, overlapGroup, hitSprite);
+			
+			super.update();
 		}
 		
 		protected function hitSolidSprite(obj1:FlxObject, obj2:FlxObject):void {
@@ -239,9 +242,9 @@ package krakel {
 				&& (obj1.immovable || obj2.immovable))
 				hitSprite(obj1 as KrkSprite, obj2 as KrkSprite);
 		}
-		protected function hitSprite(obj1:KrkSprite, obj2:KrkSprite):void {
+		protected function hitSprite(obj1:KrkSprite, obj2:KrkSprite):Boolean {
 			if (!obj1.checkHit(obj2) || !obj2.checkHit(obj1))
-				return;
+				return false;
 			
 			if (obj1 is Trigger) 
 				hitTrigger(obj1 as Trigger, obj2);
@@ -251,6 +254,7 @@ package krakel {
 				
 			obj1.hitObject(obj2);
 			obj2.hitObject(obj1);
+			return true;
 		}
 		
 		public function hitTrigger(trigger:Trigger, collider:FlxObject):void {
@@ -307,14 +311,4 @@ package krakel {
  		}
 	}
 
-}
-import org.flixel.FlxBasic;
-import org.flixel.FlxGroup;
-class Group extends FlxGroup {
-	override public function revive():void {
-		super.revive();
-		
-		for each(var obj:FlxBasic in members)
-			if (obj != null) obj.revive();
-	}
 }
