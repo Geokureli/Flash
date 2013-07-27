@@ -53,13 +53,13 @@ package greed.art {
 			
 			super.setParameters(data);
 			
-			if (maxFall < 0) maxFall = maxVelocity.y;
-			if (maxRise < 0) maxRise = maxFall;
+			if (maxFall < 0)	maxFall = maxVelocity.y;
+			if (maxRise < 0)	maxRise = maxFall;
 			
-			if (groundDrag < 0) groundDrag = drag.x;
-			if (airDrag < 0) airDrag = groundDrag;
+			if (groundDrag < 0)	groundDrag = drag.x;
+			if (airDrag < 0)	airDrag = groundDrag;
 			
-			if (airAcc < 0) airAcc = acc;
+			if (airAcc < 0)		airAcc = acc;
 			
 			Scheme.JUMP_MAX = jumpMax;
 		}

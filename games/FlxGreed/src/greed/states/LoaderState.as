@@ -197,6 +197,10 @@ package greed.states {
 			currentLevel.endLevel = onLevelEnd;
 			currentLevel.ID = counter++;
 			add(currentLevel);
+			FlxG.worldBounds.width = currentLevel.width;
+			FlxG.worldBounds.height = currentLevel.height;
+			
+			FlxG.camera.bounds = new FlxRect(0, 0, currentLevel.width, currentLevel.height);
 		}
 		
 		public function deleteLevel(num:uint):void {
