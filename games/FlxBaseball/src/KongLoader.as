@@ -6,7 +6,7 @@ package  {
 	 */
 	public class KongLoader extends Preloader {
 		
-		public function createAdBox():void {
+		override public function createAdBox():void {
 			//_min = 10000;
 			addChild(new KongBox());
 		}

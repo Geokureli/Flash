@@ -1,4 +1,5 @@
-package greed.art {
+package greed.tiles {
+	import greed.art.Hero;
 	import krakel.KrkTile;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxSprite;

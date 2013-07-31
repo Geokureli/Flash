@@ -11,9 +11,8 @@ package greed.levels {
 		
 		[Embed(source = "../../../res/graphics/greed_hell.png")] static public const TILES:Class;
 		
-		public function HellLevel(csv:String) {
-			super(csv, TILES);
-			
+		public function HellLevel() {
+			super();
 		}
 		
 		override protected function parseSprite(node:XML):FlxSprite {

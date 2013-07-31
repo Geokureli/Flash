@@ -16,9 +16,35 @@ package krakel {
 			members = [];
 			super.create();
 		}
-		
+		//override public function preUpdate():void {
+			//super.preUpdate();
+			//var basic:FlxBasic;
+			//var i:uint = 0;
+			//while(i < length)
+			//{
+				//basic = members[i++] as FlxBasic;
+				//if((basic != null) && basic.exists && basic.active)
+				//{
+					//basic.preUpdate();
+					//basic.update();
+					//basic.postUpdate();
+				//}
+			//}
+		//}
 		override public function update():void {
-			super.update()
+			//super.update()
+			var basic:FlxBasic;
+			var i:uint = 0;
+			while(i < length)
+			{
+				basic = members[i++] as FlxBasic;
+				if((basic != null) && basic.exists && basic.active)
+				{
+					basic.preUpdate();
+					basic.update();
+					basic.postUpdate();
+				}
+			}
 			if (FlxG.debug) debugUpdate();
 		}
 		

@@ -18,7 +18,7 @@ package krakel {
 	 */
 	public class KrkLevel extends KrkState {
 		
-		static public const CLASS_REFS:Object = { KrkSprite:KrkSprite, text:KrkText, Trigger:Trigger };
+		static public const CLASS_REFS:Object = { KrkSprite:KrkSprite, text:KrkText };
 		public var width:int, height:int;
 		
 		public var maps:Vector.<KrkTilemap>;
@@ -33,23 +33,20 @@ package krakel {
 		
 		public var bounds:FlxRect;
 		
+		public var endLevel:Function;
+		
 		private var levelData:XML;
-		private var csv:String;
-		private var tiles:Class;
 		
 		private var _cloudsEnabled:Boolean;
 		
 		protected var groups:Object;
 		protected var paths:Vector.<FlxPath>
+		protected var links:Vector.<KrkSprite>
 		
 		protected var hud:HUD;
 		
-		public function KrkLevel(csv:String, tiles:Class) {
+		public function KrkLevel() {
 			super();
-			
-			//this.levelData = levelData.copy();
-			this.csv = csv;
-			this.tiles = tiles;
 			
 			groups = { };
 			resetGroup = new KrkGroup();
@@ -73,7 +70,8 @@ package krakel {
 			
 			XMLParser.setProperties(this, data);
 			
-			checkPaths()
+			checkPaths();
+			initLinks();
 			
 			for each (var layer:XML in levelData.layer)
 				createLayer(layer);
@@ -82,13 +80,16 @@ package krakel {
 				solidGroup.add(maps[0]);
 				
 			addHUD();
+			setLinks();
 		}
 		
 		private function checkPaths():void {
 			paths = new Vector.<FlxPath>();
 			var path:FlxPath;
 			for each(var pathData:XML in levelData..path) {
-				path = new FlxPath();
+				if ("@type" in pathData) {
+					path = new CLASS_REFS[pathData.@type.toString()]() as FlxPath;
+				} else path = new FlxPath();
 				for each(var node:XML in pathData.nodes[0].node)
 					path.add(
 						StringHelper.AutoTypeString(node.@x.toString()) as Number,
@@ -98,14 +99,34 @@ package krakel {
 			}
 		}
 		
+		private function initLinks():void {
+			links = new <KrkSprite>[];
+			if (levelData.links.length() == 0)
+				return;
+			
+			var numLinks:int = 0;
+			for each (var link:XML in levelData.links[0].link) {
+				if (int(link.@from) > numLinks) numLinks = int(link.@from);
+				if (int(link.@to) > numLinks) numLinks = int(link.@to);
+			}
+			while (links.length <= numLinks)
+				links.push(null);
+		}
+		
 		protected function createLayer(layer:XML):void {
 			var name:String = layer.@name.toString();
 			
 			if (layer.sprite.length() > 0 || layer.shape.length() > 0) {
 				var group:KrkGroup = new KrkGroup();
+				var resets:Boolean = layer.@resets.toString() == "true";
+				var exists:Boolean = layer.@exists.toString() != "false";
 				
-				for each (var node:XML in layer.sprite)
+				for each (var node:XML in layer.sprite) {
+					if (resets) node.@resets = true;
+					if (!exists)
+						node.@exists = false;
 					group.add(parseSprite(node));
+				}
 				
 				for each (node in layer.shape) {
 					if(node.@type == "text")
@@ -116,8 +137,18 @@ package krakel {
 					this[name.substr(1)] = group;
 				
 				// --- IGNORE PATH GROUPS
-				if(group.length > 0)
+				if(group.length > 0){
 					add(group);
+					groups[name] = group;
+				}
+				
+			} else if (layer.path.length() > 0) {
+				var pathGroup:PathDrawer = new PathDrawer()
+				for each (var pathNode:XML in layer.path) {
+					if(pathNode.@draw.toString() == "true")
+						pathGroup.addPath(paths[int(pathNode.childIndex())]);
+				}
+				add(pathGroup);
 			}
 			
 			var map:KrkTilemap;
@@ -132,7 +163,14 @@ package krakel {
 		protected function parseSprite(node:XML):FlxSprite {
 			node = node.copy();
 			
-			var sprite:KrkSprite = new CLASS_REFS[node.@type.toString()]();
+			var sprite:KrkSprite;
+			if (node.@type.toString() in CLASS_REFS) {
+				sprite = new CLASS_REFS[node.@type.toString()]();
+			} else if (node.@type.toString() in KrkSprite.GRAPHICS) {
+				sprite = new KrkSprite();
+				node.@graphic = node.@type.toString();
+			}
+			
 			if (!("type" in sprite)) delete node.@type;
 			
 			if ("@group" in node) {
@@ -167,8 +205,22 @@ package krakel {
 				delete node.@group;
 			}
 			
+			if ("@linkId" in node)
+				links[int(node.@linkId)] = sprite;
+			
 			if ("@pathId" in node) {
-				sprite.followPath(paths[int(node.@pathId)], 30, FlxObject.PATH_LOOP_FORWARD);
+				var path:FlxPath = paths[int(node.@pathId)];
+				var pathMode:uint = FlxObject.PATH_LOOP_FORWARD;
+				var pathSpeed:Number = 30;
+				if ("@pathMode" in node) {
+					pathMode = StringHelper.AutoTypeString(node.@pathMode.toString()) as uint;
+					delete node.@pathMode;
+				}
+				if ("@pathSpeed" in node) {
+					pathSpeed = StringHelper.AutoTypeString(node.@pathSpeed.toString()) as uint;
+					delete node.@pathSpeed;
+				}
+				sprite.followPath(path, pathSpeed, pathMode);
 				delete node.@pathId;
 			}
 			
@@ -204,8 +256,9 @@ package krakel {
 			groups[group].add(sprite);
 		}
 		
-		protected function createTileMap(mapData:XML):KrkTilemap {			
-			var map:KrkTilemap = new KrkTilemap(mapData, csv, tiles);
+		protected function createTileMap(mapData:XML):KrkTilemap {		
+			
+			var map:KrkTilemap = new KrkTilemap(mapData);
 			
 			if (map.width > width) width = map.width;
 			if (map.height > height) height = map.height;
@@ -214,15 +267,30 @@ package krakel {
 		
 		protected function addHUD():void { add(hud = new HUD()); }
 		
+		private function setLinks():void {
+			if (levelData.links.length() == 0)
+				return;
+			
+			for each(var link:XML in levelData.links[0].link)
+				links[int(link.@from)].links.push(links[int(link.@to)]);
+		}
+		
+		// --- --- --- --- EVENTS --- --- --- --- 
+		
 		override public function preUpdate():void {
 			super.preUpdate();
 		}
+		
 		override public function update():void {
-			//var _cloudsEnabled:Boolean = cloudsEnabled;
 			
-			FlxG.overlap(overlapGroup, overlapGroup, hitSprite);
+			checkCollisions();
 			
-			FlxG.collide(antiCloudGroup, solidGroup, hitSolidSprite);
+			super.update();
+		}
+		
+		protected function checkCollisions():void {
+			
+			FlxG.collide(antiCloudGroup, solidGroup,  hitSolidSprite);
 			
 			if (!_cloudsEnabled)
 				cloudsEnabled = true;
@@ -232,38 +300,35 @@ package krakel {
 			if (!_cloudsEnabled)
 				cloudsEnabled = false;
 			
-			super.update();
+			FlxG.overlap(overlapGroup, overlapGroup, hitSprite, processHit);
 		}
 		
 		protected function hitSolidSprite(obj1:FlxObject, obj2:FlxObject):void {
 			
-			if (obj1 is KrkSprite && (obj1 as KrkSprite).callback
+			if (
+				(obj1.immovable || obj2.immovable)
+				&& obj1 is KrkSprite && (obj1 as KrkSprite).callback
 				&& obj2 is KrkSprite && (obj2 as KrkSprite).callback
-				&& (obj1.immovable || obj2.immovable))
+				&& processHit(obj1 as KrkSprite, obj2 as KrkSprite)
+			)
 				hitSprite(obj1 as KrkSprite, obj2 as KrkSprite);
 		}
-		protected function hitSprite(obj1:KrkSprite, obj2:KrkSprite):Boolean {
-			if (!obj1.checkHit(obj2) || !obj2.checkHit(obj1))
-				return false;
+		
+		protected function processHit(obj1:KrkSprite, obj2:KrkSprite):Boolean {
+			return obj1.checkHit(obj2) && obj2.checkHit(obj1);
+		}
+		
+		protected function hitSprite(obj1:KrkSprite, obj2:KrkSprite):void {
+			if (obj1.alive && obj1.action != null) 
+				parseActions(obj1.action);
 			
-			if (obj1 is Trigger) 
-				hitTrigger(obj1 as Trigger, obj2);
-				
-			if (obj2 is Trigger) 
-				hitTrigger(obj2 as Trigger, obj1);
-				
+			if (obj2.alive && obj2.action != null) 
+				parseActions(obj2.action);
+			
 			obj1.hitObject(obj2);
 			obj2.hitObject(obj1);
-			return true;
 		}
-		
-		public function hitTrigger(trigger:Trigger, collider:FlxObject):void {
-			if (trigger.alive) {
-				parseActions(trigger.action);
-				trigger.onTrigger(collider);
-			}
-		}
-		
+				
 		public function parseActions(actions:String):void {
 			var actionList:Array = actions.split(/\s*;\s*/);
 			var args:Array;
@@ -284,8 +349,14 @@ package krakel {
 		
 		protected function reset():void {
 			
-			for each(var obj:FlxObject in resetGroup.members)
-				if (obj != null) obj.revive();
+			for each(var obj:FlxObject in resetGroup.members) {
+				if (obj != null) {
+					obj.revive();
+					if (obj is KrkSprite && (obj as KrkSprite).data.@exists.toString() == "false")
+						obj.kill();
+				}
+				
+			}
 			
 		}
 		
@@ -293,10 +364,9 @@ package krakel {
 			super.destroy();
 			
 			maps = null;
-		
+			
+			endLevel = null;
 			levelData = null;
-			csv = null;
-			tiles = null;
 		}
 		
 		public function get cloudsEnabled():Boolean { return _cloudsEnabled; }
@@ -311,4 +381,21 @@ package krakel {
  		}
 	}
 
+}
+import org.flixel.FlxG;
+import org.flixel.FlxGroup;
+import org.flixel.FlxPath;
+class PathDrawer extends FlxGroup {
+	public var paths:Vector.<FlxPath>;
+	public function PathDrawer():void {
+		paths = new <FlxPath>[];
+	}
+	public function addPath(path:FlxPath):void {
+		paths.push(path);
+	}
+	override public function draw():void {
+		super.draw();
+		for each (var path:FlxPath in paths)
+			path.drawDebug(FlxG.camera);
+	}
 }

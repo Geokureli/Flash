@@ -119,7 +119,11 @@ package krakel {
 		
 		override public function destroy():void {
 			super.destroy();
+			if (timer != null) timer.destroy();
+			timer = null;
 			type = null;
+			indices = null;
+			_frames = null;
 		}
 		
 		override public function toString():String {

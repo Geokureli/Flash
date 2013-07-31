@@ -53,5 +53,7 @@ package krakel {
 			for each(var obj:FlxBasic in members)
 				if (obj != null) obj.revive();
 		}
+		
+		public function reset():void { }
 	}
 }

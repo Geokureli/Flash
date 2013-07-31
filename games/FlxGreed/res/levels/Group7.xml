@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <level name="Group7" bounds.x="0" bounds.y="0" bounds.width="480" bounds.height="240" bgColor = "0xff777777" >
 	<layer name="Layer1" xScroll="1.000" yScroll="1.000" >
-		<sprite type="Treasure" x="96.00" y="112.00" flip="false" xScale="1.00" yScale="1.00" anim="emerald" callback="true" resets="true" recenter="true" />
-		<sprite type="Treasure" x="256.00" y="128.00" flip="false" xScale="1.00" yScale="1.00" anim="ruby" callback="true" resets="true" recenter="true" />
-		<sprite type="Treasure" x="176.00" y="144.00" flip="false" xScale="1.00" yScale="1.00" anim="diamond" callback="true" recenter="true" resets="true" />
-		<sprite type="hero" x="22.00" y="200.00" flip="false" xScale="1.00" yScale="1.00" jumpV="180" jumpMax="26" jumpMin="6" maxVelocity.x="150" maxVelocity.y="180" acc="1000" airAcc="1000" drag.x="1000" solid="true" callback="true" falls="true" passClouds="true" recenter="true" />
+		<sprite type="Treasure" x="256.00" y="128.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" recenter="true" anim="ruby" />
+		<sprite type="Treasure" x="176.00" y="144.00" flip="false" xScale="1.00" yScale="1.00" callback="true" recenter="true" resets="true" anim="diamond" />
+		<sprite type="hero" x="22.00" y="200.00" flip="false" xScale="1.00" yScale="1.00" jumpV="180" jumpMax="26" jumpMin="6" maxVelocity.x="150" maxVelocity.y="180" acc="800" drag.x="800" solid="true" callback="true" falls="true" passClouds="true" recenter="true" />
 		<sprite type="Door" x="448.00" y="200.00" flip="false" xScale="1.00" yScale="1.00" callback="true" />
 	</layer>
 	<layer name="Map2" xScroll="1.000" yScroll="1.000" >

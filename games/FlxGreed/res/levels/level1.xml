@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<level name="level1" bounds.x="0" bounds.y="0" bounds.width="640" bounds.height="400" bgColor = "0xff777777" >
+<level name="level1" bounds.x="0" bounds.y="0" bounds.width="640" bounds.height="400" bgColor = "0xff777777" gravity="1800" >
 	<layer name="bg" xScroll="1.000" yScroll="1.000" >
 		<sprite type="KrkSprite" x="536.00" y="24.00" flip="false" xScale="1.00" yScale="1.00" graphic="sign_button" />
 	</layer>
@@ -44,12 +44,11 @@
 		<sprite type="Gold" x="304.00" y="16.00" flip="true" xScale="1.00" yScale="1.00" callback="true" recenter="true" resets="true" />
 		<sprite type="Gold" x="96.00" y="160.00" flip="false" xScale="1.00" yScale="1.00" callback="true" recenter="true" resets="true" />
 		<sprite type="Door" x="608.00" y="24.00" flip="false" xScale="1.00" yScale="1.00" callback="true" />
-		<sprite type="hero" x="22.00" y="360.00" flip="false" xScale="1.00" yScale="1.00" jumpV="180" jumpMax="26" jumpMin="6" maxVelocity.x="150" maxVelocity.y="180" acc="1000" airAcc="1000" drag.x="1000" solid="true" callback="true" falls="true" passClouds="true" recenter="true" />
-		<sprite type="Button" x="32.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" target="beams1" />
-		<sprite type="Treasure" x="16.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" anim="diamond" callback="true" recenter="true" resets="true" />
-		<sprite type="Treasure" x="496.00" y="304.00" flip="false" xScale="1.00" yScale="1.00" anim="emerald" callback="true" resets="true" recenter="true" />
-		<sprite type="Treasure" x="352.00" y="128.00" flip="false" xScale="1.00" yScale="1.00" anim="ruby" callback="true" resets="true" recenter="true" />
-		<sprite type="KrkSprite" x="576.00" y="16.00" flip="false" xScale="1.00" yScale="1.00" graphic="beam" solid="true" resets="true" immovable="true" group="beams1" />
-		<sprite type="KrkSprite" x="576.00" y="32.00" flip="false" xScale="1.00" yScale="1.00" graphic="beam" solid="true" resets="true" immovable="true" group="beams1" />
+		<sprite type="hero" x="22.00" y="360.00" flip="false" xScale="1.00" yScale="1.00" jumpV="180" jumpMax="26" jumpMin="6" maxVelocity.x="150" maxVelocity.y="180" acc="800" drag.x="800" solid="true" callback="true" falls="true" passClouds="true" recenter="true" />
+		<sprite type="Button" x="32.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" action="beam:kill()" />
+		<sprite type="Treasure" x="16.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" callback="true" recenter="true" resets="true" anim="diamond" />
+		<sprite type="Treasure" x="352.00" y="128.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" recenter="true" anim="ruby" />
+		<sprite type="KrkSprite" x="576.00" y="16.00" flip="false" xScale="1.00" yScale="2.00" graphic="beam" solid="true" resets="true" immovable="true" group="beam" />
+		<sprite type="Treasure" x="496.00" y="304.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" recenter="true" anim="emerald" />
 	</layer>
 </level>

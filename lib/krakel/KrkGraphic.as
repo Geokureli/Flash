@@ -4,7 +4,7 @@ package krakel {
 	 * @author George
 	 */
 	public class KrkGraphic {
-		private var embed:Class;
+		public var embed:Class;
 		private var animated:Boolean;
 		private var reverse:Boolean;
 		private var width:uint;

@@ -1,7 +1,6 @@
 package greed.art {
 	import krakel.KrkSprite;
 	import krakel.KrkTile;
-	import krakel.Trigger;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxSprite;
 	import org.flixel.system.FlxTile;
@@ -10,7 +9,7 @@ package greed.art {
 	 * ...
 	 * @author George
 	 */
-	public class Button extends Trigger {
+	public class Button extends KrkSprite {
 		[Embed(source = "../../../res/graphics/button.png")] static private const SHEET:Class;
 		private var _style:String,
 					_state:String;
@@ -26,9 +25,9 @@ package greed.art {
 			addAnimation('down_orange',	[3]);
 			
 			width = 10;
-			height = 8;
+			height = 12;
 			offset.x = 3;
-			offset.y = 8;
+			offset.y = 4;
 			recenter = true;
 			
 			_state = "up";

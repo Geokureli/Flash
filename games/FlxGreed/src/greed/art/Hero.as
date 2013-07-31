@@ -14,7 +14,8 @@ package greed.art {
 		
 		[Embed(source="../../../res/graphics/theif.png")] static private const SHEET:Class;
 		
-		private var jumpDecrease:int;
+		private var jumpDecrease:int,
+					_weight:int;
 		
 		public function Hero(x:Number = 0, y:Number = 0) {
 			super(x, y);
@@ -39,6 +40,8 @@ package greed.art {
 			addAnimation("duck", [22]);
 			addAnimation("slide", [23]);
 			
+			movePairs = CEILING
+			
 			scheme = new Scheme();
 			weight = 0;
 		}
@@ -50,10 +53,13 @@ package greed.art {
 			
 			super.setParameters(data);
 			
-			if (maxFall == 10000) maxFall = maxVelocity.y;
-			if (maxRise == 10000) maxRise = maxFall;
-			if (groundDrag == 0) groundDrag = drag.x;
-			if (airDrag == 0) airDrag = groundDrag;
+			if (maxFall < 0) maxFall = maxVelocity.y;
+			if (maxRise < 0) maxRise = maxFall;
+			
+			if (groundDrag < 0) groundDrag = drag.x;
+			if (airDrag < 0) airDrag = groundDrag;
+			
+			if (airAcc < 0) airAcc = acc;
 			
 			Scheme.JUMP_MAX = jumpMax;
 		}
@@ -79,6 +85,7 @@ package greed.art {
 		
 		override public function revive():void {
 			super.revive();
+			velocity.x = velocity.y = 0;
 			weight = 0;
 		}
 		
@@ -103,9 +110,9 @@ package greed.art {
 			super.destroy();
 		}
 		
-		public function get weight():int { return mass-1; }
+		public function get weight():int { return _weight; }
 		public function set weight(value:int):void {
-			mass = value+1;
+			_weight = value;
 			//jumpScheme.dragOnDecel = value == 0;
 			jumpMax = Scheme.JUMP_MAX - weight * jumpDecrease;
 			if (jumpMax < jumpMin)
@@ -150,7 +157,6 @@ package greed.art {
 		
 		public function get acc():Number { return jumpScheme.acc; }
 		public function set acc(value:Number):void { jumpScheme.acc = value; }
-		
 		
 		// --- ABILITIES
 		public function get canSkidJump():Boolean { return jumpScheme.canSkidJump; }

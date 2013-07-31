@@ -1,4 +1,6 @@
 package greed.levels {
+	import greed.art.Treasure;
+	import krakel.KrkSprite;
 	import org.flixel.FlxSprite;
 	import greed.art.Gold;
 	import greed.art.Hero;
@@ -14,8 +16,8 @@ package greed.levels {
 		
 		private var coinsUI:FlxText;
 		
-		public function ChoiceLevel(csv:String) {
-			super(csv, TILES);
+		public function ChoiceLevel() {
+			super();
 		}
 		override protected function addHUD():void {
 			add(hud = new Hud());
@@ -28,7 +30,6 @@ package greed.levels {
 			//gold.alpha = .5
 			gold.play("ui");
 			
-			(hud as Hud).treasureTotal = 3;
 		}
 		
 		override public function set coins(value:int):void {
@@ -36,13 +37,16 @@ package greed.levels {
 			if(coinsUI != null)
 				coinsUI.text = "x " + coins + "/" + totalCoins;
 		}
-		
-		override public function set treasure(value:uint):void {
-			super.treasure = value;
-			if (hud != null)
-				(hud as Hud).treasureCollected = value;
+		override protected function hitSprite(obj1:KrkSprite, obj2:KrkSprite):void {
+			super.hitSprite(obj1, obj2);
+			if (obj2 is Treasure && obj1 is Hero) (hud as Hud).treasureCollected(obj2.anim);
+			if (obj1 is Treasure && obj2 is Hero) (hud as Hud).treasureCollected(obj1.anim);
 		}
-		
+		//override public function set treasure(value:uint):void { super.treasure = value; }
+		override protected function reset():void {
+			super.reset();
+			(hud as Hud).reset();
+		}
 	}
 
 }
@@ -53,50 +57,44 @@ import org.flixel.FlxG;
 import org.flixel.FlxGroup;
 import org.flixel.FlxPoint;
 class Hud extends HUD {
-	
+	static private var ORDER:Vector.<String> = new <String>["emerald", "ruby", "diamond"];
 	private var _treasureCollected:uint;
-	private var treasure:Vector.<Treasure>;
+	private var treasure:Object;
 	
 	public function Hud() {
 		super();
-		treasure = new <Treasure>[];
-		treasureTotal = 0;
-		treasureCollected = 0;
+		treasure = {};
+		addTreasureHud();
 	}
 	
-	public function get treasureCollected():uint { return _treasureCollected; }
-	public function set treasureCollected(value:uint):void {
+	public function treasureCollected(value:String):void {
 		
-		while (_treasureCollected < value) {
-			treasure[_treasureCollected].filters.pop();
-			treasure[_treasureCollected].dirty = true;
-			_treasureCollected++;
-		}
-		
-		while (_treasureCollected > value) {
-			_treasureCollected--;
-			treasure[_treasureCollected].dirty = true;
-			treasure[_treasureCollected].filters.push(KrkSprite.desaturate);
-		}
-		
+		treasure[value].filters.pop();
+		treasure[value].dirty = true;
 	}
 	
-	public function get treasureTotal():uint { return treasure.length; }
-	
-	public function set treasureTotal(value:uint):void {
+	public function addTreasureHud():void {
 		var gem:Treasure;
-		while (treasure.length < value) {
-			add(gem = new Treasure(FlxG.width - 60 + 16 * treasure.length, 20));
-			gem.play(Treasure.ORDER[treasure.length]);
+		
+		for (var i:int = 0; i < ORDER.length; i++) {
+			add(gem = new Treasure(FlxG.width - 60 + 16 * i, 20));
+			gem.play(ORDER[i]);
 			gem.filters = new <Function>[KrkSprite.desaturate];
 			gem.dirty = true;
-			treasure.push(gem);
+			treasure[ORDER[i]] = gem;
 		}
-		while (treasure.length > value)
-			remove(treasure.pop());
 	}
+	
+	public function reset():void {
+		for (var i:int = 0; i < ORDER.length; i++) {
+			if (treasure[ORDER[i]].filters.length == 0) {
+				treasure[ORDER[i]].filters = new <Function>[KrkSprite.desaturate];
+				treasure[ORDER[i]].dirty = true;
+			}
+		}
+	}
+	
 	override public function destroy():void {
-		treasureTotal = 0;
 		super.destroy();
 	}
 }

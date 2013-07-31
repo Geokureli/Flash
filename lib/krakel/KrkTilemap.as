@@ -14,20 +14,21 @@ package krakel {
 	public class KrkTilemap extends FlxTilemap {
 		
 		static public const TILE_TYPES:Object = { };
+		static public const CSV_REFS:Object = { };
 		
 		private var _cloudsEnabled:Boolean;
 		
 		private var clouds:Vector.<FlxTile>;
 		private var special:Vector.<KrkTile>;
 		
-		public function KrkTilemap(mapData:XML, csv:String, tiles:Class) {
+		public function KrkTilemap(mapData:XML) {
 			super();
 			clouds = new Vector.<FlxTile>();
 			special = new Vector.<KrkTile>();
 			cloudsEnabled = true;
 			loadMap(
-				csv,
-				tiles,
+				CSV_REFS[mapData.@csv.toString()],
+				KrkSprite.GRAPHICS[mapData.@tiles.toString()],
 				int(mapData.@tileWidth),
 				int(mapData.@tileHeight),
 				FlxTilemap.OFF,
@@ -41,8 +42,6 @@ package krakel {
 		
 		private function setParameters(mapData:XML):void {
 			for each(var properties:XML in mapData.properties) {
-				
-				
 				
 				for each (var tileData:XML in properties.tile) {
 					

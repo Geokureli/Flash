@@ -33,17 +33,18 @@ package  {
 		[Embed(source = "../res/graphics/safe.png")] static public const SAFE:Class;
 		[Embed(source = "../res/graphics/hitblock.png")] static public const HIT_BLOCK:Class;
 		
+		[Embed(source = "../res/graphics/greed_props.png")] static public const NORMAL_TILES:Class;
+		
 		static public const levels:Object = {
 			0:new <Class>[LEVEL0_XML, LEVEL0_CSV],
 			1:new <Class>[LEVEL1_XML, LEVEL1_CSV],
 			2:new <Class>[LEVEL2_XML, LEVEL2_CSV],
 			3:new <Class>[LEVEL3_XML, LEVEL3_CSV]
 			// --- TEST LEVEL
-			,test:new <Class>[TEST_XML, TEST_CSV]
+			//,test:new <Class>[TEST_XML, TEST_CSV]
 		}
 		
 		{
-		trace("blerg");
 			KrkSprite.GRAPHICS.sign_button = new KrkGraphic(SIGN_BUTTON);
 			KrkSprite.GRAPHICS.hold = new KrkGraphic(HOLD);
 			KrkSprite.GRAPHICS.beam = new KrkGraphic(BEAM);

@@ -22,7 +22,7 @@ package greed.art {
 			immovable = true;
 			slack = 16;
 			drop = 16;
-			_overlapArgs = { collider: { moves:true }};
+			overlapArgs = { collider: { moves:true }};
 			dragOnDecel = true;
 			drag.y = 800;
 			counterWeight = 0;
@@ -38,26 +38,30 @@ package greed.art {
 			var mass:Number = getPairMass(this) - counterWeight;
 			//trace(drop * mass);
 			var targetY:Number = spawn.y + drop * mass;
+			
 			if(mass > 0)
-				trace(mass, targetY, y);
+				targetY += drop / 4;
 			if (y + SPEED*FlxG.elapsed < targetY) {
 				acceleration.y = SPEED;
 			} else if (y - SPEED*FlxG.elapsed > targetY) {
 				acceleration.y = -SPEED;
 			} else {
 				acceleration.y = 0;
-				//y = targetY;
+				if (velocity.y == 0)
+					y = targetY;
 			}
 			
 		}
 		private function getPairMass(obj:KrkSprite, ignore:KrkSprite = null):Number {
 			var mass:Number = obj.mass;
+			if (obj is Hero) mass += (obj as Hero).weight;
+			
 			for each(var pair:KrkSprite in obj.pairs[UP]) {
-				if (pair.moves && pair != ignore)
-					mass += getPairMass(pair, obj);
 				
+				if (pair.moves && pair != ignore && pair != this)
+					mass += getPairMass(pair, obj);
 			}
-			return mass
+			return mass;
 		}
 		override public function hitObject(obj:FlxObject):void {
 			super.hitObject(obj);

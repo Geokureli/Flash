@@ -184,6 +184,9 @@ package krakel {
 		
 		public function get flickering():Boolean { return target.flickering; }
 		
+		public function get path():FlxPath { return target.path; }
+		public function set path(value:FlxPath):void { target.path = value; }
+		
 		public function followPath(path:FlxPath, speed:Number = 100, mode:uint = PATH_FORWARD, autoRotate:Boolean = false):void {
 			target.followPath(path, speed, mode, autoRotate);
 		}

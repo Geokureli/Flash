@@ -2,6 +2,7 @@ package  {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.ui.Mouse;
@@ -21,10 +22,16 @@ package  {
 	 * @author George
 	 */
 	public dynamic class Preloader extends FlxPreloader {
+		
+		[Embed(source = "../res/sprites/loading_bar.png")] static public const LOAD_BAR:Class;
+		[Embed(source = "../res/sprites/loadingscreen.png")] static public const LOAD_SCREEN:Class;
+		
 		static public const MOCHI_ID:String = "9b3b1ff9c740acfd";
 		static private const SHOW_AD:Boolean = true;
 		
-		private var loadBar:LoadBar;
+		private var loadBar:Bitmap,
+					loadScreen:Bitmap;
+		
 		public var hiScore:HighScore;
 		
 		public function Preloader() {
@@ -36,14 +43,36 @@ package  {
 		override protected function create():void {
 			super.create();
 			
+			//_min = 10000;
+			
+			createLoaderGraphics();
+			
 			if (!FlxG.debug) {
 				canExit = false;
 				createAdBox();
 				createHiScore();
-				AdBox.showPreLoaderAd(onAdDone);
-				MochiServices.connect(MOCHI_ID, this);
+				//AdBox.showPreLoaderAd(onAdDone);
+				//MochiServices.connect(MOCHI_ID, this);
 			}
         }
+		
+		protected function createLoaderGraphics():void {
+			removeChild(_buffer);
+			_buffer = new Sprite();
+			addChild(_buffer);
+			
+			_buffer.scaleX = _buffer.scaleY = 2;
+			
+			_buffer.addChild(loadBar = new LOAD_BAR());
+			_buffer.addChild(loadScreen = new LOAD_SCREEN());
+			
+			var loaderMask:Shape = new Shape();
+			_buffer.addChild(loadBar.mask = loaderMask);
+			loaderMask.graphics.beginFill(0);
+			loaderMask.graphics.drawRect(0, 8, 200, 26);
+			loaderMask.graphics.endFill();
+			loaderMask.x += 50;
+		}
 		
 		protected function createHiScore():void { }
 		
@@ -59,6 +88,16 @@ package  {
 			
 			else return super.addChild(child);
 		}
+		
+		override protected function update(percent:Number):void {
+			//super.update(Percent);
+			
+			loadBar.mask.scaleX = percent;
+			
+			trace("update:" + percent);
+			
+		}
+		
 		override protected function destroy():void {
 			removeChild(_buffer);
 			super.destroy();
@@ -66,13 +105,4 @@ package  {
 		}
 	}
 
-}
-import flash.display.Sprite;
-class LoadBar extends Sprite {
-	public function LoadBar(width:Number) {
-		super();
-		graphics.beginFill(0);
-		graphics.drawRect(0, 0, width, 20);
-		graphics.endFill();
-	}
 }

@@ -1,4 +1,5 @@
 package krakel.helpers {
+	import krakel.KrkSprite;
 	import org.flixel.FlxObject;
 	/**
 	 * ...
@@ -11,10 +12,11 @@ package krakel.helpers {
 							IS_FORCE_STRING:RegExp = /^\s*['"].*['"]\s*$/,
 							IS_FORCE_XML:RegExp = /^\s*xml:.+$/,
 							IS_ARRAY:RegExp = /^.+,.+,.+$/,
-							IS_OBJECT:RegExp = /^\s*{+(\s*\w+\s*+:\s*\w+\s*(,|}))+\s*$/,
+							IS_OBJECT:RegExp = /^\s*{+\s*(.*)\s*}+\s*$/,
 							LETTERS:RegExp = /[a-z]+/,
 							COMMAS:RegExp = /\s*,\s*/g,
-							OUTER_BRACKETS:RegExp = /(^\s*{\s*)|(\s*}\s*$)/g;
+							OUTER_BRACKETS:RegExp = /(^\s*{\s*)|(\s*}\s*$)/g,
+							FILEPATH_NAME:RegExp = /(?<=\/)[^\/]*(?=\..*$)/;
 		
 		static public const CONSTANTS:Object = {
 			"true"	:true,
@@ -27,8 +29,18 @@ package krakel.helpers {
 			RIGHT	:FlxObject.RIGHT,
 			DOWN	:FlxObject.DOWN,
 			UP		:FlxObject.UP,
-			NONE	:FlxObject.NONE
+			NONE	:FlxObject.NONE,
+			PATH_FORWARD			:FlxObject.PATH_FORWARD,
+			PATH_BACKWARD			:FlxObject.PATH_BACKWARD,
+			PATH_LOOP_FORWARD		:FlxObject.PATH_LOOP_FORWARD,
+			PATH_LOOP_BACKWARD		:FlxObject.PATH_LOOP_BACKWARD,
+			PATH_YOYO				:FlxObject.PATH_YOYO,
+			PATH_HORIZONTAL_ONLY	:FlxObject.PATH_HORIZONTAL_ONLY,
+			PATH_VERTICAL_ONLY		:FlxObject.PATH_VERTICAL_ONLY,
+			TILE:		KrkSprite.TILE,
+			STRETCH:	KrkSprite.STRETCH
 		};
+		
 		static public const UNIT_CONVERSIONS:Object = {
 			s:1000,
 			f:1000 / 30
@@ -59,16 +71,31 @@ package krakel.helpers {
 			return arr;
 		}
 		static public function ConvertToObject(value:String):Object {
-			var arr:Array = value.split(OUTER_BRACKETS)[1].split(COMMAS);
+			var arr:Array = value.match(IS_OBJECT)[1].split(COMMAS);
 			var obj:Object = { };
-			var split:Array;
+			var groups:Array;
 			
 			for (var i:String in arr) {
-				
-				split = arr[i].split(/\s*:\s*/);
-				obj[split[0]] = AutoTypeString(split[1]);
+				groups = arr[i].match(/^\s*([^:]*)\s*:\s*(.*)\s*$/);
+				obj[groups[1]] = AutoTypeString(groups[2]);
 			}
 			return obj;
+		}
+		static public function splitTopLevel(value:String):Array {
+			var open:int, close:int, comma:int, i:int = 0, stack:int = 0;
+			var before:String;
+			open = value.indexOf("{");
+			close = value.indexOf("}");
+			if (open == -1) return value.split(COMMAS);
+			var commas:Vector.<int>;
+			while (i < open) {
+				i = value.indexOf(',', i);
+				if (i == -1) break;
+				commas.push(i);
+				i++;
+			}
+			// --- parse top level commas
+			return null
 		}
 		static public function getArray(target:Object, params:String):Array {
 			var arr:Array = [];

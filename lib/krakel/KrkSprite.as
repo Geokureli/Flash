@@ -18,6 +18,9 @@ package krakel {
 	public class KrkSprite extends FlxSprite {
 		static private const ZERO:Point = new Point();
 		
+		static public const TILE:String = "tile",
+							STRETCH:String = "stretch";
+		
 		static private const B_W:ColorMatrixFilter = new ColorMatrixFilter([
 			1/3, 1/2, 1/6, 0, 0,
 			1/3, 1/2, 1/6, 0, 0,
@@ -27,7 +30,7 @@ package krakel {
 		
 		static public const GRAPHICS:Object = { };
 		
-		protected var _overlapArgs:Object;
+		public var overlapArgs:Object;
 		
 		private var _graphic:String,
 					_anim:String;
@@ -43,18 +46,27 @@ package krakel {
 					recenter:Boolean,
 					collides:Boolean,
 					callback:Boolean,
-					dragOnDecel:Boolean;
+					dragOnDecel:Boolean,
+					pushed:Boolean;
+		
+		public var links:Vector.<KrkSprite>;
 		
 		public var filters:Vector.<Function>;
 		
-		protected var spawn:FlxPoint;
+		protected var spawn:FlxPoint,
+						repeat:FlxPoint,
+						lastRepeat:FlxPoint,
+						pushDrag:FlxPoint;
 		
 		public var hitAnim:String,
 					killAnim:String,
-					type:String;
+					type:String,
+					action:String;
+		
+		private var _displayMode:String;
 		
 		private var _scheme:KrkScheme;
-		private var data:XML;
+		public var data:XML;
 		public var pairs:Object,
 					framePairs:Object;
 		
@@ -74,7 +86,13 @@ package krakel {
 			triggeringEdge = ANY;
 			
 			spawn = new FlxPoint(x, y);
+			repeat = new FlxPoint(1, 1);
+			lastRepeat = new FlxPoint(1, 1);
+			pushDrag = new FlxPoint(-1, -1);
 			
+			displayMode = TILE;
+			
+			links = new <KrkSprite>[];
 			framePairs = {
 				0x1000:new <KrkSprite>[],
 				0x0100:new <KrkSprite>[],
@@ -87,8 +105,9 @@ package krakel {
 				0x0010:new <KrkSprite>[],
 				0x0001:new <KrkSprite>[]
 			}
-			_overlapArgs = { };
+			overlapArgs = { };
 		}
+		
 		public function setParameters(data:XML):void {
 			this.data = data;
 			XMLParser.setProperties(this, data);
@@ -98,26 +117,53 @@ package krakel {
 				//var end:FlxPoint = path.nodes[(_pathNodeIndex + 1) % path.nodes.length];
 				//x = (end.x - start.x) * pathT + start.x;
 				//y = (end.y - start.y) * pathT + start.y;
-				advancePath(false);
+				//advancePath(false);
 			}
 			if (recenter) {
+				if (displayMode == STRETCH) {	
+					if (scale.x != 1)
+						offset.x = (width - (frameWidth * scale.x)) / 2;
+					if (scale.y != 1)
+						offset.y = (height - (frameHeight * scale.y)) / 2;
+				}
+				
 				x += offset.x;
 				y += offset.y;
+				
 			}
 			spawn.x = x;
 			spawn.y = y;
 			
+			if (pushDrag.x == -1) pushDrag.x = drag.x / 2;
+			if (pushDrag.y == -1) pushDrag.y = drag.y / 2;
+			
 			if (!exists) kill();
 		}
+		
 		override public function preUpdate():void {
 			super.preUpdate();
+			
+			pushed = false;
+			if (moves && !immovable && (pairs[LEFT].length > 0 || pairs[RIGHT].length > 0)) {
+				var pair:KrkSprite;
+				for each(pair in pairs[LEFT].concat(pairs[RIGHT])) {
+					if (pair.moves && pair.velocity.x != 0) {
+						pushed = true;
+						break;
+					}
+				}
+			}
+			
 			if (scheme != null) scheme.preUpdate();
 		}
+		
 		override public function update():void {
 			super.update();
+			
 			if (scheme != null) scheme.update();
 			//trace(this, color.toString(16));
 		}
+		
 		override public function postUpdate():void {
 			super.postUpdate();
 			if (scheme != null) scheme.postUpdate();
@@ -136,22 +182,33 @@ package krakel {
 		}
 		
 		override protected function updateMotion():void {
+			
+			var drag:FlxPoint = this.drag;
+			if (pushed) {
+				trace(velocity.x);
+				this.drag = pushDrag;
+			}
+			
 			super.updateMotion();
+			
+			this.drag = drag;
+			
 			if ((last.x != x || last.y != y) && movePairs > 0) {
 				for (var i:String in pairs) {
 					if ((uint(i) & movePairs) > 0) {	
 						for each(var pair:KrkSprite in pairs[i]) {
-							trace(x - last.x, y - last.y);
 							pair.x += x-last.x;
 							pair.y += y-last.y;
 						}
 					}
 				}
 			}
+			
 			if (dragOnDecel) {
 				if(isDecelX) velocity.x = FlxU.applyDrag(velocity.x, drag.x);
 				if(isDecelY) velocity.y = FlxU.applyDrag(velocity.y, drag.y);
 			}
+			
 		}
 		
 		override public function draw():void {
@@ -165,14 +222,36 @@ package krakel {
 			
 			_flicker = !flicker;
 		}
+		
 		override protected function calcFrame():void {
 			super.calcFrame();
+			if (displayMode == TILE && (scale.x != 1 || scale.y != 1)) {
+				var bmd:BitmapData = new BitmapData(framePixels.width * scale.x, framePixels.height * scale.y, true, 0);
+				var p:Point = new Point();
+				for (p.x = 0; p.x < bmd.width; p.x += framePixels.width) {
+					for (p.y = 0; p.y < bmd.height; p.y += framePixels.height) {
+						bmd.copyPixels(framePixels, framePixels.rect, p, null, null, true);
+					}
+				}
+				framePixels = bmd;
+				scale.x = scale.y = 1;
+				
+				_flashRect.width = frameWidth = width;
+				_flashRect.height = frameHeight = height;
+			}
 			if (filters != null)
 				for each(var filter:Function in filters)
 					filter(framePixels);
 		}
 		
+		/**
+		 * Called by KrkLevel.update() when to listening objects overlap
+		 * @param	obj: The colliding Object
+		 * @return Whether to process the hit.
+		 */
 		public function checkHit(obj:FlxObject):Boolean {
+			if (!alive || !obj.alive) return false;
+			
 			var isHit:Boolean = !collides || triggeringEdge == ANY;
 			if (!isHit) {
 				if ((triggeringEdge & DOWN) > NONE)
@@ -188,8 +267,8 @@ package krakel {
 					isHit ||= justTouched(LEFT);
 			}
 			
-			if (_overlapArgs != null) {
-				var colliderArgs:Object = _overlapArgs.collider;
+			if (overlapArgs != null) {
+				var colliderArgs:Object = overlapArgs.collider;
 				if (colliderArgs != null) {
 					for (var i:String in colliderArgs) {
 						
@@ -197,7 +276,7 @@ package krakel {
 							return false;
 					}
 				}
-				var args:Object = _overlapArgs["this"];
+				var args:Object = overlapArgs["this"];
 				if (args != null) {
 					for (i in args) {
 						if (i in this && this[i] != args[i])
@@ -242,7 +321,7 @@ package krakel {
 				//((edge & 0x0010) > 0 ? "RIGHT " : "") + 
 				//((edge & 0x0001) > 0 ? "LEFT " : "");
 			//if (msg != "") trace(msg);
-			if (obj is KrkSprite && edge > 0) {
+			if (obj is KrkSprite && edge > 0 && obj.moves) {
 				if (edge in framePairs && framePairs[edge].indexOf(obj) == -1) {
 					if (isEnter) enterObject(obj);
 					framePairs[edge].push(obj);
@@ -252,6 +331,20 @@ package krakel {
 			}
 			
 			if (hitAnim != null) play(hitAnim);
+			
+			if (action != null) {
+				var actionList:Array = action.split(/\s*;\s*/);
+				var args:Array;
+				var target:String;
+			
+				for each (var action:String in actionList) {
+					
+					args = action.split(/\s*:\s*/);
+					
+					if (/\(\)$/.test(args[1]) && args[0] == "this")
+						this[args[1].substring(0, args[1].length-2)]();
+				}
+			}
 		}
 		
 		public function enterObject(obj:FlxObject):void { }
@@ -278,16 +371,18 @@ package krakel {
 		public function removePairs():void {
 			for (var i:String in pairs) {
 				while (pairs[i].length > 0)
-					pairs.pop();
+					pairs[i].pop();
 				while (framePairs[i].length > 0)
-					framePairs.pop();
+					framePairs[i].pop();
 			}
 		}
 		
 		override public function revive():void {
 			super.revive();
-			x = spawn.x;
-			y = spawn.y;
+			
+			last.x = x = spawn.x;
+			last.y = y = spawn.y;
+			
 			if (_anim != null)
 				play(_anim);
 		}
@@ -321,6 +416,7 @@ package krakel {
 		override public function play(AnimName:String, Force:Boolean = false):void {
 			super.play(AnimName, Force);
 		}
+		
 		public function get anim():String {
 			if (_curAnim == null) return _anim;
 			return _curAnim.name;
@@ -343,23 +439,28 @@ package krakel {
 		public function get xScale():Number { return scale.x; }
 		public function set xScale(value:Number):void {
 			scale.x = value;
-			offset.y = (width - (frameWidth * value)) / 2;
+			
+			if(displayMode == TILE)
+				dirty = true;
+				
 			width = frameWidth * value;
 		}
 		
 		public function get yScale():Number { return scale.y; }
 		public function set yScale(value:Number):void {
 			scale.y = value;
-			offset.y = (height - (frameHeight * value)) / 2;
+			
+			if(displayMode == TILE)
+				dirty = true;
+				
 			height = frameHeight * value;
 		}
 		
-		public function get overlapArgs():String {
-			return _overlapArgs.toString();
-		}
+		public function get displayMode():String { return _displayMode; }
 		
-		public function set overlapArgs(value:String):void {
-			_overlapArgs = null;
+		public function set displayMode(value:String):void {
+			_displayMode = value;
+			dirty = true;
 		}
 		
 		public function bounce(height:Number):void {
@@ -369,6 +470,7 @@ package krakel {
 		static public function desaturate(bmd:BitmapData):void {
 			bmd.applyFilter(bmd, bmd.rect, ZERO, B_W);
 		}
+		
 		static public function outline(bmd:BitmapData):void {
 			bmd.applyFilter(bmd, bmd.rect, ZERO, new GlowFilter(0, 1, 2, 2, 3, 1));
 		}

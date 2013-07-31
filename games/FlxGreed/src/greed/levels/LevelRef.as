@@ -3,7 +3,10 @@ package greed.levels {
 	import flash.net.FileReference;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import krakel.helpers.StringHelper;
 	import krakel.KrkLevel;
+	import krakel.KrkSprite;
+	import krakel.KrkTilemap;
 	/**
 	 * ...
 	 * @author George
@@ -11,38 +14,88 @@ package greed.levels {
 	public class LevelRef {
 		static public var ROOT_PATH:String;
 		
-		private var mapLoader:URLLoader;
+		private var loader:URLLoader;
 		private var callBack:Function;
+		private var csvUrls:Vector.<String>;
+		private var tileUrls:Vector.<String>;
 		
-		public var xml:XML;
-		private var csv:String;
+		public var xmlData:XML;
+		public var currentURL:String;
 		
 		public var name:String;
 		
-		public function LevelRef(name:String, data:XML) {
-			xml = data;
-			this.name = name;
+		public function LevelRef(data:XML) {
+			xmlData = data;
+			if ("@name" in data)
+				name = data.@name.toString();
 		}
 		
 		public function load(callBack:Function = null):void {
+			csvUrls = new <String>[];
+			tileUrls = new <String>[];
+			var path:String,
+				fileName:String;
+			for each(var tilemap:XML in xmlData.layer.map) {
+				// --- LOAD CSV
+				path = tilemap.@csv.toString();
+				trace(path.match(StringHelper.FILEPATH_NAME));
+				fileName = path.match(StringHelper.FILEPATH_NAME)[0];
+				
+				if (!(fileName in KrkTilemap.CSV_REFS))
+					csvUrls.push(ROOT_PATH + path);
+				
+				tilemap.@csv = fileName;
+				
+				// --- LOAD TILES
+				path = tilemap.@tiles.toString();
+				fileName = path.match(StringHelper.FILEPATH_NAME)[0];
+				
+				if (!(fileName in KrkSprite.GRAPHICS))
+					tileUrls.push(ROOT_PATH + path);
+				
+				tilemap.@tiles = fileName;
+			}
 			
-			mapLoader = new URLLoader();
-			mapLoader.load(new URLRequest(ROOT_PATH + "maps/" + name + ".csv"));
-			mapLoader.addEventListener(Event.COMPLETE, onMapLoaded);
 			this.callBack = callBack;
+			
+			loader = new URLLoader();
+			loadNext();
+		}
+		private function loadNext():void {
+			
+			if(csvUrls.length > 0)
+				loader.load(new URLRequest(csvUrls[0]));
+			else if(tileUrls.length > 0)
+				loader.load(new URLRequest(tileUrls[0]));
+			else {
+				if (callBack != null) callBack(this);
+				return;
+			}
+			
+			loader.addEventListener(Event.COMPLETE, onMapLoaded);
 		}
 		
 		private function onMapLoaded(e:Event):void {
-			csv = mapLoader.data;
-			mapLoader = null;
-			if(callBack != null) callBack(this);
+			var path:String;
+			if(csvUrls.length > 0)
+				path = csvUrls.shift();
+			else if(tileUrls.length > 0)
+				path = tileUrls.shift();
+			
+			var name:String = path.match(StringHelper.FILEPATH_NAME)[0];
+			if (path.indexOf(".csv") > -1)
+				KrkTilemap.CSV_REFS[name] = loader.data as String;
+			
+			loadNext();
 		}
 		
-		public function create():GreedLevel {
-			var level:GreedLevel = new ChoiceLevel(csv);
-			level.setParameters(xml);
+		public function create(target:KrkLevel = null):KrkLevel {
+			if (target == null) 
+				target = new ChoiceLevel();
 			
-			return level;
+			target.setParameters(xmlData);
+			
+			return target;
 		}
 	}
 

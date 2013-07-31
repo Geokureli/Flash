@@ -45,6 +45,7 @@ package krakel.jump {
 		
 		public var maxWallFall:Number,
 					groundDrag:Number,
+					decelDrag:Number,
 					jumpSkidV:Number,
 					airDrag:Number,
 					maxFall:Number,
@@ -57,22 +58,25 @@ package krakel.jump {
 		
 		public function JumpScheme() {
 			super();
-			hopCount = 0;
-			jumpMin = 
-				jumpMax =
-				hopMin =
+			
+			jumpMax =
 				hopMax =
-				numHops =
 				wallMin =
 				wallMax =
 				airAcc =
+				maxFall =
+				maxRise =
 				airDrag =
 				groundDrag =
+				decelDrag = -1;
+				
+			hopCount =
+				numHops =
+				jumpMin = 
+				hopMin =
 				acc = 0;
 			
 			jumpTime =
-				maxFall =
-				maxRise =
 				maxWallFall = 10000;
 			
 			changeDirOnHop =

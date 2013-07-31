@@ -27,9 +27,7 @@ layers = {}
 local groupPropTypes = as3.toobject({ String="String", Int="int", Float="Number", Boolean="Boolean" })
 DAME.SetCurrentPropTypes( groupPropTypes )
 
-layerPropsString = "%%ifproplength%%"..tab2.."<properties"
-	layerPropsString = layerPropsString.."%%proploop%% %propname%=\"%propvalue%\"%%proploopend%%"
-layerPropsString = layerPropsString.."/>\n%%endifproplength%%"
+layerPropsString = "%%ifproplength%%%%proploop%% %propname%=\"%propvalue%\"%%proploopend%%%%endifproplength%%"
 
 groupPropsText = "%%ifproplength%%%%proploop%%%propname%=\"%propvalue%\" %%proploopend%%%%endifproplength%%"
 
@@ -58,13 +56,11 @@ pathIdText = pathIdText.."%counter++:paths%" -- This line will actually incremem
 lineNodeText = tab4.."<node x=\"%nodex%\" y=\"%nodey%\" />\n"
 splineNodeText = tab4.."<node x=\"%nodex%\" y=\"%nodey%\" tan1x=\"%tan1x%\" tan1y=\"%tan1y%\" tan2x=\"%tan2x%\" tan2y=\"%tan2y%\" />\n"
 
-pathPropsText = "%%ifproplength%%"..tab3.."<properties>\n"
-	pathPropsText = pathPropsText.."%%proploop%%"..tab4.."<prop name=\"%propname%\" value=\"%propvalue%\" />\n%%proploopend%%"
-pathPropsText = pathPropsText..tab3.."</properties>\n%%endifproplength%%"
+pathPropsText = "%%ifproplength%%".."%%proploop%% %propname%\=\"%propvalue%\"%%proploopend%%%%endifproplength%%"
 
-pathText = tab3.."<nodes>\n%nodelist%"..tab3.."</nodes>\n"..pathPropsText..tab2.."</path>\n"
-linesText = pathIdText..tab2.."<path spline=\"false\" closed =\"%isclosed%\""..linkAssignText.." >\n"..pathText
-curvesText = pathIdText..tab2.."<path spline=\"true\" closed=\"%isclosed%\""..linkAssignText.." >\n"..pathText
+pathText = tab3.."<nodes>\n%nodelist%"..tab3.."</nodes>\n"..tab2.."</path>\n"
+linesText = pathIdText..tab2.."<path spline=\"false\" closed =\"%isclosed%\""..linkAssignText..pathPropsText.." >\n"..pathText
+curvesText = pathIdText..tab2.."<path spline=\"true\" closed=\"%isclosed%\""..linkAssignText..pathPropsText.." >\n"..pathText
 
 function generatePaths( )
 	for i,v in ipairs(pathLayers) do
@@ -275,9 +271,12 @@ for groupIndex = 0,groupCount do
 			layerName = string.gsub(layerName, " ", "_")
 			xscroll = as3.tolua(layer.xScroll)
 			yscroll = as3.tolua(layer.yScroll)
-			fileText = fileText..tab1.."<layer name=\""..layerName.."\" xScroll=\""..string.format("%.3f",xscroll).."\" yScroll=\""..string.format("%.3f",yscroll).."\" >\n"
+			fileText = fileText..tab1.."<layer"
+					.." name=\""..layerName.."\""
+					.." xScroll=\""..string.format("%.3f",xscroll).."\""
+					.." yScroll=\""..string.format("%.3f",yscroll).."\""
+					..as3.tolua(DAME.GetTextForProperties( layerPropsString, layer.properties )).." >\n"
 			fileText = fileText..layers[i][4]
-			fileText = fileText..as3.tolua(DAME.GetTextForProperties( layerPropsString, layer.properties ))
 			fileText = fileText..tab1.."</layer>\n"
 		end
 		

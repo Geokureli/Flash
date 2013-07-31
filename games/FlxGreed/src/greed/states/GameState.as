@@ -5,6 +5,7 @@ package greed.states {
 	import greed.art.Treasure;
 	import krakel.KrkGameState;
 	import krakel.KrkLevel;
+	import krakel.KrkLevelManager;
 	import org.flixel.FlxG;
 	import org.flixel.FlxRect;
 	import org.flixel.FlxText;
@@ -14,11 +15,10 @@ package greed.states {
 	 * ...
 	 * @author George
 	 */
-	public class GameState extends KrkGameState {
+	public class GameState extends KrkLevelManager {
 		
 		static public const NUM_LEVELS:int = 4;
 		
-		private var level:GreedLevel;
 		private var levelNum:Number;
 		private var hellMode:Boolean;
 		public function GameState() {
@@ -34,7 +34,7 @@ package greed.states {
 		override protected function addBG():void {
 			super.addMG();
 			
-			startLevel();
+			startLevel(Imports.getLevel(levelNum.toString(), hellMode));
 			
 			FlxG.visualDebug = true;
 			
@@ -43,25 +43,10 @@ package greed.states {
 			super.addUI();
 		}
 		
-		private function startLevel():void {
-			//try {
-				add(level = Imports.getLevel(levelNum.toString(), hellMode));
-				level.endLevel = onLevelEnd;
-				
-				FlxG.worldBounds.width = level.width;
-				
-				FlxG.worldBounds.height = level.height;
-				
-				FlxG.camera.bounds = new FlxRect(0, 0, level.width, level.height);
-				
-			//} catch (e:Error) { level = null };
-		}
-		
-		private function onLevelEnd():void {
+		override protected function onLevelEnd():void {
 			trace("end: " + levelNum);
 			
-			remove(level);
-			level.destroy();
+			super.onLevelEnd();
 			levelNum++;
 			if (levelNum == NUM_LEVELS) {
 				if (hellMode) return;

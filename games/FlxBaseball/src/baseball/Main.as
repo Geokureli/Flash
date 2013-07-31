@@ -23,12 +23,20 @@ package baseball{
 	 * ...
 	 * @author George
 	 */
-	[Frame(factoryClass="NGPreloader")]
+	//[Frame(factoryClass="KongLoader")]
 	public class Main extends KrkGame {
 		
 		public function Main() {
 			super(600, 350, FlxG.debug ? MenuState : IntroState, 1, 60, 30, true);
-			//addEventListener(Event.ADDED_TO_STAGE, onAdded);
+			addEventListener(Event.ADDED_TO_STAGE, onAdded);
+			trace(	18*12 +
+					12*10 +
+					13*07 +
+					13*12 +
+					13*09 +
+					13*09 +
+					13 * 13 +
+					5*4*3 );
 		}
 		
 		private function onAdded(e:Event):void {

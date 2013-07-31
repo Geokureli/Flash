@@ -7,6 +7,7 @@ package greed.states {
 	import flash.net.URLRequest;
 	import greed.levels.GreedLevel;
 	import greed.levels.LevelRef;
+	import krakel.KrkGroup;
 	import krakel.KrkState;
 	import org.flixel.FlxBasic;
 	import org.flixel.FlxButton;
@@ -20,23 +21,26 @@ package greed.states {
 	 */
 	public class LoaderState extends KrkState {
 		
+		[Embed(source="../../../res/graphics/trash.jpg")] static private const TRASH:Class;
+		
 		private var loader:URLLoader;
 		private var fileRef:FileReference;
 		private var levelRef:LevelRef;
 		private var sharedObject:SharedObject;
 		
-		public var buttons:FlxGroup;
+		public var levelButtons:FlxGroup,
+					utilButtons:FlxGroup,
+					deleteButtons:FlxGroup;
 		
 		private var btn_load:FlxButton,
 					btn_reload:FlxButton,
-					btn_auto:FlxButton;
+					btn_draw:FlxButton;
 		
 		private var levels:Object;
 		private var settings:XML;
 		private var currentLevel:GreedLevel;
 		private var levelName:String;
-		private var numLevels:int,
-					numUtilBtns:int;
+		private var numLevels:int;
 		
 		private var savedLevels:Array;
 		public var counter:int;
@@ -51,11 +55,15 @@ package greed.states {
 			levels = { };
 			numLevels =
 				counter = 0;
-			add(buttons = new FlxGroup());
+			add(utilButtons = new KrkGroup());
+			add(levelButtons = new KrkGroup());
+			add(deleteButtons = new KrkGroup());
 			
 			loader = new URLLoader();
 			loader.addEventListener(Event.COMPLETE, onSettingsload);
 			loader.load(new URLRequest("settings.xml"));
+			
+			FlxG.bgColor = 0xFF808080;
 		}
 		
 		private function onSettingsload(e:Event):void {
@@ -74,11 +82,10 @@ package greed.states {
 				savedLevels = [];
 			}
 			
-			buttons.add(btn_load = new FlxButton(5, FlxG.height-25, "Load", clk_load));
-			buttons.add(btn_reload = new FlxButton(90, FlxG.height - 25, "Reload", clk_reload));
-			buttons.add(btn_auto = new FlxButton(175, FlxG.height - 25, "Auto-load", clk_auto));
-			
-			numUtilBtns = buttons.length;
+			utilButtons.add(btn_load = new FlxButton(1, FlxG.height-25, "Load", clk_load));
+			utilButtons.add(btn_reload = new FlxButton(81, FlxG.height - 25, "Reload", clk_reload));
+			utilButtons.add(btn_draw = new FlxButton(161, FlxG.height - 25, "Debug Draw", clk_draw));
+			utilButtons.add(btn_draw = new FlxButton(241, FlxG.height - 25, "Clear all", clk_clear));
 		}
 		
 		private function loadLevels():void {
@@ -119,25 +126,40 @@ package greed.states {
 			
 			levelRef = levels[name];
 			if (levelRef == null) {
-				levelRef = new LevelRef(name, new XML(e.target.data));
-				buttons.add(
+				var ref:LevelRef = levelRef = new LevelRef(new XML(e.target.data));
+				levelButtons.add(
 					new FlxButton(
-						5 + 100*int(numLevels/10),
-						5 + (numLevels%10) * 20,
-						levelRef.name,
-						function():void { runlevel(levelRef); }
+						5 + 100*int(numLevels/7),
+						5 + (numLevels%7) * 20,
+						ref.name,
+						function():void { runlevel(ref); }
 					)
 				).visible = false;
+				
+				//--- COPIES INT FOR ANONYMOUS FUNCTION
+				var numCopy:int = numLevels;
+				var button:FlxButton;
+				deleteButtons.add(
+					button = new FlxButton(
+						85 + 100*int(numLevels/7),
+						7 + (numLevels%7) * 20,
+						null,
+						function():void { deleteLevel(numCopy); }
+					)
+				);
+				button.loadGraphic(TRASH);
 				levels[levelRef.name] = levelRef;
 			} else
-				levelRef.xml = new XML(e.target.data);
+				levelRef.xmlData = new XML(e.target.data);
 			
 			levelRef.load(onMapLoaded);
 			
 		}
 		
 		private function onMapLoaded(ref:LevelRef):void {
-			buttons.members[numUtilBtns + numLevels].visible = true;
+			trace(numLevels);
+			levelButtons.members[numLevels].visible = true;
+			deleteButtons.members[numLevels].visible = true;
 			
 			numLevels++;
 			
@@ -146,8 +168,8 @@ package greed.states {
 		
 		public function clk_reload():void {
 			if (sharedObject.data.levels != null) {
-				buttons.setAll("visible", false);
-				btn_load.visible = btn_reload.visible = btn_auto.visible = true;
+				levelButtons.setAll("visible", false);
+				deleteButtons.setAll("visible", false);
 				numLevels = 0;
 				
 				// --- COPY ARRAY;
@@ -156,40 +178,64 @@ package greed.states {
 			}
 		}
 		
-		public function clk_auto():void {
-			btn_auto.on = !btn_auto.on;
+		public function clk_draw():void {
+			btn_draw.on = !btn_draw.on;
+			FlxG.visualDebug = !FlxG.visualDebug;
+		}
+		
+		public function clk_clear():void {
+			while (levelButtons.length > 0)
+				deleteLevel(0);
 		}
 		
 		public function runlevel(levelRef:LevelRef):void {
-			buttons.kill();
+			utilButtons.kill();
+			levelButtons.kill();
+			deleteButtons.kill();
 			
-			currentLevel = levelRef.create();
+			currentLevel = levelRef.create() as GreedLevel;
+			currentLevel.endLevel = onLevelEnd;
 			currentLevel.ID = counter++;
 			add(currentLevel);
-			trace(currentLevel.ID);
-			FlxG.worldBounds.width = currentLevel.width;
-			FlxG.worldBounds.height = currentLevel.height;
+		}
+		
+		public function deleteLevel(num:uint):void {
+			var removeBtn:FlxButton = levelButtons.members[num];
+			// --- REMOVE LEVEL BUTTON
+			levelButtons.remove(removeBtn, true);
+			while (levelButtons.length > num) {
+				levelButtons.members[num].y -= 20;
+				num++;
+			}
+			delete levels[removeBtn.label.text];
+			// --- REMOVE LAST DELETE
+			deleteButtons.remove(deleteButtons.members[deleteButtons.length - 1], true);
 			
-			FlxG.camera.bounds = new FlxRect(0, 0, currentLevel.width, currentLevel.height);
+			var i:int = sharedObject.data.levels.indexOf(removeBtn.label.text + ".xml");
+			if (i > -1) {
+				sharedObject.data.levels.splice(i, 1);
+				sharedObject.flush();
+			}
 		}
 		
 		override public function update():void {
 			super.update();
 			
 			if (FlxG.keys.ESCAPE && currentLevel) {
-				remove(currentLevel);
-				currentLevel.destroy();
-				currentLevel = null;
-				
-				FlxG.camera.setBounds(0, 0, FlxG.width, FlxG.height, true);
-				
-				buttons.revive();
-				var button:FlxBasic = buttons.getFirstDead();
-				while (button != null) {
-					button.revive();
-					button = buttons.getFirstDead()
-				}
+				onLevelEnd();
 			}
+		}
+		
+		private function onLevelEnd():void {
+			remove(currentLevel);
+			currentLevel.destroy();
+			currentLevel = null;
+			
+			FlxG.camera.setBounds(0, 0, FlxG.width, FlxG.height, true);
+			
+			utilButtons.revive();
+			levelButtons.revive();
+			deleteButtons.revive();
 		}
 		
 		override public function destroy():void {
