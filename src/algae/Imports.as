@@ -1,5 +1,4 @@
-package  {
-	import algae.Quadrat;
+package algae {
 	import flash.text.Font;
 	import krakel.KrkGraphic;
 	import krakel.KrkSprite;
@@ -11,29 +10,29 @@ package  {
 	 */
 	public class Imports extends KrkImporter {
 		
-		[Embed(source = "../res/KBPlanetEarth.ttf", fontName = "KBPlanetEarth")] static public const KBPlanetEarth:Class;
+		[Embed(source = "../../res/algae/KBPlanetEarth.ttf", fontName = "KBPlanetEarth")] static public const KBPlanetEarth:Class;
 		
-		[Embed(source = "../res/levels/test_0.xml", mimeType = "application/octet-stream")] static private const LEVEL0_XML:Class;
-		[Embed(source = "../res/levels/levelA.xml", mimeType = "application/octet-stream")] static private const LEVEL1_XML:Class;
+		[Embed(source = "../../res/algae/levels/test_0.xml", mimeType = "application/octet-stream")] static private const LEVEL0_XML:Class;
+		[Embed(source = "../../res/algae/levels/levelA.xml", mimeType = "application/octet-stream")] static private const LEVEL1_XML:Class;
 		
-		[Embed(source = "../res/levels/maps/test_0/seaweed.csv", mimeType = "application/octet-stream")] static private const SEAWEED_0_CSV:Class;
-		[Embed(source = "../res/levels/maps/levelA/seaweed.csv", mimeType="application/octet-stream")] static private const SEAWEED_1_CSV:Class;
-		[Embed(source = "../res/levels/maps/test_0/height.csv", mimeType = "application/octet-stream")] static private const HEIGHT_0_CSV:Class;
-		[Embed(source = "../res/levels/maps/levelA/height.csv", mimeType="application/octet-stream")] static private const HEIGHT_1_CSV:Class;
-		[Embed(source = "../res/levels/maps/test_0/grow.csv", mimeType = "application/octet-stream")] static private const GROW_0_CSV:Class;
-		[Embed(source = "../res/levels/maps/levelA/grow.csv", mimeType="application/octet-stream")] static private const GROW_1_CSV:Class;
+		[Embed(source = "../../res/algae/levels/maps/test_0/seaweed.csv", mimeType = "application/octet-stream")] static private const SEAWEED_0_CSV:Class;
+		[Embed(source = "../../res/algae/levels/maps/levelA/seaweed.csv", mimeType="application/octet-stream")] static private const SEAWEED_1_CSV:Class;
+		[Embed(source = "../../res/algae/levels/maps/test_0/height.csv", mimeType = "application/octet-stream")] static private const HEIGHT_0_CSV:Class;
+		[Embed(source = "../../res/algae/levels/maps/levelA/height.csv", mimeType="application/octet-stream")] static private const HEIGHT_1_CSV:Class;
+		[Embed(source = "../../res/algae/levels/maps/test_0/grow.csv", mimeType = "application/octet-stream")] static private const GROW_0_CSV:Class;
+		[Embed(source = "../../res/algae/levels/maps/levelA/grow.csv", mimeType="application/octet-stream")] static private const GROW_1_CSV:Class;
 		
-		[Embed(source = "../res/graphics/colors.png")]static public const SEAWEED_TILES:Class;
-		[Embed(source = "../res/graphics/heightUI.png")]static public const HEIGHT_TILES:Class;
-		[Embed(source = "../res/graphics/toGrow.png")]static public const GROW_TILES:Class;
+		[Embed(source = "../../res/algae/graphics/colors.png")]static public const SEAWEED_TILES:Class;
+		[Embed(source = "../../res/algae/graphics/heightUI.png")]static public const HEIGHT_TILES:Class;
+		[Embed(source = "../../res/algae/graphics/toGrow.png")]static public const GROW_TILES:Class;
 		
-		[Embed(source = "../res/graphics/stonewall.png")] static private const STONE_WALL:Class;
-		[Embed(source = "../res/graphics/water.png")] static private const WATER:Class;
-		[Embed(source = "../res/graphics/counter_energy.png")] static private const COUNTER_ENERGY:Class;
-		[Embed(source = "../res/graphics/counter_rounds.png")] static private const COUNTER_ROUNDS:Class;
-		[Embed(source = "../res/graphics/counter_phase.png")] static private const COUNTER_PHASE:Class;
+		[Embed(source = "../../res/algae/graphics/stonewall.png")] static private const STONE_WALL:Class;
+		[Embed(source = "../../res/algae/graphics/water.png")] static private const WATER:Class;
+		[Embed(source = "../../res/algae/graphics/counter_energy.png")] static private const COUNTER_ENERGY:Class;
+		[Embed(source = "../../res/algae/graphics/counter_rounds.png")] static private const COUNTER_ROUNDS:Class;
+		[Embed(source = "../../res/algae/graphics/counter_phase.png")] static private const COUNTER_PHASE:Class;
 		
-		[Embed(source = "../res/audio/songs/menu_theme.mp3")] static private const MENU_THEME:Class;
+		[Embed(source = "../../res/algae/audio/songs/menu_theme.mp3")] static private const MENU_THEME:Class;
 		
 		static private const songs:Object = { };
 		

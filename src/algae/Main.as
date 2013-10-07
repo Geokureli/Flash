@@ -1,4 +1,4 @@
-package algae{
+package algae {
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import krakel.KrkGame;

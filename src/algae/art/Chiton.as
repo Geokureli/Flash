@@ -9,7 +9,7 @@ package algae.art {
 	 */
 	public class Chiton extends KrkSprite {
 		
-		[Embed(source="../../../res/graphics/chiton.png")] static private const SPRITE:Class
+		[Embed(source="../../../res/algae/graphics/chiton.png")] static private const SPRITE:Class
 		static public const MOVE_TIME:Number = 1;
 		
 		public var targetPos:FlxPoint;

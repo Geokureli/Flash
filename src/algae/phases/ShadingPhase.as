@@ -1,5 +1,6 @@
 package algae.phases {
 	import algae.AlgaeMap;
+	import algae.Imports;
 	import com.greensock.easing.Linear;
 	import com.greensock.TweenMax;
 	import org.flixel.FlxBasic;
