@@ -27,6 +27,10 @@ package krakel.helpers
 			return between(array.length);
 		}
 		
+		static public function item(array:Object):Object {
+			return array[between(array.length)];
+		}
+		
 		static public function point(x:Number, y:Number, width:Number, height:Number):Point {
 			return new Point(between(width) + x, between(height) + y);
 		}

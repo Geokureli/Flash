@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level name="levelA" bounds.x="0" bounds.y="0" bounds.width="1280" bounds.height="960" bgColor = "0xff777777" >
+	<layer name="bg" xScroll="1.000" yScroll="1.000">
+		<sprite type="KrkSprite" x="0.00" y="0.00" flip="false" xScale="1.00" yScale="1.00" 
+			graphic="bg"
+		/>
+	</layer>
+	<layer name="seaweed" xScroll="1.000" yScroll="1.000"
+		ref="seaweed"
+		type="AlgaeMap"
+	>
+		<map csv="maps/levelA/seaweed.csv" tiles="../graphics/colors.png"
+			x="0.000" y="0.000"
+			tileWidth="64" tileHeight="64"
+			collide="false"
+			collIdx="1" drawIdx="0"
+			ref="seaweed"
+			type="AlgaeMap"
+		/>
+	</layer>
+	<layer name="sprites" xScroll="1.000" yScroll="1.000">
+		<sprite type="KrkSprite" x="0.00" y="960.00" flip="false" xScale="1.00" yScale="1.00" 
+			graphic="water"
+			ref="tide"
+		/>
+	</layer>
+	<layer name="UI" xScroll="1.000" yScroll="1.000">
+		<sprite type="button" x="808.00" y="39.00" flip="false" xScale="1.00" yScale="1.00" 
+			text="Continue"
+			ref="btn_continue"
+		/>
+		<sprite type="KrkSprite" x="928.00" y="32.00" flip="false" xScale="1.00" yScale="1.00" 
+			graphic="energyMeter"
+		/>
+		<sprite type="KrkSprite" x="384.00" y="32.00" flip="false" xScale="1.00" yScale="1.00" 
+			graphic="roundMeter"
+		/>
+		<sprite type="KrkSprite" x="64.00" y="32.00" flip="false" xScale="1.00" yScale="1.00" 
+			graphic="phaseReadout"
+		/>
+	</layer>
+	<layer name="text" xScroll="1.000" yScroll="1.000">
+		<shape type="text" x="77.00" y="55.00" angle="0.00" width="265.88" height="40.32"
+			text="Predator's turn"
+			font="KBPlanetEarth"
+			size="28"
+			color="000000"
+			align="center"
+			ref="txt_phase"
+		/>
+		<shape type="text" x="390.00" y="53.00" angle="0.00" width="67.71" height="40.32"
+			text="99"
+			font="KBPlanetEarth"
+			size="36"
+			color="000000"
+			align="center"
+			ref="txt_round"
+		/>
+		<shape type="text" x="982.44" y="53.00" angle="0.00" width="77.33" height="40.32"
+			text="99"
+			font="KBPlanetEarth"
+			size="36"
+			color="000000"
+			align="left"
+			ref="txt_b_energy"
+		/>
+		<shape type="text" x="1129.40" y="53.00" angle="0.00" width="75.37" height="40.32"
+			text="99"
+			font="KBPlanetEarth"
+			size="36"
+			color="000000"
+			align="left"
+			ref="txt_r_energy"
+		/>
+	</layer>
+</level>

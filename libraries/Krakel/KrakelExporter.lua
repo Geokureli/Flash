@@ -41,7 +41,7 @@ linkAssignText = linkAssignText.."%%endiflink%%"
 function exportMapCSV( mapLayer, layerFileName )
 	-- get the raw mapdata. To change format, modify the strings passed in (rowPrefix,rowSuffix,columnPrefix,columnSeparator,columnSuffix)
 	mapText = as3.tolua(DAME.ConvertMapToText(mapLayer,"","\n","",",",""))
-	DAME.WriteFile(projectDataDir.."/"..layerFileName, mapText );
+	DAME.WriteFile(projectDataDir.."/levels/maps/"..layerFileName, mapText );
 end
 
 ------------------------
@@ -176,7 +176,7 @@ for groupIndex = 0,groupCount do
 		layerText = ""
 		
 		if isMap == true then
-			mapFileName = "maps".."/"..groupName..".csv"
+			mapFileName = groupName..".csv"
 			-- Generate the map file.
 			exportMapCSV( layer, mapFileName )
 			
@@ -197,7 +197,7 @@ for groupIndex = 0,groupCount do
 				end
 				
 				
-				mapFileName = "maps".."/"..groupName..".csv"
+				mapFileName = "levels/maps".."/"..groupName..".csv"
 				
 				
 				layerText = layerText..tab2..
@@ -209,8 +209,8 @@ for groupIndex = 0,groupCount do
 							.."tileWidth=\""..as3.tolua(layer.map.tileWidth).."\" "
 							.."tileHeight=\""..as3.tolua(layer.map.tileHeight).."\" "
 							.."collide=\""..hasHitsString.."\" "
-							.."collIdx=\""..as3.tolua(layer.map.collideIndex).."\" "
-							.."drawIdx=\""..as3.tolua(layer.map.drawIndex).."\" "
+							.."collIdx=\""..as3.tolua(layer.map.drawIndex).."\" "
+							.."drawIdx=\""..as3.tolua(layer.map.collideIndex).."\" "
 				
 				tilePropsText = "%%ifproplength%%"..tab4.."<tile id=\"%tileid%\" "..
 								"%%proploop%%%propname%=\"%propvalue%\" %%proploopend%%"..
@@ -299,7 +299,7 @@ for groupIndex = 0,groupCount do
 			
 		-- Save the file!
 		
-		DAME.WriteFile(projectDataDir..groupName..".xml", fileText )
+		DAME.WriteFile(projectDataDir.."levels/"..groupName..".xml", fileText )
 		
 	end
 end

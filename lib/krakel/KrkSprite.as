@@ -5,6 +5,7 @@ package krakel {
 	import flash.filters.ColorMatrixFilter;
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
+	import krakel.serial.KrkImporter;
 	import krakel.xml.XMLParser;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxObject;
@@ -28,7 +29,7 @@ package krakel {
 			0, 0, 0, 1, 0
 		]);
 		
-		static public const GRAPHICS:Object = { };
+		//static public const GRAPHICS:Object = { };
 		
 		public var overlapArgs:Object;
 		
@@ -70,6 +71,7 @@ package krakel {
 		public var pairs:Object,
 					framePairs:Object;
 		
+		public var flickerColor:uint;
 		
 		public function KrkSprite(x:Number = 0, y:Number = 0, graphic:Class = null) {
 			super(x, y, graphic);
@@ -91,6 +93,7 @@ package krakel {
 			pushDrag = new FlxPoint(-1, -1);
 			
 			displayMode = TILE;
+			flickerColor = 0xFFFFFF;
 			
 			links = new <KrkSprite>[];
 			framePairs = {
@@ -120,7 +123,9 @@ package krakel {
 				//advancePath(false);
 			}
 			if (recenter) {
-				if (displayMode == STRETCH) {	
+				//resetHelpers();
+				
+				if (displayMode == STRETCH) {
 					if (scale.x != 1)
 						offset.x = (width - (frameWidth * scale.x)) / 2;
 					if (scale.y != 1)
@@ -212,15 +217,19 @@ package krakel {
 		}
 		
 		override public function draw():void {
-			var flicker:Boolean = _flicker;
-			//color = 0xFFFFFF;
-			if (_flickerTimer != 0 && flicker) {
-				color = 0xFF4040;
-				_flicker = true;
+			if (flickerColor < 0xFFFFFF) {
+				var flicker:Boolean = _flicker;
+				color = 0xFFFFFF;
+				if (_flickerTimer != 0 && flicker) {
+					color = flickerColor;
+					_flicker = true;
+				}
 			}
+			
 			super.draw();
 			
-			_flicker = !flicker;
+			if (flickerColor < 0xFFFFFF)
+				_flicker = !flicker;
 		}
 		
 		override protected function calcFrame():void {
@@ -428,7 +437,15 @@ package krakel {
 		public function get graphic():String { return _graphic; }
 		public function set graphic(value:String):void {
 			_graphic = value;
-			(GRAPHICS[value] as KrkGraphic).load(this);
+			if (value.indexOf('/') != -1) {
+				
+			} else if(value in KrkImporter.graphics){
+				
+				if(KrkImporter.graphics[value] is KrkGraphic)
+					(KrkImporter.graphics[value] as KrkGraphic).load(this);
+				else if (KrkImporter.graphics[value] is Class)
+					loadGraphic(KrkImporter.graphics[value]);
+			}
 			if (scale.x != 1) xScale = scale.x;
 			if (scale.y != 1) yScale = scale.y;
 		}

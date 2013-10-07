@@ -52,11 +52,13 @@ package krakel.beat {
 			songStarted = false;
 			isRunning = true;
 		}
+		
 		static public function stop():void {
 			isRunning = false;
 			if (song != null) song.stop();
 			if (lastSound != null) lastSound.stop();
 		}
+		
 		override public function update():void {
 			if (isRunning) {
 				
@@ -69,7 +71,8 @@ package krakel.beat {
 				}
 				
 				if (songStarted) {
-					time = song.position+songOffset;
+					time = song.position + songOffset;
+					trace(song.position);
 				}
 				beat = time / 60000 * beatsPerMinute;
 				if (beat > nextBeat) { 
@@ -155,6 +158,7 @@ package krakel.beat {
 			
 			beatCallback = null;
 			beat = -1000;
+			stopSync();
 			
 			while (beatWatchers.length > 0)
 				beatWatchers.pop().destroy();

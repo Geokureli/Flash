@@ -114,7 +114,7 @@ package krakel.jump {
 				// --- JET JUMPING (VARIABLE HEIGHT)
 				jumpTime++;
 				isJumping = (u && jumpTime < jumpMax) || jumpTime < jumpMin;
-				if (isJumping && !isTouching(CEILING))
+				if (isJumping)// && !isTouching(CEILING))
 					velY = -jumpV;
 				else {
 					jumpTime = jumpMax;

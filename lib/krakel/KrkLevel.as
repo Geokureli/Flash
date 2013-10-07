@@ -1,8 +1,10 @@
 package krakel {
-	import greed.art.Gold;
 	import krakel.helpers.StringHelper;
+	import krakel.serial.KrkImporter;
+	import krakel.serial.Serializer;
 	import krakel.xml.XMLParser;
 	import org.flixel.FlxBasic;
+	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPath;
@@ -18,7 +20,7 @@ package krakel {
 	 */
 	public class KrkLevel extends KrkState {
 		
-		static public const CLASS_REFS:Object = { KrkSprite:KrkSprite, text:KrkText };
+		static public const CLASS_REFS:Object = { KrkSprite:KrkSprite, text:KrkText, button:KrkButton };
 		public var width:int, height:int;
 		
 		public var maps:Vector.<KrkTilemap>;
@@ -44,6 +46,9 @@ package krakel {
 		protected var links:Vector.<KrkSprite>
 		
 		protected var hud:HUD;
+		
+		protected var phases:Vector.<KrkPhase>;
+		protected var phase:KrkPhase;
 		
 		public function KrkLevel() {
 			super();
@@ -75,10 +80,10 @@ package krakel {
 			
 			for each (var layer:XML in levelData.layer)
 				createLayer(layer);
-				
+			
 			if (maps.length == 1)
 				solidGroup.add(maps[0]);
-				
+			
 			addHUD();
 			setLinks();
 		}
@@ -96,6 +101,9 @@ package krakel {
 						StringHelper.AutoTypeString(node.@y.toString()) as Number
 					)
 				paths.push(path);
+				
+				if ("@ref" in pathData)
+					setLocalRef(pathData.@ref.toString(), path);
 			}
 		}
 		
@@ -129,12 +137,12 @@ package krakel {
 				}
 				
 				for each (node in layer.shape) {
-					if(node.@type == "text")
+					if(node.@type.toString() == "text")
 					group.add(parseText(node));
 				}
 				
-				if (name.charAt(0) == '@')
-					this[name.substr(1)] = group;
+				if ("@ref" in layer)
+					setLocalRef(layer.@ref.toString(),group);
 				
 				// --- IGNORE PATH GROUPS
 				if(group.length > 0){
@@ -155,8 +163,6 @@ package krakel {
 			for each (node in layer.map) {
 				add(map = createTileMap(node));
 				maps.push(map);
-				if (name.charAt(0) == '@')
-					this[name.substr(1)] = map;
 			}
 		}
 		
@@ -166,7 +172,7 @@ package krakel {
 			var sprite:KrkSprite;
 			if (node.@type.toString() in CLASS_REFS) {
 				sprite = new CLASS_REFS[node.@type.toString()]();
-			} else if (node.@type.toString() in KrkSprite.GRAPHICS) {
+			} else if (node.@type.toString() in KrkImporter.graphics) {
 				sprite = new KrkSprite();
 				node.@graphic = node.@type.toString();
 			}
@@ -237,17 +243,29 @@ package krakel {
 				(sprite as KrkSprite).setParameters(node);
 			else XMLParser.setProperties(sprite, node);
 			
+			// --- SET HARD REFERENCE
+			if ("@ref" in node)
+				setLocalRef(node.@ref.toString(), sprite);
+			
 			return sprite;
 		}
 		
 		private function parseText(node:XML):FlxText {
-			var txt:FlxText = new FlxText(
+			var txt:KrkText = new KrkText(
 				Number(node.@x),
 				Number(node.@y),
 				Number(node.@width),
 				node.@text.toString()
 			);
-			txt.alignment = node.@align.toString()
+			//txt.font = node.@font.toString();
+			txt.size = Number(node.@size);
+			txt.color = parseInt(node.@color.toString(), 0xF);
+			txt.alignment = node.@align.toString();
+			
+			// --- SET HARD REFERENCE
+			if ("@ref" in node)
+				setLocalRef(node.@ref.toString(), txt);
+			
 			return txt;
 		}
 		
@@ -258,10 +276,21 @@ package krakel {
 		
 		protected function createTileMap(mapData:XML):KrkTilemap {		
 			
-			var map:KrkTilemap = new KrkTilemap(mapData);
+			var map:KrkTilemap;
+			if ("@type" in mapData) {
+				map = new CLASS_REFS[mapData.@type.toString()](mapData);
+			} else
+				map = new KrkTilemap(mapData);
+			
 			
 			if (map.width > width) width = map.width;
 			if (map.height > height) height = map.height;
+			
+			
+			// --- SET HARD REFERENCE
+			if ("@ref" in mapData)
+				setLocalRef(mapData.@ref.toString(), map);
+			
 			return map;
 		}
 		
@@ -284,6 +313,9 @@ package krakel {
 		override public function update():void {
 			
 			checkCollisions();
+			
+			if (phase != null)
+				phase.update();
 			
 			super.update();
 		}
@@ -379,6 +411,17 @@ package krakel {
 			
 			cloudGroup.setAll("allowCollisions", value ? FlxObject.CEILING : FlxObject.NONE);
  		}
+		
+		public function setLocalRef(name:String, obj:Object):void {
+			var target:Object = this;
+			
+			var path:Array = name.split('.');
+			while (path.length > 1)
+				target = target[path.shift()];
+			
+			target[path[0]] = obj;
+		}
+		
 	}
 
 }

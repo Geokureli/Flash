@@ -1,6 +1,7 @@
 package krakel {
 	import flash.geom.Rectangle;
 	import krakel.helpers.StringHelper;
+	import krakel.serial.KrkImporter;
 	import org.flixel.FlxG;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxSprite;
@@ -27,8 +28,8 @@ package krakel {
 			special = new Vector.<KrkTile>();
 			cloudsEnabled = true;
 			loadMap(
-				CSV_REFS[mapData.@csv.toString()],
-				KrkSprite.GRAPHICS[mapData.@tiles.toString()],
+				new (KrkImporter.getFile(mapData.@csv.toString()))(),
+				KrkImporter.getFile(mapData.@tiles.toString()),
 				int(mapData.@tileWidth),
 				int(mapData.@tileHeight),
 				FlxTilemap.OFF,

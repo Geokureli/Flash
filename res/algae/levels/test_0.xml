@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level name="test_0" bounds.x="0" bounds.y="0" bounds.width="1280" bounds.height="960" bgColor = "0xff777777" >
+	<layer name="seaweed" xScroll="1.000" yScroll="1.000" >
+		<map csv="maps/test_0/seaweed.csv" tiles="../colors.png" x="0.000" y="0.000" tileWidth="64" tileHeight="64" collide="false" collIdx="1" drawIdx="0" />
+	</layer>
+	<layer name="height" xScroll="1.000" yScroll="1.000" >
+		<map csv="maps/test_0/height.csv" tiles="../sprites/heightUI.png" x="0.000" y="0.000" tileWidth="64" tileHeight="64" collide="false" collIdx="1" drawIdx="1" />
+	</layer>
+	<layer name="grow" xScroll="1.000" yScroll="1.000" >
+		<map csv="maps/test_0/grow.csv" tiles="../sprites/toGrow.png" x="0.000" y="0.000" tileWidth="64" tileHeight="64" collide="false" collIdx="1" drawIdx="1" />
+	</layer>
+</level>

@@ -1,4 +1,5 @@
 package krakel {
+	import org.flixel.FlxSprite;
 	/**
 	 * ...
 	 * @author George

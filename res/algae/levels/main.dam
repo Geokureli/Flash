@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+  <version>3.1.3</version>
+  <bgColor>0x777777</bgColor>
+  <viewPos x="71.75" y="39.032871972318276"/>
+  <firstLayersTop>false</firstLayersTop>
+  <spriteEntries currentId="1"/>
+  <layers>
+    <group name="test_0" id="0" xScroll="1" yScroll="1" visible="true" open="true" locked="false" exports="true">
+      <maplayer name="seaweed" id="0" xScroll="1" yScroll="1" x="0" y="0" width="20" height="15" tileset="../colors.png" tileWidth="64" tileHeight="64" visible="true" hasHits="false" drawIdx="0" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="64" tileSpacingY="64" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" selected="true">
+        <row>0,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2</row>
+        <row>0,0,0,0,0,0,2,2,2,2,0,0,0,0,0,0,0,0,0,2</row>
+        <row>0,0,0,0,2,2,2,2,2,2,1,2,0,0,0,0,2,0,2,2</row>
+        <row>0,0,0,1,2,2,2,0,2,0,0,0,0,0,0,0,0,2,1,2</row>
+        <row>0,0,0,2,0,0,0,0,0,0,0,4,4,0,0,2,0,0,2,2</row>
+        <row>0,0,0,0,0,3,0,0,0,0,0,4,0,0,0,2,2,0,0,2</row>
+        <row>0,0,0,3,3,0,0,0,0,0,4,4,0,2,2,2,2,2,0,0</row>
+        <row>0,0,0,3,3,0,0,0,0,0,4,4,0,2,2,2,1,2,2,2</row>
+        <row>0,0,0,2,2,2,2,0,2,2,2,2,0,2,2,2,2,2,2,0</row>
+        <row>2,2,2,2,2,2,0,0,2,2,2,2,2,0,2,2,2,0,0,0</row>
+        <row>0,2,2,2,2,2,0,0,2,2,1,2,2,0,2,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,2,2,2,2,2,2,2,0,0,0,0,0,0</row>
+        <row>2,2,2,0,0,0,0,2,2,2,2,2,0,0,0,0,0,2,2,2</row>
+        <row>2,2,2,2,0,0,0,0,2,2,0,0,0,0,0,2,2,2,2,2</row>
+        <row>2,2,2,2,2,2,0,0,2,2,2,0,0,0,2,2,2,2,2,2</row>
+        <tileProperties>
+          <properties/>
+          <properties/>
+          <properties/>
+        </tileProperties>
+      </maplayer>
+      <maplayer name="height" id="1" xScroll="1" yScroll="1" x="0" y="0" width="20" height="15" tileset="../sprites/heightUI.png" tileWidth="64" tileHeight="64" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="64" tileSpacingY="64" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false">
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+      </maplayer>
+      <maplayer name="grow" id="5" xScroll="1" yScroll="1" x="0" y="0" width="20" height="15" tileset="../sprites/toGrow.png" tileWidth="64" tileHeight="64" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="64" tileSpacingY="64" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false">
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+        <row>0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0</row>
+      </maplayer>
+    </group>
+  </layers>
+  <layerTemplates/>
+  <tileMatrix currentMatrix="1" rows="3" cols="3" randomizeMiddle="true" ignoreClear="false" ignoreMapEdges="true" allowSpecialTiles="true" tileset="../autotiles.png">
+    <row>
+      <tile>7</tile>
+      <tile>15</tile>
+      <tile>13</tile>
+    </row>
+    <row>
+      <tile>8</tile>
+      <tile>16</tile>
+      <tile>14</tile>
+    </row>
+    <row>
+      <tile>4</tile>
+      <tile>12</tile>
+      <tile>10</tile>
+    </row>
+    <specialConnections>
+      <sets>
+        <connections name="Single Inside Corners">
+          <entry green="0x1000" red="0x1010010"/>
+          <entry green="0x11000" red="0x1000010"/>
+          <entry green="0x10000" red="0x1001010"/>
+          <entry green="0x0" red="0x1011010"/>
+        </connections>
+        <connections name="Double Inside Corners">
+          <entry green="0x1000000" red="0x11010"/>
+          <entry green="0x1000010" red="0x11000"/>
+          <entry green="0x10" red="0x1011000"/>
+          <entry green="0x1111011" red="0x10000100"/>
+        </connections>
+        <connections name="Triple Inside Corners">
+          <entry green="0x1011011" red="0x10100100"/>
+          <entry green="0x1011110" red="0x10100001"/>
+          <entry green="0x11011010" red="0x100101"/>
+          <entry green="0x1111010" red="0x10000101"/>
+        </connections>
+        <connections name="Quad Inside Corners">
+          <entry green="0x1011010" red="0x10100101"/>
+          <entry green="0x0" red="0x0"/>
+          <entry green="0x0" red="0x0"/>
+          <entry green="0x0" red="0x0"/>
+        </connections>
+        <connections name="Double Outside Corners">
+          <entry green="0x10" red="0x1011000"/>
+          <entry green="0x1000" red="0x1010010"/>
+          <entry green="0x1000000" red="0x11010"/>
+          <entry green="0x10000" red="0x1001010"/>
+        </connections>
+        <connections name="Double Outside Edges">
+          <entry green="0x1000010" red="0x11000"/>
+          <entry green="0x11000" red="0x1000010"/>
+          <entry green="0x0" red="0x0"/>
+          <entry green="0x0" red="0x0"/>
+        </connections>
+        <connections name="Opposing Double Inside Corners">
+          <entry green="0x1111110" red="0x10000001"/>
+          <entry green="0x11011011" red="0x100100"/>
+          <entry green="0x0" red="0x0"/>
+          <entry green="0x0" red="0x0"/>
+        </connections>
+      </sets>
+      <rows>
+        <row set="0">
+          <tiles>
+            <id>3</id>
+            <id>11</id>
+            <id>9</id>
+            <id>1</id>
+          </tiles>
+        </row>
+        <row set="1">
+          <tiles>
+            <id>2</id>
+            <id>6</id>
+            <id>5</id>
+            <id>0</id>
+          </tiles>
+        </row>
+      </rows>
+    </specialConnections>
+  </tileMatrix>
+  <tileMatrixData name="matrix1" rows="3" cols="3" randomizeMiddle="true" ignoreClear="false" ignoreMapEdges="true" allowSpecialTiles="true" tileset="../autotiles.png">
+    <tiles>7,15,13,8,16,14,4,12,10</tiles>
+    <connections set="0">
+      <tiles>3,11,9,1</tiles>
+    </connections>
+    <connections set="1">
+      <tiles>2,6,5,0</tiles>
+    </connections>
+  </tileMatrixData>
+  <tileMatrixData name="std_mat" rows="3" cols="3" randomizeMiddle="true" ignoreClear="false" ignoreMapEdges="true" allowSpecialTiles="true" tileset="../autotiles.png">
+    <tiles>7,15,13,8,16,14,4,12,10</tiles>
+    <connections set="0">
+      <tiles>3,11,9,1</tiles>
+    </connections>
+    <connections set="1">
+      <tiles>2,6,5,0</tiles>
+    </connections>
+  </tileMatrixData>
+  <tileBrushes/>
+  <colorSwatches/>
+  <bookmarks>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+  </bookmarks>
+  <colourGrid>
+    <colour>0x000000</colour>
+    <colour>0x5e5e5e</colour>
+    <colour>0xffffff</colour>
+    <colour>0xff0000</colour>
+    <colour>0x800000</colour>
+    <colour>0x483b2a</colour>
+    <colour>0xa36323</colour>
+    <colour>0xeb8833</colour>
+    <colour>0xffff00</colour>
+    <colour>0x2e474d</colour>
+    <colour>0x42881e</colour>
+    <colour>0xa2cd2e</colour>
+    <colour>0x1a2531</colour>
+    <colour>0x025683</colour>
+    <colour>0x33a2f1</colour>
+    <colour>0xb2dcee</colour>
+  </colourGrid>
+  <options>
+    <AllowEditingTemplateLayerList>true</AllowEditingTemplateLayerList>
+    <ForceAddingTemplatedMapsOnly>false</ForceAddingTemplatedMapsOnly>
+    <ForceAddingTemplatedLayersOnly>false</ForceAddingTemplatedLayersOnly>
+    <PreventEditingMapTileset>false</PreventEditingMapTileset>
+    <PreventEditingSprites>false</PreventEditingSprites>
+    <SaveSpritesSeparately>false</SaveSpritesSeparately>
+    <SavePropertyTypesSeparately>false</SavePropertyTypesSeparately>
+    <SaveLayerTemplatesSeparately>false</SaveLayerTemplatesSeparately>
+    <SaveTileMatrixSeparately>false</SaveTileMatrixSeparately>
+    <SaveTileBrushesSeparately>false</SaveTileBrushesSeparately>
+    <SaveGuidesSeparately>false</SaveGuidesSeparately>
+    <ForceTilemapPositionChangesInUnits>false</ForceTilemapPositionChangesInUnits>
+  </options>
+  <exporter name="C:\Users\GeoKureli\Documents\FlashDevelop\Git\Science Game Jam\science-game-jam\tools\KrakelExporter.lua" spritepos="Top Left" rotatedSpritePos="false" relativePaths="true" useProjectExporterOnly="false">
+    <setting name="EXPORT_ANGLE">false</setting>
+    <setting name="ExportOnlyCSV">false</setting>
+    <setting name="DataDir"/>
+  </exporter>
+  <customPropertyTypes/>
+  <guides>
+    <snap>true</snap>
+    <visible>false</visible>
+    <x>0</x>
+    <y>0</y>
+    <xspace>16</xspace>
+    <yspace>16</yspace>
+    <gridcolour>0x77ff0000</gridcolour>
+    <snaptype>Anchor</snaptype>
+    <paintcontinuous>true</paintcontinuous>
+    <showgameregion>false</showgameregion>
+    <gameregionwidth>400</gameregionwidth>
+    <gameregionheight>400</gameregionheight>
+    <gameregionopacity>0.5</gameregionopacity>
+    <gameregioncentered>false</gameregioncentered>
+    <minGridSpace>4</minGridSpace>
+    <showregiongrid>false</showregiongrid>
+    <regiongridx>0</regiongridx>
+    <regiongridy>0</regiongridy>
+    <regiongridcolour>0xccffffff</regiongridcolour>
+  </guides>
+</project>

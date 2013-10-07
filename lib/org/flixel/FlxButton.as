@@ -9,8 +9,8 @@ package org.flixel
 	 */
 	public class FlxButton extends FlxSprite
 	{
-		[Embed(source="data/button.png")] protected var ImgDefaultButton:Class;
-		[Embed(source="data/beep.mp3")] protected var SndBeep:Class;
+		[Embed(source="data/button.png")] static public var ImgDefaultButton:Class;
+		[Embed(source="data/beep.mp3")] static public var SndBeep:Class;
 		
 		/**
 		 * Used with public variable <code>status</code>, means not highlighted or pressed.

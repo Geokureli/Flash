@@ -1,6 +1,7 @@
 package org.flixel
 {
 	import flash.display.BitmapData;
+	import flash.text.AntiAliasType;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	
