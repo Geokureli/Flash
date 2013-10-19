@@ -6,17 +6,17 @@
 				<tile id="5" kills="true" range="6" />
 				<tile id="11" cloud="true" range="2" />
 				<tile id="13" triggerEdge="DOWN" hitFrame="14" />
-				<tile id="17" type="fade" killTime="0.5" reviveTime="2" />
+				<tile id="17" type="Fade" killTime="0.5" reviveTime="2" />
 				<tile id="20" frames="#,0" frameTimer="3" />
-				<tile id="22" type="ladder" range="2" edges="NONE" />
+				<tile id="22" type="Ladder" range="2" edges="NONE" />
 				<tile id="23" cloud="true" />
-				<tile id="25" type="spring" edges="CEILING" />
+				<tile id="25" type="Spring" edges="CEILING" />
 			</properties>
 		</map>
 	</layer>
 	<layer name="sprites" xScroll="1.000" yScroll="1.000" >
 		<sprite type="KrkSprite" x="544.00" y="16.00" flip="false" xScale="1.00" yScale="4.00" graphic="beam" solid="true" resets="true" immovable="true" group="beam1" displayMode="TILE" />
-		<sprite type="hero" x="23.00" y="279.00" flip="false" xScale="1.00" yScale="1.00" jumpV="180" jumpMax="26" jumpMin="6" maxVelocity.x="150" maxVelocity.y="180" acc="800" drag.x="800" solid="true" callback="true" falls="true" passClouds="true" recenter="true" />
+		<sprite type="Hero" x="23.00" y="279.00" flip="false" xScale="1.00" yScale="1.00" jumpV="180" jumpMax="26" jumpMin="6" maxVelocity.x="150" maxVelocity.y="180" acc="800" drag.x="800" solid="true" callback="true" falls="true" passClouds="true" recenter="true" />
 		<sprite type="Button" x="512.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" action="beam1:kill()" />
 		<sprite type="KrkSprite" x="151.00" y="202.00" flip="false" xScale="1.00" yScale="1.00"  pathId="0" startNode="3.00" pathT="0.51" graphic="platform" moves="true" cloud="true" immovable="true" />
 		<sprite type="KrkSprite" x="400.00" y="161.13" flip="false" xScale="1.00" yScale="1.00"  pathId="1" startNode="0.00" pathT="0.00" graphic="platform" moves="true" cloud="true" immovable="true" />
@@ -25,13 +25,13 @@
 		<sprite type="KrkSprite" x="96.00" y="160.00" flip="false" xScale="1.00" yScale="1.00" graphic="platform" moves="true" cloud="true" immovable="true" pathId="0" startNode="0" />
 		<sprite type="KrkSprite" x="336.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" moves="true" solid="true" resets="true" falls="true" graphic="safe" maxVelocity.y="180" drag.x="800" callback="true" movePairs="UP" />
 		<sprite type="KrkSprite" x="240.00" y="64.00" flip="false" xScale="1.00" yScale="1.00" moves="true" solid="true" resets="true" falls="true" graphic="safe" maxVelocity.y="180" drag.x="800" callback="true" movePairs="UP" />
-		<sprite type="weightForm" x="80.00" y="240.00" flip="false" xScale="1.00" yScale="1.00" graphic="platform" cloud="true" drop="16" callback="true" />
+		<sprite type="WeightForm" x="80.00" y="240.00" flip="false" xScale="1.00" yScale="1.00" graphic="platform" cloud="true" drop="16" callback="true" />
 		<sprite type="KrkSprite" x="576.00" y="16.00" flip="false" xScale="1.00" yScale="1.00" graphic="hitBlock" solid="true" triggeringEdge="FLOOR" immovable="true" callback="true" anim="idle" killAnim="hit" resets="true" action="emerald:revive();this:kill()" />
 		<sprite type="Button" x="608.00" y="288.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" action="coins:revive()" />
-		<sprite type="weightForm" x="608.00" y="256.00" flip="false" xScale="1.00" yScale="1.00" graphic="platform" cloud="false" drop="16" callback="true" edges="CEILING" solid="true" displayMode="TILE" />
+		<sprite type="WeightForm" x="608.00" y="256.00" flip="false" xScale="1.00" yScale="1.00" graphic="platform" cloud="false" drop="16" callback="true" edges="CEILING" solid="true" displayMode="TILE" />
 		<sprite type="Treasure" x="592.00" y="16.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" recenter="true" anim="emerald" group="emerald" exists="false" />
 		<sprite type="KrkSprite" x="576.00" y="32.00" flip="false" xScale="1.00" yScale="1.00" graphic="arrow" anim="up" />
-		<sprite type="weightForm" x="224.00" y="240.00" flip="false" xScale="1.00" yScale="1.00" graphic="platform" cloud="true" drop="16" callback="true" />
+		<sprite type="WeightForm" x="224.00" y="240.00" flip="false" xScale="1.00" yScale="1.00" graphic="platform" cloud="true" drop="16" callback="true" />
 		<sprite type="KrkSprite" x="544.00" y="285.00" flip="false" xScale="3.00" yScale="1.00"  pathId="2" startNode="0.00" pathT="1.00" graphic="platform" moves="true" cloud="true" immovable="true" overlapArgs="{collider:{type:hero}}" />
 		<sprite type="KrkSprite" x="807.00" y="333.00" flip="false" xScale="1.00" yScale="1.00" graphic="platform" moves="true" cloud="true" immovable="true" />
 	</layer>

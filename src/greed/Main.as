@@ -4,6 +4,7 @@ package greed{
 	import flash.events.ProgressEvent;
 	import greed.art.Button;
 	import greed.art.LevelPath;
+	import greed.levels.Overworld;
 	import greed.states.PathCreator;
 	import greed.tiles.CallbackTile;
 	import greed.art.Door;
@@ -17,11 +18,13 @@ package greed{
 	import greed.states.OverworldState;
 	import greed.tiles.FadeTile;
 	import krakel.helpers.StringHelper;
+	import krakel.KrkData;
 	import krakel.KrkGame;
 	import krakel.KrkLevel;
 	import krakel.KrkSprite;
 	import krakel.KrkTilemap;
 	import krakel.serial.KrkImporter;
+	import mx.core.IUIComponent;
 	import org.flixel.FlxG;
 	import org.flixel.FlxObject;
 	
@@ -34,25 +37,25 @@ package greed{
 		
 		static private function init():void {
 			
-			
-			KrkLevel.CLASS_REFS.Gold = Gold;
-			KrkLevel.CLASS_REFS.Treasure = Treasure;
-			KrkLevel.CLASS_REFS.Door = Door;
-			KrkLevel.CLASS_REFS.Button = Button;
-			KrkLevel.CLASS_REFS.hero = Hero;
-			KrkLevel.CLASS_REFS.overHero = OverworldHero;
-			KrkLevel.CLASS_REFS.weightForm = WeightForm;
-			KrkLevel.CLASS_REFS.levelPath = LevelPath;
+			KrkData.CLASS_REFS.Gold = Gold;
+			KrkData.CLASS_REFS.Treasure = Treasure;
+			KrkData.CLASS_REFS.Door = Door;
+			KrkData.CLASS_REFS.Button = Button;
+			KrkData.CLASS_REFS.Hero = Hero;
+			KrkData.CLASS_REFS.OverworldHero = OverworldHero;
+			KrkData.CLASS_REFS.WeightForm = WeightForm;
+			KrkData.CLASS_REFS.LevelPath = LevelPath;
+			KrkData.CLASS_REFS.Overworld = Overworld;
 			
 			//CLASS_REFS.flipScheme = TileScheme;
 			
 			//CLASS_REFS.Arrow = Arrow;
 			//CLASS_REFS.HoldSign = HoldSign;
 			
-			KrkTilemap.TILE_TYPES.spring = CallbackTile;
-			//KrkTilemap.TILE_TYPES.button = Button;
-			KrkTilemap.TILE_TYPES.ladder = CallbackTile;
-			KrkTilemap.TILE_TYPES.fade = FadeTile;
+			KrkTilemap.TILE_TYPES.Spring = CallbackTile;
+			//KrkTilemap.TILE_TYPES.Button = Button;
+			KrkTilemap.TILE_TYPES.Ladder = CallbackTile;
+			KrkTilemap.TILE_TYPES.Fade = FadeTile;
 		}
 		
 		{ init(); }
@@ -60,7 +63,7 @@ package greed{
 		static private const SCALE:Number = 2;
 		
 		public function Main():void {
-			super(720 / SCALE, 400 / SCALE, GameState, SCALE);
+			super(720 / SCALE, 400 / SCALE, OverworldState, SCALE);
 			Imports.BEAM;
 		}
 		

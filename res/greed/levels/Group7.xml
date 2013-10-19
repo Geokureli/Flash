@@ -3,7 +3,7 @@
 	<layer name="Layer1" xScroll="1.000" yScroll="1.000" >
 		<sprite type="Treasure" x="256.00" y="128.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" recenter="true" anim="ruby" />
 		<sprite type="Treasure" x="176.00" y="144.00" flip="false" xScale="1.00" yScale="1.00" callback="true" recenter="true" resets="true" anim="diamond" />
-		<sprite type="hero" x="22.00" y="200.00" flip="false" xScale="1.00" yScale="1.00" jumpV="180" jumpMax="26" jumpMin="6" maxVelocity.x="150" maxVelocity.y="180" acc="800" drag.x="800" solid="true" callback="true" falls="true" passClouds="true" recenter="true" />
+		<sprite type="Hero" x="22.00" y="200.00" flip="false" xScale="1.00" yScale="1.00" jumpV="180" jumpMax="26" jumpMin="6" maxVelocity.x="150" maxVelocity.y="180" acc="800" drag.x="800" solid="true" callback="true" falls="true" passClouds="true" recenter="true" />
 		<sprite type="Door" x="448.00" y="200.00" flip="false" xScale="1.00" yScale="1.00" callback="true" />
 	</layer>
 	<layer name="Map2" xScroll="1.000" yScroll="1.000" >
@@ -12,12 +12,21 @@
 				<tile id="5" kills="true" range="6" />
 				<tile id="11" cloud="true" range="2" />
 				<tile id="13" triggerEdge="DOWN" hitFrame="14" />
-				<tile id="17" type="fade" killTime="0.5" reviveTime="2" />
+				<tile id="17" type="Fade" killTime="0.5" reviveTime="2" />
 				<tile id="20" frames="#,0" frameTimer="3" />
-				<tile id="22" type="ladder" range="2" edges="NONE" />
+				<tile id="22" type="Ladder" range="2" edges="NONE" />
 				<tile id="23" cloud="true" />
-				<tile id="25" type="spring" edges="CEILING" />
+				<tile id="25" type="Spring" edges="CEILING" />
 			</properties>
 		</map>
+	</layer>
+	<layer name="Layer3" xScroll="1.000" yScroll="1.000" >
+		<path spline="true" closed="false" >
+			<nodes>
+				<node x="184.00" y="152.00" tan1x="0.00" tan1y="-44.00" tan2x="0.00" tan2y="30.00" />
+				<node x="264.00" y="136.00" tan1x="0.00" tan1y="-30.00" tan2x="0.00" tan2y="64.00" />
+				<node x="152.00" y="72.00" tan1x="-26.49" tan1y="-14.07" tan2x="26.49" tan2y="14.07" />
+			</nodes>
+		</path>
 	</layer>
 </level>

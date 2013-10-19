@@ -13,11 +13,11 @@
 				<tile id="5" kills="true" range="6" />
 				<tile id="11" cloud="true" range="2" />
 				<tile id="13" triggerEdge="DOWN" hitFrame="14" />
-				<tile id="17" type="fade" killTime="0.5" reviveTime="2" />
+				<tile id="17" type="Fade" killTime="0.5" reviveTime="2" />
 				<tile id="20" frames="#,0" frameTimer="3" />
-				<tile id="22" type="ladder" range="2" edges="NONE" />
+				<tile id="22" type="Ladder" range="2" edges="NONE" />
 				<tile id="23" cloud="true" />
-				<tile id="25" type="spring" edges="CEILING" />
+				<tile id="25" type="Spring" edges="CEILING" />
 			</properties>
 		</map>
 	</layer>
@@ -35,7 +35,7 @@
 		<sprite type="Gold" x="1072.00" y="336.00" flip="false" xScale="1.00" yScale="1.00" callback="true" recenter="true" resets="true" />
 		<sprite type="Gold" x="1104.00" y="336.00" flip="false" xScale="1.00" yScale="1.00" callback="true" recenter="true" resets="true" />
 		<sprite type="Gold" x="1104.00" y="160.00" flip="false" xScale="1.00" yScale="1.00" callback="true" recenter="true" resets="true" />
-		<sprite type="hero" x="22.00" y="344.00" flip="false" xScale="1.00" yScale="1.00" jumpV="180" jumpMax="26" jumpMin="6" maxVelocity.x="150" maxVelocity.y="180" acc="800" drag.x="800" solid="true" callback="true" falls="true" passClouds="true" recenter="true" />
+		<sprite type="Hero" x="22.00" y="344.00" flip="false" xScale="1.00" yScale="1.00" jumpV="180" jumpMax="26" jumpMin="6" maxVelocity.x="150" maxVelocity.y="180" acc="800" drag.x="800" solid="true" callback="true" falls="true" passClouds="true" recenter="true" />
 		<sprite type="Gold" x="1056.00" y="160.00" flip="false" xScale="1.00" yScale="1.00" callback="true" recenter="true" resets="true" />
 		<sprite type="Door" x="800.00" y="360.00" flip="false" xScale="1.00" yScale="1.00" callback="true" />
 		<sprite type="Treasure" x="752.00" y="208.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" recenter="true" anim="ruby" />

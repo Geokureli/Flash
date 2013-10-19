@@ -2,10 +2,150 @@
 <project>
   <version>3.1.3</version>
   <bgColor>0x777777</bgColor>
-  <viewPos x="-1142" y="-265"/>
+  <viewPos x="34" y="103.12978723404257"/>
   <firstLayersTop>false</firstLayersTop>
-  <spriteEntries currentId="21">
-    <sprite name="hero" idx="1" className="hero" image="graphics/theif.png" width="32" height="24" preview="0" anchorX="10" anchorY="8" centerAnchor="false" boundsX="11" boundsY="4" boundsWidth="10" boundsHeight="20" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
+  <spriteEntries currentId="24">
+    <group name="treasure" idx="1" open="false">
+      <sprite name="coin" idx="2" className="Gold" image="graphics/gold.png" width="16" height="16" preview="0" anchorX="0" anchorY="0" centerAnchor="false" boundsX="4" boundsY="3" boundsWidth="8" boundsHeight="10" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
+        <anims>
+          <anim name="" fps="10" loops="true">33,34,35,36</anim>
+        </anims>
+        <properties>
+          <type typeof="Boolean" name="callback" value="true" hidden="false"/>
+          <type typeof="Boolean" name="recenter" value="true" hidden="false"/>
+          <type typeof="Boolean" name="resets" value="true" hidden="false"/>
+        </properties>
+      </sprite>
+      <tileEntry name="emerald" idx="3" className="Treasure" image="graphics/treasure.png" offsetX="0" offsetY="0" width="16" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="true" canRotate="true" surfaceObject="false" lockRotation="false">
+        <properties>
+          <type typeof="Boolean" name="callback" value="true" hidden="false"/>
+          <type typeof="Boolean" name="resets" value="true" hidden="false"/>
+          <type typeof="Boolean" name="recenter" value="true" hidden="false"/>
+          <type typeof="String" name="anim" value="emerald" hidden="false"/>
+        </properties>
+      </tileEntry>
+      <sprite name="ruby" idx="4" className="Treasure" image="graphics/gold.png" width="16" height="16" preview="6" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
+        <properties>
+          <type typeof="Boolean" name="callback" value="true" hidden="false"/>
+          <type typeof="Boolean" name="resets" value="true" hidden="false"/>
+          <type typeof="Boolean" name="recenter" value="true" hidden="false"/>
+          <type typeof="String" name="anim" value="ruby" hidden="false"/>
+        </properties>
+      </sprite>
+      <sprite name="diamond" idx="5" className="Treasure" image="graphics/gold.png" width="16" height="16" preview="5" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
+        <properties>
+          <type typeof="String" name="callback" value="true" hidden="false"/>
+          <type typeof="Boolean" name="recenter" value="true" hidden="false"/>
+          <type typeof="Boolean" name="resets" value="true" hidden="false"/>
+          <type typeof="String" name="anim" value="diamond" hidden="false"/>
+        </properties>
+      </sprite>
+    </group>
+    <group name="misc" idx="6" open="false">
+      <tileEntry name="Beam" idx="7" className="KrkSprite" image="graphics/beam.png" offsetX="0" offsetY="0" width="16" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="true" canRotate="false" surfaceObject="false" lockRotation="false">
+        <properties>
+          <type typeof="String" name="graphic" value="beam" hidden="false"/>
+          <type typeof="Boolean" name="solid" value="true" hidden="false"/>
+          <type typeof="Boolean" name="resets" value="true" hidden="false"/>
+          <type typeof="Boolean" name="immovable" value="true" hidden="false"/>
+        </properties>
+      </tileEntry>
+      <tileEntry name="Hit block" idx="8" className="KrkSprite" image="graphics/hitblock.png" offsetX="0" offsetY="0" width="16" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false">
+        <properties>
+          <type typeof="String" name="graphic" value="hitBlock" hidden="false"/>
+          <type typeof="Boolean" name="solid" value="true" hidden="false"/>
+          <type typeof="Custom" name="triggeringEdge" value="floor" hidden="false" typeName="edge" customTypeIdx="0"/>
+          <type typeof="Boolean" name="immovable" value="true" hidden="false"/>
+          <type typeof="Boolean" name="callback" value="true" hidden="false"/>
+          <type typeof="String" name="anim" value="idle" hidden="false"/>
+          <type typeof="String" name="killAnim" value="hit" hidden="false"/>
+          <type typeof="Boolean" name="resets" value="true" hidden="false"/>
+        </properties>
+      </tileEntry>
+      <sprite name="Weight platform" idx="9" className="WeightForm" image="graphics/platform.png" width="16" height="7" preview="0" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="7" constructor="" creation="" exports="true" canScale="true" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="true" lockRotation="false">
+        <properties>
+          <type typeof="String" name="graphic" value="platform" hidden="false"/>
+          <type typeof="Boolean" name="cloud" value="true" hidden="false"/>
+          <type typeof="Int" name="drop" value="16" hidden="false"/>
+          <type typeof="Boolean" name="callback" value="true" hidden="false"/>
+        </properties>
+      </sprite>
+      <sprite name="Moving platform" idx="10" className="KrkSprite" image="graphics/platform.png" width="16" height="7" preview="0" anchorX="8" anchorY="3" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="7" constructor="" creation="" exports="true" canScale="true" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="true" lockRotation="false">
+        <properties>
+          <type typeof="String" name="graphic" value="platform" hidden="false"/>
+          <type typeof="Boolean" name="moves" value="true" hidden="false"/>
+          <type typeof="Boolean" name="cloud" value="true" hidden="false"/>
+          <type typeof="Boolean" name="immovable" value="true" hidden="false"/>
+        </properties>
+      </sprite>
+      <tileEntry name="Button" idx="11" className="Button" image="graphics/button.png" offsetX="0" offsetY="0" width="16" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false">
+        <properties>
+          <type typeof="Boolean" name="callback" value="true" hidden="false"/>
+          <type typeof="Boolean" name="resets" value="true" hidden="false"/>
+        </properties>
+      </tileEntry>
+      <tileEntry name="Door" idx="12" className="Door" image="graphics/door.png" offsetX="0" offsetY="0" width="16" height="24" anchorX="0" anchorY="8" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="24" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false">
+        <properties>
+          <type typeof="String" name="callback" value="true" hidden="false"/>
+        </properties>
+      </tileEntry>
+      <tileEntry name="Safe" idx="13" className="KrkSprite" image="graphics/safe.png" offsetX="0" offsetY="0" width="16" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false">
+        <properties>
+          <type typeof="Boolean" name="moves" value="true" hidden="false"/>
+          <type typeof="Boolean" name="solid" value="true" hidden="false"/>
+          <type typeof="Boolean" name="resets" value="true" hidden="false"/>
+          <type typeof="Boolean" name="falls" value="true" hidden="false"/>
+          <type typeof="String" name="graphic" value="safe" hidden="false"/>
+          <type typeof="Float" name="maxVelocity.y" value="180" hidden="false"/>
+          <type typeof="Int" name="drag.x" value="800" hidden="false"/>
+          <type typeof="Boolean" name="callback" value="true" hidden="false"/>
+          <type typeof="Custom" name="movePairs" value="up" hidden="false" typeName="edge" customTypeIdx="0"/>
+        </properties>
+      </tileEntry>
+    </group>
+    <group name="signs" idx="14" open="false">
+      <sprite name="up" idx="15" className="KrkSprite" image="graphics/arrows.png" width="16" height="16" preview="0" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
+        <properties>
+          <type typeof="String" name="graphic" value="arrow" hidden="false"/>
+          <type typeof="String" name="anim" value="up" hidden="false"/>
+        </properties>
+      </sprite>
+      <sprite name="down" idx="16" className="KrkSprite" image="graphics/arrows.png" width="16" height="16" preview="1" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
+        <properties>
+          <type typeof="String" name="anim" value="down" hidden="false"/>
+          <type typeof="String" name="graphic" value="arrow" hidden="false"/>
+        </properties>
+      </sprite>
+      <sprite name="left" idx="17" className="KrkSprite" image="graphics/arrows.png" width="16" height="16" preview="2" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
+        <properties>
+          <type typeof="String" name="anim" value="left" hidden="false"/>
+          <type typeof="String" name="graphic" value="arrow" hidden="false"/>
+        </properties>
+      </sprite>
+      <sprite name="right" idx="18" className="KrkSprite" image="graphics/arrows.png" width="16" height="16" preview="3" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
+        <properties>
+          <type typeof="String" name="anim" value="right" hidden="false"/>
+          <type typeof="String" name="graphic" value="arrow" hidden="false"/>
+        </properties>
+      </sprite>
+      <sprite name="blank" idx="19" className="KrkSprite" image="graphics/arrows.png" width="16" height="16" preview="4" anchorX="0" anchorY="0" centerAnchor="false" boundsX="3" boundsY="3" boundsWidth="10" boundsHeight="10" constructor="" creation="" exports="true" canScale="true" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
+        <properties>
+          <type typeof="String" name="anim" value="right" hidden="false"/>
+          <type typeof="String" name="graphic" value="arrow" hidden="false"/>
+        </properties>
+      </sprite>
+      <tileEntry name="Hold" idx="20" className="KrkSprite" image="graphics/hold.png" offsetX="0" offsetY="0" width="24" height="9" anchorX="4" anchorY="1" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="24" boundsHeight="9" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false">
+        <properties>
+          <type typeof="String" name="graphic" value="hold" hidden="false"/>
+        </properties>
+      </tileEntry>
+      <tileEntry name="Button Sign" idx="21" className="KrkSprite" image="graphics/buttonsign.png" offsetX="0" offsetY="0" width="24" height="16" anchorX="8" anchorY="8" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="24" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false">
+        <properties>
+          <type typeof="String" name="graphic" value="sign_button" hidden="false"/>
+        </properties>
+      </tileEntry>
+    </group>
+    <sprite name="Hero" idx="22" className="Hero" image="graphics/theif.png" width="32" height="24" preview="0" anchorX="10" anchorY="8" centerAnchor="false" boundsX="11" boundsY="4" boundsWidth="10" boundsHeight="20" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false" selected="true">
       <anims>
         <anim name="walk" fps="10" loops="true">0,1,2,3,4,5</anim>
         <anim name="jump_forward" fps="10" loops="false">6,6</anim>
@@ -42,145 +182,14 @@
         <type typeof="Boolean" name="recenter" value="true" hidden="false"/>
       </properties>
     </sprite>
-    <sprite name="coin" idx="2" className="Gold" image="graphics/gold.png" width="16" height="16" preview="0" anchorX="0" anchorY="0" centerAnchor="false" boundsX="4" boundsY="3" boundsWidth="8" boundsHeight="10" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
-      <anims>
-        <anim name="" fps="10" loops="true">33,34,35,36</anim>
-      </anims>
-      <properties>
-        <type typeof="Boolean" name="callback" value="true" hidden="false"/>
-        <type typeof="Boolean" name="recenter" value="true" hidden="false"/>
-        <type typeof="Boolean" name="resets" value="true" hidden="false"/>
-      </properties>
-    </sprite>
-    <tileEntry name="door" idx="3" className="Door" image="graphics/door.png" offsetX="0" offsetY="0" width="16" height="24" anchorX="0" anchorY="8" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="24" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false">
-      <properties>
-        <type typeof="String" name="callback" value="true" hidden="false"/>
-      </properties>
-    </tileEntry>
-    <tileEntry name="button" idx="4" className="Button" image="graphics/button.png" offsetX="0" offsetY="0" width="16" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false">
-      <properties>
-        <type typeof="Boolean" name="callback" value="true" hidden="false"/>
-        <type typeof="Boolean" name="resets" value="true" hidden="false"/>
-      </properties>
-    </tileEntry>
-    <sprite name="up" idx="5" className="KrkSprite" image="graphics/arrows.png" width="16" height="16" preview="0" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
-      <properties>
-        <type typeof="String" name="graphic" value="arrow" hidden="false"/>
-        <type typeof="String" name="anim" value="up" hidden="false"/>
-      </properties>
-    </sprite>
-    <sprite name="down" idx="6" className="KrkSprite" image="graphics/arrows.png" width="16" height="16" preview="1" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
-      <properties>
-        <type typeof="String" name="anim" value="down" hidden="false"/>
-        <type typeof="String" name="graphic" value="arrow" hidden="false"/>
-      </properties>
-    </sprite>
-    <sprite name="left" idx="7" className="KrkSprite" image="graphics/arrows.png" width="16" height="16" preview="2" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
-      <properties>
-        <type typeof="String" name="anim" value="left" hidden="false"/>
-        <type typeof="String" name="graphic" value="arrow" hidden="false"/>
-      </properties>
-    </sprite>
-    <sprite name="right" idx="8" className="KrkSprite" image="graphics/arrows.png" width="16" height="16" preview="3" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
-      <properties>
-        <type typeof="String" name="anim" value="right" hidden="false"/>
-        <type typeof="String" name="graphic" value="arrow" hidden="false"/>
-      </properties>
-    </sprite>
-    <sprite name="blank" idx="9" className="KrkSprite" image="graphics/arrows.png" width="16" height="16" preview="4" anchorX="0" anchorY="0" centerAnchor="false" boundsX="3" boundsY="3" boundsWidth="10" boundsHeight="10" constructor="" creation="" exports="true" canScale="true" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
-      <properties>
-        <type typeof="String" name="anim" value="right" hidden="false"/>
-        <type typeof="String" name="graphic" value="arrow" hidden="false"/>
-      </properties>
-    </sprite>
-    <tileEntry name="hold" idx="10" className="KrkSprite" image="graphics/hold.png" offsetX="0" offsetY="0" width="24" height="9" anchorX="4" anchorY="1" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="24" boundsHeight="9" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false">
-      <properties>
-        <type typeof="String" name="graphic" value="hold" hidden="false"/>
-      </properties>
-    </tileEntry>
-    <tileEntry name="beam" idx="11" className="KrkSprite" image="graphics/beam.png" offsetX="0" offsetY="0" width="16" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="true" canRotate="false" surfaceObject="false" lockRotation="false">
-      <properties>
-        <type typeof="String" name="graphic" value="beam" hidden="false"/>
-        <type typeof="Boolean" name="solid" value="true" hidden="false"/>
-        <type typeof="Boolean" name="resets" value="true" hidden="false"/>
-        <type typeof="Boolean" name="immovable" value="true" hidden="false"/>
-      </properties>
-    </tileEntry>
-    <tileEntry name="emerald" idx="12" className="Treasure" image="graphics/treasure.png" offsetX="0" offsetY="0" width="16" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="true" canRotate="true" surfaceObject="false" lockRotation="false">
-      <properties>
-        <type typeof="Boolean" name="callback" value="true" hidden="false"/>
-        <type typeof="Boolean" name="resets" value="true" hidden="false"/>
-        <type typeof="Boolean" name="recenter" value="true" hidden="false"/>
-        <type typeof="String" name="anim" value="emerald" hidden="false"/>
-      </properties>
-    </tileEntry>
-    <sprite name="ruby" idx="13" className="Treasure" image="graphics/gold.png" width="16" height="16" preview="6" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
-      <properties>
-        <type typeof="Boolean" name="callback" value="true" hidden="false"/>
-        <type typeof="Boolean" name="resets" value="true" hidden="false"/>
-        <type typeof="Boolean" name="recenter" value="true" hidden="false"/>
-        <type typeof="String" name="anim" value="ruby" hidden="false"/>
-      </properties>
-    </sprite>
-    <sprite name="diamond" idx="14" className="Treasure" image="graphics/gold.png" width="16" height="16" preview="5" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false">
-      <properties>
-        <type typeof="String" name="callback" value="true" hidden="false"/>
-        <type typeof="Boolean" name="recenter" value="true" hidden="false"/>
-        <type typeof="Boolean" name="resets" value="true" hidden="false"/>
-        <type typeof="String" name="anim" value="diamond" hidden="false"/>
-      </properties>
-    </sprite>
-    <tileEntry name="" idx="15" className="KrkSprite" image="graphics/buttonsign.png" offsetX="0" offsetY="0" width="24" height="16" anchorX="8" anchorY="8" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="24" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false">
-      <properties>
-        <type typeof="String" name="graphic" value="sign_button" hidden="false"/>
-      </properties>
-    </tileEntry>
-    <sprite name="moving platform" idx="16" className="KrkSprite" image="graphics/platform.png" width="16" height="7" preview="0" anchorX="8" anchorY="3" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="7" constructor="" creation="" exports="true" canScale="true" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="true" lockRotation="false">
-      <properties>
-        <type typeof="String" name="graphic" value="platform" hidden="false"/>
-        <type typeof="Boolean" name="moves" value="true" hidden="false"/>
-        <type typeof="Boolean" name="cloud" value="true" hidden="false"/>
-        <type typeof="Boolean" name="immovable" value="true" hidden="false"/>
-      </properties>
-    </sprite>
-    <tileEntry name="safe" idx="17" className="KrkSprite" image="graphics/safe.png" offsetX="0" offsetY="0" width="16" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false">
-      <properties>
-        <type typeof="Boolean" name="moves" value="true" hidden="false"/>
-        <type typeof="Boolean" name="solid" value="true" hidden="false"/>
-        <type typeof="Boolean" name="resets" value="true" hidden="false"/>
-        <type typeof="Boolean" name="falls" value="true" hidden="false"/>
-        <type typeof="String" name="graphic" value="safe" hidden="false"/>
-        <type typeof="Float" name="maxVelocity.y" value="180" hidden="false"/>
-        <type typeof="Int" name="drag.x" value="800" hidden="false"/>
-        <type typeof="Boolean" name="callback" value="true" hidden="false"/>
-        <type typeof="Custom" name="movePairs" value="up" hidden="false" typeName="edge" customTypeIdx="0"/>
-      </properties>
-    </tileEntry>
-    <sprite name="weight platform" idx="18" className="weightForm" image="graphics/platform.png" width="16" height="7" preview="0" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="7" constructor="" creation="" exports="true" canScale="true" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="true" lockRotation="false">
-      <properties>
-        <type typeof="String" name="graphic" value="platform" hidden="false"/>
-        <type typeof="Boolean" name="cloud" value="true" hidden="false"/>
-        <type typeof="Int" name="drop" value="16" hidden="false"/>
-        <type typeof="Boolean" name="callback" value="true" hidden="false"/>
-      </properties>
-    </sprite>
-    <tileEntry name="hitBlock" idx="19" className="KrkSprite" image="graphics/hitblock.png" offsetX="0" offsetY="0" width="16" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false">
-      <properties>
-        <type typeof="String" name="graphic" value="hitBlock" hidden="false"/>
-        <type typeof="Boolean" name="solid" value="true" hidden="false"/>
-        <type typeof="Custom" name="triggeringEdge" value="floor" hidden="false" typeName="edge" customTypeIdx="0"/>
-        <type typeof="Boolean" name="immovable" value="true" hidden="false"/>
-        <type typeof="Boolean" name="callback" value="true" hidden="false"/>
-        <type typeof="String" name="anim" value="idle" hidden="false"/>
-        <type typeof="String" name="killAnim" value="hit" hidden="false"/>
-        <type typeof="Boolean" name="resets" value="true" hidden="false"/>
-      </properties>
-    </tileEntry>
-    <sprite name="overHero" idx="20" className="overHero" image="graphics/theifer_top.png" width="32" height="24" preview="9" anchorX="16" anchorY="12" centerAnchor="true" boundsX="8" boundsY="0" boundsWidth="16" boundsHeight="24" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="true" lockRotation="false" selected="true"/>
+    <sprite name="Overworld Hero" idx="23" className="OverworldHero" image="graphics/theifer_top.png" width="32" height="24" preview="9" anchorX="16" anchorY="22" centerAnchor="false" boundsX="8" boundsY="0" boundsWidth="16" boundsHeight="24" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="true" lockRotation="false"/>
   </spriteEntries>
   <layers>
     <group name="MainMenu" id="272" xScroll="1" yScroll="1" visible="false" open="false" locked="false" exports="true">
-      <maplayer name="Map2" id="0" xScroll="1" yScroll="1" x="0" y="0" width="20" height="12" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true">
+      <properties>
+        <type typeof="String" name="class" value="Overworld" hidden="false"/>
+      </properties>
+      <maplayer name="Map2" id="0" xScroll="1" yScroll="1" x="0" y="0" width="20" height="12" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true" sharesTileAnims="true">
         <row>2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2</row>
         <row>2,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,2</row>
         <row>2,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,2</row>
@@ -221,7 +230,7 @@
           <properties/>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="fade" hidden="false"/>
+            <type typeof="String" name="type" value="Fade" hidden="false"/>
             <type typeof="Float" name="killTime" value="0.5" hidden="false"/>
             <type typeof="String" name="reviveTime" value="2" hidden="false"/>
           </properties>
@@ -233,7 +242,7 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="ladder" hidden="false"/>
+            <type typeof="String" name="type" value="Ladder" hidden="false"/>
             <type typeof="String" name="range" value="2" hidden="false"/>
             <type typeof="String" name="edges" value="NONE" hidden="false"/>
           </properties>
@@ -242,11 +251,15 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="spring" hidden="false"/>
+            <type typeof="String" name="type" value="Spring" hidden="false"/>
             <type typeof="Custom" name="edges" value="ceiling" hidden="false" typeName="edge" customTypeIdx="0"/>
           </properties>
           <properties/>
         </tileProperties>
+        <anims>
+          <anim name="Button" fps="0.5" loops="false">18,19</anim>
+          <anim name="HitBlock" fps="0.5" loops="true">13,14</anim>
+        </anims>
       </maplayer>
       <pathlayer name="Layer3" id="1" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
         <path guid="8911A310-C5E5-FA19-F34A-1B2802E8AC40" x="64" y="64" closed="false" curved="false" instanced="false" fillColor="0x000000" fillAlpha="0.00" attachedChild="116E5487-26B6-7AED-C844-EC02528415F2">
@@ -259,13 +272,13 @@
           <node x="64" y="64"/>
           <node x="0" y="64"/>
           <properties>
-            <type typeof="String" name="type" value="levelPath" hidden="false"/>
+            <type typeof="String" name="type" value="LevelPath" hidden="false"/>
             <type typeof="Boolean" name="draw" value="true" hidden="false"/>
           </properties>
         </path>
       </pathlayer>
       <spritelayer name="Layer1" id="2" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
-        <sprite guid="116E5487-26B6-7AED-C844-EC02528415F2" x="48" y="52" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="20" attachedTo="8911A310-C5E5-FA19-F34A-1B2802E8AC40">
+        <sprite guid="116E5487-26B6-7AED-C844-EC02528415F2" x="48" y="42" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="23" attachedTo="8911A310-C5E5-FA19-F34A-1B2802E8AC40">
           <properties>
             <type typeof="Custom" name="pathMode" value="yoyo" hidden="false" typeName="pathMode" customTypeIdx="1"/>
             <type typeof="Int" name="pathSpeed" value="120" hidden="false"/>
@@ -277,7 +290,7 @@
       <properties>
         <type typeof="Int" name="gravity" value="1800" hidden="false"/>
       </properties>
-      <maplayer name="map" id="3" xScroll="1" yScroll="1" x="0" y="0" width="30" height="20" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="2" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true">
+      <maplayer name="map" id="3" xScroll="1" yScroll="1" x="0" y="0" width="30" height="20" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="2" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true" sharesTileAnims="true">
         <row>2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2</row>
         <row>2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</row>
         <row>2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</row>
@@ -326,7 +339,7 @@
           <properties/>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="fade" hidden="false"/>
+            <type typeof="String" name="type" value="Fade" hidden="false"/>
             <type typeof="Float" name="killTime" value="0.5" hidden="false"/>
             <type typeof="String" name="reviveTime" value="2" hidden="false"/>
           </properties>
@@ -338,7 +351,7 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="ladder" hidden="false"/>
+            <type typeof="String" name="type" value="Ladder" hidden="false"/>
             <type typeof="String" name="range" value="2" hidden="false"/>
             <type typeof="String" name="edges" value="NONE" hidden="false"/>
           </properties>
@@ -347,11 +360,15 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="spring" hidden="false"/>
+            <type typeof="String" name="type" value="Spring" hidden="false"/>
             <type typeof="Custom" name="edges" value="ceiling" hidden="false" typeName="edge" customTypeIdx="0"/>
           </properties>
           <properties/>
         </tileProperties>
+        <anims>
+          <anim name="Button" fps="0.5" loops="false">18,19</anim>
+          <anim name="HitBlock" fps="0.5" loops="true">13,14</anim>
+        </anims>
       </maplayer>
       <shapelayer name="Layer4" id="4" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
         <shape guid="2EFAB616-01EB-ED00-892A-82886CB29DB5" x="160" y="224" Z="0" angle="0" width="80.00" height="50.00" text="Gems make you heavier" family="system" fontsize="8" align="center" color="16777215"/>
@@ -381,22 +398,22 @@
         <sprite guid="2A676E48-FEAD-EADF-593E-925FA387739F" x="208" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
           <properties/>
         </sprite>
-        <sprite guid="034B8921-3E5E-CA55-40E0-26C1444F49C8" x="16" y="272" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="7">
+        <sprite guid="034B8921-3E5E-CA55-40E0-26C1444F49C8" x="16" y="272" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="17">
           <properties/>
         </sprite>
-        <sprite guid="0778CA4E-D5D1-50A7-02F1-AA938D4B5FD9" x="32" y="272" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="8">
+        <sprite guid="0778CA4E-D5D1-50A7-02F1-AA938D4B5FD9" x="32" y="272" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="18">
           <properties/>
         </sprite>
-        <sprite guid="928A374D-1821-37CE-FE13-215D3C0C2BE6" x="88" y="272" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="5">
+        <sprite guid="928A374D-1821-37CE-FE13-215D3C0C2BE6" x="88" y="272" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="15">
           <properties/>
         </sprite>
-        <sprite guid="33C996C4-B447-2BBD-8097-7D6B37DA711A" x="416" y="224" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="5">
+        <sprite guid="33C996C4-B447-2BBD-8097-7D6B37DA711A" x="416" y="224" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="15">
           <properties/>
         </sprite>
-        <sprite guid="1704AA46-AC7D-1E10-6694-F7E2C80FE963" x="448" y="288" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="13">
+        <sprite guid="1704AA46-AC7D-1E10-6694-F7E2C80FE963" x="448" y="288" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="4">
           <properties/>
         </sprite>
-        <sprite guid="046B040D-B5E7-80B9-ADE9-0AD91C5E9B45" x="448" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="6">
+        <sprite guid="046B040D-B5E7-80B9-ADE9-0AD91C5E9B45" x="448" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="16">
           <properties/>
         </sprite>
         <sprite guid="03615C9C-3005-3292-FA0D-4A17D3A89054" x="432" y="224" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
@@ -411,10 +428,10 @@
         <sprite guid="9B8982D3-77DC-EEA7-86E5-BCE0C4B2A468" x="416" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
           <properties/>
         </sprite>
-        <sprite guid="1597E120-4893-77C7-30C3-BBEAE4F34B82" x="240" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="6">
+        <sprite guid="1597E120-4893-77C7-30C3-BBEAE4F34B82" x="240" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="16">
           <properties/>
         </sprite>
-        <sprite guid="5756E892-CC57-A22C-85F3-8F02CB6258CD" x="448" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="14">
+        <sprite guid="5756E892-CC57-A22C-85F3-8F02CB6258CD" x="448" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="5">
           <properties/>
         </sprite>
         <sprite guid="332BFC51-AB54-5F61-1119-30A2EBD6727F" x="304" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
@@ -432,16 +449,16 @@
         <sprite guid="15477EAA-2896-EF6B-F08B-243E960267EE" x="448" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
           <properties/>
         </sprite>
-        <sprite guid="708FCE6C-AB3B-6ACF-F09A-BFD3DFFBE47A" x="240" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="5">
+        <sprite guid="708FCE6C-AB3B-6ACF-F09A-BFD3DFFBE47A" x="240" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="15">
           <properties/>
         </sprite>
-        <sprite guid="168ED70A-BDE2-93B2-F076-E667D2ECDACC" x="236" y="79" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="10">
+        <sprite guid="168ED70A-BDE2-93B2-F076-E667D2ECDACC" x="236" y="79" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="20">
           <properties/>
         </sprite>
-        <sprite guid="AB54CECF-854A-7A30-CAFF-E1559BE52C94" x="188" y="287" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="10">
+        <sprite guid="AB54CECF-854A-7A30-CAFF-E1559BE52C94" x="188" y="287" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="20">
           <properties/>
         </sprite>
-        <sprite guid="11DC6196-4FA9-D6B8-80CC-E7C6EA1906D3" x="192" y="272" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="5">
+        <sprite guid="11DC6196-4FA9-D6B8-80CC-E7C6EA1906D3" x="192" y="272" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="15">
           <properties/>
         </sprite>
         <sprite guid="60252A4D-7057-963F-E538-E2AC9309DEAF" x="192" y="48" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
@@ -456,10 +473,10 @@
         <sprite guid="BD723B0A-6B5C-983F-69CD-01F40BFFA01E" x="288" y="48" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
           <properties/>
         </sprite>
-        <sprite guid="92C5C58B-40F3-2D15-38AA-F39A4839F44C" x="16" y="120" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="3">
+        <sprite guid="92C5C58B-40F3-2D15-38AA-F39A4839F44C" x="16" y="120" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="12">
           <properties/>
         </sprite>
-        <sprite guid="B6D90EA8-77ED-8E4D-5298-9BE399138377" x="96" y="128" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="4">
+        <sprite guid="B6D90EA8-77ED-8E4D-5298-9BE399138377" x="96" y="128" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="11">
           <properties>
             <type typeof="String" name="action" value="beam:kill()" hidden="false"/>
           </properties>
@@ -467,15 +484,15 @@
         <sprite guid="3B32418D-CA94-2A23-E684-B3C08B247611" x="400" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
           <properties/>
         </sprite>
-        <sprite guid="2DAACFE4-1334-E089-EABF-C918F1E10932" x="192" y="208" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="12">
+        <sprite guid="2DAACFE4-1334-E089-EABF-C918F1E10932" x="192" y="208" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="3">
           <properties/>
         </sprite>
       </spritelayer>
       <spritelayer name="fg" id="6" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
-        <sprite guid="FDBCE1A1-F8D5-A92C-6872-F40ABDEA0168" x="15" y="280" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1">
+        <sprite guid="FDBCE1A1-F8D5-A92C-6872-F40ABDEA0168" x="15" y="280" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="22">
           <properties/>
         </sprite>
-        <sprite guid="F8D91F83-3091-C02A-DEAA-F0C346175374" x="64" y="96" Z="0" angle="0" scaleX="1" scaleY="3" flipped="false" idx="11">
+        <sprite guid="F8D91F83-3091-C02A-DEAA-F0C346175374" x="64" y="96" Z="0" angle="0" scaleX="1" scaleY="3" flipped="false" idx="7">
           <properties>
             <type typeof="String" name="group" value="beam" hidden="false"/>
           </properties>
@@ -487,11 +504,11 @@
         <type typeof="Int" name="gravity" value="1800" hidden="false"/>
       </properties>
       <spritelayer name="bg" id="7" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
-        <sprite guid="6C6EE458-9238-A947-AB1F-0B6AC73DB6A8" x="536" y="24" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="15">
+        <sprite guid="6C6EE458-9238-A947-AB1F-0B6AC73DB6A8" x="536" y="24" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="21">
           <properties/>
         </sprite>
       </spritelayer>
-      <maplayer name="map" id="8" xScroll="1" yScroll="1" x="0" y="0" width="40" height="25" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="2" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true">
+      <maplayer name="map" id="8" xScroll="1" yScroll="1" x="0" y="0" width="40" height="25" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="2" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true" sharesTileAnims="true">
         <row>2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2</row>
         <row>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</row>
         <row>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</row>
@@ -545,7 +562,7 @@
           <properties/>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="fade" hidden="false"/>
+            <type typeof="String" name="type" value="Fade" hidden="false"/>
             <type typeof="Float" name="killTime" value="0.5" hidden="false"/>
             <type typeof="String" name="reviveTime" value="2" hidden="false"/>
           </properties>
@@ -557,7 +574,7 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="ladder" hidden="false"/>
+            <type typeof="String" name="type" value="Ladder" hidden="false"/>
             <type typeof="String" name="range" value="2" hidden="false"/>
             <type typeof="String" name="edges" value="NONE" hidden="false"/>
           </properties>
@@ -566,11 +583,15 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="spring" hidden="false"/>
+            <type typeof="String" name="type" value="Spring" hidden="false"/>
             <type typeof="Custom" name="edges" value="ceiling" hidden="false" typeName="edge" customTypeIdx="0"/>
           </properties>
           <properties/>
         </tileProperties>
+        <anims>
+          <anim name="Button" fps="0.5" loops="false">18,19</anim>
+          <anim name="HitBlock" fps="0.5" loops="true">13,14</anim>
+        </anims>
       </maplayer>
       <spritelayer name="fg" id="9" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
         <sprite guid="8658F77C-A064-B855-B0B1-B6953A78BE42" x="176" y="320" Z="0" angle="0" scaleX="1" scaleY="1" flipped="true" idx="2">
@@ -648,47 +669,47 @@
         <sprite guid="776B57F5-0A7A-2025-ED0E-318946F8B0BD" x="96" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
           <properties/>
         </sprite>
-        <sprite guid="992E4BD9-6D25-206C-D72E-5C6BBDB042AD" x="608" y="24" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="3">
+        <sprite guid="992E4BD9-6D25-206C-D72E-5C6BBDB042AD" x="608" y="24" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="12">
           <properties/>
         </sprite>
-        <sprite guid="914EE65A-A225-673F-52C8-76FF3CF10FAD" x="22" y="360" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1">
+        <sprite guid="914EE65A-A225-673F-52C8-76FF3CF10FAD" x="22" y="360" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="22">
           <properties/>
         </sprite>
-        <sprite guid="FFD7C26F-84D7-8083-3584-468F38C5574F" x="32" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="4">
+        <sprite guid="FFD7C26F-84D7-8083-3584-468F38C5574F" x="32" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="11">
           <properties>
             <type typeof="String" name="action" value="beam:kill()" hidden="false"/>
           </properties>
         </sprite>
-        <sprite guid="D7DE31B7-690F-B2C2-5B57-62603D891812" x="16" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="14">
+        <sprite guid="D7DE31B7-690F-B2C2-5B57-62603D891812" x="16" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="5">
           <properties/>
         </sprite>
-        <sprite guid="DE803ABD-EED9-1B50-8BC3-ADDEF1A845F7" x="352" y="128" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="13">
+        <sprite guid="DE803ABD-EED9-1B50-8BC3-ADDEF1A845F7" x="352" y="128" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="4">
           <properties/>
         </sprite>
-        <sprite guid="175FAFB9-3F67-D640-08A6-F7A224ACA27C" x="576" y="16" Z="0" angle="0" scaleX="1" scaleY="2" flipped="false" idx="11">
+        <sprite guid="175FAFB9-3F67-D640-08A6-F7A224ACA27C" x="576" y="16" Z="0" angle="0" scaleX="1" scaleY="2" flipped="false" idx="7">
           <properties>
             <type typeof="String" name="group" value="beam" hidden="false"/>
           </properties>
         </sprite>
-        <sprite guid="A02481F6-668F-D15C-8D53-CCA459BC4BB5" x="496" y="304" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="12">
+        <sprite guid="A02481F6-668F-D15C-8D53-CCA459BC4BB5" x="496" y="304" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="3">
           <properties/>
         </sprite>
       </spritelayer>
     </group>
-    <group name="level2" id="21" xScroll="1" yScroll="1" visible="true" open="true" locked="false" exports="true">
+    <group name="level2" id="21" xScroll="1" yScroll="1" visible="false" open="false" locked="false" exports="true">
       <properties>
         <type typeof="Int" name="gravity" value="1800" hidden="false"/>
       </properties>
-      <spritelayer name="bg" id="23" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
-        <sprite guid="896B4E3C-313E-4669-3619-D747A6C90AD4" x="1248" y="368" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="9">
+      <spritelayer name="bg" id="10" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
+        <sprite guid="896B4E3C-313E-4669-3619-D747A6C90AD4" x="1248" y="368" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="19">
           <properties/>
         </sprite>
       </spritelayer>
-      <shapelayer name="Layer3" id="10" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false" selected="true">
+      <shapelayer name="Layer3" id="11" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
         <shape guid="78435DC1-8584-307F-9F3C-D5C778D1C949" x="1152" y="352" Z="0" angle="0" width="96.00" height="16.00" text="Press R to reset." family="system" fontsize="8" align="center" color="16777215"/>
         <shape guid="9CB5B265-0B5D-8092-E3AF-1936FE97AB26" x="1250" y="369" Z="0" angle="0" width="10.00" height="16.00" text="R" family="Arial" fontsize="8" align="center" color="0"/>
       </shapelayer>
-      <maplayer name="map" id="11" xScroll="1" yScroll="1" x="0" y="0" width="80" height="25" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="2" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true">
+      <maplayer name="map" id="12" xScroll="1" yScroll="1" x="0" y="0" width="80" height="25" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="2" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true" sharesTileAnims="true">
         <row>2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2</row>
         <row>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</row>
         <row>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</row>
@@ -742,7 +763,7 @@
           <properties/>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="fade" hidden="false"/>
+            <type typeof="String" name="type" value="Fade" hidden="false"/>
             <type typeof="Float" name="killTime" value="0.5" hidden="false"/>
             <type typeof="String" name="reviveTime" value="2" hidden="false"/>
           </properties>
@@ -754,7 +775,7 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="ladder" hidden="false"/>
+            <type typeof="String" name="type" value="Ladder" hidden="false"/>
             <type typeof="String" name="range" value="2" hidden="false"/>
             <type typeof="String" name="edges" value="NONE" hidden="false"/>
           </properties>
@@ -763,13 +784,17 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="spring" hidden="false"/>
+            <type typeof="String" name="type" value="Spring" hidden="false"/>
             <type typeof="Custom" name="edges" value="ceiling" hidden="false" typeName="edge" customTypeIdx="0"/>
           </properties>
           <properties/>
         </tileProperties>
+        <anims>
+          <anim name="Button" fps="0.5" loops="false">18,19</anim>
+          <anim name="HitBlock" fps="0.5" loops="true">13,14</anim>
+        </anims>
       </maplayer>
-      <spritelayer name="fg" id="12" xScroll="1" yScroll="1" visible="false" locked="false" exports="true" aligned="false" sort="false">
+      <spritelayer name="fg" id="13" xScroll="1" yScroll="1" visible="false" locked="false" exports="true" aligned="false" sort="false">
         <sprite guid="09411DE0-E085-A116-5B30-8B04CBE4D7FC" x="421" y="339" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
           <properties/>
         </sprite>
@@ -809,39 +834,39 @@
         <sprite guid="8B735108-B42B-107D-3839-5B901990BC78" x="1104" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
           <properties/>
         </sprite>
-        <sprite guid="7436CBA2-558A-C59B-7531-BE4616D3346F" x="22" y="344" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1">
+        <sprite guid="7436CBA2-558A-C59B-7531-BE4616D3346F" x="22" y="344" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="22">
           <properties/>
         </sprite>
         <sprite guid="CFB25733-FC90-FD4A-2DF4-A594715982E4" x="1056" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
           <properties/>
         </sprite>
-        <sprite guid="D2BAC762-F297-3BF9-E5BA-916BCCF8DC67" x="800" y="360" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="3">
+        <sprite guid="D2BAC762-F297-3BF9-E5BA-916BCCF8DC67" x="800" y="360" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="12">
           <properties/>
         </sprite>
-        <sprite guid="9F0DB12A-DF23-B880-28ED-68BD9A4CD126" x="752" y="208" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="13">
+        <sprite guid="9F0DB12A-DF23-B880-28ED-68BD9A4CD126" x="752" y="208" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="4">
           <properties/>
         </sprite>
-        <sprite guid="6A482B91-0E62-F886-497D-E9D95AD501B3" x="176" y="320" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="12">
+        <sprite guid="6A482B91-0E62-F886-497D-E9D95AD501B3" x="176" y="320" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="3">
           <properties/>
         </sprite>
-        <sprite guid="0B1182DE-9036-767C-03A6-A03B4FA75658" x="1248" y="368" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="14">
+        <sprite guid="0B1182DE-9036-767C-03A6-A03B4FA75658" x="1248" y="368" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="5">
           <properties/>
         </sprite>
       </spritelayer>
     </group>
-    <group name="level3" id="3" xScroll="1" yScroll="1" visible="false" open="true" locked="false" exports="true">
+    <group name="level3" id="3" xScroll="1" yScroll="1" visible="false" open="false" locked="false" exports="true">
       <properties>
         <type typeof="Int" name="gravity" value="1800" hidden="false"/>
       </properties>
-      <spritelayer name="bg" id="13" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
-        <sprite guid="2E726DD3-D635-C101-E633-296150E6A9D9" x="592" y="304" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="5">
+      <spritelayer name="bg" id="14" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
+        <sprite guid="2E726DD3-D635-C101-E633-296150E6A9D9" x="592" y="304" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="15">
           <properties/>
         </sprite>
-        <sprite guid="990B2562-4F4F-B163-BF7E-057B3A216776" x="17" y="40" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="3">
+        <sprite guid="990B2562-4F4F-B163-BF7E-057B3A216776" x="17" y="40" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="12">
           <properties/>
         </sprite>
       </spritelayer>
-      <maplayer name="map" id="14" xScroll="1" yScroll="1" x="0" y="0" width="40" height="23" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true">
+      <maplayer name="map" id="15" xScroll="1" yScroll="1" x="0" y="0" width="40" height="23" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true" sharesTileAnims="true">
         <properties>
           <type typeof="String" name="solid" value="true" hidden="false"/>
         </properties>
@@ -896,7 +921,7 @@
           <properties/>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="fade" hidden="false"/>
+            <type typeof="String" name="type" value="Fade" hidden="false"/>
             <type typeof="Float" name="killTime" value="0.5" hidden="false"/>
             <type typeof="String" name="reviveTime" value="2" hidden="false"/>
           </properties>
@@ -908,7 +933,7 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="ladder" hidden="false"/>
+            <type typeof="String" name="type" value="Ladder" hidden="false"/>
             <type typeof="String" name="range" value="2" hidden="false"/>
             <type typeof="String" name="edges" value="NONE" hidden="false"/>
           </properties>
@@ -917,13 +942,17 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="spring" hidden="false"/>
+            <type typeof="String" name="type" value="Spring" hidden="false"/>
             <type typeof="Custom" name="edges" value="ceiling" hidden="false" typeName="edge" customTypeIdx="0"/>
           </properties>
           <properties/>
         </tileProperties>
+        <anims>
+          <anim name="Button" fps="0.5" loops="false">18,19</anim>
+          <anim name="HitBlock" fps="0.5" loops="true">13,14</anim>
+        </anims>
       </maplayer>
-      <spritelayer name="fg" id="15" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
+      <spritelayer name="fg" id="16" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
         <sprite guid="1F1CCADC-F33F-FC40-CF1C-F25F92FF003A" x="144" y="320" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
           <properties/>
         </sprite>
@@ -999,16 +1028,16 @@
         <sprite guid="DC0451E4-50FD-FB67-B8C0-992DE9DC5FE7" x="32" y="80" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="2">
           <properties/>
         </sprite>
-        <sprite guid="6907A4AE-C702-AFFE-CFFD-D78285F77FED" x="22" y="328" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1">
+        <sprite guid="6907A4AE-C702-AFFE-CFFD-D78285F77FED" x="22" y="328" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="22">
           <properties/>
         </sprite>
-        <sprite guid="EEF67EC8-D1FC-0255-3B82-2F21FB5C75A7" x="560" y="240" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="13">
+        <sprite guid="EEF67EC8-D1FC-0255-3B82-2F21FB5C75A7" x="560" y="240" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="4">
           <properties/>
         </sprite>
-        <sprite guid="7FEE9FE4-268A-5EDD-6DA7-5DC7DADB6A1D" x="256" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="14">
+        <sprite guid="7FEE9FE4-268A-5EDD-6DA7-5DC7DADB6A1D" x="256" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="5">
           <properties/>
         </sprite>
-        <sprite guid="DCFFFB1E-C0BD-5E5A-85DA-A35EC7DA8DC1" x="448" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="12">
+        <sprite guid="DCFFFB1E-C0BD-5E5A-85DA-A35EC7DA8DC1" x="448" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="3">
           <properties/>
         </sprite>
       </spritelayer>
@@ -1017,7 +1046,7 @@
       <properties>
         <type typeof="Int" name="gravity" value="1800" hidden="false"/>
       </properties>
-      <maplayer name="Map2" id="16" xScroll="1" yScroll="1" x="0" y="0" width="80" height="25" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="2" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true">
+      <maplayer name="Map2" id="17" xScroll="1" yScroll="1" x="0" y="0" width="80" height="25" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="2" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true" sharesTileAnims="true">
         <row>2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2</row>
         <row>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</row>
         <row>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</row>
@@ -1071,7 +1100,7 @@
           <properties/>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="fade" hidden="false"/>
+            <type typeof="String" name="type" value="Fade" hidden="false"/>
             <type typeof="Float" name="killTime" value="0.5" hidden="false"/>
             <type typeof="String" name="reviveTime" value="2" hidden="false"/>
           </properties>
@@ -1083,7 +1112,7 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="ladder" hidden="false"/>
+            <type typeof="String" name="type" value="Ladder" hidden="false"/>
             <type typeof="String" name="range" value="2" hidden="false"/>
             <type typeof="String" name="edges" value="NONE" hidden="false"/>
           </properties>
@@ -1092,18 +1121,22 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="spring" hidden="false"/>
+            <type typeof="String" name="type" value="Spring" hidden="false"/>
             <type typeof="Custom" name="edges" value="ceiling" hidden="false" typeName="edge" customTypeIdx="0"/>
           </properties>
           <properties/>
         </tileProperties>
+        <anims>
+          <anim name="Button" fps="0.5" loops="false">18,19</anim>
+          <anim name="HitBlock" fps="0.5" loops="true">13,14</anim>
+        </anims>
       </maplayer>
     </group>
     <group name="testLevel" id="119" xScroll="1" yScroll="1" visible="false" open="false" locked="false" exports="true">
       <properties>
         <type typeof="Int" name="gravity" value="1800" hidden="false"/>
       </properties>
-      <maplayer name="map" id="17" xScroll="1" yScroll="1" x="0" y="0" width="40" height="20" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="2" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true">
+      <maplayer name="map" id="18" xScroll="1" yScroll="1" x="0" y="0" width="40" height="20" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="2" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true" sharesTileAnims="true">
         <properties>
           <type typeof="Boolean" name="solid" value="true" hidden="false"/>
         </properties>
@@ -1155,7 +1188,7 @@
           <properties/>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="fade" hidden="false"/>
+            <type typeof="String" name="type" value="Fade" hidden="false"/>
             <type typeof="Float" name="killTime" value="0.5" hidden="false"/>
             <type typeof="String" name="reviveTime" value="2" hidden="false"/>
           </properties>
@@ -1167,7 +1200,7 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="ladder" hidden="false"/>
+            <type typeof="String" name="type" value="Ladder" hidden="false"/>
             <type typeof="String" name="range" value="2" hidden="false"/>
             <type typeof="String" name="edges" value="NONE" hidden="false"/>
           </properties>
@@ -1176,31 +1209,35 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="spring" hidden="false"/>
+            <type typeof="String" name="type" value="Spring" hidden="false"/>
             <type typeof="Custom" name="edges" value="ceiling" hidden="false" typeName="edge" customTypeIdx="0"/>
           </properties>
           <properties/>
         </tileProperties>
+        <anims>
+          <anim name="Button" fps="0.5" loops="false">18,19</anim>
+          <anim name="HitBlock" fps="0.5" loops="true">13,14</anim>
+        </anims>
       </maplayer>
-      <spritelayer name="sprites" id="18" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
-        <sprite guid="2A4F5A79-1FE2-0164-85AF-5ECF62085657" x="544" y="16" Z="0" angle="0" scaleX="1" scaleY="4" flipped="false" idx="11">
+      <spritelayer name="sprites" id="19" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
+        <sprite guid="2A4F5A79-1FE2-0164-85AF-5ECF62085657" x="544" y="16" Z="0" angle="0" scaleX="1" scaleY="4" flipped="false" idx="7">
           <properties>
             <type typeof="String" name="group" value="beam1" hidden="false"/>
             <type typeof="Custom" name="displayMode" value="tile" hidden="false" typeName="displayMode" customTypeIdx="2"/>
           </properties>
         </sprite>
-        <sprite guid="51C055EE-B046-2C6E-BDDE-63F7FCF7CCBE" x="23" y="279" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1">
+        <sprite guid="51C055EE-B046-2C6E-BDDE-63F7FCF7CCBE" x="23" y="279" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="22">
           <properties/>
         </sprite>
-        <sprite guid="52C083A2-776C-836F-F19E-A390F0A9606E" x="512" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="4">
+        <sprite guid="52C083A2-776C-836F-F19E-A390F0A9606E" x="512" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="11">
           <properties>
             <type typeof="String" name="action" value="beam1:kill()" hidden="false"/>
           </properties>
         </sprite>
-        <sprite guid="C2CE6CDA-8FC8-EE53-0A50-AEFD815186D0" x="151" y="202" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="16" attachedTo="0895F9C1-9799-AD69-8A66-C8799EE7543C">
+        <sprite guid="C2CE6CDA-8FC8-EE53-0A50-AEFD815186D0" x="151" y="202" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="10" attachedTo="0895F9C1-9799-AD69-8A66-C8799EE7543C">
           <properties/>
         </sprite>
-        <sprite guid="BC17C196-534A-FA62-211C-C532B6723D78" x="400" y="161.13" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="16" attachedTo="DB63D319-6178-F0CB-E0B9-42622421FF24">
+        <sprite guid="BC17C196-534A-FA62-211C-C532B6723D78" x="400" y="161.13" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="10" attachedTo="DB63D319-6178-F0CB-E0B9-42622421FF24">
           <properties/>
         </sprite>
         <sprite guid="DCD15060-369A-2BC0-95A6-D51147938238" x="0" y="0" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false">
@@ -1208,44 +1245,44 @@
             <sprites/>
           </spriteTrailData>
         </sprite>
-        <sprite guid="B48E4805-BCA3-F0FC-60C7-E17F4FB7C453" x="208" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="16">
+        <sprite guid="B48E4805-BCA3-F0FC-60C7-E17F4FB7C453" x="208" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="10">
           <properties>
             <type typeof="Int" name="pathId" value="0" hidden="false"/>
             <type typeof="Int" name="startNode" value="2" hidden="false"/>
           </properties>
         </sprite>
-        <sprite guid="3DA2368A-2F6C-2FD8-9D99-FA372CB0070B" x="152" y="121" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="16">
+        <sprite guid="3DA2368A-2F6C-2FD8-9D99-FA372CB0070B" x="152" y="121" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="10">
           <properties>
             <type typeof="Int" name="pathId" value="0" hidden="false"/>
             <type typeof="Int" name="startNode" value="1" hidden="false"/>
           </properties>
         </sprite>
-        <sprite guid="2E6C1745-2C2B-8088-66D9-B53458E03918" x="96" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="16">
+        <sprite guid="2E6C1745-2C2B-8088-66D9-B53458E03918" x="96" y="160" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="10">
           <properties>
             <type typeof="Int" name="pathId" value="0" hidden="false"/>
             <type typeof="Int" name="startNode" value="0" hidden="false"/>
           </properties>
         </sprite>
-        <sprite guid="06798818-282B-6967-DCA7-4D5E7A6EAE3A" x="336" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="17">
+        <sprite guid="06798818-282B-6967-DCA7-4D5E7A6EAE3A" x="336" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="13">
           <properties/>
         </sprite>
-        <sprite guid="7B57861E-D63B-02B1-9E64-BDBB3E0BA14E" x="240" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="17">
+        <sprite guid="7B57861E-D63B-02B1-9E64-BDBB3E0BA14E" x="240" y="64" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="13">
           <properties/>
         </sprite>
-        <sprite guid="7A22807B-4B6A-ADFE-F7BB-C01AE5BD3572" x="80" y="240" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="18">
+        <sprite guid="7A22807B-4B6A-ADFE-F7BB-C01AE5BD3572" x="80" y="240" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="9">
           <properties/>
         </sprite>
-        <sprite guid="3D889D6B-CCEC-CC4F-4ADB-F6E0E423276A" x="576" y="16" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="19">
+        <sprite guid="3D889D6B-CCEC-CC4F-4ADB-F6E0E423276A" x="576" y="16" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="8">
           <properties>
             <type typeof="String" name="action" value="emerald:revive();this:kill()" hidden="false"/>
           </properties>
         </sprite>
-        <sprite guid="FCA57D6B-0CDD-FAC0-EE38-A49205225A9E" x="608" y="288" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="4">
+        <sprite guid="FCA57D6B-0CDD-FAC0-EE38-A49205225A9E" x="608" y="288" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="11">
           <properties>
             <type typeof="String" name="action" value="coins:revive()" hidden="false"/>
           </properties>
         </sprite>
-        <sprite guid="8A560A36-2CB5-06BB-FED9-9D94CA6E84D2" x="608" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="18">
+        <sprite guid="8A560A36-2CB5-06BB-FED9-9D94CA6E84D2" x="608" y="256" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="9">
           <properties>
             <dataOverride name="cloud" typeof="Boolean" value="false" idx="1"/>
             <type typeof="Custom" name="edges" value="ceiling" hidden="false" typeName="edge" customTypeIdx="0"/>
@@ -1253,28 +1290,28 @@
             <type typeof="Custom" name="displayMode" value="tile" hidden="false" typeName="displayMode" customTypeIdx="2"/>
           </properties>
         </sprite>
-        <sprite guid="A676B19A-580E-0652-53F1-B77E50E31A66" x="592" y="16" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="12">
+        <sprite guid="A676B19A-580E-0652-53F1-B77E50E31A66" x="592" y="16" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="3">
           <properties>
             <type typeof="String" name="group" value="emerald" hidden="false"/>
             <type typeof="Boolean" name="exists" value="false" hidden="false"/>
           </properties>
         </sprite>
-        <sprite guid="B36D9279-FCF0-321A-8574-B8877D57DFEF" x="576" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="5">
+        <sprite guid="B36D9279-FCF0-321A-8574-B8877D57DFEF" x="576" y="32" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="15">
           <properties/>
         </sprite>
-        <sprite guid="7A2EF550-FC61-2F73-8205-FFCC5890F25D" x="224" y="240" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="18">
+        <sprite guid="7A2EF550-FC61-2F73-8205-FFCC5890F25D" x="224" y="240" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="9">
           <properties/>
         </sprite>
-        <sprite guid="5577733C-CA58-8F47-B563-2BDDD4F10F77" x="544" y="285" Z="0" angle="0" scaleX="3" scaleY="1" flipped="false" idx="16" attachedTo="3C5D4A90-2358-F24F-A8F4-72990800A0B6">
+        <sprite guid="5577733C-CA58-8F47-B563-2BDDD4F10F77" x="544" y="285" Z="0" angle="0" scaleX="3" scaleY="1" flipped="false" idx="10" attachedTo="3C5D4A90-2358-F24F-A8F4-72990800A0B6">
           <properties>
             <type typeof="String" name="overlapArgs" value="{collider:{type:hero}}" hidden="false"/>
           </properties>
         </sprite>
-        <sprite guid="D32368E7-07EE-23FF-4646-F5739798B0BA" x="807" y="333" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="16">
+        <sprite guid="D32368E7-07EE-23FF-4646-F5739798B0BA" x="807" y="333" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="10">
           <properties/>
         </sprite>
       </spritelayer>
-      <pathlayer name="Layer3" id="19" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
+      <pathlayer name="Layer3" id="20" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
         <path guid="0895F9C1-9799-AD69-8A66-C8799EE7543C" x="105" y="125" closed="true" curved="false" instanced="false" fillColor="0x000000" fillAlpha="0.00" attachedChild="C2CE6CDA-8FC8-EE53-0A50-AEFD815186D0">
           <node x="0" y="80"/>
           <node x="0" y="0"/>
@@ -1290,7 +1327,7 @@
           <node x="0" y="80"/>
         </path>
       </pathlayer>
-      <spritelayer name="coins" id="20" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
+      <spritelayer name="coins" id="21" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
         <properties>
           <type typeof="Boolean" name="exists" value="false" hidden="false"/>
           <type typeof="String" name="resets" value="true" hidden="false"/>
@@ -1372,22 +1409,22 @@
         </sprite>
       </spritelayer>
     </group>
-    <group name="Group7" id="59" xScroll="1" yScroll="1" visible="false" open="false" locked="false" exports="true">
-      <spritelayer name="Layer1" id="21" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
-        <sprite guid="1EC2F607-EC9A-CE44-6ADE-B180E6937034" x="256" y="128" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="13">
+    <group name="Group7" id="59" xScroll="1" yScroll="1" visible="true" open="true" locked="false" exports="true">
+      <spritelayer name="Layer1" id="22" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
+        <sprite guid="1EC2F607-EC9A-CE44-6ADE-B180E6937034" x="256" y="128" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="4">
           <properties/>
         </sprite>
-        <sprite guid="72D43E0A-B366-A25C-8776-2BBF6B9DABFD" x="176" y="144" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="14">
+        <sprite guid="72D43E0A-B366-A25C-8776-2BBF6B9DABFD" x="176" y="144" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="5">
           <properties/>
         </sprite>
-        <sprite guid="F8C42A0F-42E1-FBA9-53FF-AA5DBC6FF756" x="22" y="200" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="1">
+        <sprite guid="F8C42A0F-42E1-FBA9-53FF-AA5DBC6FF756" x="22" y="200" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="22">
           <properties/>
         </sprite>
-        <sprite guid="402F71F1-3846-5BF0-3F96-879B64567F08" x="448" y="200" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="3">
+        <sprite guid="402F71F1-3846-5BF0-3F96-879B64567F08" x="448" y="200" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="12">
           <properties/>
         </sprite>
       </spritelayer>
-      <maplayer name="Map2" id="22" xScroll="1" yScroll="1" x="0" y="0" width="30" height="15" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true">
+      <maplayer name="Map2" id="23" xScroll="1" yScroll="1" x="0" y="0" width="30" height="15" tileset="graphics/greed_props.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false" sharesTileProps="true" sharesTileAnims="true" selected="true">
         <row>2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2</row>
         <row>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</row>
         <row>2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2</row>
@@ -1431,7 +1468,7 @@
           <properties/>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="fade" hidden="false"/>
+            <type typeof="String" name="type" value="Fade" hidden="false"/>
             <type typeof="Float" name="killTime" value="0.5" hidden="false"/>
             <type typeof="String" name="reviveTime" value="2" hidden="false"/>
           </properties>
@@ -1443,7 +1480,7 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="ladder" hidden="false"/>
+            <type typeof="String" name="type" value="Ladder" hidden="false"/>
             <type typeof="String" name="range" value="2" hidden="false"/>
             <type typeof="String" name="edges" value="NONE" hidden="false"/>
           </properties>
@@ -1452,12 +1489,23 @@
           </properties>
           <properties/>
           <properties>
-            <type typeof="String" name="type" value="spring" hidden="false"/>
+            <type typeof="String" name="type" value="Spring" hidden="false"/>
             <type typeof="Custom" name="edges" value="ceiling" hidden="false" typeName="edge" customTypeIdx="0"/>
           </properties>
           <properties/>
         </tileProperties>
+        <anims>
+          <anim name="Button" fps="0.5" loops="false">18,19</anim>
+          <anim name="HitBlock" fps="0.5" loops="true">13,14</anim>
+        </anims>
       </maplayer>
+      <pathlayer name="Layer3" id="40" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
+        <path guid="F5C29781-E9F6-6CC1-FFC3-1F28E4658A3E" x="152" y="72" closed="false" curved="true" instanced="false" fillColor="0x000000" fillAlpha="0.00">
+          <node x="32" y="80" tan1x="0" tan1y="-44" tan2x="0" tan2y="30"/>
+          <node x="112" y="64" tan1x="0" tan1y="-30" tan2x="0" tan2y="64"/>
+          <node x="0" y="0" tan1x="-26.49" tan1y="-14.07" tan2x="26.49" tan2y="14.07"/>
+        </path>
+      </pathlayer>
     </group>
   </layers>
   <layerTemplates/>
@@ -1680,7 +1728,7 @@
     <SaveGuidesSeparately>false</SaveGuidesSeparately>
     <ForceTilemapPositionChangesInUnits>false</ForceTilemapPositionChangesInUnits>
   </options>
-  <exporter name="C:\Users\Yeehaw McKickass\Documents\Flash Develop\Projects\libraries\Krakel\KrakelExporter.lua" spritepos="Top Left" rotatedSpritePos="false" relativePaths="true" useProjectExporterOnly="false">
+  <exporter name="C:\Users\Yeehaw McKickass\Documents\Flash Develop\Projects\res\lua\KrakelExporter.lua" spritepos="Top Left" rotatedSpritePos="false" relativePaths="true" useProjectExporterOnly="false">
     <setting name="EXPORT_ANGLE">false</setting>
     <setting name="ExportOnlyCSV">false</setting>
     <setting name="DataDir"/>
@@ -1713,13 +1761,13 @@
   </customPropertyTypes>
   <guides>
     <snap>true</snap>
-    <visible>false</visible>
-    <x>0</x>
-    <y>0</y>
+    <visible>true</visible>
+    <x>8</x>
+    <y>8</y>
     <xspace>16</xspace>
     <yspace>16</yspace>
     <gridcolour>0x77ff0000</gridcolour>
-    <snaptype>Anchor</snaptype>
+    <snaptype>Center</snaptype>
     <paintcontinuous>true</paintcontinuous>
     <showgameregion>true</showgameregion>
     <gameregionwidth>360</gameregionwidth>
@@ -1727,7 +1775,7 @@
     <gameregionopacity>0.3</gameregionopacity>
     <gameregioncentered>true</gameregioncentered>
     <minGridSpace>4</minGridSpace>
-    <showregiongrid>false</showregiongrid>
+    <showregiongrid>true</showregiongrid>
     <regiongridx>0</regiongridx>
     <regiongridy>0</regiongridy>
     <regiongridcolour>0xccffffff</regiongridcolour>
