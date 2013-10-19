@@ -8,9 +8,9 @@
     <movie fps="30" />
     <movie width="800" />
     <movie height="600" />
-    <movie version="11" />
+    <movie version="3" />
     <movie minorVersion="6" />
-    <movie platform="Flash Player" />
+    <movie platform="AIR" />
     <movie background="#FFFFFF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
@@ -41,7 +41,7 @@
     <option linkReport="" />
     <option loadExterns="" />
     <option staticLinkRSL="True" />
-    <option additional="" />
+    <option additional="+configname=air" />
     <option compilerConstants="" />
     <option minorVersion="" />
   </build>
@@ -63,7 +63,7 @@
   </rslPaths>
   <!-- Intrinsic Libraries -->
   <intrinsics>
-    <element path="Library\AS3\frameworks\Flex3" />
+    <!-- example: <element path="..." /> -->
   </intrinsics>
   <!-- Assets to embed into the output SWF -->
   <library>
@@ -75,17 +75,7 @@
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
-    <hidden path="src\baseball\Main.mxml" />
-    <hidden path="Flex.as3proj" />
-    <hidden path="tests" />
-    <hidden path="libraries" />
-    <hidden path="games" />
-    <hidden path="apps" />
-    <hidden path="lib\AdamAtomic-flixel-Dev" />
-    <hidden path="lib\AdamAtomic-flixel-Master" />
-    <hidden path="lib\AdamAtomic-flixel-Dev.zip" />
-    <hidden path="lib\AdamAtomic-flixel-Master.zip" />
-    <hidden path="lib\New Project.as3proj" />
+    <!-- example: <hidden path="..." /> -->
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
@@ -93,8 +83,9 @@
   <postBuildCommand alwaysRun="False" />
   <!-- Other project options -->
   <options>
-    <option showHiddenPaths="True" />
-    <option testMovie="Default" />
+    <option showHiddenPaths="False" />
+    <option testMovie="Custom" />
+    <option testMovieCommand="Run.bat" />
   </options>
   <!-- Plugin storage -->
   <storage />
