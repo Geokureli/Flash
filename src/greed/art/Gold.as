@@ -12,7 +12,7 @@ package greed.art {
 		public function Gold(x:Number = 0 , y:Number = 0) {
 			super(x, y);
 			
-			overlapArgs = { collider: { type:"hero" }};
+			overlapArgs = { collider: { type:"Hero" }};
 			
 			loadGraphic(SHEET, true, false, 16, 16);
 			addAnimation("ui", [0]);

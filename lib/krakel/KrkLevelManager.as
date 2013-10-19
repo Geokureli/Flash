@@ -1,4 +1,5 @@
 package krakel {
+	import krakel.serial.KrkImporter;
 	/**
 	 * ...
 	 * @author George
@@ -6,18 +7,27 @@ package krakel {
 	public class KrkLevelManager extends KrkState {
 		
 		private var currentLevel:KrkLevel;
+		
+		public var defaultLevelClass:Class;
 		public function KrkLevelManager() {
 			super();
 			
+			defaultLevelClass = KrkLevel;
 		}
 		
-		public function addRef(levelData:XML):void {
+		protected function startLevel(levelData:XML):void {
+			var level:KrkLevel
+			if ("@class" in levelData) {
+				level = new KrkData.CLASS_REFS[levelData["@class"].toString()]();
+			} else {
+				level = new defaultLevelClass();
+			}
 			
-		}
-		
-		protected function startLevel(level:KrkLevel):void {
+			level.setParameters(new XML(levelData));
+			
 			if (currentLevel != null)
 				currentLevel.endLevel();
+			
 			level.endLevel = onLevelEnd;
 			add(currentLevel = level);
 		}

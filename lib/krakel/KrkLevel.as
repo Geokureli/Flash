@@ -20,7 +20,6 @@ package krakel {
 	 */
 	public class KrkLevel extends KrkState {
 		
-		static public const CLASS_REFS:Object = { KrkSprite:KrkSprite, text:KrkText, button:KrkButton };
 		public var width:int, height:int;
 		
 		public var maps:Vector.<KrkTilemap>;
@@ -93,7 +92,7 @@ package krakel {
 			var path:FlxPath;
 			for each(var pathData:XML in levelData..path) {
 				if ("@type" in pathData) {
-					path = new CLASS_REFS[pathData.@type.toString()]() as FlxPath;
+					path = new KrkData.CLASS_REFS[pathData.@type.toString()]() as FlxPath;
 				} else path = new FlxPath();
 				for each(var node:XML in pathData.nodes[0].node)
 					path.add(
@@ -170,8 +169,8 @@ package krakel {
 			node = node.copy();
 			
 			var sprite:KrkSprite;
-			if (node.@type.toString() in CLASS_REFS) {
-				sprite = new CLASS_REFS[node.@type.toString()]();
+			if (node.@type.toString() in KrkData.CLASS_REFS) {
+				sprite = new KrkData.CLASS_REFS[node.@type.toString()]();
 			} else if (node.@type.toString() in KrkImporter.graphics) {
 				sprite = new KrkSprite();
 				node.@graphic = node.@type.toString();
@@ -278,7 +277,7 @@ package krakel {
 			
 			var map:KrkTilemap;
 			if ("@type" in mapData) {
-				map = new CLASS_REFS[mapData.@type.toString()](mapData);
+				map = new KrkData.CLASS_REFS[mapData.@type.toString()](mapData);
 			} else
 				map = new KrkTilemap(mapData);
 			

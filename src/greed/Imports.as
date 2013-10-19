@@ -12,10 +12,10 @@ package greed {
 	public class Imports extends KrkImporter {
 		
 		[Embed(source="../../res/greed/levels/maps/level0.csv",mimeType="application/octet-stream")]	static private const LEVEL0_CSV:Class;
-		[Embed(source="../../res/greed/levels/level0.xml",mimeType="application/octet-stream")]		static private const LEVEL0_XML:Class;
+		[Embed(source="../../res/greed/levels/level0.xml",mimeType="application/octet-stream")]			static private const LEVEL0_XML:Class;
 		
 		[Embed(source="../../res/greed/levels/maps/level1.csv",mimeType="application/octet-stream")]	static private const LEVEL1_CSV:Class;
-		[Embed(source="../../res/greed/levels/level1.xml",mimeType="application/octet-stream")]		static private const LEVEL1_XML:Class;
+		[Embed(source="../../res/greed/levels/level1.xml",mimeType="application/octet-stream")]			static private const LEVEL1_XML:Class;
 		
 		[Embed(source="../../res/greed/levels/maps/level2.csv",mimeType="application/octet-stream")]	static private const LEVEL2_CSV:Class;
 		[Embed(source="../../res/greed/levels/level2.xml",mimeType = "application/octet-stream")]		static private const LEVEL2_XML:Class;
@@ -24,15 +24,18 @@ package greed {
 		[Embed(source="../../res/greed/levels/level3.xml",mimeType = "application/octet-stream")]		static private const LEVEL3_XML:Class;
 		
 		[Embed(source="../../res/greed/levels/maps/testLevel.csv",mimeType="application/octet-stream")]	static private const TEST_CSV:Class;
-		[Embed(source="../../res/greed/levels/testLevel.xml",mimeType = "application/octet-stream")]	static private const TEST_XML:Class;
+		[Embed(source = "../../res/greed/levels/testLevel.xml", mimeType = "application/octet-stream")]	static private const TEST_XML:Class;
 		
-		[Embed(source="../../res/greed/graphics/hold.png")]		static public const HOLD:Class;
+		[Embed(source="../../res/greed/levels/maps/MainMenu.csv",mimeType="application/octet-stream")]	static private const MAIN_MENU_CSV:Class;
+		[Embed(source="../../res/greed/levels/MainMenu.xml",mimeType = "application/octet-stream")]		static private const MAIN_MENU_XML:Class;
+		
+		[Embed(source="../../res/greed/graphics/hold.png")]			static public const HOLD:Class;
 		[Embed(source="../../res/greed/graphics/arrows.png")]		static public const ARROWS:Class;
 		[Embed(source="../../res/greed/graphics/buttonsign.png")]	static public const SIGN_BUTTON:Class;
-		[Embed(source="../../res/greed/graphics/beam.png")]		static public const BEAM:Class;
-		[Embed(source="../../res/greed/graphics/platform.png")]	static public const PLATFORM:Class;
-		[Embed(source="../../res/greed/graphics/safe.png")]		static public const SAFE:Class;
-		[Embed(source="../../res/greed/graphics/hitblock.png")]	static public const HIT_BLOCK:Class;
+		[Embed(source="../../res/greed/graphics/beam.png")]			static public const BEAM:Class;
+		[Embed(source="../../res/greed/graphics/platform.png")]		static public const PLATFORM:Class;
+		[Embed(source="../../res/greed/graphics/safe.png")]			static public const SAFE:Class;
+		[Embed(source="../../res/greed/graphics/hitblock.png")]		static public const HIT_BLOCK:Class;
 		
 		[Embed(source="../../res/greed/graphics/greed_props.png")]	static public const NORMAL_TILES:Class;
 		[Embed(source="../../res/greed/graphics/greed_hell.png")]	static public const HELL_TILES:Class;
@@ -41,7 +44,8 @@ package greed {
 			0:LEVEL0_XML,
 			1:LEVEL1_XML,
 			2:LEVEL2_XML,
-			3:LEVEL3_XML
+			3:LEVEL3_XML,
+			MainMenu:MAIN_MENU_XML
 			// --- TEST LEVEL
 			//,test:TEST_XML
 		}
@@ -52,7 +56,8 @@ package greed {
 				level0:LEVEL0_CSV,
 				level1:LEVEL1_CSV,
 				level2:LEVEL2_CSV,
-				level3:LEVEL3_CSV
+				level3:LEVEL3_CSV,
+				MainMenu:MAIN_MENU_CSV
 			}
 			
 			graphics = {
@@ -83,14 +88,11 @@ package greed {
 		
 		{ init(); }
 		
-		static public function getLevel(id:String, hell:Boolean = true):GreedLevel {
+		static public function getLevel(id:String):XML {
 			if ("test" in levels) id = "test";
 			if (!(id in levels)) throw new Error("No level found with the id: " + id);
 			
-			var level:GreedLevel = new (hell? HellLevel : ChoiceLevel) ();
-			level.setParameters(new XML(new (levels[id])()));
-			level.name = id;
-			return level;
+			return new XML(new (levels[id])());
 		}
 	}
 

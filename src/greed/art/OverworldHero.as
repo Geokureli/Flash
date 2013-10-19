@@ -23,13 +23,13 @@ package greed.art {
 					downNode:int,
 					leftNode:int;
 		
-		public function OverworldHero(x:Number=0, y:Number=0) {
+		public function OverworldHero(x:Number = 0, y:Number = 0) {
 			super(x, y);
 			loadGraphic(SHEET, true, true, 32, 24);
 			addAnimation("idle", [9]);
 			addAnimation("sideways", [0, 1, 2, 3, 4, 5], 10);
-			addAnimation("forward",[8, 9, 10, 11], 10);
-			addAnimation("backward",[12, 13, 14, 15], 10);
+			addAnimation("forward", [8, 9, 10, 11], 10);
+			addAnimation("backward", [12, 13, 14, 15], 10);
 			play("idle");
 			moves = true;
 			moveDir = 0;
@@ -52,6 +52,8 @@ package greed.art {
 				[7],
 				[]
 			]);
+			
+			offset.y = 8;
 		}
 		
 		override public function preUpdate():void {

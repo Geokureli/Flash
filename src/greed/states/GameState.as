@@ -1,16 +1,8 @@
 package greed.states {
 	import greed.Imports;
-	import greed.art.Gold;
-	import greed.levels.GreedLevel;
-	import greed.art.Hero;
-	import greed.art.Treasure;
-	import krakel.KrkGameState;
-	import krakel.KrkLevel;
+	import greed.levels.HellLevel;
+	import greed.levels.ChoiceLevel;
 	import krakel.KrkLevelManager;
-	import org.flixel.FlxG;
-	import org.flixel.FlxRect;
-	import org.flixel.FlxText;
-	import org.flixel.FlxTilemap;
 	
 	/**
 	 * ...
@@ -22,7 +14,6 @@ package greed.states {
 		static public const NUM_LEVELS:int = 4;
 		
 		private var levelNum:Number;
-		private var hellMode:Boolean;
 		
 		public function GameState() {
 			super();
@@ -32,9 +23,9 @@ package greed.states {
 			super.create();
 			
 			levelNum = 0;
-			hellMode = false;
+			defaultLevelClass = ChoiceLevel;
 			
-			startLevel(Imports.getLevel(levelNum.toString(), hellMode));
+			startLevel(Imports.getLevel(levelNum.toString()));
 		}
 		
 		override protected function onLevelEnd():void {
@@ -44,13 +35,13 @@ package greed.states {
 			
 			levelNum++;
 			if (levelNum == NUM_LEVELS) {
-				if (hellMode) return;
+				if (defaultLevelClass == HellLevel) return;
 				else {
-					hellMode = true;
+					defaultLevelClass = HellLevel;
 					levelNum = 0;
 				}
 			}
-			startLevel(Imports.getLevel(levelNum.toString(), hellMode));
+			startLevel(Imports.getLevel(levelNum.toString()));
 		}
 		
 	}
