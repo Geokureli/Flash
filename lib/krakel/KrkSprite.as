@@ -5,6 +5,7 @@ package krakel {
 	import flash.filters.ColorMatrixFilter;
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
+	import flash.utils.getQualifiedClassName;
 	import krakel.serial.KrkImporter;
 	import krakel.xml.XMLParser;
 	import org.flixel.FlxGroup;
@@ -462,7 +463,6 @@ package krakel {
 				
 			width = frameWidth * value;
 		}
-		
 		public function get yScale():Number { return scale.y; }
 		public function set yScale(value:Number):void {
 			scale.y = value;
@@ -493,8 +493,11 @@ package krakel {
 		}
 		
 		override public function toString():String {
-			return (type != "KrkSprite" || graphic == null ? type : graphic) 
-				+ "( " + int(x).toString() + ", " + int(y).toString() + ')';
+			var name:String = type != "KrkSprite" || graphic == null ? type : graphic;
+			if (name == null) {
+				name = getQualifiedClassName(this);
+			}
+			return name + "( " + int(x).toString() + ", " + int(y).toString() + ')';
 		}
 	}
 
