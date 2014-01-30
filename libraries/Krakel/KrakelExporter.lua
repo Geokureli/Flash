@@ -112,9 +112,18 @@ end
 -- SPRITE GENERATION - must be called after paths.
 -------------------------------------
 
-spritePropsText = "%%ifproplength%%"
-	spritePropsText = spritePropsText.."%%proploop%%%propname%\=\"%propvalue%\" %%proploopend%%"..
+spritePropsText =	"%%ifproplength%%"..
+					"%%proploop%%%propname%\=\"%propvalue%\" %%proploopend%%"..
 					"%%endifproplength%%"
+
+spriteAnimText =	"%%spriteanimloop%%"..
+						tab3.."<animation name=\"%animname%\" fps=\"%fps%\" looped=\"%looped%\">"..
+						"%%animframeloop%%"..
+							tab4.."%tileid%%separator:,%\n"..
+						"%%animframeloopend%%"..tab3.."</animation>\n"..
+					"%%spriteanimloopend%%"
+-- spriteShapeString = "%%spriteframeloop%%"..tab3.."spriteData.shapeList[%frame%] = ( [%%shapeloop%%new AnimFrameShapeData(\"%shapename%\", AnimFrameShapeData.SHAPE_%TYPE%, %xpos%, %ypos%, %radius%, %wid%, %ht%)%separator:,\n"..tab5..tab5.."%%%shapeloopend%% ]);\n%%spriteframeloopend%%"
+	
 spriteText = tab2.."<sprite type=\"%class%\" "..
 			-- "name=%name% "..
 			"x=\"%xpos%\" "..
@@ -129,7 +138,9 @@ spriteText = tab2.."<sprite type=\"%class%\" "..
 			"%%if parent%%"..
 				" pathId=\"%getparent%\" ".."startNode=\"%attachedsegment%\" pathT=\"%attachedsegment_t%\" "..
 			"%%endifparent%%"..
-			linkAssignText..spritePropsText.."/>\n"
+			linkAssignText..spritePropsText..">\n"..
+			spriteAnimText..
+			tab2.."</sprite>"
 
 function generateSprites( )
 	for i,v in ipairs(spriteLayers) do
