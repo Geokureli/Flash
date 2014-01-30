@@ -53,26 +53,13 @@ package krakel {
 		public function KrkScheme() { }
 		
 		
-		protected function init():void {
-			_hitCallbacks = { };
-		}
+		protected function init():void {}
 		
 		public function preUpdate():void { }
 		public function update():void { }
 		public function postUpdate():void { }
 		
-		public function hitObject(obj:FlxObject):void {
-			var sprite:KrkSprite = obj as KrkSprite;
-			if (sprite != null && sprite.type in _hitCallbacks) {
-				_hitCallbacks[sprite.type](sprite);
-				return;
-			}
-			var tile:KrkTile = obj as KrkTile;
-			if (tile != null && tile.type in _hitCallbacks) {
-				_hitCallbacks[tile.type](tile);
-				return;
-			}
-		}
+		public function hitObject(obj:FlxObject):void { }
 		
 		public function kill():void { target = null; }
 		public function revive():void { init(); }
