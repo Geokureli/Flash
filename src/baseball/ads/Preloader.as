@@ -1,21 +1,16 @@
 package  {
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.events.Event;
 	import flash.ui.Mouse;
 	import flash.utils.getQualifiedClassName;
 	import krakel.ads.AdBox;
 	import krakel.ads.FlxMochiBox;
 	import krakel.ads.HighScore;
-	import krakel.ads.MochiBox;
-	import mochi.as3.MochiServices;
 	import org.flixel.FlxG;
-	import rawr.BorderMaker;
-	//import krakel.helpers.Random;
 	import org.flixel.system.FlxPreloader;
+	//import krakel.helpers.Random;
 	
 	/**
 	 * ...

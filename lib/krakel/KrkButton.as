@@ -15,73 +15,66 @@ package krakel {
 	 */
 	public class KrkButton extends KrkSprite {
 		
-		/**
-		 * The text that appears on the button.
-		 */
+		/** The text that appears on the button. */
 		public var label:FlxText;
-		/**
-		 * Controls the offset (from top left) of the text from the button.
-		 */
+		
+		/** Controls the offset (from top left) of the text from the button. */
 		public var labelOffset:FlxPoint;
+		
 		/**
 		 * This function is called when the button is released.
 		 * We recommend assigning your main button behavior to this function
 		 * via the <code>FlxButton</code> constructor.
 		 */
 		public var onUp:Function;
-		/**
-		 * This function is called when the button is pressed down.
-		 */
+		
+		/** This function is called when the button is pressed down. */
 		public var onDown:Function;
-		/**
-		 * This function is called when the mouse goes over the button.
-		 */
+		
+		/** This function is called when the mouse goes over the button. */
 		public var onOver:Function;
-		/**
-		 * This function is called when the mouse leaves the button area.
-		 */
+		
+		/** This function is called when the mouse leaves the button area. */
 		public var onOut:Function;
-		/**
-		 * Shows the current state of the button.
-		 */
+		
+		/** Shows the current state of the button.*/
 		public var status:uint;
+		
 		/**
 		 * Set this to play a sound when the mouse goes over the button.
 		 * We recommend using the helper function setSounds()!
 		 */
 		public var soundOver:FlxSound;
+		
 		/**
 		 * Set this to play a sound when the mouse leaves the button.
 		 * We recommend using the helper function setSounds()!
 		 */
 		public var soundOut:FlxSound;
+		
 		/**
 		 * Set this to play a sound when the button is pressed down.
 		 * We recommend using the helper function setSounds()!
 		 */
 		public var soundDown:FlxSound;
+		
 		/**
 		 * Set this to play a sound when the button is released.
 		 * We recommend using the helper function setSounds()!
 		 */
 		public var soundUp:FlxSound;
-
-		/**
-		 * Used for checkbox-style behavior.
-		 */
+		
+		/** Used for checkbox-style behavior. */
 		protected var _onToggle:Boolean;
 		
-		/**
-		 * Tracks whether or not the button is currently pressed.
-		 */
+		/** Tracks whether or not the button is currently pressed. */
 		protected var _pressed:Boolean;
-		/**
-		 * Whether or not the button has initialized itself yet.
-		 */
+		/** Whether or not the button has initialized itself yet. */
 		protected var _initialized:Boolean;
 		
-		public function KrkButton() {
-			super();
+		public function KrkButton(x:int = 0, y:int = 0, graphic:Class = null) {
+			
+			super(x, y , graphic);
 			
 			onUp = null;
 			onDown = null;
@@ -140,13 +133,11 @@ package krakel {
 			}
 		}
 		
-		/**
-		 * Called by the game loop automatically, handles mouseover and click detection.
-		 */
+		/** Called by the game loop automatically, handles mouseover and click detection. */
 		override public function update():void
 		{
 			updateButton(); //Basic button logic
-
+			
 			//Default button appearance is to simply update
 			// the label appearance based on animation frame.
 			if(label == null)
@@ -167,9 +158,7 @@ package krakel {
 			}
 		}
 		
-		/**
-		 * Basic button update logic
-		 */
+		/** Basic button update logic */
 		protected function updateButton():void
 		{
 			//Figure out if the button is highlighted or pressed or what
@@ -219,7 +208,7 @@ package krakel {
 					status = FlxButton.NORMAL;
 				}
 			}
-		
+			
 			//Then if the label and/or the label offset exist,
 			// position them to match the button.
 			if(label != null)
@@ -240,9 +229,7 @@ package krakel {
 				frame = status;
 		}
 		
-		/**
-		 * Just draws the button graphic and text label to the screen.
-		 */
+		/** Just draws the button graphic and text label to the screen. */
 		override public function draw():void
 		{
 			super.draw();
@@ -254,9 +241,7 @@ package krakel {
 			}
 		}
 		
-		/**
-		 * Updates the size of the text field to match the button.
-		 */
+		/** Updates the size of the text field to match the button. */
 		override protected function resetHelpers():void
 		{
 			super.resetHelpers();
@@ -291,25 +276,19 @@ package krakel {
 				soundUp = FlxG.loadSound(SoundUp, SoundUpVolume);
 		}
 		
-		/**
-		 * Use this to toggle checkbox-style behavior.
-		 */
+		/** Use this to toggle checkbox-style behavior. */
 		public function get on():Boolean
 		{
 			return _onToggle;
 		}
 		
-		/**
-		 * @private
-		 */
+		/** @private */
 		public function set on(On:Boolean):void
 		{
 			_onToggle = On;
 		}
 		
-		/**
-		 * Internal function for handling the actual callback call (for UI thread dependent calls like <code>FlxU.openURL()</code>).
-		 */
+		/** Internal function for handling the actual callback call (for UI thread dependent calls like <code>FlxU.openURL()</code>). */
 		protected function onMouseUp(event:MouseEvent):void
 		{
 			if(!exists || !visible || !active || (status != FlxButton.PRESSED))
@@ -319,11 +298,9 @@ package krakel {
 			if(soundUp != null)
 				soundUp.play(true);
 		}
-	
 		
-		/**
-		 * Called by the game state when state is changed (if this object belongs to the state)
-		 */
+		
+		/** Called by the game state when state is changed (if this object belongs to the state) */
 		override public function destroy():void
 		{
 			if(FlxG.stage != null)
@@ -347,7 +324,7 @@ package krakel {
 				soundUp.destroy();
 			super.destroy();
 		}
-	
+		
 		// --- DELEGATES FROM FlxText
 		
 		/** The text being displayed. */

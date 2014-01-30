@@ -45,27 +45,27 @@ package baseball.states.editor {
 		
 		private var isPlaying:Boolean;
 		private var songStarted:Boolean;
-		private var playbackDrag:Boolean
+		private var playbackDrag:Boolean;
 		private var useMetronome:Boolean;
 		
 		private var selected:Class;
 		private var highlighted:Obstacle;
 		
-		private var frame:int,
-					meter:int,
-					songOffset:int;
+		private var frame:int;
+		private var meter:int;
+		private var songOffset:int;
 		
 		public var songName:String;
 		
 		public var obstacles:Array;
 		
-		protected var sld_speed:Slider,
-						sld_meter:Slider,
-						sld_bpm:Slider,
-						sld_offset:Slider;
+		protected var sld_speed:Slider;
+		protected var sld_meter:Slider;
+		protected var sld_bpm:Slider;
+		protected var sld_offset:Slider;
 		
-		private var btn_play:FlxButton,
-					btn_test:FlxButton;
+		private var btn_play:FlxButton;
+		private var btn_test:FlxButton;
 		
 		private var timeline:Timeline;
 		private var playback:FlxSprite;
@@ -105,7 +105,7 @@ package baseball.states.editor {
 			add(new Button(168, 8, Imports.getButtonGraphic(32, 32), null, baseClick));
 			add(new Button(208, 8, Imports.getButtonGraphic(32, 32), null, removeClick));
 			
-			var slider:Slider;
+			//var slider:Slider;
 			
 			add(sld_speed = new Slider(5, 20, 1, 3));
 			sld_speed.x = 100;

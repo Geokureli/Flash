@@ -18,7 +18,7 @@ package algae {
 		}
 		{ init(); }
 		
-		public function Main():void {
+		public function Main() {
 			super(1280, 960, GameState, .75);
 		}
 	}

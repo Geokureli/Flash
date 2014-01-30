@@ -88,7 +88,7 @@ package baseball.states.play {
 		}
 		
 		private function addRandomObstacle():void {
-			var name:String = randomName;
+			//var name:String = randomName;
 			var node:XML = <{name} beat={beatCount}/>;
 			//trace(level.assets[0]);
 			level.assets[0].appendChild(node);

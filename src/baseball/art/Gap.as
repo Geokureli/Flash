@@ -11,7 +11,7 @@ package baseball.art {
 	public class Gap extends Obstacle {
 		[Embed(source="../../../res/baseball/sprites/gap.png")] static private const SHEET:Class;
 		[Embed(source="../../../res/baseball/sprites/gap2.png")] static private const GAP_TEMPLATE:Class;
-		static public var GAP:BitmapData = new GAP_TEMPLATE().bitmapData;
+		static public const GAP:BitmapData = new GAP_TEMPLATE().bitmapData;
 		
 		static private const gaps:Array = [];
 		

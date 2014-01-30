@@ -9,7 +9,7 @@ package greed {
 	public class Editor extends KrkGame {
 		static private const SCALE:Number = 2;
 		
-		public function Editor():void {
+		public function Editor() {
 			super(640 / SCALE, 360 / SCALE, GameState, SCALE);
 		}
 		

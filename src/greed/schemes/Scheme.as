@@ -5,7 +5,10 @@ package greed.schemes {
 	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
-	
+	/**
+	 * The Main scheme of the greed game.
+	 * @author George
+	 */
 	public class Scheme extends JumpScheme {
 		
 		static public var
@@ -59,6 +62,9 @@ package greed.schemes {
 			
 			//accY = GRAVITY;
 			//maxX = MAX_X;
+			
+			_hitCallbacks.Ladder = hitLadder;
+			_hitCallbacks.Spring = hitSpring;
 		}
 		
 		override public function update():void {
@@ -85,22 +91,18 @@ package greed.schemes {
 		private function centerTileX():void {
 			x = int((x - offsetX + frameWidth/2) / TILE_SIZE) * TILE_SIZE + offsetX - 8;
 		}
+		
 		override public function postUpdate():void {
 			super.postUpdate();
 			touchLadder = false;
 		}
 		
-		override public function hitObject(obj:FlxObject):void {
-			if (obj is KrkTile) {
-				switch((obj as KrkTile).type) {
-					case "ladder":
-						touchLadder = x - obj.x > -4 && x - obj.x < 10;
-						break;
-					case "spring":
-						forceJump();
-						break;
-				}
-			}
+		private function hitLadder(ladder:KrkTile):void {
+			touchLadder = x - ladder.x > -4 && x - ladder.x < 10;
+		}
+		
+		private function hitSpring(spring:KrkTile):void {
+			forceJump();
 		}
 	}
 

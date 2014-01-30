@@ -38,9 +38,8 @@ import org.flixel.FlxPoint;
 
 class PathDragger extends Overworld {
 	public var path:FlxPath;
-	override public function update():void {
-		super.update();
-		var mouse:FlxPoint = FlxG.mouse;
-		
-	}
+	//override public function update():void {
+		//super.update();
+		//var mouse:FlxPoint = FlxG.mouse;
+	//}
 }

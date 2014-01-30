@@ -34,15 +34,15 @@ package greed.levels {
 		protected var _hero:Hero;
 		protected var buttonsLeft:int;
 		
-		protected var isThief:Boolean,
-					gameOver:Boolean,
-					cameraSet:Boolean;
+		protected var isThief:Boolean;
+		protected var gameOver:Boolean;
+		protected var cameraSet:Boolean;
 		
-		public var totalCoins:uint,
-					totalTreasure:uint;
+		public var totalCoins:uint;
+		public var totalTreasure:uint;
 		
-		private var _coins:uint,
-					_treasure:uint;
+		private var _coins:uint;
+		private var _treasure:uint;
 		
 		public var name:String;
 		
@@ -64,9 +64,9 @@ package greed.levels {
 			FlxG.camera.bounds = new FlxRect(0, 0, width, height);
 		}
 		
-		override protected function createLayer(layer:XML):void {
-			super.createLayer(layer);
-		}
+		//override protected function createLayer(layer:XML):void {
+			//super.createLayer(layer);
+		//}
 		
 		override protected function parseSprite(node:XML):FlxSprite {
 			var sprite:FlxSprite = super.parseSprite(node);

@@ -13,8 +13,8 @@ package krakel {
 			
 			var basic:FlxBasic;
 			var i:uint = 0;
-			while(i < length)
-			{
+			while (i < length) {
+				
 				basic = members[i++] as FlxBasic;
 				if((basic != null) && basic.exists && basic.active)
 					basic.preUpdate();
@@ -22,10 +22,11 @@ package krakel {
 		}
 		override public function update():void {
 			//super.update();
+			
 			var basic:FlxBasic;
 			var i:uint = 0;
-			while(i < length)
-			{
+			while (i < length) {
+				
 				basic = members[i++] as FlxBasic;
 				if ((basic != null) && basic.exists && basic.active) {
 					//basic.preUpdate();

@@ -8,91 +8,71 @@ package krakel {
 	 * @author George
 	 */
 	public class KrkScheme {
-		/**
-		 * Generic value for "left" Used by <code>facing</code>, <code>allowCollisions</code>, and <code>touching</code>.
-		 */
+		/** Generic value for "left" Used by <code>facing</code>, <code>allowCollisions</code>, and <code>touching</code>. */
 		static public const LEFT:uint	= 0x0001;
-		/**
-		 * Generic value for "right" Used by <code>facing</code>, <code>allowCollisions</code>, and <code>touching</code>.
-		 */
+		/** Generic value for "right" Used by <code>facing</code>, <code>allowCollisions</code>, and <code>touching</code>. */
 		static public const RIGHT:uint	= 0x0010;
-		/**
-		 * Generic value for "up" Used by <code>facing</code>, <code>allowCollisions</code>, and <code>touching</code>.
-		 */
+		/** Generic value for "up" Used by <code>facing</code>, <code>allowCollisions</code>, and <code>touching</code>. */
 		static public const UP:uint		= 0x0100;
-		/**
-		 * Generic value for "down" Used by <code>facing</code>, <code>allowCollisions</code>, and <code>touching</code>.
-		 */
+		/** Generic value for "down" Used by <code>facing</code>, <code>allowCollisions</code>, and <code>touching</code>. */
 		static public const DOWN:uint	= 0x1000;
 		
-		/**
-		 * Special-case constant meaning no collisions, used mainly by <code>allowCollisions</code> and <code>touching</code>.
-		 */
+		/** Special-case constant meaning no collisions, used mainly by <code>allowCollisions</code> and <code>touching</code>. */
 		static public const NONE:uint	= 0;
-		/**
-		 * Special-case constant meaning up, used mainly by <code>allowCollisions</code> and <code>touching</code>.
-		 */
+		/** Special-case constant meaning up, used mainly by <code>allowCollisions</code> and <code>touching</code>. */
 		static public const CEILING:uint= UP;
-		/**
-		 * Special-case constant meaning down, used mainly by <code>allowCollisions</code> and <code>touching</code>.
-		 */
+		/** Special-case constant meaning down, used mainly by <code>allowCollisions</code> and <code>touching</code>. */
 		static public const FLOOR:uint	= DOWN;
-		/**
-		 * Special-case constant meaning only the left and right sides, used mainly by <code>allowCollisions</code> and <code>touching</code>.
-		 */
+		/** Special-case constant meaning only the left and right sides, used mainly by <code>allowCollisions</code> and <code>touching</code>. */
 		static public const WALL:uint	= LEFT | RIGHT;
-		/**
-		 * Special-case constant meaning any direction, used mainly by <code>allowCollisions</code> and <code>touching</code>.
-		 */
+		/** Special-case constant meaning any direction, used mainly by <code>allowCollisions</code> and <code>touching</code>. */
 		static public const ANY:uint	= LEFT | RIGHT | UP | DOWN;
 		
-		/**
-		 * Handy constant used during collision resolution (see <code>separateX()</code> and <code>separateY()</code>).
-		 */
+		/** Handy constant used during collision resolution (see <code>separateX()</code> and <code>separateY()</code>). */
 		static public const OVERLAP_BIAS:Number = 4;
 		
-		/**
-		 * Path behavior controls: move from the start of the path to the end then stop.
-		 */
+		/** Path behavior controls: move from the start of the path to the end then stop. */
 		static public const PATH_FORWARD:uint			= 0x000000;
-		/**
-		 * Path behavior controls: move from the end of the path to the start then stop.
-		 */
+		/** Path behavior controls: move from the end of the path to the start then stop. */
 		static public const PATH_BACKWARD:uint			= 0x000001;
-		/**
-		 * Path behavior controls: move from the start of the path to the end then directly back to the start, and start over.
-		 */
+		/** Path behavior controls: move from the start of the path to the end then directly back to the start, and start over. */
 		static public const PATH_LOOP_FORWARD:uint		= 0x000010;
-		/**
-		 * Path behavior controls: move from the end of the path to the start then directly back to the end, and start over.
-		 */
+		/** Path behavior controls: move from the end of the path to the start then directly back to the end, and start over. */
 		static public const PATH_LOOP_BACKWARD:uint		= 0x000100;
-		/**
-		 * Path behavior controls: move from the start of the path to the end then turn around and go back to the start, over and over.
-		 */
+		/** Path behavior controls: move from the start of the path to the end then turn around and go back to the start, over and over. */
 		static public const PATH_YOYO:uint				= 0x001000;
-		/**
-		 * Path behavior controls: ignores any vertical component to the path data, only follows side to side.
-		 */
+		/** Path behavior controls: ignores any vertical component to the path data, only follows side to side. */
 		static public const PATH_HORIZONTAL_ONLY:uint	= 0x010000;
-		/**
-		 * Path behavior controls: ignores any horizontal component to the path data, only follows up and down.
-		 */
+		/** Path behavior controls: ignores any horizontal component to the path data, only follows up and down. */
 		static public const PATH_VERTICAL_ONLY:uint		= 0x100000;
 		
 		internal var target:KrkSprite;
 		private var _x:Number;
+		protected var _hitCallbacks:Object;
 		
 		public function KrkScheme() { }
 		
 		
-		protected function init():void {}
+		protected function init():void {
+			_hitCallbacks = { };
+		}
 		
 		public function preUpdate():void { }
 		public function update():void { }
 		public function postUpdate():void { }
 		
-		public function hitObject(obj:FlxObject):void { }
+		public function hitObject(obj:FlxObject):void {
+			var sprite:KrkSprite = obj as KrkSprite;
+			if (sprite != null && sprite.type in _hitCallbacks) {
+				_hitCallbacks[sprite.type](sprite);
+				return;
+			}
+			var tile:KrkTile = obj as KrkTile;
+			if (tile != null && tile.type in _hitCallbacks) {
+				_hitCallbacks[tile.type](tile);
+				return;
+			}
+		}
 		
 		public function kill():void { target = null; }
 		public function revive():void { init(); }

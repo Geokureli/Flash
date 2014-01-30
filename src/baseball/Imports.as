@@ -23,7 +23,7 @@ package baseball {
 		
 		static public var BUTTON:BitmapData;
 		
-		static private const songs:Object = { };
+		static private const songs:Object = { }; 
 		static private const levels:Object = { };
 		static private const buttons:Object = { };
 		
