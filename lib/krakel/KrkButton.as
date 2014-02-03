@@ -305,6 +305,7 @@ package krakel {
 		{
 			if(FlxG.stage != null)
 				FlxG.stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+				
 			if(label != null)
 			{
 				label.destroy();
