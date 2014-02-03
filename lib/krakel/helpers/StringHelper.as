@@ -50,7 +50,7 @@ package krakel.helpers {
 			if (value in CONSTANTS) return CONSTANTS[value];
 			if (value.match(IS_FORCE_XML)) return value.substring(4, -1);
 			if (value.match(IS_NUMBER)) return Number(value);
-			if (value.match(IS_COLOR)) return parseInt(value.split(/^(0x|#)/)[1], 16);
+			if (value.match(IS_COLOR)) return parseInt(value.split(/^(0x|#)/).pop(), 16);
 			if (value.match(IS_UNITS)) return ConvertUnits(value);
 			if (value.match(IS_ARRAY)) return ConvertToArray(value);
 			if (value.match(IS_OBJECT)) return ConvertToObject(value);
