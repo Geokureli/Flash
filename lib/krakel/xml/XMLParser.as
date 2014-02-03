@@ -21,40 +21,55 @@ package krakel.xml {
 		public function XMLParser(source:XML, target:Object) {
 			this.target = target;
 			this.source = source;
+			
 			setDefaultValues();
 			preParse();
 		}
 		
 		protected function setDefaultValues():void {
+			
 			methods = { };
 			classes = { };
-			if("derived" in source)
+			
+			if ("derived" in source)
 				derived = removeFromParent(source.derived[0]);
-			else derived = <derived/>
-			if("defaults" in source)
+			else
+				derived = <derived/>
+				
+			if ("defaults" in source)
 				defaultAttributes = removeFromParent(source.defaults[0]);
-			else defaultAttributes = <defaults/>;
+			else
+				defaultAttributes = <defaults/>;
 		}
-		protected function preParse():void {
-		}
+		
+		protected function preParse():void { }
+		
 		public function parse(entry:String = null):void {
-			if (entry == null) parseNode(source);
-			else parseNode(source.children().(name().toString() == entry))[0];
+			
+			if (entry == null)
+				parseNode(source);
+			else
+				parseNode(source.children().(name().toString() == entry))[0];
 		}
+		
 		protected function parseNode(node:XML):void {
 			setDefaultAttributes(node);
+			
 			for each(var child:XML in node.children())
 				parseNode(child);
 		}
 		
-		
 		public function setDefaultAttributes(node:XML):void {
-			if (node.name().toString() in defaultAttributes) 
+			
+			if (node.name().toString() in defaultAttributes)
+				
 				XMLParser.addAttributes(node, defaultAttributes[node.name().toString()][0]);
+				
 			XMLParser.setDefaultAttributes(node);
 		}
 		
 		public function destroy():void {
+			
 			methods = null;
 			classes = null;
 			source = null;
@@ -62,54 +77,79 @@ package krakel.xml {
 		}
 		
 		static public function removeFromParent(node:XML):XML {
+			
 			delete node.parent()[node.name()];
+			
 			return node;
 		}
+		
 		static public function removeAttribute(node:XML, name:String):String {
+			
 			var value:String = node['@' + name];
-			delete node['@'+name];
+			delete node['@' + name];
+			
 			return value;
 		}
+		
 		static public function setProperties(obj:Object, node:XML):Object {
+			
 			if (obj == null) obj = { };
 			setDefaultAttributes(node);
 			
 			for each(var att:XML in node.attributes()) {
+				
 				var test:String = att.name();
 				setProperty(obj, att.name().toString(), att.toString());
 			}
+			
 			return obj;
 		}
+		
 		static public function setProperty(obj:Object, varName:String, value:String):void {
-			if(varName in obj)
+			
+			if (varName in obj)
+				
 				obj[varName] = StringHelper.AutoTypeString(value);
-			else if(varName.indexOf('.') != -1){
+				
+			else if (varName.indexOf('.') != -1) {
+				
 				var arr:Array = varName.split('.');
 				varName = arr.shift();
-				if(obj[varName] != null)
+				
+				if (obj[varName] != null)
+					
 					setProperty(obj[varName], arr.join('.'), value);
-				else throw new Error("Cannot serialize property:" + arr.join('.') + " on null property: " + varName);;
+					
+				else
+					throw new Error("Cannot serialize property:" + arr.join('.') + " on null property: " + varName);
+				
 			} else if (false)// --- DISABLED
 				trace("Property: " + varName + " not found on object:" + obj);
 		}
 		static public function removeNodes(parent:XML, names:String):XMLList {
+			
 			var list:XMLList = new XMLList();
 			for each(var name:String in names.split(','))
 				list += removeFromParent(parent[name][0]);
+			
 			return list;
 		}
 		static public function removeAttributes(parent:XML, names:String):Object {
+			
 			var obj:Object = { };
 			for each(var name:String in names.split(','))
 				obj[name] = StringHelper.AutoTypeString(removeAttribute(parent, name));
+			
 			return obj;
 		}
 		static public function setDefaultAttributes(node:XML):void {
+			
 			if (node.name().toString() in DEFAULT_ATTRIBUTES) 
 				XMLParser.addAttributes(node, DEFAULT_ATTRIBUTES[node.name().toString()][0]);
 		}
 		
 		static public function addAttributes(node:XML, params:XML):void {
+			
 			for each(var att:XML in params.attributes())
 				node["@" + att.name().toString()] = att.toString();
 		}
