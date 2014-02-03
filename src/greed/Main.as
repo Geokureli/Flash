@@ -5,6 +5,7 @@ package greed{
 	import greed.art.Button;
 	import greed.art.LevelPath;
 	import greed.levels.Overworld;
+	import greed.states.ParserState;
 	import greed.states.PathCreator;
 	import greed.tiles.CallbackTile;
 	import greed.art.Door;
@@ -63,7 +64,7 @@ package greed{
 		static private const SCALE:Number = 2;
 		
 		public function Main():void {
-			super(720 / SCALE, 400 / SCALE, GameState, SCALE);
+			super(720 / SCALE, 400 / SCALE, ParserState, SCALE);
 			Imports.BEAM;
 		}
 		
