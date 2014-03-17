@@ -9,8 +9,15 @@ package krakel.helpers
 	public class Random 
 	{
 		static public function between(low:Number, high:Number = 0, round:Number = 1):Number {
+			if (low > high){
+				
+				var temp:Number = low;
+				low = high;
+				high = temp;
+			}
+			
 			if (round > 0)
-				return int(low + Math.random() * (high - low) / round) * round;
+				return low + int(Math.random() * (high - low) / round) * round;
 			return low + Math.random() * (high - low);
 		}
 		

@@ -71,7 +71,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="src\greed\Main.as" />
+    <compile path="src\astley\Main.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
@@ -86,6 +86,7 @@
     <hidden path="lib\AdamAtomic-flixel-Dev.zip" />
     <hidden path="lib\AdamAtomic-flixel-Master.zip" />
     <hidden path="lib\New Project.as3proj" />
+    <hidden path="res\astley\graphics\Thumbs.db" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />

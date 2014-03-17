@@ -2,6 +2,7 @@ package krakel {
 	import org.flixel.FlxBasic;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxObject;
+	import org.flixel.FlxPoint;
 	
 	/**
 	 * ...
@@ -9,8 +10,11 @@ package krakel {
 	 */
 	
 	public class KrkNest extends KrkGroup {
-		public var _x:Number,
-					_y:Number;
+		public var _x:Number;
+		public var _y:Number;
+		/** not used yet */
+		public var offset:FlxPoint;
+		
 		
 		public function KrkNest(x:Number = 0, y:Number = 0) {
 			super();
@@ -29,10 +33,19 @@ package krakel {
 		
 		public function get x():Number { return _x; }
 		public function set x(value:Number):void {
-			for each(var child:FlxObject in members) {
+			
+			if (_x == value) return;
+			
+			for each(var child:FlxBasic in members) {
 				
-				if (child != null)
-					child.x += value - _x;
+				if (child != null) {
+					
+					if (child is FlxObject) 
+						(child as FlxObject).x += value - _x;
+						
+					else if (child is KrkNest)
+						(child as KrkNest).x += value - _x;
+				}
 			}
 				
 			_x = value;
@@ -40,10 +53,19 @@ package krakel {
 		
 		public function get y():Number { return _y; }
 		public function set y(value:Number):void {
-			for each(var child:FlxObject in members) {
+			
+			if (_y == value) return;
+			
+			for each(var child:FlxBasic in members) {
 				
-				if (child != null)
-					child.y += value - _y;
+				if (child != null) {
+					
+					if (child is FlxObject) 
+						(child as FlxObject).y += value - _y;
+						
+					else if (child is KrkNest)
+						(child as KrkNest).y += value - _y;
+				}
 			}
 				
 			_y = value;

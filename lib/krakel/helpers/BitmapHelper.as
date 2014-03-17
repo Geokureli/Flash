@@ -90,7 +90,7 @@ package krakel.helpers {
 		//static public function apply9Grid(src:BitmapData, grid:Rectangle, width:int, height:int):BitmapData {
 			//return apply9GridTo(src, grid, new BitmapData(width, height));
 		//}
-		static public function apply9GridTo(src:BitmapData, target:BitmapData, grid:Rectangle, srcRect:Rectangle, dest:Rectangle, params:Object = null):void {
+		static public function apply9GridTo(src:BitmapData, target:BitmapData, grid:Rectangle, srcRect:Rectangle = null, dest:Rectangle = null, params:Object = null):BitmapData {
 			if (srcRect == null)
 				srcRect = src.rect;
 			if (dest == null)
@@ -159,6 +159,8 @@ package krakel.helpers {
 					target.fillRect(rect, src.getPixel32(srcRect.x + grid.x, srcRect.y + grid.y));
 			}
 			src.unlock();
+			
+			return target;
 		}
 	}
 }

@@ -44,6 +44,7 @@ package krakel.xml.dame {
 		
 		override protected function setChildDelegates():void {
 			super.setChildDelegates();
+			
 			childDelegates.push(new VarDelegate("version"));
 			childDelegates.push(new VarDelegate("bgColor"));
 			childDelegates.push(new VarDelegate("viewPos"));
