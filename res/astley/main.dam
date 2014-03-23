@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+  <version>3.1.6</version>
+  <bgColor>0x777777</bgColor>
+  <viewPos x="244" y="79"/>
+  <firstLayersTop>false</firstLayersTop>
+  <spriteEntries currentId="1"/>
+  <layers>
+    <group name="Group1" id="0" xScroll="1" yScroll="1" visible="true" open="true" locked="false" exports="true">
+      <maplayer name="Map2" id="2" xScroll="1" yScroll="1" x="0" y="0" width="10" height="16" tileset="graphics/mario_tiles.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false">
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>670,670,670,670,670,670,670,670,670,670</row>
+        <row>241,241,241,241,241,241,241,241,241,241</row>
+        <row>270,270,270,270,270,270,270,270,270,270</row>
+        <row>270,270,270,270,270,270,270,270,270,270</row>
+      </maplayer>
+      <shapelayer name="static" id="1" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false" selected="true">
+        <shape guid="72B2C09E-9ECE-95D1-8DF6-91159BC34691" x="16" y="16" Z="0" angle="0" width="128.00" height="32.00" text="THANKS FOR PLAYING" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="center" scale="1"/>
+        <shape guid="9838A148-E7DE-733C-42E0-92BC8519EC13" x="16" y="208" Z="0" angle="0" width="128.00" height="16.00" text="LINKS" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="center" scale="1"/>
+      </shapelayer>
+      <shapelayer name="credits1" id="3" xScroll="1" yScroll="1" visible="false" locked="false" exports="true" aligned="false" sort="false">
+        <shape guid="F7DEB6B7-65EA-07D0-47EA-C3CBAC8B9905" x="25" y="111" Z="0" angle="0" width="128.00" height="16.00" text="MATTHEW HARRIS" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="center" scale="1"/>
+        <shape guid="51A84B5C-4E7D-9316-68BA-BF061DE4B108" x="9" y="95" Z="0" angle="0" width="144.00" height="16.00" text="ORIGINAL CONCEPT:" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="center" scale="1"/>
+      </shapelayer>
+      <shapelayer name="credits2" id="5" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
+        <shape guid="B6E6D5D9-2AC6-B9CD-4587-99F841CE4F44" x="32" y="80" Z="0" angle="0" width="112.00" height="16.00" text="RANDOM PERSON" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
+        <shape guid="3DF48992-3468-E8C6-BDC6-FB4F745FE331" x="16" y="64" Z="0" angle="0" width="112.00" height="16.00" text="CHARACTER ART:" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
+        <shape guid="DCF466A9-4EFA-60E8-8831-80BF054E0FEC" x="16" y="112" Z="0" angle="0" width="112.00" height="16.00" text="BG TILE ART:" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
+        <shape guid="2382EA6B-E9C4-0CAC-593D-BED3DB1863D5" x="32" y="128" Z="0" angle="0" width="80.00" height="16.00" text="NINTENDO" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
+        <shape guid="1229F696-F9B4-D0C3-A247-F572CA4508B8" x="32" y="176" Z="0" angle="0" width="80.00" height="16.00" text="BLAH BLAH" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
+        <shape guid="A41E1A57-FC59-66F3-63CE-DA1E2FF8B68F" x="16" y="160" Z="0" angle="0" width="128.00" height="16.00" text="LOADING SCREEN:" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
+      </shapelayer>
+      <shapelayer name="credits3" id="6" xScroll="1" yScroll="1" visible="false" locked="false" exports="true" aligned="false" sort="false">
+        <shape guid="4F5A84F2-A4F2-6299-8E03-E6CD5FDAECC3" x="25" y="111" Z="0" angle="0" width="128.00" height="16.00" text="GEORGE KURELIC" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="center" scale="1"/>
+        <shape guid="52A102BE-1395-EF30-9184-D0E9DEBE932E" x="9" y="95" Z="0" angle="0" width="144.00" height="16.00" text="PROGRAMMING:" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
+      </shapelayer>
+    </group>
+  </layers>
+  <layerTemplates/>
+  <tileMatrix currentMatrix="0" rows="3" cols="3" randomizeMiddle="true" ignoreClear="false" ignoreMapEdges="true" allowSpecialTiles="false" tileset="">
+    <row>
+      <tile>0</tile>
+      <tile>0</tile>
+      <tile>0</tile>
+    </row>
+    <row>
+      <tile>0</tile>
+      <tile>0</tile>
+      <tile>0</tile>
+    </row>
+    <row>
+      <tile>0</tile>
+      <tile>0</tile>
+      <tile>0</tile>
+    </row>
+    <specialConnections>
+      <sets>
+        <connections name="Single Inside Corners">
+          <entry green="0x1111111" red="0x10000000"/>
+          <entry green="0x11011111" red="0x100000"/>
+          <entry green="0x11111110" red="0x1"/>
+          <entry green="0x11111011" red="0x100"/>
+        </connections>
+        <connections name="Double Inside Corners">
+          <entry green="0x1011111" red="0x10100000"/>
+          <entry green="0x11011110" red="0x100001"/>
+          <entry green="0x11111010" red="0x101"/>
+          <entry green="0x1111011" red="0x10000100"/>
+        </connections>
+        <connections name="Triple Inside Corners">
+          <entry green="0x1011011" red="0x10100100"/>
+          <entry green="0x1011110" red="0x10100001"/>
+          <entry green="0x11011010" red="0x100101"/>
+          <entry green="0x1111010" red="0x10000101"/>
+        </connections>
+        <connections name="Quad Inside Corners">
+          <entry green="0x1011010" red="0x10100101"/>
+          <entry green="0x0" red="0x0"/>
+          <entry green="0x0" red="0x0"/>
+          <entry green="0x0" red="0x0"/>
+        </connections>
+        <connections name="Double Outside Corners">
+          <entry green="0x10" red="0x1011000"/>
+          <entry green="0x1000" red="0x1010010"/>
+          <entry green="0x1000000" red="0x11010"/>
+          <entry green="0x10000" red="0x1001010"/>
+        </connections>
+        <connections name="Double Outside Edges">
+          <entry green="0x1000010" red="0x11000"/>
+          <entry green="0x11000" red="0x1000010"/>
+          <entry green="0x0" red="0x0"/>
+          <entry green="0x0" red="0x0"/>
+        </connections>
+        <connections name="Opposing Double Inside Corners">
+          <entry green="0x1111110" red="0x10000001"/>
+          <entry green="0x11011011" red="0x100100"/>
+          <entry green="0x0" red="0x0"/>
+          <entry green="0x0" red="0x0"/>
+        </connections>
+      </sets>
+      <rows>
+        <row set="0">
+          <tiles>
+            <id>0</id>
+            <id>0</id>
+            <id>0</id>
+            <id>0</id>
+          </tiles>
+        </row>
+        <row set="0">
+          <tiles>
+            <id>0</id>
+            <id>0</id>
+            <id>0</id>
+            <id>0</id>
+          </tiles>
+        </row>
+      </rows>
+    </specialConnections>
+  </tileMatrix>
+  <tileMatrixData name="matrix1" rows="3" cols="3" randomizeMiddle="true" ignoreClear="false" ignoreMapEdges="true" allowSpecialTiles="false" tileset="">
+    <tiles>0,0,0,0,0,0,0,0,0</tiles>
+    <connections set="0">
+      <tiles>0,0,0,0</tiles>
+    </connections>
+    <connections set="0">
+      <tiles>0,0,0,0</tiles>
+    </connections>
+  </tileMatrixData>
+  <tileBrushes/>
+  <colorSwatches/>
+  <bookmarks>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+    <bookmark enabled="false"/>
+  </bookmarks>
+  <colourGrid>
+    <colour>0x000000</colour>
+    <colour>0x5e5e5e</colour>
+    <colour>0xffffff</colour>
+    <colour>0xff0000</colour>
+    <colour>0x800000</colour>
+    <colour>0x483b2a</colour>
+    <colour>0xa36323</colour>
+    <colour>0xeb8833</colour>
+    <colour>0xffff00</colour>
+    <colour>0x2e474d</colour>
+    <colour>0x42881e</colour>
+    <colour>0xa2cd2e</colour>
+    <colour>0x1a2531</colour>
+    <colour>0x025683</colour>
+    <colour>0x33a2f1</colour>
+    <colour>0xb2dcee</colour>
+  </colourGrid>
+  <options>
+    <AllowEditingTemplateLayerList>true</AllowEditingTemplateLayerList>
+    <ForceAddingTemplatedMapsOnly>false</ForceAddingTemplatedMapsOnly>
+    <ForceAddingTemplatedLayersOnly>false</ForceAddingTemplatedLayersOnly>
+    <PreventEditingMapTileset>false</PreventEditingMapTileset>
+    <PreventEditingSprites>false</PreventEditingSprites>
+    <SaveSpritesSeparately>false</SaveSpritesSeparately>
+    <SavePropertyTypesSeparately>false</SavePropertyTypesSeparately>
+    <SaveLayerTemplatesSeparately>false</SaveLayerTemplatesSeparately>
+    <SaveTileMatrixSeparately>false</SaveTileMatrixSeparately>
+    <SaveTileBrushesSeparately>false</SaveTileBrushesSeparately>
+    <SaveGuidesSeparately>false</SaveGuidesSeparately>
+    <ForceTilemapPositionChangesInUnits>false</ForceTilemapPositionChangesInUnits>
+  </options>
+  <exporter name="C:\Users\Yeehaw McKickass\Documents\Flash Develop\Projects\res\lua\KrakelExporter.lua" spritepos="Top Left" rotatedSpritePos="false" relativePaths="true" useProjectExporterOnly="false">
+    <setting name="EXPORT_ANGLE">false</setting>
+    <setting name="ExportOnlyCSV">false</setting>
+    <setting name="DataDir"/>
+  </exporter>
+  <customPropertyTypes/>
+  <guides>
+    <snap>true</snap>
+    <visible>true</visible>
+    <x>0</x>
+    <y>0</y>
+    <xspace>16</xspace>
+    <yspace>16</yspace>
+    <gridcolour>0x77ff0000</gridcolour>
+    <snaptype>TopLeft</snaptype>
+    <paintcontinuous>true</paintcontinuous>
+    <showgameregion>true</showgameregion>
+    <gameregionwidth>320</gameregionwidth>
+    <gameregionheight>512</gameregionheight>
+    <gameregionopacity>0.3</gameregionopacity>
+    <gameregioncentered>true</gameregioncentered>
+    <minGridSpace>4</minGridSpace>
+    <showregiongrid>true</showregiongrid>
+    <regiongridx>0</regiongridx>
+    <regiongridy>0</regiongridy>
+    <regiongridcolour>0xccffffff</regiongridcolour>
+  </guides>
+</project>

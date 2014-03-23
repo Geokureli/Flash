@@ -22,7 +22,7 @@ package astley.art {
 		[Embed(source = "../../../res/astley/graphics/txt_score.png")] static private const TXT_SCORE:Class;
 		[Embed(source = "../../../res/astley/graphics/txt_best.png")] static private const TXT_BEST:Class;
 		[Embed(source = "../../../res/astley/graphics/txt_medal.png")] static private const TXT_MEDAL:Class;
-		[Embed(source="../../../res/astley/graphics/txt_new.png")] static private const TXT_NEW:Class;
+		[Embed(source = "../../../res/astley/graphics/txt_new.png")] static private const TXT_NEW:Class;
 		[Embed(source = "../../../res/astley/graphics/medals.png")] static private const MEDALS:Class;
 		static public const BEST_SAVE:String = "GRA_Best";
 		
@@ -50,7 +50,7 @@ package astley.art {
 			{
 				_best = _save.data.best;
 			}
-			_best = 1111;
+			//_best = 1111;
 			
 			// --- CREATE BACK BOARD
 			var board:FlxSprite = new FlxSprite();

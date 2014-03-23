@@ -77,7 +77,7 @@ package astley.art {
 			
 			// --- DEATH DRAG
 			if (isTouching(DOWN))
-				drag.x = 200
+				drag.x = 200;
 			
 			if (!alive) return;
 			
