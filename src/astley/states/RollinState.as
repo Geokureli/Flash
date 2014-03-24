@@ -1,10 +1,10 @@
 package astley.states {
 	
 	import astley.art.Cloud;
-	import astley.art.DeathUI;
+	import astley.art.ui.DeathUI;
 	import astley.art.Grass;
 	import astley.art.Rick;
-	import astley.art.ScoreText;
+	import astley.art.ui.ScoreText;
 	import astley.art.Shrub;
 	import astley.art.Tilemap;
 	import astley.data.LevelData;
@@ -28,6 +28,7 @@ package astley.states {
 	public class RollinState extends BaseState {
 		
 		[Embed(source = "../../../res/astley/audio/music/nggyu_reversed_1_5x.mp3")] static private const SONG_REVERSED:Class;
+		[Embed(source = "../../../res/astley/audio/sfx/death.mp3")] static private const SOUND_DIE:Class;
 		
 		static public const MIN_RESET_TIME:Number = .5;
 		static private const RESET_SCROLL_SPEED:int = 360;
@@ -157,6 +158,8 @@ package astley.states {
 			_deathUI.x = _hero.x;
 			_scoreTxt.visible = false;
 			
+			FlxG.play(SOUND_DIE);
+			
 			//_gameUI.visible = true;
 			_song.stop();
 		}
@@ -265,8 +268,8 @@ import org.flixel.FlxSprite;
 class IntroUI extends FlxGroup {
 	
 	
-	[Embed(source = "../../../res/astley/graphics/get_ready.png")] static private const GET_READY:Class;
-	[Embed(source = "../../../res/astley/graphics/press_or_click.png")] static private const INSTRUCTIONS:Class;
+	[Embed(source = "../../../res/astley/graphics/text/get_ready.png")] static private const GET_READY:Class;
+	[Embed(source = "../../../res/astley/graphics/text/press_or_click.png")] static private const INSTRUCTIONS:Class;
 	
 	private var _instructions:FlxSprite;
 	private var _getReady:FlxSprite;

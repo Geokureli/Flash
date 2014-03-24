@@ -2,12 +2,52 @@
 <project>
   <version>3.1.6</version>
   <bgColor>0x777777</bgColor>
-  <viewPos x="244" y="79"/>
+  <viewPos x="244.1274950293914" y="118.68276223272409"/>
   <firstLayersTop>false</firstLayersTop>
-  <spriteEntries currentId="1"/>
+  <spriteEntries currentId="33">
+    <group name="Text" idx="1" open="true">
+      <group name="Rick Astley" idx="32" open="true"/>
+      <group name="Matthew Harris" idx="29" open="false">
+        <tileEntry name="" idx="28" className="oiginalConcept" image="graphics/text/txt_original_concept.png" offsetX="0" offsetY="0" width="117" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="117" boundsHeight="16" constructor="" creation="" exports="true" canScale="true" canRotate="true" surfaceObject="false" lockRotation="false"/>
+        <tileEntry name="" idx="26" className="matthew" image="graphics/text/txt_matthew.png" offsetX="0" offsetY="0" width="65" height="15" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="65" boundsHeight="15" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+        <tileEntry name="" idx="27" className="harris" image="graphics/text/txt_harris.png" offsetX="0" offsetY="0" width="43" height="15" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="43" boundsHeight="15" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+      </group>
+      <group name="Dan Nguyen" idx="2" open="false">
+        <tileEntry name="" idx="21" className="basedOn" image="graphics/text/txt_based_on.png" offsetX="0" offsetY="0" width="142" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="142" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+        <tileEntry name="" idx="22" className="flappy" image="graphics/text/txt_flappy.png" offsetX="0" offsetY="0" width="42" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="42" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+        <tileEntry name="" idx="23" className="bird" image="graphics/text/txt_bird.png" offsetX="0" offsetY="0" width="26" height="15" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="26" boundsHeight="15" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+        <tileEntry name="" idx="24" className="dan" image="graphics/text/txt_dan.png" offsetX="0" offsetY="0" width="23" height="15" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="23" boundsHeight="15" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+        <tileEntry name="" idx="25" className="nguyen" image="graphics/text/txt_nguyen.png" offsetX="0" offsetY="0" width="49" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="49" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+      </group>
+      <group name="Nintendo" idx="3" open="true">
+        <tileEntry name="bg art" idx="15" className="bgTileArt" image="graphics/text/txt_bg_tile_art.png" offsetX="0" offsetY="0" width="81" height="15" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="81" boundsHeight="15" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false" selected="true"/>
+        <tileEntry name="nintendo" idx="17" className="nintendo" image="graphics/text/txt_nintendo.png" offsetX="0" offsetY="0" width="61" height="15" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="61" boundsHeight="15" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+      </group>
+      <group name="TheAlex" idx="30" open="false">
+        <tileEntry name="character art" idx="19" className="characterArt" image="graphics/text/txt_character_art.png" offsetX="0" offsetY="0" width="104" height="15" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="104" boundsHeight="15" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+        <tileEntry name="theAlex" idx="20" className="theAlex" image="graphics/text/txt_the_alex.png" offsetX="0" offsetY="0" width="55" height="15" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="55" boundsHeight="15" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+      </group>
+      <group name="George Kurelic" idx="4" open="false">
+        <tileEntry name="programming" idx="5" className="programming" image="graphics/text/txt_programming.png" offsetX="0" offsetY="0" width="97" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="97" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+        <tileEntry name="george" idx="6" className="george" image="graphics/text/txt_george.png" offsetX="0" offsetY="0" width="47" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="47" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+        <tileEntry name="kurelic" idx="7" className="kurelic" image="graphics/text/txt_kurelic.png" offsetX="0" offsetY="0" width="49" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="49" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+      </group>
+      <group name="Loading Screen" idx="31" open="false">
+        <tileEntry name="loading screen" idx="18" className="loadingScreen" image="graphics/text/txt_loading_screen.png" offsetX="0" offsetY="0" width="111" height="16" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="111" boundsHeight="16" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+      </group>
+      <tileEntry name="thanks" idx="8" className="thanks" image="graphics/text/txt_thanks.png" offsetX="0" offsetY="0" width="79" height="30" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="79" boundsHeight="30" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+      <tileEntry name="links" idx="9" className="links" image="graphics/text/txt_links.png" offsetX="0" offsetY="0" width="38" height="15" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="38" boundsHeight="15" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" lockRotation="false"/>
+    </group>
+    <group name="Buttons" idx="10" open="false">
+      <sprite name="meh" idx="11" className="MEHButton" image="graphics/buttons/btn_meh.png" width="25" height="13" preview="0" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="25" boundsHeight="13" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="false" lockRotation="false"/>
+      <sprite name="notes" idx="12" className="SongButton" image="graphics/buttons/btn_song.png" width="19" height="17" preview="0" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="19" boundsHeight="17" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="true" lockRotation="false"/>
+      <sprite name="gk" idx="13" className="GKButton" image="graphics/buttons/btn_gk.png" width="16" height="13" preview="0" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="16" boundsHeight="13" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="true" lockRotation="false"/>
+      <sprite name="rick" idx="14" className="RickButton" image="graphics/buttons/btn_rick.png" width="18" height="19" preview="0" anchorX="0" anchorY="0" centerAnchor="false" boundsX="0" boundsY="0" boundsWidth="18" boundsHeight="19" constructor="" creation="" exports="true" canScale="false" canRotate="false" surfaceObject="false" tileIndex="-1" canEditFrames="true" lockRotation="false"/>
+    </group>
+  </spriteEntries>
   <layers>
     <group name="Group1" id="0" xScroll="1" yScroll="1" visible="true" open="true" locked="false" exports="true">
-      <maplayer name="Map2" id="2" xScroll="1" yScroll="1" x="0" y="0" width="10" height="16" tileset="graphics/mario_tiles.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="true" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false">
+      <maplayer name="Map2" id="0" xScroll="1" yScroll="1" x="0" y="0" width="10" height="16" tileset="graphics/source/mario_tiles.png" tileWidth="16" tileHeight="16" visible="true" hasHits="false" drawIdx="1" collideIdx="1" eraseIdx="0" locked="false" exports="false" tileSpacingX="16" tileSpacingY="16" xStagger="0" tileOffsetX="0" tileOffsetY="0" isMaster="false" mapType="2d" hasHeight="false" repeatX="false" repeatY="false">
         <row>670,670,670,670,670,670,670,670,670,670</row>
         <row>670,670,670,670,670,670,670,670,670,670</row>
         <row>670,670,670,670,670,670,670,670,670,670</row>
@@ -25,26 +65,36 @@
         <row>270,270,270,270,270,270,270,270,270,270</row>
         <row>270,270,270,270,270,270,270,270,270,270</row>
       </maplayer>
-      <shapelayer name="static" id="1" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false" selected="true">
-        <shape guid="72B2C09E-9ECE-95D1-8DF6-91159BC34691" x="16" y="16" Z="0" angle="0" width="128.00" height="32.00" text="THANKS FOR PLAYING" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="center" scale="1"/>
-        <shape guid="9838A148-E7DE-733C-42E0-92BC8519EC13" x="16" y="208" Z="0" angle="0" width="128.00" height="16.00" text="LINKS" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="center" scale="1"/>
-      </shapelayer>
-      <shapelayer name="credits1" id="3" xScroll="1" yScroll="1" visible="false" locked="false" exports="true" aligned="false" sort="false">
-        <shape guid="F7DEB6B7-65EA-07D0-47EA-C3CBAC8B9905" x="25" y="111" Z="0" angle="0" width="128.00" height="16.00" text="MATTHEW HARRIS" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="center" scale="1"/>
-        <shape guid="51A84B5C-4E7D-9316-68BA-BF061DE4B108" x="9" y="95" Z="0" angle="0" width="144.00" height="16.00" text="ORIGINAL CONCEPT:" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="center" scale="1"/>
-      </shapelayer>
-      <shapelayer name="credits2" id="5" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
-        <shape guid="B6E6D5D9-2AC6-B9CD-4587-99F841CE4F44" x="32" y="80" Z="0" angle="0" width="112.00" height="16.00" text="RANDOM PERSON" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
-        <shape guid="3DF48992-3468-E8C6-BDC6-FB4F745FE331" x="16" y="64" Z="0" angle="0" width="112.00" height="16.00" text="CHARACTER ART:" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
-        <shape guid="DCF466A9-4EFA-60E8-8831-80BF054E0FEC" x="16" y="112" Z="0" angle="0" width="112.00" height="16.00" text="BG TILE ART:" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
-        <shape guid="2382EA6B-E9C4-0CAC-593D-BED3DB1863D5" x="32" y="128" Z="0" angle="0" width="80.00" height="16.00" text="NINTENDO" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
-        <shape guid="1229F696-F9B4-D0C3-A247-F572CA4508B8" x="32" y="176" Z="0" angle="0" width="80.00" height="16.00" text="BLAH BLAH" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
-        <shape guid="A41E1A57-FC59-66F3-63CE-DA1E2FF8B68F" x="16" y="160" Z="0" angle="0" width="128.00" height="16.00" text="LOADING SCREEN:" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
-      </shapelayer>
-      <shapelayer name="credits3" id="6" xScroll="1" yScroll="1" visible="false" locked="false" exports="true" aligned="false" sort="false">
-        <shape guid="4F5A84F2-A4F2-6299-8E03-E6CD5FDAECC3" x="25" y="111" Z="0" angle="0" width="128.00" height="16.00" text="GEORGE KURELIC" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="center" scale="1"/>
-        <shape guid="52A102BE-1395-EF30-9184-D0E9DEBE932E" x="9" y="95" Z="0" angle="0" width="144.00" height="16.00" text="PROGRAMMING:" bmpFile="graphics/letters.png" charSetType="Other" charSet="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz:" charWid="8" charHt="11" autoTrim="true" xSpace="0" ySpace="0" align="left" scale="1"/>
-      </shapelayer>
+      <spritelayer name="static" id="1" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false">
+        <sprite guid="0A7A3743-DB2A-E94C-E987-C8A4804E2B8A" x="54" y="232" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="12"/>
+        <sprite guid="C804CF12-E2D1-1569-25F8-6EFC607685C5" x="21" y="230.5" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="14"/>
+        <sprite guid="BE8870E1-9C20-8331-C0E5-FC7B482825E2" x="89" y="235" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="13"/>
+        <sprite guid="9F73C165-EA36-FB5D-5C6E-128592EE1FA4" x="120" y="235" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="11"/>
+        <sprite guid="983E6A1F-40D8-DBD6-A2DB-56D13F9C3717" x="41" y="8" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="8"/>
+        <sprite guid="7F0DCE4E-6A3F-D258-91BE-7E014FE3934E" x="62" y="203.5" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="9"/>
+      </spritelayer>
+      <spritelayer name="credits1" id="6" xScroll="1" yScroll="1" visible="false" locked="false" exports="true" aligned="false" sort="false">
+        <sprite guid="CB3919E2-BE3C-A81A-2D9B-D6264811E758" x="12" y="144" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="21"/>
+        <sprite guid="EA346734-2E77-FCF1-3D0D-1E63588361D8" x="34" y="161" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="22"/>
+        <sprite guid="41BE8ABD-5B0B-DE18-2D4D-E0591E01AFD3" x="80" y="161.5" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="23"/>
+        <sprite guid="F816EA1D-BAD3-18CB-94E6-48E1A3C7BE34" x="34.5" y="178.5" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="24"/>
+        <sprite guid="C14413AE-15FF-B76E-1FCC-F7783C2CC8A2" x="61.5" y="178" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="25"/>
+        <sprite guid="17633577-E7AA-866C-CC9A-D3A7AC18D1B1" x="18.5" y="70.5" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="26"/>
+        <sprite guid="C046A75E-D264-A477-73BA-B14C8E3D348D" x="86.5" y="70.5" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="27"/>
+        <sprite guid="EDA22C3D-F497-DFAD-C65D-88260FC55078" x="9.5" y="52" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="28"/>
+      </spritelayer>
+      <spritelayer name="credits2" id="5" xScroll="1" yScroll="1" visible="false" locked="false" exports="true" aligned="false" sort="false">
+        <sprite guid="559E9AE8-3A78-5B0E-B864-91E3E2561795" x="19.5" y="113.5" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="15"/>
+        <sprite guid="45874BC0-3448-E96E-1C51-1FAB131ACF1D" x="34.5" y="130.5" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="17"/>
+        <sprite guid="3A58156D-2A94-A12B-6C79-214A0BDDD506" x="18.5" y="161" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="18"/>
+        <sprite guid="911CA0B4-80EE-11B5-A797-156DBE966E54" x="17" y="65.5" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="19"/>
+        <sprite guid="7CE618E7-AA41-D2FA-2777-A2062B56762D" x="31.5" y="82.5" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="20"/>
+      </spritelayer>
+      <spritelayer name="credits3" id="4" xScroll="1" yScroll="1" visible="true" locked="false" exports="true" aligned="false" sort="false" selected="true">
+        <sprite guid="AF49EF21-528C-4374-4E52-889AC313ECBE" x="89.5" y="113" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="7"/>
+        <sprite guid="0AA7C236-AA76-F0E0-C43D-0AB568CD1FA3" x="36.5" y="114" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="6"/>
+        <sprite guid="B091FFC3-E45F-E88C-1617-964D42CE1798" x="21.5" y="96" Z="0" angle="0" scaleX="1" scaleY="1" flipped="false" idx="5"/>
+      </spritelayer>
     </group>
   </layers>
   <layerTemplates/>
@@ -190,8 +240,8 @@
   </exporter>
   <customPropertyTypes/>
   <guides>
-    <snap>true</snap>
-    <visible>true</visible>
+    <snap>false</snap>
+    <visible>false</visible>
     <x>0</x>
     <y>0</y>
     <xspace>16</xspace>
@@ -199,9 +249,9 @@
     <gridcolour>0x77ff0000</gridcolour>
     <snaptype>TopLeft</snaptype>
     <paintcontinuous>true</paintcontinuous>
-    <showgameregion>true</showgameregion>
-    <gameregionwidth>320</gameregionwidth>
-    <gameregionheight>512</gameregionheight>
+    <showgameregion>false</showgameregion>
+    <gameregionwidth>160</gameregionwidth>
+    <gameregionheight>256</gameregionheight>
     <gameregionopacity>0.3</gameregionopacity>
     <gameregioncentered>true</gameregioncentered>
     <minGridSpace>4</minGridSpace>

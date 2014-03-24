@@ -1,4 +1,4 @@
-package astley.art {
+package astley.art.ui {
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import krakel.KrkBitmapFont;
@@ -12,7 +12,7 @@ package astley.art {
 	 */
 	public class ScoreText extends KrkBitmapFont {
 		
-		[Embed(source = "../../../res/astley/graphics/numbers_10.png")] static private const FONT:Class;
+		[Embed(source = "../../../../res/astley/graphics/text/numbers_10.png")] static private const FONT:Class;
 		
 		static private const SHADOW_POINT:Point = new Point(1, 1);
 		

@@ -72,6 +72,7 @@ package astley.states {
 			
 			leadGhost.playSounds = true;
 			setCameraFollow(leadGhost);
+			FlxG.worldBounds.width = leadGhost.x + leadGhost.width;
 		}
 		
 		override protected function onStart():void {
@@ -92,11 +93,13 @@ package astley.states {
 		
 		override public function update():void {
 			super.update();
-			for each(var ghost:ReplayRick in _ghosts){
-				if (ghost != null && ghost.replayFinished){
+			
+			for each(var ghost:ReplayRick in _ghosts.members) {
+				
+				if (ghost != null && ghost.replayFinished)
 					_finishedGhosts.add(ghost);
-				}
 			}
+			
 			FlxG.collide(_finishedGhosts, _map, onGhostHit);
 		}
 		

@@ -22,7 +22,7 @@ package astley.states {
 		
 		
 		[Embed(source = "../../../res/astley/audio/music/nggyu.mp3")] static private const SONG_FILE:Class;
-		[Embed(source = "../../../res/astley/text/Flappy.ttf", fontFamily = "NES", embedAsCFF = "false")] static private const FONT:Class;
+		//[Embed(source = "../../../res/astley/text/Flappy.ttf", fontFamily = "NES", embedAsCFF = "false")] static private const FONT:Class;
 		
 		protected var _map:FlxTilemap;
 		protected var _ground:FlxSprite;

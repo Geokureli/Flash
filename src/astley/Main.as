@@ -15,7 +15,7 @@ package astley {
 	[SWF(width = "320", height = "512", backgroundColor = "#5c94fc", frameRate = "30")]
 	public class Main extends FlxGame {
 		
-		[Embed(source = "../../res/astley/graphics/pres_any_key.png")] static public const INSTRUCTIONS:Class;
+		[Embed(source = "../../res/astley/graphics/text/press_any_key.png")] static public const INSTRUCTIONS:Class;
 		
 		static private const SCALE:int = 2;
 		static private const POWERS:Number = Math.pow(Math.E, 4);
@@ -53,7 +53,7 @@ package astley {
 
 import astley.art.Grass;
 import astley.art.RickLite;
-import astley.art.ScoreBoard;
+import astley.art.ui.ScoreBoard;
 import astley.art.Tilemap;
 import astley.data.LevelData;
 import astley.data.RAInput;
@@ -64,6 +64,7 @@ import com.greensock.TweenMax;
 import org.flixel.FlxG;
 import org.flixel.FlxGroup;
 import org.flixel.FlxRect;
+import org.flixel.FlxSound;
 import org.flixel.FlxSprite;
 import org.flixel.FlxState;
 import org.flixel.FlxTimer;
@@ -72,20 +73,27 @@ import astley.Main;
 
 class IntroState extends FlxState {
 	
-	[Embed(source = "../../res/astley/graphics/gassy_rick_astley.png")] static private const TITLE:Class;
+	[Embed(source = "../../res/astley/graphics/text/gassy_rick_astley.png")] static private const TITLE:Class;
 	[Embed(source = "../../res/astley/graphics/tap.png")] static private const TAP_ICON:Class;
-	[Embed(source="../../res/astley/graphics/keys.png")] static private const KEYS_ICON:Class;
+	[Embed(source = "../../res/astley/graphics/keys.png")] static private const KEYS_ICON:Class;
+	
+	[Embed(source = "../../res/astley/audio/music/intro.mp3")] static private const INTRO_SONG:Class;
+	[Embed(source="../../res/astley/audio/sfx/start.mp3")] static private const START_SOUND:Class;
 	
 	private var _tileMap:Tilemap;
 	private var _title:FlxSprite;
 	private var _instructions:FlxSprite;
 	private var _tweens:Array;
 	private var _hero:RickLite;
+	private var _music:FlxSound;
 	
 	override public function create():void {
 		super.create();
 		
 		FlxG.camera.bounds = new FlxRect(0, 0, FlxG.width, FlxG.height);
+		
+		_music = new FlxSound().loadEmbedded(INTRO_SONG, true);
+		_music.play();
 		
 		//add(_tileMap = new Tilemap());
 		
@@ -126,10 +134,14 @@ class IntroState extends FlxState {
 			
 			RAInput.enabled = false;
 			FlxG.fade(0, .25, onFadeOut, true);
+			_music.fadeOut(.25);
+			FlxG.play(START_SOUND);
 		}
 	}
 	
 	private function onFadeOut():void {
+		
+		_music.stop();
 		
 		FlxG.switchState(
 			new RollinState()
@@ -155,6 +167,7 @@ class IntroState extends FlxState {
 		_title = null;
 		_instructions = null;
 		_hero = null;
+		_music = null;
 	}
 }
 

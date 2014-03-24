@@ -1,4 +1,4 @@
-package astley.art {
+package astley.art.ui {
 	import astley.data.Prize;
 	import com.greensock.easing.Cubic;
 	import com.greensock.easing.Linear;
@@ -18,12 +18,12 @@ package astley.art {
 	 */
 	public class ScoreBoard extends KrkNest {
 		
-		[Embed(source = "../../../res/astley/graphics/board.png")] static private const BOARD_TEMPLATE:Class;
-		[Embed(source = "../../../res/astley/graphics/txt_score.png")] static private const TXT_SCORE:Class;
-		[Embed(source = "../../../res/astley/graphics/txt_best.png")] static private const TXT_BEST:Class;
-		[Embed(source = "../../../res/astley/graphics/txt_medal.png")] static private const TXT_MEDAL:Class;
-		[Embed(source = "../../../res/astley/graphics/txt_new.png")] static private const TXT_NEW:Class;
-		[Embed(source = "../../../res/astley/graphics/medals.png")] static private const MEDALS:Class;
+		[Embed(source = "../../../../res/astley/graphics/board.png")] static private const BOARD_TEMPLATE:Class;
+		[Embed(source = "../../../../res/astley/graphics/text/txt_score.png")] static private const TXT_SCORE:Class;
+		[Embed(source = "../../../../res/astley/graphics/text/txt_best.png")] static private const TXT_BEST:Class;
+		[Embed(source = "../../../../res/astley/graphics/text/txt_medal.png")] static private const TXT_MEDAL:Class;
+		[Embed(source = "../../../../res/astley/graphics/text/txt_new.png")] static private const TXT_NEW:Class;
+		[Embed(source = "../../../../res/astley/graphics/medals.png")] static private const MEDALS:Class;
 		static public const BEST_SAVE:String = "GRA_Best";
 		
 		public var width:int;

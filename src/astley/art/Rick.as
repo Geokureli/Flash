@@ -21,6 +21,7 @@ package astley.art {
 		[Embed(source = "../../../res/astley/audio/sfx/fart_2.mp3")] static private const FART_2:Class;
 		[Embed(source = "../../../res/astley/audio/sfx/fart_3.mp3")] static private const FART_3:Class;
 		[Embed(source = "../../../res/astley/audio/sfx/fart_4.mp3")] static private const FART_4:Class;
+		[Embed(source = "../../../res/astley/audio/sfx/hit.mp3")] static private const HIT:Class;
 		
 		static private const FARTS:Vector.<Class> = new <Class>[
 			FART_0, FART_1, FART_2, FART_3, FART_4
@@ -76,8 +77,13 @@ package astley.art {
 			if (!moves) return;
 			
 			// --- DEATH DRAG
-			if (isTouching(DOWN))
+			if (isTouching(DOWN)) {
+				
+				if ((wasTouching & DOWN) == 0)
+					FlxG.play(HIT);
+				
 				drag.x = 200;
+			}
 			
 			if (!alive) return;
 			

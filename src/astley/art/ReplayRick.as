@@ -30,7 +30,6 @@ package astley.art {
 			super.update();
 			
 			FlxG.resetInput();
-				
 		}
 		
 		override public function reset(x:Number, y:Number):void {

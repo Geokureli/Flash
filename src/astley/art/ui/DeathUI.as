@@ -1,10 +1,10 @@
-package astley.art {
+package astley.art.ui {
 	/**
 	 * ...
 	 * @author George
 	 */
-	import astley.art.ScoreBoard;
-	import astley.art.ScoreText;
+	import astley.art.ui.ScoreBoard;
+	import astley.art.ui.ScoreText;
 	import astley.data.Prize;
 	import astley.states.ReplayState;
 	import astley.states.RollinState;
@@ -17,9 +17,9 @@ package astley.art {
 
 	public class DeathUI extends KrkNest {
 		
-		[Embed(source = "../../../res/astley/graphics/game_over.png")] static private const GAME_OVER2:Class;
-		[Embed(source = "../../../res/astley/graphics/give_up.png")] static private const GIVE_UP2:Class;
-		[Embed(source = "../../../res/astley/graphics/pres_any_key.png")] static private const RETRY:Class;
+		[Embed(source = "../../../../res/astley/graphics/text/game_over.png")] static private const GAME_OVER2:Class;
+		[Embed(source = "../../../../res/astley/graphics/text/give_up.png")] static private const GIVE_UP2:Class;
+		[Embed(source = "../../../../res/astley/graphics/text/press_any_key.png")] static private const RETRY:Class;
 		
 		private var _gameOver:FlxSprite;
 		private var _giveUp:FlxSprite;
