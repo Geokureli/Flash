@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level name="Group1" bounds.x="9999999" bounds.y="9999999" bounds.width="-9999999" bounds.height="-9999999" bgColor = "0xff777777" >
+	<layer name="static" xScroll="1.000" yScroll="1.000" >
+		<sprite type="SongButton" x="54.00" y="232.00" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="RickButton" x="21.00" y="230.50" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="GKButton" x="89.00" y="235.00" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="MEHButton" x="120.00" y="235.00" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="thanks" x="41.00" y="8.00" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="links" x="62.00" y="203.50" flip="false" xScale="1.00" yScale="1.00" />
+	</layer>
+	<layer name="credits1" xScroll="1.000" yScroll="1.000" >
+		<sprite type="basedOn" x="12.00" y="144.00" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="flappy" x="34.00" y="161.00" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="bird" x="80.00" y="161.50" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="dan" x="34.50" y="178.50" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="nguyen" x="61.50" y="178.00" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="matthew" x="18.50" y="70.50" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="harris" x="86.50" y="70.50" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="oiginalConcept" x="9.50" y="52.00" flip="false" xScale="1.00" yScale="1.00" />
+	</layer>
+	<layer name="credits2" xScroll="1.000" yScroll="1.000" >
+		<sprite type="bgTileArt" x="19.50" y="113.50" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="nintendo" x="34.50" y="130.50" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="loadingScreen" x="18.50" y="161.00" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="characterArt" x="17.00" y="65.50" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="theAlex" x="31.50" y="82.50" flip="false" xScale="1.00" yScale="1.00" />
+	</layer>
+	<layer name="credits3" xScroll="1.000" yScroll="1.000" >
+		<sprite type="kurelic" x="89.50" y="113.00" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="george" x="36.50" y="114.00" flip="false" xScale="1.00" yScale="1.00" />
+		<sprite type="programming" x="21.50" y="96.00" flip="false" xScale="1.00" yScale="1.00" />
+	</layer>
+</level>

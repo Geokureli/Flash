@@ -16,6 +16,11 @@ package astley.data {
 			instance = new RAInput();
 		}
 		
+		static public function get isButtonDown():Boolean {
+			
+			return instance.isButtonDown && enabled;
+		}
+		
 		public var isButtonDown:Boolean;
 		private var _antiPress:Boolean
 		
@@ -34,10 +39,10 @@ package astley.data {
 			if (!FlxG.keys.any() && !FlxG.mouse.pressed())
 				_antiPress = true;
 				
-			else if(_antiPress && enabled) {
+			else if(_antiPress) {
 				
 				_antiPress = false;
-				isButtonDown = true;
+				isButtonDown = enabled;
 			}
 		}
 		

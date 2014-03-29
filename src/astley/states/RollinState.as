@@ -28,11 +28,13 @@ package astley.states {
 	public class RollinState extends BaseState {
 		
 		[Embed(source = "../../../res/astley/audio/music/nggyu_reversed_1_5x.mp3")] static private const SONG_REVERSED:Class;
+		[Embed(source = "../../../res/astley/audio/sfx/record_scratch.mp3")] static private const SOUND_SKIP_RESET:Class;
 		[Embed(source = "../../../res/astley/audio/sfx/death.mp3")] static private const SOUND_DIE:Class;
 		
-		static public const MIN_RESET_TIME:Number = .5;
+		static public const MIN_RESET_TIME:Number = 0.5;
 		static private const RESET_SCROLL_SPEED:int = 360;
 		static private const RESET_ANTICIPATION:int = 120;
+		static private const RESET_SKIP_TIME:Number = 0.8;
 		
 		protected var _hero:Rick;
 		
@@ -40,6 +42,8 @@ package astley.states {
 		private var _introUI:IntroUI;
 		private var _deathUI:DeathUI;
 		private var _songReversed:KrkSound;
+		private var _sndRecordScratch:KrkSound;
+		private var _resetPanTween:TweenMax;
 		
 		private var _score:int;
 		private var _running:Boolean;
@@ -51,6 +55,7 @@ package astley.states {
 			
 			//FlxG.visualDebug = true;
 			_songReversed = new KrkSound().embed(SONG_REVERSED);
+			_sndRecordScratch = new KrkSound().embed(SOUND_SKIP_RESET);
 			
 			_isResetting = false;
 			_isGameOver = false;
@@ -121,9 +126,11 @@ package astley.states {
 						//_hero.drag.x = 200
 				}
 				
-				if (RAInput.instance.isButtonDown){
-					if (_isGameOver && _deathUI.canRestart)
-						startResetTransition();
+				if (RAInput.isButtonDown) {
+					if (_isResetting)
+						skipResetTween();
+					else if (_isGameOver && _deathUI.canRestart)
+						startResetPan();
 					else if (!_isGameOver)
 						onStart();
 				}
@@ -154,7 +161,7 @@ package astley.states {
 			_deathUI.visible = true;
 			_hero.canFart = false;
 			RAInput.enabled = false;
-			_deathUI.startTransition(score, onEndTransitionComplete);
+			_deathUI.startTransition(score, onEndScreenIn);
 			_deathUI.x = _hero.x;
 			_scoreTxt.visible = false;
 			
@@ -164,17 +171,17 @@ package astley.states {
 			_song.stop();
 		}
 		
-		private function onEndTransitionComplete():void {
+		private function onEndScreenIn():void {
 			
 			RAInput.enabled = true;
 		}
 		
 		
-		private function startResetTransition():void {
+		private function startResetPan():void {
 			
 			_deathUI.killTimer();
 			_isResetting = true;
-			RAInput.enabled = false;
+			//RAInput.enabled = false;
 			FlxG.camera.target = null;
 			// --- EXTEND CAM RANGE FOR TWEEN
 			FlxG.camera.bounds.x = -FlxG.camera.bounds.width;
@@ -197,7 +204,7 @@ package astley.states {
 			}
 			
 			duration = (panAmount * 4  + FlxG.camera.scroll.x) / RESET_SCROLL_SPEED;
-			TweenMax.to (
+			_resetPanTween = TweenMax.to (
 				FlxG.camera.scroll,
 				duration,
 				{
@@ -215,18 +222,28 @@ package astley.states {
 			_songReversed.play();
 		}
 		
-		public function startResetTweenBack():void {
+		private function skipResetTween():void {
 			
-			TweenMax.to(FlxG.camera.scroll, FlxG.camera.scroll.x / RESET_SCROLL_SPEED, { x:0, ease:Linear.easeNone, onComplete:finishResetTween } );
-		}
-		
-		public function finishResetTween():void {
+			var tooLate:Boolean = _resetPanTween.totalDuration - _resetPanTween.totalTime < RESET_SKIP_TIME;
 			
-			var panAmount:int = RESET_ANTICIPATION;
-			var duration:Number = panAmount * Math.PI / RESET_SCROLL_SPEED / 2;
-			TweenMax.to(FlxG.camera.scroll, duration, { x:-panAmount, yoyo:true, repeat:1, ease:Sine.easeOut, onComplete:onResetComplete } );
+			trace("time left: " + (_resetPanTween.totalDuration - _resetPanTween.totalTime));
+			
+			if (!tooLate) {
+				_resetPanTween.kill();
+				_resetPanTween = null;
+				_songReversed.stop();
+				RAInput.enabled = false;
+				_sndRecordScratch.play(true);
+				
+				TweenMax.to(FlxG.camera.scroll, RESET_SKIP_TIME,
+					{
+						x:0,
+						ease:Linear.easeNone,
+						onComplete:onResetComplete
+					}
+				);
+			}
 		}
-		
 		private function onResetComplete():void {
 			
 			RAInput.enabled = true;
