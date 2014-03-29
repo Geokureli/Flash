@@ -16,7 +16,7 @@ package astley.art {
 		
 		static public var addPipes:Boolean = true;
 		
-		[Embed(source = "../../../res/astley/graphics/tiles.png")] static private const TILES:Class;
+		[Embed(source = "../../../res/astley/graphics/tiles_0.png")] static private const TILES:Class;
 		
 		static private const CLOUD_STAMP:Array = [[1, 2], [3, 4]];
 		static private const PIPE_FRAME:int = 3;

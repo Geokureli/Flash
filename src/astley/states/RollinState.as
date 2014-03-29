@@ -68,7 +68,7 @@ package astley.states {
 		override protected function setDefaultProperties():void {
 			super.setDefaultProperties();
 			
-			_hero = new Rick(32, 64);
+			_hero = new Rick(HERO_SPAWN_X, 64);
 			
 			//var buffer:int = (levelSize - Tilemap.PIPE_START) % Tilemap.PIPE_INTERVAL;
 			//FlxG.camera.bounds = new FlxRect(0, 0, LevelData.TILE_SIZE * (Tilemap.PIPE_START + Tilemap.PIPE_INTERVAL + 2) + buffer, FlxG.height);
@@ -140,6 +140,13 @@ package astley.states {
 			}
 		}
 		
+		override protected function updateWorldBounds():void {
+			super.updateWorldBounds();
+			
+			if (FlxG.camera.target != null)
+				FlxG.worldBounds.x = FlxG.camera.target.x - 1;
+		}
+		
 		private function checkHit():Boolean {
 			
 			if (FlxG.collide(_map, _ground)) return true;
@@ -150,6 +157,7 @@ package astley.states {
 		override protected function onStart():void {
 			super.onStart()
 			
+			_song.play(true);
 			_scoreTxt.visible = true;
 			_hero.start();
 			_running = true;

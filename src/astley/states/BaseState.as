@@ -24,6 +24,8 @@ package astley.states {
 		[Embed(source = "../../../res/astley/audio/music/nggyu.mp3")] static private const SONG_FILE:Class;
 		//[Embed(source = "../../../res/astley/text/Flappy.ttf", fontFamily = "NES", embedAsCFF = "false")] static private const FONT:Class;
 		
+		static public const HERO_SPAWN_X:Number = 32;
+		
 		protected var _map:FlxTilemap;
 		protected var _ground:FlxSprite;
 		protected var _bgSprites:FlxGroup;
@@ -96,14 +98,13 @@ package astley.states {
 		
 		protected function onStart():void {
 			
-			_song.play(true);
+			//_song.play(true);
 		}
 		
 		override public function update():void {
 			super.update();
 			
-			if (FlxG.camera.target != null)
-				FlxG.worldBounds.x = FlxG.camera.target.x - 1;
+			updateWorldBounds();
 		}
 		
 		protected function updateWorldBounds():void { }

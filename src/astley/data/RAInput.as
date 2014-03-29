@@ -22,6 +22,7 @@ package astley.data {
 		}
 		
 		public var isButtonDown:Boolean;
+		public var mouseJustPressed:Boolean;
 		private var _antiPress:Boolean
 		
 		public function RAInput() {
@@ -35,6 +36,7 @@ package astley.data {
 			super.update();
 			
 			isButtonDown = false;
+			mouseJustPressed = FlxG.mouse.justPressed();
 			
 			if (!FlxG.keys.any() && !FlxG.mouse.pressed())
 				_antiPress = true;
