@@ -1,4 +1,5 @@
 package astley.art.ui {
+	import astley.data.BestSave;
 	import astley.data.Prize;
 	import com.greensock.easing.Cubic;
 	import com.greensock.easing.Linear;
@@ -24,7 +25,7 @@ package astley.art.ui {
 		[Embed(source = "../../../../res/astley/graphics/text/txt_medal.png")] static private const TXT_MEDAL:Class;
 		[Embed(source = "../../../../res/astley/graphics/text/txt_new.png")] static private const TXT_NEW:Class;
 		[Embed(source = "../../../../res/astley/graphics/medals.png")] static private const MEDALS:Class;
-		static public const BEST_SAVE:String = "GRA_Best";
+		
 		
 		public var width:int;
 		public var height:int;
@@ -34,7 +35,6 @@ package astley.art.ui {
 		private var _bestTxt:ScoreText;
 		private var _new:FlxSprite;
 		private var _scoreSetCallback:Function;
-		private var _save:FlxSave;
 		
 		public function ScoreBoard(width:int = 128, height:int = 80) {
 			super(0, 0);
@@ -43,14 +43,7 @@ package astley.art.ui {
 			this.height = height;
 			
 			_score = 0;
-			
-			_save = new FlxSave();
-			_save.bind(BEST_SAVE);
-			if ("best" in _save.data)
-			{
-				_best = _save.data.best;
-			}
-			//_best = 1111;
+			_best = BestSave.best;
 			
 			// --- CREATE BACK BOARD
 			var board:FlxSprite = new FlxSprite();
@@ -99,10 +92,8 @@ package astley.art.ui {
 		}
 		
 		private function onRollupComplete():void {
-			if (_new.visible) {
-				_save.data.best = _best;
-				_save.flush();
-			}
+			if (_new.visible) 
+				BestSave.best = _best;
 			
 			if (_scoreSetCallback != null) {
 				

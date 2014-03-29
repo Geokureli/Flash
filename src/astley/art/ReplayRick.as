@@ -8,6 +8,8 @@ package astley.art {
 	 */
 	public class ReplayRick extends Rick {
 		
+		public var startTime:int;
+		
 		private var _replay:FlxReplay;
 		
 		public function ReplayRick(x:int, y:int, replayData:String) {
@@ -25,11 +27,28 @@ package astley.art {
 				exists = visible = false;
 				
 			if (!moves || !exists) return;
-			_replay.playNextFrame();
 			
-			super.update();
+			// --- PLAY RECORDING UNTIL RICK HITS HIS DESIRED X.
+			do {
+				_replay.playNextFrame();
+				
+				super.update();
+				
+				// --- STOP WHEN UP TO SPEED
+				if(_replay.frame < startTime)
+					updateMotion();
+				
+			} while (_replay.frame < startTime)
 			
 			FlxG.resetInput();
+		}
+		override public function start():void {
+			if (startTime >= _replay.frameCount)
+			{
+				startTime = 0;
+			}
+			
+			super.start();
 		}
 		
 		override public function reset(x:Number, y:Number):void {
