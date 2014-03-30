@@ -17,6 +17,9 @@ package astley {
 		
 		[Embed(source = "../../res/astley/graphics/text/press_any_key.png")] static public const INSTRUCTIONS:Class;
 		
+		static public const FADE_COLOR:int = 0;
+		static public const FADE_TIME:Number = 0.25;
+		
 		static private const SCALE:int = 2;
 		static private const POWERS:Number = Math.pow(Math.E, 4);
 		
@@ -27,12 +30,6 @@ package astley {
 				60, 30,
 				true
 			);
-			
-			var numPipes:int = 131;
-			
-			for (var i:int = 0; i <= numPipes; i++) {
-				trace(i, (i / numPipes) * POWERS, check(i / 131));
-			}
 		}
 		
         override protected function create(FlashEvent:Event):void
@@ -133,7 +130,7 @@ class IntroState extends FlxState {
 		if (RAInput.instance.isButtonDown) {
 			
 			RAInput.enabled = false;
-			FlxG.fade(0, .25, onFadeOut, true);
+			FlxG.fade(Main.FADE_COLOR, Main.FADE_TIME, onFadeOut, true);
 			_music.fadeOut(.25);
 			FlxG.play(START_SOUND);
 		}

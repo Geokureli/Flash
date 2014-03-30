@@ -5,11 +5,14 @@ package astley.states {
 	import astley.art.Tilemap;
 	import astley.art.ui.Credits;
 	import astley.data.Beat;
+	import astley.data.RAInput;
 	import astley.data.Recordings;
+	import astley.Main;
 	import krakel.helpers.Random;
 	import krakel.KrkSound;
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
+	import org.flixel.FlxObject;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTimer;
 	/**
@@ -44,6 +47,8 @@ package astley.states {
 			_timerMusic = new FlxTimer();
 			
 			add(_credits = new Credits());
+			
+			RAInput.enabled = false;
 			
 			onStart();
 		}
@@ -150,7 +155,7 @@ package astley.states {
 			}
 			
 			FlxG.collide(_finishedGhosts, _map, onGhostHit);
-			FlxG.collide(_finishedGhosts, _ground);
+			FlxG.collide(_finishedGhosts, _ground, onGhostHit);
 		}
 		
 		override protected function updateWorldBounds():void {
@@ -159,9 +164,24 @@ package astley.states {
 			FlxG.worldBounds.x = FlxG.camera.scroll.x;
 		}
 		
-		private function onGhostHit(ghost:ReplayRick, map:Tilemap):void {
+		private function onGhostHit(ghost:ReplayRick, map:FlxObject):void {
 			
 			ghost.kill();
+		}
+		override public function destroy():void {
+			super.destroy();
+			
+			_finishedGhosts.destroy();
+			_ghosts = null;
+			_credits = null;
+			
+			_songIntro.stop();
+			_songIntro = null;
+			_songLoop.stop();
+			_songLoop = null;
+			
+			if(_timerMusic != null)
+				_timerMusic.destroy();
 		}
 	}
 }

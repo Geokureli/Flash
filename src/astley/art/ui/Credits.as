@@ -1,4 +1,8 @@
 package astley.art.ui {
+	import astley.data.RAInput;
+	import astley.Main;
+	import astley.states.RollinState;
+	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxTimer;
@@ -9,7 +13,10 @@ package astley.art.ui {
 	 */
 	public class Credits extends FlxGroup {
 		
-		[Embed(source = "../../../../res/astley/levels/maps/levels/Credits.xml", mimeType = "application/octet-stream")] static private const CREDIT_DATA:Class;
+		[Embed(
+			source = "../../../../res/astley/levels/maps/levels/Credits.xml",
+			mimeType = "application/octet-stream")] static private const CREDIT_DATA:Class;
+		[Embed(source = "../../../../res/astley/graphics/text/press_any_key.png")] static private const TRY_AGAIN:Class;
 		
 		static public const CREDIT_START_TIME:Number = 5;
 		static public const CREDIT_DELAY_TIME:Number = 1;
@@ -53,6 +60,23 @@ package astley.art.ui {
 		
 		private function onCreditsEnd():void {
 			
+			add(new XMLGroup(_layers.(@name.toString() == "end")[0]));
+			RAInput.enabled = true;
+		}
+		
+		override public function update():void {
+			
+			if (RAInput.isButtonDown)
+				FlxG.fade(Main.FADE_COLOR, Main.FADE_TIME, restartGame, true);
+			
+			super.update();
+		}
+		
+		private function restartGame():void {
+			
+			FlxG.switchState(new RollinState());
+			
+			RAInput.enabled = false;
 		}
 	}
 }
@@ -99,6 +123,7 @@ class XMLGroup extends FlxGroup {
 	[Embed(source = "../../../../res/astley/graphics/text/txt_fart_sounds.png")]		static public const fartSounds:Class;
 	[Embed(source = "../../../../res/astley/graphics/text/txt_joe.png")]				static public const joe:Class;
 	[Embed(source = "../../../../res/astley/graphics/text/txt_alleruzzo.png")]			static public const alleruzzo:Class;
+	[Embed(source = "../../../../res/astley/graphics/text/press_any_key.png")]			static public const press:Class;
 	
 	static private const BUTTONS:Object = {
 		
@@ -133,7 +158,8 @@ class XMLGroup extends FlxGroup {
 		programming:programming,
 		fartSounds:fartSounds,
 		joe:joe,
-		alleruzzo:alleruzzo
+		alleruzzo:alleruzzo,
+		press:press
 	};
 	
 	//} endregion						ASSETS

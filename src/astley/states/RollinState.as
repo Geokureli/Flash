@@ -9,6 +9,7 @@ package astley.states {
 	import astley.art.Tilemap;
 	import astley.data.LevelData;
 	import astley.data.RAInput;
+	import astley.Main;
 	import com.greensock.easing.Linear;
 	import com.greensock.easing.Sine;
 	import com.greensock.easing.Strong;
@@ -62,7 +63,7 @@ package astley.states {
 			_running = false;
 			alive = false;
 			
-			FlxG.flash(0, .25, onFlashEnd, true);
+			FlxG.flash(Main.FADE_COLOR, Main.FADE_TIME, onFlashEnd, true);
 		}
 		
 		override protected function setDefaultProperties():void {
@@ -74,6 +75,7 @@ package astley.states {
 			//FlxG.camera.bounds = new FlxRect(0, 0, LevelData.TILE_SIZE * (Tilemap.PIPE_START + Tilemap.PIPE_INTERVAL + 2) + buffer, FlxG.height);
 			
 			setCameraFollow(_hero);
+			FlxG.worldBounds.width = _hero.width + 2;
 		}
 		
 		override protected function addMG():void {
@@ -232,11 +234,7 @@ package astley.states {
 		
 		private function skipResetTween():void {
 			
-			var tooLate:Boolean = _resetPanTween.totalDuration - _resetPanTween.totalTime < RESET_SKIP_TIME;
-			
-			trace("time left: " + (_resetPanTween.totalDuration - _resetPanTween.totalTime));
-			
-			if (!tooLate) {
+			if (_resetPanTween.totalDuration - _resetPanTween.totalTime > RESET_SKIP_TIME * 2) {
 				_resetPanTween.kill();
 				_resetPanTween = null;
 				_songReversed.stop();

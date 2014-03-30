@@ -92,8 +92,6 @@ package astley.states {
 				target.width,
 				FlxG.camera.height
 			);
-			
-			FlxG.worldBounds.width = target.width + 2;
 		}
 		
 		protected function onStart():void {

@@ -36,4 +36,7 @@
 		<sprite type="joe" x="34.50" y="154.50" flip="false" xScale="1.00" yScale="1.00" />
 		<sprite type="alleruzzo" x="64.50" y="154.50" flip="false" xScale="1.00" yScale="1.00" />
 	</layer>
+	<layer name="end" xScroll="1.000" yScroll="1.000" >
+		<sprite type="press" x="42.50" y="45.00" flip="false" xScale="1.00" yScale="1.00" />
+	</layer>
 </level>
