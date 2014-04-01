@@ -55,6 +55,7 @@ package astley.art.ui {
 		private function parseHighScores():void {
 			
 			_highScores = API.getScoreBoard(LevelData.SCORE_BOARD_ID);
+			_highScores.numResults = uint.MAX_VALUE;
 			//API.logCustomEvent(_highScores.numResults.toString());
 			_highScores.addEventListener(APIEvent.SCORES_LOADED, onScoresLoaded);
 			_highScores.loadScores();
@@ -67,13 +68,11 @@ package astley.art.ui {
 			const X2:int = 131;
 			
 			var allNames:XML = <scores/>;
-			
-			for each(var score:Score in _highScores.scores){
+			for each(var score:Score in _highScores.scores) {
 				
 				allNames.appendChild(<text x={ X1.toString() } text={ score.username.toString()  }/>);
 				allNames.appendChild(<text x={ X2.toString() } text={ score.score.toString() }/>);
 			}
-			
 			
 			var creditsPage:int = 5;
 			var y:int = 71;

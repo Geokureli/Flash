@@ -116,7 +116,7 @@ package astley.states {
 			score = numScore;
 			
 			for (var i:int = Prize.GOALS.length - 1; i >= 0; i--)
-				if(numScore > Prize.GOALS[i])
+				if(numScore >= Prize.GOALS[i])
 					Prize.unlockMedal(Prize.ACHIEVEMENTS[i]);
 			
 			if (_running) {
