@@ -22,9 +22,7 @@ package astley.art.ui {
 			this.x = x;
 			this.y = y;
 			
-			var rect:Rectangle = grabData['1'.charCodeAt(0)];
-			rect.x++;
-			rect.width -= 2;
+			setKerning('1', 6).x++;
 			padding.x = -1;
 			text = '0';
 		}

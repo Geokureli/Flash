@@ -49,6 +49,7 @@ package astley.states {
 			add(_credits = new Credits());
 			
 			RAInput.enabled = false;
+			RAInput.replayMode = true;
 			
 			onStart();
 		}

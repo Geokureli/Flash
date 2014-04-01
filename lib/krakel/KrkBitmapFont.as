@@ -185,7 +185,13 @@ package krakel {
 			}
         }
 		
-		
+		public function setKerning(char:String, width:int):Rectangle{
+			
+			var rect:Rectangle = grabData[char.charCodeAt(0)];
+			rect.width = width;
+			
+			return rect;
+		}
 		
 		/**
 		 * Set this value to update the text in this sprite. Carriage returns are automatically stripped out if multiLine is false. Text is converted to upper case if autoUpperCase is true.

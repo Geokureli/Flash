@@ -4,6 +4,8 @@ package astley {
 	import com.greensock.plugins.BezierPlugin;
 	import com.greensock.plugins.TweenPlugin;
 	import flash.events.Event;
+	import krakel.ads.KrkNG;
+	import org.flixel.FlxG;
 	import org.flixel.FlxGame;
 	
 	/**
@@ -32,13 +34,18 @@ package astley {
 			);
 		}
 		
-        override protected function create(FlashEvent:Event):void
-        {
+        override protected function create(FlashEvent:Event):void {
             super.create(FlashEvent);
+			
             stage.removeEventListener(Event.DEACTIVATE, onFocusLost);
             stage.removeEventListener(Event.ACTIVATE, onFocus);
 			
 			TweenPlugin.activate([BezierPlugin]);
+			var numPipes:int = 131;
+			
+			//for (var i:int = 0; i <= numPipes; i++) {
+				//trace(i,  check(i / numPipes));
+			//}
         }
 		
 		public function check(num:Number):int{
@@ -121,7 +128,7 @@ class IntroState extends FlxState {
 		
 		RAInput.enabled = true;
 		_instructions.visible = true;
-		_tweens = TweenMax.allTo( [_hero, _title], .5, { y:"-8", ease:Sine.easeInOut, repeat: -1, yoyo:true } );
+		_tweens = TweenMax.allTo( [_hero, _title], 60 / 115.14, { y:"-8", ease:Sine.easeInOut, repeat: -1, yoyo:true } );
 	}
 	
 	override public function update():void {

@@ -2,6 +2,8 @@ package astley.art {
 	import astley.data.Beat;
 	import astley.data.RAInput;
 	import astley.data.Recordings;
+	import com.greensock.easing.Linear;
+	import com.greensock.TweenMax;
 	import krakel.helpers.Random;
 	import org.flixel.FlxG;
 	import org.flixel.FlxPoint;
@@ -22,6 +24,7 @@ package astley.art {
 		[Embed(source = "../../../res/astley/audio/sfx/fart_3.mp3")] static private const FART_3:Class;
 		[Embed(source = "../../../res/astley/audio/sfx/fart_4.mp3")] static private const FART_4:Class;
 		[Embed(source = "../../../res/astley/audio/sfx/hit.mp3")] static private const HIT:Class;
+		[Embed(source = "../../../res/astley/audio/sfx/smb_pipe.mp3")] static private const SOUND_PIPE:Class;
 		
 		static private const FARTS:Vector.<Class> = new <Class>[
 			FART_0, FART_1, FART_2, FART_3, FART_4
@@ -120,9 +123,41 @@ package astley.art {
 			//velocity.x = 0;
 			alive = false;
 			play("dead");
+			endRecording();
+		}
+		
+		public function playWinAnim(targetX:int, targetY:int, callback:Function):void {
+			
+			x = targetX - width;
+			acceleration.y = 0;
+			velocity.x = 0;
+			velocity.y = 0;
+			canFart = false;
+			
+			endRecording(true);
+			
+			var speed:int = 10;
+			var duration:Number = (y - targetY) / speed;
+			TweenMax.to(this, duration, { y:targetY, ease:Linear.easeNone, onComplete:onPipeCentered, onCompleteParams:[callback] } );
+		}
+		
+		private function onPipeCentered(callback:Function):void {
+			
+			velocity.x = 30;
+			FlxG.play(SOUND_PIPE);
+			callback();
+		}
+		
+		public function endRecording(isDestroy:Boolean = false):void {
 			
 			if (_recorder != null)
 				Recordings.addRecording(_recorder);
+			
+			if (isDestroy) {
+				
+				_recorder.destroy();
+				_recorder = null;
+			}
 		}
 		
 		public function get resetPos():FlxPoint {

@@ -1,5 +1,6 @@
 package astley.states {
 	import astley.art.Cloud;
+	import astley.art.EndPipe;
 	import astley.art.Grass;
 	import astley.art.Rick;
 	import astley.art.Shrub;
@@ -25,8 +26,10 @@ package astley.states {
 		//[Embed(source = "../../../res/astley/text/Flappy.ttf", fontFamily = "NES", embedAsCFF = "false")] static private const FONT:Class;
 		
 		static public const HERO_SPAWN_X:Number = 32;
+		static public const EASY_WIN_MODE:Boolean = false;
 		
-		protected var _map:FlxTilemap;
+		protected var _map:Tilemap;
+		protected var _endPipe:FlxSprite;
 		protected var _ground:FlxSprite;
 		protected var _bgSprites:FlxGroup;
 		protected var _song:KrkSound;
@@ -47,6 +50,13 @@ package astley.states {
 			_bgSprites = add(new FlxGroup()) as FlxGroup;
 			
 			var levelSize:int = _song.duration * Rick.SPEED;
+			
+			if (EASY_WIN_MODE) {
+				
+				var buffer:int = ((Math.ceil(levelSize / LevelData.TILE_SIZE) - Tilemap.PIPE_START ) % Tilemap.PIPE_INTERVAL) * LevelData.TILE_SIZE;
+				levelSize = LevelData.TILE_SIZE * (Tilemap.PIPE_START + Tilemap.PIPE_INTERVAL * 1 + 2) + buffer;
+			}
+			
 			FlxG.camera.bounds = new FlxRect(0, 0, levelSize, FlxG.height);
 		}
 		
@@ -82,7 +92,10 @@ package astley.states {
 		}
 		
 		protected function addMG():void { }
-		protected function addFG():void { }
+		protected function addFG():void {
+			
+			add(_endPipe = new EndPipe(_map.endX, _map.endY));
+		}
 		
 		protected function setCameraFollow(target:Rick):void {
 			FlxG.camera.target = target;

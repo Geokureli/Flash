@@ -8,12 +8,14 @@ package astley.states {
 	import astley.art.Shrub;
 	import astley.art.Tilemap;
 	import astley.data.LevelData;
+	import astley.data.Prize;
 	import astley.data.RAInput;
 	import astley.Main;
 	import com.greensock.easing.Linear;
 	import com.greensock.easing.Sine;
 	import com.greensock.easing.Strong;
 	import com.greensock.TweenMax;
+	import com.newgrounds.API;
 	import krakel.helpers.Random;
 	import krakel.KrkSound;
 	import org.flixel.FlxG;
@@ -50,6 +52,7 @@ package astley.states {
 		private var _running:Boolean;
 		private var _isGameOver:Boolean;
 		private var _isResetting:Boolean;
+		private var _isEnd:Boolean;
 		
 		override public function create():void {
 			super.create();
@@ -61,18 +64,18 @@ package astley.states {
 			_isResetting = false;
 			_isGameOver = false;
 			_running = false;
+			_isEnd = false;
 			alive = false;
 			
 			FlxG.flash(Main.FADE_COLOR, Main.FADE_TIME, onFlashEnd, true);
+			
+			API.logCustomEvent(API.username);
 		}
 		
 		override protected function setDefaultProperties():void {
 			super.setDefaultProperties();
 			
 			_hero = new Rick(HERO_SPAWN_X, 64);
-			
-			//var buffer:int = (levelSize - Tilemap.PIPE_START) % Tilemap.PIPE_INTERVAL;
-			//FlxG.camera.bounds = new FlxRect(0, 0, LevelData.TILE_SIZE * (Tilemap.PIPE_START + Tilemap.PIPE_INTERVAL + 2) + buffer, FlxG.height);
 			
 			setCameraFollow(_hero);
 			FlxG.worldBounds.width = _hero.width + 2;
@@ -91,9 +94,9 @@ package astley.states {
 			super.addFG();
 			
 			add(_scoreTxt = new ScoreText(0, 32, true));
-			_scoreTxt.offset.x = -(FlxG.width - _scoreTxt.width) / 2 + _hero.x;
+			_scoreTxt.x = (FlxG.width - _scoreTxt.width) / 2;
+			_scoreTxt.scrollFactor.x = 0;
 			_scoreTxt.visible = false;
-			
 		}
 		
 		private function onFlashEnd():void {
@@ -105,8 +108,16 @@ package astley.states {
 		override public function update():void {
 			super.update();
 			
-			_scoreTxt.x = _hero.x;
-			score = Tilemap.getScore(_hero.x);
+			if (_isEnd)
+				return;
+			
+			
+			var numScore:Number = Tilemap.getScore(_hero.x);
+			score = numScore;
+			
+			for (var i:int = Prize.GOALS.length - 1; i >= 0; i--)
+				if(numScore > Prize.GOALS[i])
+					Prize.unlockMedal(Prize.ACHIEVEMENTS[i]);
 			
 			if (_running) {
 				
@@ -116,13 +127,19 @@ package astley.states {
 				if(!_hero.alive)
 					onPlayerDie();
 				
+				if (score >= _map.numPipes){
+					
+					_isEnd = true;
+					_hero.playWinAnim(_endPipe.x, _endPipe.y + 5, onPipeCentered);
+				}
+				
 			} else {
 				
 				checkHit();
 				
 				if (_isGameOver && !_isResetting) {
 					
-					_deathUI.x = _hero.x;
+					_deathUI.x = FlxG.camera.scroll.x + _hero.resetPos.x;
 					
 					//if (_hero.isTouching(FlxObject.DOWN))
 						//_hero.drag.x = 200
@@ -165,6 +182,17 @@ package astley.states {
 			_running = true;
 		}
 		
+		private function onPipeCentered():void {
+			
+			FlxG.fade(0xFFFFFFFF, 1, onFadeComplete)
+			_song.stop();
+		}
+		
+		private function onFadeComplete():void {
+			
+			FlxG.switchState(new ReplayState());
+		}
+		
 		protected function onPlayerDie():void {
 			_running = false;
 			_isGameOver = true;
@@ -172,7 +200,7 @@ package astley.states {
 			_hero.canFart = false;
 			RAInput.enabled = false;
 			_deathUI.startTransition(score, onEndScreenIn);
-			_deathUI.x = _hero.x;
+			_deathUI.x = FlxG.camera.scroll.x + _hero.resetPos.x;
 			_scoreTxt.visible = false;
 			
 			FlxG.play(SOUND_DIE);
@@ -189,6 +217,8 @@ package astley.states {
 		
 		private function startResetPan():void {
 			
+			Prize.unlockMedal(Prize.CONTINUE_MEDAL);
+			
 			_deathUI.killTimer();
 			_isResetting = true;
 			//RAInput.enabled = false;
@@ -201,28 +231,33 @@ package astley.states {
 			var duration:Number;
 			if (score < 1) {
 				
-				panAmount = (_deathUI.x + _deathUI.width - FlxG.camera.scroll.x) / 2;
+				panAmount = _deathUI.x + _deathUI.width - FlxG.camera.scroll.x;
 				TweenMax.to(
 					_deathUI,
 					panAmount * Math.PI / RESET_SCROLL_SPEED / 4,
 					{
 						x: '-' + panAmount,// --- RELATIVE
-						ease:Sine.easeOut,
+						ease:Sine.easeIn,
 						onComplete:resetGame
 					}
 				);
 			}
+			
+			var bezier:Array = [
+				{ x:FlxG.camera.scroll.x + panAmount },
+				{ x: -RESET_ANTICIPATION },
+				{ x:0 }
+			];
+			
+			if (FlxG.camera.scroll.x + FlxG.width == FlxG.camera.bounds.right)
+				bezier.shift();
 			
 			duration = (panAmount * 4  + FlxG.camera.scroll.x) / RESET_SCROLL_SPEED;
 			_resetPanTween = TweenMax.to (
 				FlxG.camera.scroll,
 				duration,
 				{
-					bezier:[
-						{ x:FlxG.camera.scroll.x + panAmount },
-						{ x: -RESET_ANTICIPATION },
-						{ x:0 }
-					],
+					bezier:bezier,
 					ease:Linear.easeNone,
 					onComplete:onResetComplete
 				}

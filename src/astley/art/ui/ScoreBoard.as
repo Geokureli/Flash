@@ -1,10 +1,12 @@
 package astley.art.ui {
 	import astley.data.BestSave;
+	import astley.data.LevelData;
 	import astley.data.Prize;
 	import com.greensock.easing.Cubic;
 	import com.greensock.easing.Linear;
 	import com.greensock.easing.Strong;
 	import com.greensock.TweenMax;
+	import com.newgrounds.API;
 	import flash.display.BitmapData;
 	import flash.geom.Rectangle;
 	import krakel.helpers.BitmapHelper;
@@ -92,8 +94,12 @@ package astley.art.ui {
 		}
 		
 		private function onRollupComplete():void {
-			if (_new.visible) 
+			if (_new.visible) {
+				
 				BestSave.best = _best;
+				if (API.connected) 
+					API.postScore(LevelData.SCORE_BOARD_ID, _best);
+			}
 			
 			if (_scoreSetCallback != null) {
 				

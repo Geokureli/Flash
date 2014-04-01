@@ -8,11 +8,13 @@ package astley.data {
 	public class RAInput extends FlxBasic {
 		
 		static public var enabled:Boolean;
+		static public var replayMode:Boolean;
 		static public var instance:RAInput;
 		
 		static private function STATIC_INIT():void {
 			
 			enabled = true;
+			replayMode = false;
 			instance = new RAInput();
 		}
 		
@@ -44,7 +46,7 @@ package astley.data {
 			else if(_antiPress) {
 				
 				_antiPress = false;
-				isButtonDown = enabled;
+				isButtonDown = enabled || replayMode;
 			}
 		}
 		

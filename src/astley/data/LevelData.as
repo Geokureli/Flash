@@ -16,5 +16,7 @@ package astley.data {
 		
 		static public const PIPES:Vector.<int> = new <int>[];
 		
+		static public const SCORE_BOARD_ID:String = "Gassy_Rick_Astley";
+		
 	}
 }

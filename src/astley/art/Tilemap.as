@@ -39,12 +39,17 @@ package astley.art {
 			PIPE_STAMP.push(last);
 		}
 		
+		public var numPipes:int;
+		public var endY:int;
+		public var endX:int;
+		
 		private var _isReplay:Boolean;
 		
 		public function Tilemap(isReplay:Boolean = false) {
 			super();
 			
 			_isReplay = isReplay;
+			numPipes = 0;
 			
 			loadMap(
 				
@@ -95,14 +100,18 @@ package astley.art {
 		}
 		
 		private function createPipes(data:Array, columns:int):void {
-			
 			var x:int = PIPE_START;
+			
 			do {
 				
-				stampPipe(x, data);
+				endY = stampPipe(x, data);
 				x += PIPE_INTERVAL;
+				numPipes++;
 				
 			} while (x < columns);
+			endY += 2;
+			endY *= LevelData.TILE_SIZE
+			endX = (x - PIPE_INTERVAL + 1) * LevelData.TILE_SIZE;
 		}
 		
 		private function stampImage(x:int, y:int, data:Array, stamp:Array):void {
@@ -121,8 +130,9 @@ package astley.art {
 			stampImage(x, Random.between(y), data, CLOUD_STAMP);
 		}
 		
-		public function stampPipe(x:int, data:Array):void {
+		public function stampPipe(x:int, data:Array):int {
 			var y:int
+			var ret:int;
 			
 			if (_isReplay) {
 				
@@ -133,6 +143,7 @@ package astley.art {
 				y = Random.between(PIPE_MIN, FlxG.height / LevelData.TILE_SIZE - PIPE_MIN - PIPE_GAP - LevelData.FLOOR_BUFFER);
 				LevelData.PIPES.push(y);
 			}
+			ret = y;
 			var stamp:Array = PIPE_STAMP.concat();
 			
 			while (y > 0) {
@@ -147,9 +158,11 @@ package astley.art {
 			//stamp.push(PIPE_BASE);
 			
 			stampImage(x, y, data, stamp);
+			
+			return ret;
 		}
 		
-		static public function getScore(distance:int):int {
+		static public function getScore(distance:int):Number {
 			
 			return 1 + (distance / LevelData.TILE_SIZE - PIPE_START) / PIPE_INTERVAL
 		}
