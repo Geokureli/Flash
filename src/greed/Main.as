@@ -64,7 +64,7 @@ package greed{
 		static private const SCALE:Number = 2;
 		
 		public function Main():void {
-			super(720 / SCALE, 400 / SCALE, ParserState, SCALE);
+			super(720 / SCALE, 400 / SCALE, GameState, SCALE);
 			Imports.BEAM;
 		}
 		

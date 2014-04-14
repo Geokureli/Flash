@@ -57,7 +57,7 @@
 		<sprite type="Treasure" x="192.00" y="208.00" flip="false" xScale="1.00" yScale="1.00" callback="true" resets="true" recenter="true" anim="emerald" />
 	</layer>
 	<layer name="fg" xScroll="1.000" yScroll="1.000" >
-		<sprite type="Hero" x="15.00" y="280.00" flip="false" xScale="1.00" yScale="1.00" jumpV="180" jumpMax="26" jumpMin="6" maxVelocity.x="150" maxVelocity.y="180" acc="800" drag.x="800" solid="true" callback="true" falls="true" passClouds="true" recenter="true" />
+		<sprite type="Hero" x="15.00" y="280.00" flip="false" xScale="1.00" yScale="1.00" jumpV="120" jumpMax="40" jumpMin="12" maxVelocity.x="100" maxVelocity.y="120" acc="600" drag.x="600" solid="true" callback="true" falls="true" passClouds="true" recenter="true" />
 		<sprite type="KrkSprite" x="64.00" y="96.00" flip="false" xScale="1.00" yScale="3.00" graphic="beam" solid="true" resets="true" immovable="true" group="beam" />
 	</layer>
 </level>
