@@ -7,6 +7,7 @@ package astley.states {
 	import astley.art.ui.ScoreText;
 	import astley.art.Shrub;
 	import astley.art.Tilemap;
+	import astley.data.BestSave;
 	import astley.data.LevelData;
 	import astley.data.Prize;
 	import astley.data.RAInput;
@@ -127,10 +128,12 @@ package astley.states {
 				if(!_hero.alive)
 					onPlayerDie();
 				
-				if (score >= _map.numPipes){
+				if (score >= _map.numPipes) {
 					
 					_isEnd = true;
 					_hero.playWinAnim(_endPipe.x, _endPipe.y + 5, onPipeCentered);
+					BestSave.best = _map.numPipes;
+					API.postScore(LevelData.SCORE_BOARD_ID, _map.numPipes);
 				}
 				
 			} else {

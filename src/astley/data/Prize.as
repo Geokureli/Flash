@@ -1,7 +1,6 @@
 package astley.data {
 	import astley.art.Tilemap;
 	import com.newgrounds.API;
-	import org.flixel.FlxG;
 	/**
 	 * ...
 	 * @author George
